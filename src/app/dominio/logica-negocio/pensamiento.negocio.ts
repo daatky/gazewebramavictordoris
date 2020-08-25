@@ -19,7 +19,8 @@ export class PensamientoNegocio {
     obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
         return this.pensamientoRepository.obtenerPensamientoAleatorio()
             .pipe(
-                map((data: PensamientoModel) => {                    
+                map((data: PensamientoModel) => {    
+                    console.log(data)                
                     return data
                 }),
                 catchError(err => {
@@ -29,11 +30,13 @@ export class PensamientoNegocio {
             )
     }
     obtenerPensamientoPublicos(idPerfil:string): Observable<Array<PensamientoModel>> {
+        console.log("1")
         //Para saber que lista debo cargar mas
         this.isPublico=true
         return this.pensamientoRepository.obtenerPensamientoPublicos(idPerfil)
             .pipe(
                 map((data:Array<PensamientoModel>) => {
+                    console.log("2", data)
                     return data
                 }),
                 catchError(err => {

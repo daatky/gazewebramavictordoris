@@ -21,7 +21,7 @@ export class PensamientoRepository {
         return this.pensamientoService.obtenerPensamientoAleatorio()
             .pipe(
                 map(data => {
-                    return this.pensamientoMapperService.transform(data.respuesta.datos);
+                    return this.pensamientoMapperService.transform(data.respuesta.datos);            
                 }),
                 catchError(err => {
                     console.log(err)

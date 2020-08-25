@@ -30,25 +30,21 @@ export class CrearPensamientoComponent implements OnInit {
     private pensamientoNegocio:PensamientoNegocio,
     private formBuilder: FormBuilder,      
   ) {  
+    this.iniciarDatos()
     //this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: 'Titulo', esLista: false, configuracionItem: EstiloItemPensamiento.ITEM_ALEATORIO }    
   }
 
-  ngOnInit(): void {   
-    this.iniciarDatos()
+  ngOnInit(): void {       
   }
-
   iniciarDatos(){
     this.crearPensamientoForm = this.formBuilder.group({
       pensamiento: ['', [Validators.required, Validators.maxLength(230)]],
     });      
-    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo',
-    configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
     this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}        
-    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarPensamientosPrivados()}         
-    this.obtenerPensamientosPublicos()
-    //await this.internacionalizacionNegocio.obtenerTextoLlave('enviar')
-//    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }    
+    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo', configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
+    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarPensamientosPrivados()}             
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.actualizarPensamiento }    
+    this.obtenerPensamientosPublicos()
   }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
@@ -76,8 +72,10 @@ export class CrearPensamientoComponent implements OnInit {
     this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 3'})
     this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 4'})
     return*/
+    console.log("VOY A OBTENER PENSAMIENTOS PRIVADOS")
     this.pensamientoNegocio.obtenerPensamientoPublicos('5f3e907015ae58647c0d3e1d')
     .subscribe((res:Array<PensamientoModel>)=>{ 
+      console.log("+++++++++++++")
       this.dataLista.lista=res
     },error=>{
       console.log(error)
