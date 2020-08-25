@@ -1,0 +1,59 @@
+<div
+    id="{{ 'itemRectangularCanvas' + configuracion.idInterno }}"
+    [ngClass]="itemMetodos.obtenerClasesParaItemRectangular(configuracion)"
+    (press)="eventoClickLargo()"
+>
+    <img
+        [ngClass]="{
+            'capa': true,
+            'imagenFondo': true,
+            'mostrar': !configuracion.mostrarLoader && configuracion.urlMedia.length > 0 
+        }"
+        [src]="configuracion.urlMedia"
+        (load)="onImageLoad($event)"
+    >
+    <!-- Loader -->
+    <div
+        [ngClass]="{
+            'capa': true,
+            'loader': true,
+            'mostrar': configuracion.mostrarLoader
+        }"
+    >
+        <app-cargando></app-cargando>
+    </div>
+    <input type="file" id="{{ 'itemRectangularInputFile' + configuracion.idInterno }}" class="hide" accept="image/*" (change)="cambioEnInputTipoFile($event.target.files)"/>
+    <p [ngClass]="itemMetodos.obtenerClasesTextoBoton(configuracion.mostrarBoton)">{{ configuracion.textoBoton }}</p>
+    <!-- Esquinas -->
+    <div 
+        *ngFor="let item of bordesEsquinas; let i = index"
+        [ngClass]="itemMetodos.obtenerClasesBordesEnLasEsquinas(i, configuracion.usoDelItem)"
+    ></div>
+    <!-- Capa Marco Seleccionada - ALBUMPREVIEW -->
+    <div
+        [ngClass]="itemMetodos.obtenerClasesCapaConBordeRojo(configuracion.mostrarCapaImagenSeleccionadaConBorde)"
+    >
+        <div class="cancelar">
+            <div class="mensaje">
+                <p>
+                    {{ configuracion.textoCerrarEditarDescripcion }}
+                </p>
+            </div>
+            <img src="../../../../assets/recursos/botones/forma-x-blanca.svg">
+        </div>
+    </div>
+    <!-- Capa Preview con boton de expandir - ALBUMPREVIEW -->
+    <div
+        [ngClass]="itemMetodos.obtenerClasesCapaConIconoExpandir(configuracion.usoDelItem, configuracion.mostrarIconoExpandirFoto)"
+    >
+        <img src="../../../../assets/recursos/botones/forma-flecha-ampliar-foto.svg">
+    </div>
+    <!-- Capa opacidad a, b, c segun especificaciones -->
+    <div [ngClass]="itemMetodos.obtenerClasesCapaOpacidad(configuracion.capaOpacidad)"></div>
+</div>
+<div
+    [ngClass]="itemMetodos.obtenerClasesItemDescripcion(configuracion.usoDelItem)"
+>
+    <p>{{ configuracion.descripcion }}</p>
+    <div class="linea"></div>
+</div>

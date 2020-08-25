@@ -1,0 +1,121 @@
+<app-appbar #appbar [configuracion]="confAppBar"></app-appbar>
+<div class="cuerpo">
+    <div class="portada">
+        <app-item-rectangulo #portada [configuracion]="confPortada"></app-item-rectangulo>
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            {{ 'indicacionSubirFoto' | translate }}
+        </p>
+    </div>
+    <div class="nombrePerfil">
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
+            })"
+        >
+            {{ nombreUsuario }}
+        </p>
+    </div>
+    <div class="divisorVerde">
+        <app-linea #linea [configuracionLinea]="confLinea"></app-linea>
+    </div>
+    <div 
+        *ngIf="accionAlbum === accionAlbumEnum.CREAR"
+        class="indicaciones crear"
+    >
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            ERASE PHOTO: LONG PRESS
+        </p>
+    </div>
+    <div 
+        *ngIf="accionAlbum === accionAlbumEnum.ACTUALIZAR"
+        class="indicaciones actualizar"
+    >
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            CLICK TO UPDATE
+        </p>
+        <div class="espaciador-178"></div>
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            ERASE PHOTO: LONG PRESS
+        </p>
+    </div>
+    <div class="grilla">
+        <app-item-rectangulo #botonUpload [configuracion]="confBotonUpload"></app-item-rectangulo>
+        <div class="divisorVertical"></div>
+        <!-- Item por defecto -->
+        <div
+            *ngFor="let item of itemsAlbumPorDefecto;let i = index"
+            class="cajaItem"
+        >
+            <app-item-rectangulo
+                *ngIf="itemsAlbum.length <= 0"
+                [configuracion]="item"
+            ></app-item-rectangulo>
+            <div  *ngIf="validarDivisorGrilla(i) && itemsAlbum.length <= 0" class="divisorVertical"></div>
+        </div>
+        <div
+            *ngIf="itemsAlbum.length <= 0"
+            class="mensajeDeFotos"
+        >
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA,
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_IGUAL 
+                })"
+            >
+                {{ 'reemplaceFotos' | translate }}
+            </p>
+        </div>
+        <!-- Items del usuario -->
+        <div
+            *ngFor="let item of itemsAlbum;let i = index"
+            class="cajaItem"
+        >
+            <app-item-rectangulo
+                [configuracion]="item"
+            ></app-item-rectangulo>
+            <div  *ngIf="validarDivisorGrilla(i)" class="divisorVertical"></div>
+        </div>
+    </div>
+</div>
+<app-camara
+    #camara
+    [configuracion]="confCamara"
+></app-camara>
+<app-cropper
+    #cropper
+    [configuracion]="confCropper"
+></app-cropper>
+<app-toast #toast [configuracion]="confToast"></app-toast>

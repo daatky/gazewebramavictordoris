@@ -1,0 +1,14 @@
+<app-appbar [configuracion]="configuracionAppBar"> </app-appbar>
+<app-portada-gaze #portadaGazeComponent></app-portada-gaze>
+
+<app-lista-vertical [dataLista]='dataLista' class="centrar">
+
+    <div *ngIf="listaMenu">
+        <div *ngFor="let item of listaMenu">
+            <app-item-menu [configuracionItem]="prepararItemMenu(item)"></app-item-menu>
+        </div>
+    </div>
+
+    <app-item-menu *ngIf="itemSubMenu" [configuracionItem]="prepararItemSubMenu(itemSubMenu)"></app-item-menu>
+
+</app-lista-vertical>

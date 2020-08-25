@@ -1,0 +1,205 @@
+<div [ngClass]="obtenerClasesAppBar()">
+    <!-- USO_DEMO_APPBAR -->
+    <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_DEMO_APPBAR" class="box">
+        <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.demoAppbar.tamanoColorFondo)"></div>
+        <div class="botonAtras" (tap)="clickBotonAtras()">
+            <div class="icono"></div>
+        </div>
+        <div *ngIf="configuracion.demoAppbar?.nombrePerfil.mostrar" class="nombrePerfil">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_IGUAL 
+                })">
+                {{ textoNombrePerfil }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.demoAppbar?.subtitulo.mostrar" class="tituloSecundario">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L7_IGUAL 
+                })">
+                {{ textoSubtitulo }}
+            </p>
+        </div>
+        <div *ngIf="confBoton" class="botonPrincipal" (tap)="clickBotonPrincipal()">
+            <app-button [botonCompartido]="confBoton"></app-button>
+        </div>
+    </div>
+    <!-- USO_SEARCHBAR_APPBAR -->
+    <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_SEARCHBAR_APPBAR" class="box">
+        <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.searchBarAppBar.tamanoColorFondo)"></div>
+        <div class="barraBuscar"></div>
+        <div class="botonAtras" (tap)="clickBotonAtras()">
+            <div class="icono"></div>
+            <p *ngIf="configuracion.searchBarAppBar?.mostrarTextoBack" [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_IGUAL 
+                })">
+                {{ textoBack }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.searchBarAppBar?.mostrarTextoHome" class="botonHome">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_IGUAL 
+                })">
+                {{ textoHome }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.searchBarAppBar?.nombrePerfil.mostrar" class="nombrePerfil">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_IGUAL 
+                })">
+                {{ textoNombrePerfil }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.searchBarAppBar?.subtitulo.mostrar" class="tituloSecundario">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
+                })">
+                {{ textoSubtitulo }}
+            </p>
+        </div>
+    </div>
+    <!-- USO_GAZE_BAR -->
+    <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_GAZE_BAR" class="box">
+        <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.gazeAppBar.tamanoColorFondo)"></div>
+        <div class="botonAtras" (tap)="clickBotonAtras()">
+            <div class="icono"></div>
+        </div>
+        <div *ngIf="configuracion.gazeAppBar?.tituloPrincipal.mostrar" class="tituloPrincipal">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L7_IGUAL 
+                })">
+                {{ textoTituloPrincipal }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.gazeAppBar?.subtituloDemo?.mostrar || configuracion.gazeAppBar?.subtituloNormal?.mostrar"
+            class="tituloSecundario">
+            <p *ngIf="configuracion.gazeAppBar?.subtituloDemo" [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L7_IGUAL 
+                })">
+                {{ textoSubtituloDemo }}
+            </p>
+            <p *ngIf="configuracion.gazeAppBar?.subtituloNormal" [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULCLARO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
+                })">
+                {{ textoSubtitulo }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.gazeAppBar.mostrarBotonXRoja" class="botonX" (tap)="clickBotonXRoja()">
+            <div class="icono"></div>
+        </div>
+    </div>
+</div>
+<app-linea *ngIf="configuracion?.demoAppbar?.mostrarLineaVerde || configuracion?.searchBarAppBar?.mostrarLineaVerde"
+    [configuracionLinea]="confLinea"></app-linea>
+
+
+
+
+
+
+<!-- <div
+    [ngClass]="obtenerClasesAppBar()"
+>
+    
+
+
+    
+    <div
+        [ngClass]="obtenerClasesCapaColorFondo()"
+    ></div>
+    
+    <div
+        *ngIf="configuracionAppBar.barraDebusqueda.mostrar"
+        class="barraBuscar"
+    >
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.tituloPrincipal.mostrar"
+        class="tituloPrincipal"
+    >
+        <p [ngClass]="obtenerClasesLineasTexto(configuracionAppBar.tituloPrincipal.lineaTexto)">{{ configuracionAppBar.tituloPrincipal.lineaTexto.texto }}</p>
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.botonPrincipal.mostrar"
+        class="botonPrincipal"
+    >
+        <app-button [botonCompartido]="configuracionAppBar.botonPrincipal.configuracion"></app-button>
+    </div>
+    
+    <div
+        class="botonAtras"
+        (tap)="clickBotonAtras()"
+    >
+        <div
+            *ngIf="configuracionAppBar.botonAtras.mostrarIcono"
+            class="icono"
+        ></div>
+        <p
+            *ngIf="configuracionAppBar.botonAtras.mostrarTexto"
+            [ngClass]="obtenerClasesLineasTexto(configuracionAppBar.botonAtras.lineaTexto)"
+        >
+            {{ configuracionAppBar.botonAtras.lineaTexto.texto }}
+        </p>
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.botonHome.mostrar"
+        class="botonHome"
+    >
+        <p [ngClass]="obtenerClasesLineasTexto(configuracionAppBar.botonHome.lineaTexto)">{{ configuracionAppBar.botonHome.lineaTexto.texto }}</p>
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.nombrePerfil.mostrar"
+        class=" nombrePerfil"
+    >
+        <p [ngClass]="obtenerClasesLineasTexto(configuracionAppBar.nombrePerfil.lineaTexto)">{{ configuracionAppBar.nombrePerfil.lineaTexto.texto }}</p>
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.tituloSecundario.mostrar"
+        class="tituloSecundario"
+    >
+        <p [ngClass]="obtenerClasesLineasTexto(configuracionAppBar.tituloSecundario.lineaTexto)">{{ configuracionAppBar.tituloSecundario.lineaTexto.texto }}</p>
+    </div>
+    
+    <div
+        *ngIf="configuracionAppBar.botonXRoja.mostrar"
+        class="botonX"
+        (tap)="clickBotonXRoja()"
+    >
+        <div class="icono"></div>
+    </div>
+</div>
+<app-linea
+    *ngIf="configuracionAppBar.linea.mostrar"
+    [configuracionLinea]="configuracionAppBar.linea.configuracion"
+></app-linea> -->

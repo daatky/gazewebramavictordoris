@@ -1,0 +1,84 @@
+<!-- Input del selector -->
+<div
+    *ngIf="configuracion.inputPreview.mostrar"
+    class="inputSelector"
+    (tap)="clickInputSelector()"
+>
+    <input
+        type="text"
+        [placeholder]="configuracion.inputPreview.input.placeholder"
+        [(ngModel)]="configuracion.inputPreview.input.valor"
+        autocomplete="disabled"
+        readonly="true"
+    >
+</div>
+<!-- Modal del selector -->
+<div
+    [ngClass]="{
+        'modal': true,
+        'mostrar': configuracion.mostrarModal
+    }"
+    (tap)="eventoModal($event.target)"
+>
+    <div class="caja sombraCaja">
+        <div
+            *ngIf="configuracion.cargando.mostrar"
+            class="cargando"
+        >
+            <app-cargando></app-cargando>
+        </div>
+        <div
+            *ngIf="configuracion.error.mostrarError"
+            class="error"
+        >
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_I2,
+                    paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                })"
+            >
+                {{ configuracion.error.contenido }}
+            </p>
+        </div>
+        <div class="elegibles">
+            <div class="titulo">
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: false,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I1,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ configuracion.tituloSelector }}
+                </p>
+            </div>
+            <div class="lista">
+                <div
+                    [ngClass]="{
+                        'elegible': true,
+                        'activo': (configuracion.seleccionado.codigo === item.codigo)
+                    }"
+                    *ngFor="let item of configuracion.elegibles"
+                    (tap)="elegirPais(item.codigo, item.nombre)"
+                >
+                    <p
+                        [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                            color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                            estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                            enMayusculas: false,
+                            tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I3,
+                            paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                        })"
+                    >
+                        {{ item.nombre }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

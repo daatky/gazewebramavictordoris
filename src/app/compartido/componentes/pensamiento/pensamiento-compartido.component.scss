@@ -1,0 +1,53 @@
+@import '../../../../assets/estilos/dimensiones.scss';
+@import '../../../../assets/estilos/colores.scss';
+@import '../../../../assets/estilos/imagenes.scss';
+
+.div249{
+    width: 100%;
+    height: $interlineado-4;
+}
+.divOtroPensamiento{
+    padding-bottom: $interlineado-10;    
+    box-sizing: border-box;
+    width: $ancho-pagina*0.6382;
+}
+.divPensamientoAleatorio{
+    padding-bottom: $interlineado-10;    
+    box-sizing: border-box;
+    width: $ancho-pagina*0.6382;
+}
+
+.divPensamientoAmarillo{
+    background-image: $forma-amarilla-pensamientos-login;
+    //border-image-source: $forma-amarilla-pensamientos-login;
+    background-repeat: no-repeat;
+}
+.divPensamientoRojo{
+    background-image: $forma-roja-pensamientos;
+    background-repeat: no-repeat;
+}
+.tamanoPensamientoAleatorio{
+    width: 100%;
+    min-height: calcular(41.43);
+    //$ancho-pagina*0.4143;
+    height: fit-content;
+    //max-height: $ancho-pagina*0.6143;
+    background-color: blue($color: #000000);
+    //height: fit-content;
+    padding-top: $espacio-677;    
+    padding-left: $espacio-267;
+    padding-right: $espacio-267;
+    padding-bottom: $espacio-677 - $espacio-0249;  
+    box-sizing: border-box;
+}
+/*
+.divFecha{
+    width: fit-content;
+    height: fit-content;
+    border-radius: $interlineado-15;
+    padding: $interlineado-6;
+    box-sizing: border-box;
+    font-size: $letra-3;
+    background-color: $titulo-fecha;
+    color: $blanco;
+}*/

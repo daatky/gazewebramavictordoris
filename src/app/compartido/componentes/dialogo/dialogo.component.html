@@ -1,0 +1,31 @@
+<div #fondo class="modal">
+    <div #principal class="contenedorPrincipal">
+        <div [ngSwitch]="data.tipo">
+            <div *ngSwitchCase="dialogo.CONFIRMACION">
+                <div #descripcion class="contenedorDescripcion">
+                    <p class="letraDescripcion">{{data.descripcion}}</p>
+                </div>
+                <div class="contenedorBotonesConfirmacion">
+                    <div *ngFor="let item of data.listaAcciones">
+                        <app-button [botonCompartido]="item"></app-button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngSwitchCase="dialogo.MULTIPLE_ACCION">
+                <div #descripcion class="contenedorDescripcion">
+                    <p class="letraDescripcion">{{data.descripcion}}</p>
+                </div>
+                <div class="contenedorBotonesMultipleAccion" *ngFor="let item of data.listaAcciones">
+                    <app-button [botonCompartido]="item"></app-button>
+                </div>
+            </div>
+
+            <div *ngSwitchCase="dialogo.MULTIPLE_ACCION_HORIZONTAL">
+                <div class="contenedorBotonesMultipleAccionHorizontal" *ngFor="let item of data.listaAcciones">
+                    <app-button [botonCompartido]="item"></app-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

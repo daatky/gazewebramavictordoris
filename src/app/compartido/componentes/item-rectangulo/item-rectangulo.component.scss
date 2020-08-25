@@ -1,0 +1,320 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+// Perfil
+$perfil-espesor: calcular(0.24);
+$perfil-tamano-ancho: calcular(43.06);
+$perfil-tamano-alto: calcular(30.66);
+
+// Perfil - Esquinas
+$esquina-diametro: calcular(4.71);
+$esquina-margen: $perfil-espesor * -1;
+
+// Album mini
+$album-mini-tamano-ancho: calcular(43.3);
+$album-mini-tamano-alto: calcular(30.9);
+
+// Album preview
+$album-preview-tamano-ancho: $ancho-pagina;
+$album-preview-tamano-alto: calcular(71.3626);
+// Album preview descripcion
+$padding-descripcion: calcular(2.67);
+$margin-descripcion: $interlineado-2;
+$ancho-descripcion: $album-preview-tamano-ancho - ($padding-descripcion * 2);
+$border-descripcion-ancho: calcular(63.86);
+$border-descripcion-alto: calcular(0.71);
+$margen-descripcion-linea: $interlineado-2;
+// Album preview editando descripcion
+$capa-border-rojo-espesor-borde: calcular(1.19);
+$capa-border-rojo-ancho: $album-preview-tamano-ancho - ($capa-border-rojo-espesor-borde * 2);
+$capa-border-rojo-alto: $album-preview-tamano-alto - ($capa-border-rojo-espesor-borde * 2);
+$capa-border-rojo-cancelar-ancho: $album-preview-tamano-ancho;
+$capa-border-rojo-cancelar-alto: calcular(8.86);
+$capa-border-rojo-cancelar-padding-izquierdo: calcular(5.22);
+$capa-border-rojo-cancelar-mensaje-ancho: calcular(79.34);
+$capa-border-rojo-cancelar-mensaje-margen-derecha: calcular(3.16);
+// Album preview con icono expandir
+$expandir-icono-margen: calcular(2.67);
+
+.itemRectangulo {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.itemRectangulo .esquina {
+    display: none;
+    position: absolute;
+    
+    width: $esquina-diametro;
+    height: $esquina-diametro;
+
+    background-image: $forma-equina-album;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.itemRectangulo .esquina.mostrar {
+    display: block;
+}
+
+.itemRectangulo .esquina.a {
+    top: $esquina-margen;
+    left: $esquina-margen;
+    transform: rotate(270deg);
+}
+
+.itemRectangulo .esquina.b {
+    top: $esquina-margen;
+    right: $esquina-margen;
+}
+
+.itemRectangulo .esquina.c {
+    bottom: $esquina-margen;
+    left: $esquina-margen;
+    transform: rotate(180deg);
+}
+
+.itemRectangulo .esquina.d {
+    bottom: $esquina-margen;
+    right: $esquina-margen;
+    transform: rotate(450deg);
+}
+
+.itemRectangulo .textoBoton {
+    font-size: $letra-3;
+    line-height: $letra-3;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+}
+
+.itemRectangulo.perfil {
+    width: $perfil-tamano-ancho;
+    height: $perfil-tamano-alto;
+    border: $perfil-espesor solid $negro;
+}
+
+.itemRectangulo.albumMini {
+    width: $album-mini-tamano-ancho;
+    height: $album-mini-tamano-alto;
+}
+
+.itemRectangulo.albumPreview {
+    width: $album-preview-tamano-ancho;
+    height: $album-preview-tamano-alto;
+}
+
+// Descripcion del item
+.itemDescripcion {
+    width: $ancho-descripcion;
+    margin: $margin-descripcion 0;
+    padding: 0 $padding-descripcion;
+
+    display: none;
+    align-items: center;
+    flex-flow: column;
+}
+.itemDescripcion.mostrar {
+    display: flex;
+}
+.itemDescripcion p {
+    text-align: center;
+    margin: 0;
+    font-size: $letra-2;
+    font-style: italic;
+    line-height: $interlineado-4;
+}
+.itemDescripcion .linea {
+    background-color: $verde-base;
+    width: $border-descripcion-ancho;
+    height: $border-descripcion-alto;
+    margin-top: $margen-descripcion-linea;
+}
+
+// Capas - albumMini
+.capa {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+
+    width: $album-mini-tamano-ancho;
+    height: $album-mini-tamano-alto;
+}
+
+.capa.mostrar {
+    display: flex;
+}
+
+// Capa X
+.capa.capax {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.capa.capax img {
+    width: $diametro-x-blanca;
+    height: $diametro-x-blanca;
+
+    margin-right: $x-margen-album-derecha;
+    margin-bottom: $x-margen-album-abajo;
+}
+
+// Capa - albumPreview
+.capa.dos {
+    width: $capa-border-rojo-ancho;
+    height: $capa-border-rojo-alto;
+
+    border: $capa-border-rojo-espesor-borde solid $rojo-base;
+}
+
+.capa.dos .cancelar {
+    position: absolute;
+    bottom: 0;
+
+    width: $capa-border-rojo-cancelar-ancho;
+    height: $capa-border-rojo-cancelar-alto;
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+
+    padding-left: $capa-border-rojo-cancelar-padding-izquierdo;
+}
+
+.capa.dos .cancelar .mensaje {
+    background-color: $border-dark;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: $capa-border-rojo-cancelar-mensaje-ancho;
+    height: $capa-border-rojo-cancelar-alto -($interlineado-1 * 2);
+
+    margin-right: $capa-border-rojo-cancelar-mensaje-margen-derecha;
+    padding: $interlineado-1 0;
+    
+}
+
+.capa.dos .cancelar .mensaje p {
+    margin: 0;
+    color: $blanco;
+    font-size: $letra-2;
+    line-height: $interlineado-4;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.capa.dos .cancelar img {
+    width: $diametro-x-blanca;
+    height: $diametro-x-blanca;
+}
+
+// Capa Album preview expandir foto
+// Capa - albumPreview
+.capa.tres {
+    width: $album-preview-tamano-ancho;
+    height: $album-preview-tamano-alto;
+}
+
+.capa.tres.mostrar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.capa.tres img {
+    width: $diametro-x-blanca;
+    height: $diametro-x-blanca;
+
+    margin-right: $expandir-icono-margen;
+    margin-bottom: $expandir-icono-margen;
+}
+
+
+
+// Capa loader
+.capa.loader {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+// Capa imagen de fondo
+.capa.imagenFondo {
+
+}
+
+// Capa Opacidad
+.capa.opacidad {
+    
+}
+
+$modal-origen-foto-ancho: $ancho-pagina;
+$modal-origen-foto-alto: calcular(24);
+$modal-origen-foto-opcion-alto: calcular(12);
+$modal-origen-foto-opcion-caja-padding: calcular(4);
+$modal-origen-foto-opcion-imagen-margin-der: calcular(3);
+
+// Modal origen foto
+.modalOrigenFoto {
+    background: transparent;
+    display: none;
+    position: fixed;
+    width: $modal-origen-foto-ancho;
+    height: $altura-pagina;
+    top: 0;
+    left: 0;
+    z-index: 300;    
+}
+.modalOrigenFoto.mostrar {
+    display: flex;
+    align-items: flex-end;
+}
+.modalOrigenFoto .caja {
+    background: #ffffff;
+    width: $modal-origen-foto-ancho;
+    height: $modal-origen-foto-alto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+.modalOrigenFoto .caja .opcion {
+    display: flex;
+    flex-flow: row;
+    box-sizing: border-box;
+
+    padding: 0 $espacio-267;
+
+    width: 100%;
+    height: $modal-origen-foto-opcion-alto;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row;
+    cursor: pointer;
+
+    &:hover {
+        background: #eee;
+    }
+
+}
+.modalOrigenFoto .caja .opcion img {
+    height: 55%;
+    margin: 0 $modal-origen-foto-opcion-imagen-margin-der 0 0;
+}
+.modalOrigenFoto .caja .opcion p {
+    font-weight: 500;
+}

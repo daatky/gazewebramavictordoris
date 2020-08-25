@@ -1,0 +1,33 @@
+<div 
+    [ngClass]="{
+        'wrapper-toast': true,
+        'mostrar': configuracion.mostrarToast
+    }"
+    (tap)="cerrarToast()"
+>
+    <div
+        [ngClass]="{
+            'toast': true,
+            'sombraCaja': true
+        }"
+    >
+        <div class="texto">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR,
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I3
+                })"
+            >
+                {{ configuracion.texto }}
+            </p>
+        </div>
+        <div class="loader">
+            <div
+                *ngIf="configuracion.mostrarLoader"
+                class="spinner"
+            ></div>
+        </div>
+    </div>
+</div>

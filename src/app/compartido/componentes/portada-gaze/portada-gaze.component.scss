@@ -1,0 +1,24 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+.portada-gaze-completa {
+    width: $portada-gaze-ancho-completo;
+    height: $portada-gaze-alto-completo;
+
+    background: $portada-gaze-completa;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.portada-gaze-cortada {
+    width: $portada-gaze-ancho-cortada;
+    height: $portada-gaze-alto-cortada;
+
+    background: $portada-gaze-mitad;
+    background-size: 101% 100%;
+    background-repeat: no-repeat;
+}
+.espacio-derecha{
+    position: relative;    
+    left: -((($ancho-pagina - $ancho-6920)/2)+$espacio-267);;
+}

@@ -1,0 +1,29 @@
+@import '../../../../assets/estilos/dimensiones.scss';
+@import '../../../../assets/estilos/colores.scss';
+
+.divIdiomas{
+    //padding-top: $interlineado-8;
+    margin-left: -$espacio-267;
+    box-sizing: border-box;
+    height:calcular(6.4);
+    // $ancho-pagina*0.064;
+    width: $ancho-6920;
+}
+.amarilloIdioma{
+    color: $amarillo-base !important;
+}
+.divLetrasIdioma{
+    float: left;
+    width: calcular(11.085);
+    //$ancho-pagina*0.11085;
+    height: calcular(6.4);
+    //$ancho-pagina*0.064;
+}
+.divLineaIdioma{    
+    float: left;
+    background-color: $blanco;    
+    height: calcular(6.4);
+    //$ancho-pagina*0.064;
+    width: calcular(0.53),
+    //$ancho-pagina*0.0053;    
+}

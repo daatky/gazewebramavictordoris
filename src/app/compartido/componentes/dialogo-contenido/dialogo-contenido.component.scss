@@ -1,0 +1,55 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+
+.contenedorPrincipal {
+    border: $interlineado-14 solid #000000;
+    border-radius: $interlineado-13;
+    padding-top: $interlineado-8;
+    padding-left: $interlineado-2;
+    padding-right: $interlineado-2;
+    padding-bottom: $interlineado-8;
+    background-color: white;
+    height: fit-content;
+    width: $ancho-6916;
+}
+
+.modal {
+    //background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+}
+
+.fondoModal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modalAbierto {
+    overflow: hidden;
+}
+
+.contenedorDescripcion {
+    padding-top: $interlineado-2;
+    padding-bottom: $interlineado-2;
+    padding-left: $interlineado-6;
+    padding-right: $interlineado-6;
+    background-color: $input-fondo;
+    border-radius: $interlineado-15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $espacio-0316;
+}
+
+.letraDescripcion {
+    text-align: center;
+    font-size: $letra-3;
+    color: $azul-base;
+    font-weight: bold;
+}

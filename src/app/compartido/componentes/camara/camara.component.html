@@ -1,0 +1,70 @@
+<div
+    [ngClass]="{
+        'modal': true,
+        'mostrar': configuracion.mostrarModal
+    }"
+>
+    <div
+        [ngClass]="{
+            'caja': true,
+            'box': true,
+            'mostrar': (configuracion && !mostrarLoader)
+        }"
+    >
+        <webcam 
+            *ngIf="configuracion.mostrarModal"
+            [height]="anchoCamara"
+            [width]="altoCamara"
+            [trigger]="triggerObservable"
+            (imageCapture)="handleImage($event)"
+            [allowCameraSwitch]="allowCameraSwitch"
+            [switchCamera]="nextWebcamObservable"
+            [imageQuality]="1"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="errorEnCamara($event)"
+        ></webcam>
+        <div class="botones">
+            <div
+                *ngIf="multipleWebcamsAvailable"
+                class="girarCamara"
+                (tap)="showNextWebcam(true)"
+            ></div>
+            <div
+                *ngIf="!mensajeError.mostrarError"
+                class="tomarFoto sombraCaja"
+                (tap)="triggerSnapshot()"
+            ></div>
+            <div
+                class="cerrarCamara"
+                (tap)="cerrarCamara()"
+            ></div>
+        </div>
+    </div>
+    <div
+        [ngClass]="{
+            'loader': true,
+            'box': true,
+            'mostrar': mostrarLoader
+        }"
+    >
+        <app-cargando></app-cargando>
+    </div>
+    <div
+        [ngClass]="{
+            'error': true,
+            'box': true,
+            'mostrar': mensajeError.mostrarError
+        }"
+    >
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD,
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2 
+            })"
+        >
+            {{ mensajeError.contenido }}
+        </p>
+    </div>
+</div>

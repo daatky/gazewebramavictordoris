@@ -1,0 +1,96 @@
+@import "../../../../styles.scss";
+
+.contenedorPrincipal {
+    border: $interlineado-14 solid #000000;
+    border-radius: $interlineado-13;
+    padding-top: $interlineado-8;
+    padding-left: $interlineado-2;
+    padding-right: $interlineado-2;
+    padding-bottom: $interlineado-8;
+    background-color: white;
+}
+
+.modal {
+    //background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+}
+
+.fondoModal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modalAbierto {
+    overflow: hidden;
+}
+
+.contenedorDescripcion {
+    padding-top: $interlineado-2;
+    padding-bottom: $interlineado-2;
+    padding-left: $interlineado-6;
+    padding-right: $interlineado-6;
+    background-color: $input-fondo;
+    border-radius: $interlineado-15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dimensionesMultipleAccion {
+    width: $espacio-6238;
+    box-sizing: border-box;
+}
+
+.dimensionesConfirmacion {
+    width: $espacio-5664;
+    box-sizing: border-box;
+}
+
+.dimensionesMultipleAccionHorizontal {
+    width: $espacio-5360;
+    padding-top: 0 !important;
+}
+
+.dimensionDescripcionConfirmacion {
+    font-size: $letra-4;
+    //line-height: $interlineado-0178;
+    height: $espacio-1981;
+    box-sizing: border-box;
+}
+
+.dimensionDescripcionMultipleAccion {
+    font-size: $letra-4;
+    //line-height: $interlineado-0178;
+    height: $espacio-1726;
+    box-sizing: border-box;
+}
+
+.letraDescripcion {
+    text-align: center;
+    color: $azul-base;
+}
+
+.contenedorBotonesConfirmacion {
+    padding-top: $interlineado-8;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contenedorBotonesMultipleAccion {
+    padding-top: $interlineado-8;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedorBotonesMultipleAccionHorizontal {
+    padding-top: $interlineado-8;
+    display: flex;
+    justify-content: center;
+}

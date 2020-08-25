@@ -1,0 +1,63 @@
+<app-appbar #appbar [configuracion]="confAppBar"></app-appbar>
+<div class="cuerpo">
+    <div class="fotos">
+        <app-item-circulo #albumPerfil [configuracion]="confItemCir"></app-item-circulo>
+        <app-portada-gaze #portadaGaze></app-portada-gaze>
+        <app-item-rectangulo #albumGeneral [configuracion]="confItemRec"></app-item-rectangulo>
+    </div>
+    <div class="nombreAlbums">
+        <div class="caja a">
+            <p  
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
+                })"
+            >
+                profile
+            </p>
+        </div>
+        <div class="caja b"></div>
+        <div class="caja c">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
+                })"
+            >
+                album
+            </p>
+        </div>
+    </div>
+    <div class="descripcion_perfil">
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512
+            })"
+        >
+            In this profile, you will choose the photos of yourself you prefer, your contact name, name, and relevant data.
+        </p>
+    </div>
+    <div class="inputs_formularios">
+        <form [formGroup]="registroForm">
+            <div
+                *ngFor="let item of inputsForm"
+                class="input"
+            >
+                <app-input [inputCompartido]="item"></app-input>
+            </div>
+            <app-selector #selectorPaises [configuracion]="confSelector"></app-selector>
+            <app-buscador-modal #buscadorLocalidades [configuracion]="confBuscador" ></app-buscador-modal>
+            <div class="button">
+                <app-button [botonCompartido]='botonSubmit' type="submit"></app-button>
+            </div>
+        </form>
+    </div>
+</div>

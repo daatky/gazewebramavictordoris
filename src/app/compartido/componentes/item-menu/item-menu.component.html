@@ -1,0 +1,97 @@
+<div id="{{ 'itemMenu' + configuracionItem.idInterno }}" [ngClass]="obtenerItemClases()" (press)="eventoClickLargo()">
+    <div class="capaAnuncios">
+        <div [ngClass]="obtenerClasesItemCaja()">
+
+            <div class="contenedor-texto">
+                <!-- ITEM PARA PERFIL CREATE, TIPO, PROFILE-->
+                <div [ngSwitch]="configuracionItem.tipoMenu">
+                    <div *ngSwitchCase="tipoMenu.CREATE_PROFILE_INFO">
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                    color: estiloTexto.colorDelTexto.TEXTOAMARILLOBASE, 
+                    estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I4 
+                })">{{configuracionItem.texto1}}</p>
+
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                    color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I4 
+                })">{{configuracionItem.texto2}}</p>
+
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                    color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I4 
+                })">{{configuracionItem.texto3}}</p>
+                    </div>
+                    <div *ngSwitchCase="tipoMenu.GESTION_PROFILE">
+
+                    </div>
+                    <div *ngSwitchCase="tipoMenu.ACCION">
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                        estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I8 
+                    })">{{configuracionItem.texto1}}</p>
+                    </div>
+                    <div *ngSwitchCase="tipoMenu.INSTRUCCIONES">
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                        estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
+                    })">{{configuracionItem.texto1}}</p>
+
+                        <p class="instruccion-separacion" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                        estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
+                    })">{{configuracionItem.texto2}}</p>
+
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        color: estiloTexto.colorDelTexto.TEXTOAMARILLOBASE, 
+                        estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
+                    })">{{configuracionItem.texto3}}</p>
+                    </div>
+                    <div *ngSwitchCase="tipoMenu.SUBMENU">
+                        <div class="boton-puntos"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="configuracionItem.descripcion || configuracionItem.submenus"
+                class="centrar contener-descripcion">
+                <div class="flecha" id="{{ 'flecha' + configuracionItem.idInterno }}">
+                </div>
+                <div *ngIf="configuracionItem.mostrarDescripcion" class="grupo-texto-descripcion">
+
+                    <p *ngFor="let item of configuracionItem.descripcion" [ngClass]="obtenerClasesLineasTexto(item)"
+                        class="separacion-texto">
+                        {{ item.texto }}
+                    </p>
+
+                    <p *ngFor="let item of configuracionItem.submenus" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTO_COLOR_PLATEADO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
+                            enMayusculas: false,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL 
+                        })" class="texto-submenu test">
+                        {{ item.titulo }}
+                    </p>
+
+
+                </div>
+            </div>
+
+        </div>
+        <app-linea *ngIf="configuracionItem.linea.mostrar" [configuracionLinea]="configuracionItem.linea.configuracion">
+        </app-linea>
+    </div>
+</div>

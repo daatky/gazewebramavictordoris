@@ -1,0 +1,27 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+
+.listaScroll {
+    height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
+    overflow-y: auto;
+    width: $ancho-6920;
+}
+.listaScrollPensamientoGestionar {
+    height: 200px !important;
+    overflow-y: auto;
+    width: $ancho-6920;
+}
+
+.listaScrollMenuPrincipal {
+    height: calc(100vh - #{$appbar-alto-default} - #{$portada-gaze-alto-completo}) !important;
+    overflow-y: auto;
+    width: $ancho-6920;
+}
+
+.fondoLista {
+    background-color: $tranparencia-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}

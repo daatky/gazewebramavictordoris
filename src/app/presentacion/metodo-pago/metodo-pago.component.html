@@ -1,0 +1,78 @@
+<app-appbar [configuracion]="configuracionAppBar"> </app-appbar>
+<div class="centrar">
+    <div class="fondoTransparente contenedorTransparencia">
+        <app-lista-vertical [dataLista]='dataLista' class="centrar">
+            <div class="espaciador">
+                <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL 
+            })" class="titlePago">{{ 'pagueCon' | translate }}</p>
+
+                <div *ngFor="let item of listaMetodoPago">
+                    <div>
+                        <div class="cotenedorNombreMetodoPago">
+                            <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        color: estiloTexto.colorDelTexto.TEXTOAMARILLOBASE, 
+                        estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                        enMayusculas: false,
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL 
+                    })" class="nombreMetodoPago">{{item.nombre}}
+                            </p>
+                        </div>
+
+                        <div class="iconPago">
+                            <div *ngIf="item.estado.codigo==estadoPendiente; else elseBlock"
+                                (click)=navegarMetodoPago(item)>
+                                <img [src]="item.icono">
+                            </div>
+                            <ng-template #elseBlock>
+                                <div class="container-mensaje-pendiente-pago">
+                                    <p class="centrar-texto" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                                color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                                estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                                enMayusculas: true,
+                                tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L3_IGUAL 
+                            })">IN STUDY...</p>
+                                    <p class="mensaje-pendiente-pago" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                                color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                                estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                                enMayusculas: true,
+                                tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
+                            })">WE ARE CONCERNED THAT CRYPTOCURRENCIES HAS BEEN TAKEN BY LOAN SHARKS AND STOCK MARKET
+                                        SPECULATORS, WORRIED ABOUT THEIR CONVERTIBILITY INTO FIAT CURRENCY AND VALUE
+                                        FLUCTUATION
+                                    </p>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </app-lista-vertical>
+    </div>
+
+    <app-dialogo-contenido id="{{dialogoTarjetaId}}" [data]="dataDialogo">
+        <div [formGroup]="pagoForm">
+            <input formControlName="nombre" type="text" placeholder="Nombres Completos" />
+            <input formControlName="email" type="text" placeholder="email" />
+            <input formControlName="telefono" type="text" placeholder="telefono" />
+            <input formControlName="direccion" type="text" placeholder="direccion" />
+            <div class="espacioMetodoPago"> </div>
+            
+                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+                </ngx-stripe-card>            
+
+            <div class="espacioMetodoPago"> </div>
+            <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
+        </div>
+    </app-dialogo-contenido>
+
+    <app-dialogo-contenido id="{{dialogoPaypalId}}" [data]="dataDialogo">
+        
+        <ngx-paypal class="btnpaypal" id="btnpaypal" [config]="payPalConfig"></ngx-paypal>
+        
+    </app-dialogo-contenido>
+
+</div>

@@ -1,0 +1,91 @@
+@import '../../../assets/estilos/dimensiones.scss';
+@import '../../../assets/estilos/colores.scss';
+
+.login{
+    height: $altura-pagina;
+    //overflow-y: auto
+}
+.divCabecera{
+    height: $item-menu-alto-2621;
+    width: 100%;
+}
+.escogerLeng{
+    height:$item-menu-alto-2621 - calcular(6.4);
+    //$item-menu-alto-2621 - ($ancho-pagina*0.064);
+    padding-top: $interlineado-8;
+    padding-bottom: $interlineado-1;
+    box-sizing: border-box;
+    text-align: center;
+}
+.divLetraInput{
+    padding: 0 0 $interlineado-2 0;
+}
+
+.divLetraLogin{
+    padding: 0 0 ($interlineado-4 - ($interlineado-4 /2)) 0;
+}
+.div249{
+    width: 100%;
+    height: $interlineado-4;
+}
+.divEspacioReflexion{
+    padding: 0 0 $interlineado-10 0;
+}
+.divTres{
+    box-sizing: border-box;
+    color: $blanco;
+    text-align: center;
+    padding-top: $interlineado-10;
+    /*padding-left: $espacio-267;
+    padding-right: $espacio-267;
+    box-sizing: border-box;*/
+}
+
+.textTiempo{
+    font-size: $letra-5;    
+}
+.textVisita{
+    font-size:$letra-3;
+}
+/*.btnSitioWeb{
+    height: calcular(9.2);
+}*/
+.textLogin{
+    font-size: $letra-7;
+    color: $amarillo-base;
+}
+.textEmail{
+    font-size: $letra-4;
+    color: $amarillo-base;
+}
+.textOlvideContrasena{
+    text-align: right;
+    color: $blanco;
+    font-size: $letra-2;
+}
+.tituloPensamiento{
+    color: $blanco;
+    font-size: $letra-3;
+    padding-top: $interlineado-10;
+    box-sizing: border-box;
+    color: $blanco;
+    text-align: center;
+}
+
+.divBoton{
+    padding-top: $interlineado-8;
+    padding-bottom: $espacio-1512;
+    box-sizing: border-box;
+}
+.div522{
+    padding-top: $interlineado-10;
+    padding-bottom: $interlineado-10;
+    box-sizing: border-box;
+}
+
+.divContenido{
+    float: left;
+    width: 100%;
+    height: calc(#{$altura-pagina} - #{($item-menu-alto-2621 + $portada-gaze-alto-completo)});    
+    overflow-y: auto
+}

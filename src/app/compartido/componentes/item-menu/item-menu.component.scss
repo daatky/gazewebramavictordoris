@@ -1,0 +1,123 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+.itemMenu {
+    position: relative;
+    width: $item-menu-ancho-6920;
+    box-sizing: border-box;
+    padding-top: $espacio-0316;
+    padding-bottom: $espacio-522;
+    padding-left: $espacio-267;
+    padding-right: $espacio-267;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemMenu .caja {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemMenu .cajaNormal {
+    width: $item-menu-ancho-con-padding-6920;
+}
+
+.itemMenu .cajaGaze {
+    display: none;
+}
+
+.itemMenu.gazeAnuncios .cajaGaze {
+    display: flex !important;
+    background-color: transparent;
+    width: $item-menu-gaze-anuncios;
+}
+
+.itemMenu.gazeAnuncios .cajaNormal {
+    display: none !important;
+}
+
+// Tamanos del item
+.item-menu-alto-1948 {
+    height: $item-menu-alto-1948;
+}
+.item-menu-alto-2621 {
+    min-height: $item-menu-alto-2621;
+}
+.item-menu-alto-3149 {
+    height: $item-menu-alto-3149;
+}
+
+.item-menu-alto-3774 {
+    min-height: $item-menu-alto-3774;
+}
+.item-menu-alto-4255 {
+    height: $item-menu-alto-4255;
+}
+
+// Estilos para lienas de texto
+.itemMenu .caja p {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+.flecha {
+    background-image: $forma-flecha-verde-desplegable;
+    height: $espacio-0518;
+    width: $espacio-0875;
+    margin-top: calcularPaddingAfectadoPorInterlineadoTemp(3.16, $arriba: true);
+    //margin-bottom: $espacio-522;
+}
+
+.boton-puntos {
+    background-image: $forma-tres-puntos-grises;
+    height: $espacio-558;
+    width: $espacio-1590;
+}
+
+.rotar-flecha {
+    transform: rotate(180deg);
+}
+
+.grupo-texto-descripcion {
+    padding-top: $espacio-522 - 3.16;
+    width: 100%;
+}
+
+.instruccion-separacion {
+    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(5.22, $arriba: true);
+}
+
+.contener-descripcion {
+    flex-flow: column;
+    width: 100%;
+}
+
+.separacion-texto {
+    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.16, $arriba: true);
+}
+
+.texto-submenu {
+    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.32, $arriba: true);
+    position: relative;
+    display: block;
+    display: flex;
+    align-items: center;
+
+    padding-left: $espacio-267 + $espacio-159;
+
+    &::before {
+        position: absolute;
+        content: " ";
+        left: 0;
+        width: $espacio-159;
+        height: $espacio-159;
+        border-radius: 50%;
+        background: $plateado;
+    }
+}

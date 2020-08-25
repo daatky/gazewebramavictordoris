@@ -1,0 +1,6 @@
+@import "../../../assets/estilos/dimensiones.scss";
+
+.listaMenu {
+    height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
+    overflow-y: auto;
+}

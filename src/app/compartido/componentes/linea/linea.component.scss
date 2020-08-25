@@ -1,0 +1,64 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+
+// Forzar al final
+.forzarAlFinal {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+}
+
+// Ancho de la linea
+.ancho-6028 {
+    width: $ancho-6028;
+}
+.ancho-6382 {
+    width: $ancho-6382;
+}
+.ancho-6916 {
+    width: $ancho-6916;
+}
+.ancho-6386 {
+    width: $ancho-6386;
+}
+.ancho-6920 {
+    width: $ancho-6920;
+}
+.ancho-100 {
+    width: $ancho-100;
+}
+
+.ancho-6028.forzarAlFinal {
+    left: $item-menu-padding-267 + $item-menu-padding-178;
+}
+.ancho-6382.forzarAlFinal {
+    left: $item-menu-padding-267;
+}
+.ancho-6386.forzarAlFinal {
+    left: $item-menu-padding-267;
+}
+.ancho-6920.forzarAlFinal {
+    left: 0;
+}
+.ancho-100.forzarAlFinal {
+    left: 0;
+}
+
+// Espesor de la linea
+.espesor-041 {
+    height: $espesor-041;
+}
+.espesor-071 {
+    height: $espesor-071;
+}
+.espesor-089 {
+    height: $espesor-089;
+}
+
+// Colores de fondo
+.fondo-blanco {
+    background-color: $blanco;
+}
+.fondo-verde-base {
+    background-color: $verde-base;
+}

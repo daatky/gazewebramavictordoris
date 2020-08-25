@@ -1,0 +1,125 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+$error-ancho: calcular(75);
+$error-alto: calcular(30);
+$error-borde-radio: calcular(1.56);
+
+@function calcularConAltoTotal($valor) {
+    @return ($valor * 100vh) / 100;
+}
+
+// Modales
+.sombraCaja {
+    -webkit-box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 900;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 1);
+}
+.modal.mostrar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Caja camara
+.box {
+    position: absolute;
+    z-index: 0;
+    opacity: 0;
+    transition: all 0.2s 0.2s ease-in;
+}
+.box.mostrar {
+    z-index: 1;
+    opacity: 1;
+    transition: all 0.2s 0.2s ease-out;
+}
+
+// Caja
+.caja {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+.caja .botones {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: calcularConAltoTotal(11);
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.caja .botones .girarCamara {
+    width: calcularConAltoTotal(4);
+    height: calcularConAltoTotal(4);
+
+    background-image: $forma-boton-girar-camara-blanco;
+    background-size: 100% 100%;
+}
+.caja .botones .tomarFoto {
+    background: #fff;
+    width: calcularConAltoTotal(8);
+    height: calcularConAltoTotal(8);
+    border-radius: 50%;
+    margin: 0 calcularConAltoTotal(2);
+}
+.caja .botones .cerrarCamara {
+    width: calcularConAltoTotal(4);
+    height: calcularConAltoTotal(4);
+
+    background-image: $forma-boton-cerrar-camara-blanco;
+    background-size: 100% 100%;
+}
+
+// Loader
+.loader {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Error
+.error {
+    background: white;
+    border-radius: $error-borde-radio;
+    width: $error-ancho;
+    height: $error-alto;
+    padding: 0 3vw;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    -webkit-box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+}
+.error p {
+    text-align: center;
+}

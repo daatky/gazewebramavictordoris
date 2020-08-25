@@ -1,0 +1,163 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+.appbar {
+    position: relative;
+    z-index: 1;
+    width: $appbar-ancho;
+    height: $appbar-alto-default;
+}
+
+
+// Uso del appbar - demo-appbar
+.demo-appbar {
+    
+}
+
+// Uso del appbar - searchbar-appbar
+.searchbar-appbar {
+
+}
+
+// Uso del appbar - gaze-appbar
+.gaze-appbar {
+
+}
+
+.box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+// Color de fondo
+.colorFondo {
+    position: absolute;
+    top: 0;
+    z-index: 0;
+
+    background-color: $tranparencia-base;
+    height: 100%;
+}
+
+.ancho-color-6028 {
+    width: $ancho-6028;
+}
+.ancho-color-6386 {
+    width: $ancho-6386;
+}
+.ancho-color-6920 {
+    width: $ancho-6920;
+}
+
+.ancho-color-100 {
+    width: $ancho-100;
+}
+
+// tituloPrincipal Validar
+.tituloPrincipal {
+    position: absolute;
+    // top: $espacio-267;
+    // left: $espacio-267;
+    z-index: 1;
+}
+
+// Boton atras
+.botonAtras {
+    position: absolute;
+    left: $espacio-267;
+    bottom: $espacio-6545;
+    z-index: 1;
+
+    height: fit-content;
+
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.botonAtras .icono {
+    width: $boton-back-icono-ancho;
+    height: $boton-back-icono-alto;
+
+    margin: 0 $espacio-267 0 $espacio-287;
+
+    background: $forma-flecha-back;
+    background-size: 100% 100%;
+}
+.botonAtras p {
+    margin: 0 0 $espacio-05 0;
+}
+
+// Boton home
+.botonHome {
+    position: absolute;
+    bottom: $espacio-7045;
+    z-index: 1;
+}
+
+// Nombre de perfil
+.nombrePerfil {
+    position: absolute;
+    bottom: $espacio-089;
+    left: $espacio-267;
+    z-index: 1;
+}
+
+// Titulo Secundario
+.tituloSecundario {
+    position: absolute;
+    bottom: $espacio-089;
+    z-index: 1;
+}
+
+// Boton x
+.botonX {
+    height: $boton-x-tamano-alto;
+    position: absolute;
+    right: $boton-x-padding-der;
+    bottom: $boton-x-padding-bot;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botonX .icono {
+    width: $boton-x-tamano-icono-ancho;
+    height: $boton-x-tamano-icono-alto;
+
+    background: $forma-x-roja;
+    background-size: 100% 100%;
+}
+
+// Boton principal
+.botonPrincipal {
+    position: absolute;
+    top: $espacio-522;
+    z-index: 1;
+}
+
+
+
+// Para pruebas - churon
+.barraBuscar {
+    position: absolute;
+    top: $espacio-267;
+    left: $espacio-267;
+
+    background: $blanco;
+    width: $ancho-barra-busqueda;
+    height: $alto-barra-busqueda;
+    
+    border: $espesor-borde-barra-buscar solid $negro;
+    border-radius: $radio-borde-barra-buscar;
+    box-sizing: border-box;
+}

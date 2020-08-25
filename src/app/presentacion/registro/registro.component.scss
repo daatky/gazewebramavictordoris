@@ -1,0 +1,85 @@
+@import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/colores.scss";
+
+$ancho-album-perfil: calcular(28.39);
+$ancho-portada: $portada-gaze-ancho-cortada;
+$ancho-album-general: calcular(43.06);
+$descripcion-perfil-alto-minimo: calcular(61.65) - ($espacio-316 * 2);
+
+.cuerpo {
+  background: $blanco;
+}
+
+.fotos {
+  width: 100%;
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: $espacio-178;
+}
+
+.nombreAlbums {
+  width: 100%;
+  margin-bottom: $espacio-316;
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.nombreAlbums .a {
+  width: $ancho-album-perfil;
+}
+
+.nombreAlbums .b {
+  width: $ancho-portada;
+}
+
+.nombreAlbums .c {
+  height: 100%;
+  width: $ancho-album-general;
+}
+
+.nombreAlbums .caja p {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  height: fit-content;
+  display: block;
+}
+
+// Descripcion perfil
+.descripcion_perfil {
+  text-align: center;
+  width: 100%;
+  min-height: $descripcion-perfil-alto-minimo;
+  margin-bottom: $espacio-316;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Inputs
+.inputs_formularios {
+  width: 100%;
+  min-height: 20vw;
+}
+
+.inputs_formularios .input {
+  width: 100%;
+  margin-bottom: $espacio-0249;
+}
+
+.inputs_formularios .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,27 @@
+@import "../../../assets/estilos/dimensiones.scss";
+
+.botones {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    flex-flow: row;
+}
+
+.botones p {
+    color: white;
+    font-weight: bold;
+    font-size: calcular(5.16);
+    line-height: 80%;
+}
+
+
+.caja {
+    position: relative;
+    z-index: 1;
+}
+
+.caja img {
+    width: 100%;
+}

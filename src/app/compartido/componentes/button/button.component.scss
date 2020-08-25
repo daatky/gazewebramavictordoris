@@ -1,0 +1,61 @@
+@import "../../../../styles.scss";
+
+.buttonBase {
+    background-image: $forma-boton;
+    background-size: cover;
+    text-shadow: $sombraTexto;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    width: fit-content;
+}
+.icono {
+    background-image: $forma-flecha-circular-amarilla;
+    height: $espacio-1310;
+    width: $espacio-1310;
+    margin-left: $interlineado-2;
+}
+
+.letraDescripcion {
+    text-align: center;
+    color: $azul-base;
+}
+
+.contenedorDescripcion {
+    padding-top: $interlineado-2;
+    padding-bottom: $interlineado-2;
+    padding-left: $interlineado-6;
+    padding-right: $interlineado-6;
+    background-color: $input-fondo;
+    border-radius: $interlineado-15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $espacio-1232;
+    width: $espacio-3418;
+    font-size: $letra-3;
+}
+
+.botonLargo {
+    padding-left: $espacio-0247;
+    padding-right: $espacio-0296;
+    padding-top: $espacio-0178;
+    padding-bottom: $espacio-0249;
+    box-sizing: border-box;
+}
+
+.botonCorto {
+    padding-left: $espacio-0247;
+    padding-right: $espacio-0296;
+    padding-top: calcularPaddingAfectadoPorInterlineado(2.49, $arriba: true);
+    padding-bottom: calcularPaddingAfectadoPorInterlineado(3.16, $arriba: false);
+    font-size: $letra-7;
+    box-sizing: border-box;
+    line-height: $letra-7;
+    height: $espacio-1116;
+}
+
+.contenerBotonHorizontal {
+    display: flex;
+    justify-content: center;
+}

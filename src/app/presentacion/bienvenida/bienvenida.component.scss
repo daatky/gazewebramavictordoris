@@ -1,0 +1,75 @@
+@import '../../../assets/estilos/dimensiones.scss';
+
+.divCabecera{
+    height: $item-menu-alto-2621;
+    width: 100%;
+}
+.escogerLeng{
+    height:$item-menu-alto-2621 - calcular(6.4);
+    //$item-menu-alto-2621 - ($ancho-pagina*0.064);
+    padding-top: $interlineado-8;
+    padding-bottom: $espacio-1719;
+    box-sizing: border-box;
+    text-align: center;
+}
+.divContenido{
+    float: left;
+    position: relative;    
+    width: $ancho-6920;
+    height: calc(#{$altura-pagina} - #{($item-menu-alto-2621 + $portada-gaze-alto-completo)});    
+    left: - $espacio-267;
+    overflow-y: auto
+}
+.divPaddign522{    
+    padding: $interlineado-10 0 $interlineado-10 0;
+    box-sizing: border-box;
+}
+
+.divMargin522{    
+    margin: $interlineado-10 0 $interlineado-10 0;
+    box-sizing: border-box;
+}
+
+.divPaddign522Top{
+    padding-top: $interlineado-10;
+    box-sizing: border-box;
+}
+
+.centrar2{
+    display: table-cell;
+    vertical-align: middle;
+}
+.divAviso{
+    min-height: calcular(57.14);
+    width: 100%;
+    display: table
+    /*display: flex;
+    justify-content: center;
+    align-items: center;*/
+}
+.divCompromiso{
+    min-height: calcular(55.07);
+    width: 100%;
+    display: table
+} 
+.paddinLeft267{
+    box-sizing: border-box;
+    padding-left: $espacio-267;
+}
+.paddinRight267{
+    box-sizing: border-box;
+    padding-right: $espacio-267;
+}
+.btnEnviar{
+    margin-top: $interlineado-10;
+    margin-bottom: $interlineado-10;
+    box-sizing: border-box;
+}
+/*.lineaInferior{
+    width: $ancho-6920;
+    position: relative;
+    left: - $espacio-267 !important;
+}*/
+.posicionRelativa{
+    position: absolute;
+}

@@ -1,0 +1,99 @@
+@import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/colores.scss";
+
+.espaciador {
+    padding-top: $espacio-522;
+    padding-bottom: $espacio-522;
+}
+.titlePago {
+    text-align: center;
+}
+
+.iconPago {
+    box-sizing: content-box;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.nombreMetodoPago {
+    padding-bottom: $interlineado-8;
+}
+
+.cotenedorNombreMetodoPago {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: $espacio-1512;
+    box-sizing: content-box;
+}
+img {
+    //width: 100%;
+    //height: 100%;
+    height: $espacio-4028;
+    width: $ancho-6920;
+}
+
+.contenedorTransparencia {
+    height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
+    overflow-y: auto;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+.container-mensaje-pendiente-pago {
+    width: $ancho-6920;
+    background-color: $azul-pago-pendiente;
+    padding-top: $espacio-0249;
+    padding-bottom: calcularPaddingAfectadoPorInterlineadoTemp(2.49, false);
+}
+
+.mensaje-pendiente-pago {
+    padding-left: $espacio-267;
+    padding-right: $espacio-267;
+    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.16, true);
+    text-align: center;
+}
+.centrar-texto {
+    text-align: center;
+}
+
+.espacioMetodoPago {
+    height: $espacio-0316;
+}
+
+input[type="text"] {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    color: $azul-base;
+    font-weight: bold;
+    outline: none;
+    font-size: $letra-2;
+    font-family: "Source Sans Pro", sans-serif;
+
+    &:focus {
+        outline: none;
+    }
+    &:active {
+        outline: none;
+    }
+}
+
+.prueba {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    color: $azul-base;
+    font-weight: bold;
+    outline: none;
+    font-size: $letra-2;
+    font-family: "Source Sans Pro", sans-serif;
+
+    &:focus {
+        outline: none;
+    }
+    &:active {
+        outline: none;
+    }
+}

@@ -1,0 +1,234 @@
+$ancho: 100vw;
+$ancho-pagina: 100vw; //Calculo de la anchura para la aplicacion
+// $ancho-pagina: 100vh / 1.6;
+$altura-pagina: 100vh;
+
+// Variables sin unidad - valor neto
+$defecto-top-neto: 1.048;
+$defecto-bottom-neto: 0.7;
+
+// Constantes para valores que anade la fuente por defecto - con unidad
+$defecto-top: calcular(1.048);
+$defecto-bottom: calcular(0.7);
+$defecto-total: $defecto-top + $defecto-bottom;
+
+// Para calcular la medida en base al ancho de la pagina
+@function calcular($porcentaje) {
+    @return ($ancho-pagina * ($porcentaje)) / 100;
+}
+
+// Para calcular el interlineado en base a la fuente e interlineado deseado
+@function calcularInterlineado($letra, $interlineado) {
+    @return $letra + (($interlineado - $defecto-total) / 2);
+}
+
+// Calcula el padding valido en caso de que se afectado por el interlineado (espacio superior que anade la fuente por defecto) del texto
+// $padding-deseado - es el valor que te da la guia de diseno
+// $arriba - cuando es true, significa que al padding le afecta el interlineado de arriba
+// $arriba - cuando es false, significa que al padding le afecta el interlineado de abajo
+// Se debe enviar el valor del padding deseado sin unidad por ejemplo 2.49
+@function calcularPaddingAfectadoPorInterlineado($padding-deseado, $arriba) {
+    @if $arriba {
+        @return calcular(($padding-deseado - ($padding-deseado - $defecto-top-neto)));
+    } @else {
+        @return calcular(($padding-deseado - ($padding-deseado - $defecto-bottom-neto)));
+    }
+}
+
+@function calcularPaddingAfectadoPorInterlineadoTemp($padding-deseado, $arriba) {
+    @if $arriba {
+        @return calcular(($padding-deseado - ($defecto-top-neto)));
+    } @else {
+        @return calcular(($padding-deseado - ($defecto-bottom-neto)));
+    }
+}
+
+// Mixin para fuente con interlineado combinado
+@mixin fuenteConInterlineado($letra, $interlineado) {
+    font-size: $letra;
+    line-height: calcularInterlineado($letra, $interlineado);
+}
+
+// Mundo
+$mundo-diametro: $ancho-pagina + calcular(3.27); // El diametro es el 100 + 3.27%
+$mundo-derecha: calcular(6.58);
+$mundo-abajo: calcular(25.16);
+
+// Portada Gazelook
+$portada-gaze-ancho-cortada: calcular(22.97);
+$portada-gaze-alto-cortada: calcular(16.09);
+
+$portada-gaze-ancho-completo: $ancho-pagina;
+$portada-gaze-alto-completo: calcular(35.24);
+
+/* TAMANO LETRAS */
+$letra-0: calcular(2.96); // Calibri => 3,08% | Open Source => 2.96% - 52 px
+$letra-1: calcular(3.56); // Calibri => 3,68% | Open Source => 3.56% - 62 px
+$letra-2: calcular(4.27); // Calibri => 4.45% | Open Source => 4.27% - 75 px
+$letra-3: calcular(5.16); // Calibri => 5.33% | Open Source => 5.16% - 90 px
+$letra-4: calcular(6.22); // Calibri => 6.46% | Open Source => 6.22%  - 109 px
+$letra-5: calcular(6.52); // Calibri => 6.76% | Open Source => 6.52% - 114 px
+$letra-6: calcular(7.23); // Calibri => 7.53% | Open Source => 7.23% - 127 px
+$letra-7: calcular(8.12); // Calibri => 8.42% | Open Source => 8.12% - 142 px
+$letra-8: calcular(17.19); // Calibri => 17.78% | Open Source => 17.19% - 300 px
+
+/*INTERLINEADOS*/
+$interlineado-1: calcular(1.36); // 1.36
+$interlineado-2: calcular(1.78); // 1.78
+$interlineado-3: calcular(3.02); // 3.02
+$interlineado-4: calcular(2.49); // 2.49
+$interlineado-5: calcular(3.32); // 3.32
+$interlineado-6: calcular(1.39); // 1.39
+$interlineado-7: calcular(2.67); // 2.67
+$interlineado-8: calcular(3.16); // 3.16
+$interlineado-9: calcular(3.035); // 3.035
+$interlineado-10: calcular(5.22); // 5.22
+$interlineado-11: calcular(6.58); // 6.58
+$interlineado-12: calcular(1.532); // 1.532
+$interlineado-13: calcular(2.55); // 2.55
+$interlineado-14: calcular(0.49); // 0.49
+$interlineado-15: calcular(1.03); // 1.03
+// Pruebas churon
+$interlineado-16: calcular(4.56); // 4.56 77 px
+$interlineado-17: calcular(4.50); // 4.50 76 px
+$interlineado-18: calcular(7.46); // 4.50 125.86 px
+
+/*Espaciadores*/
+$espacio-0178: calcular(1.78);
+$espacio-0249: calcular(2.49);
+$espacio-0247: calcular(2.47);
+$espacio-0296: calcular(2.96);
+$espacio-0316: calcular(3.16);
+$espacio-1726: calcular(17.26);
+$espacio-6238: calcular(62.38);
+$espacio-6253: calcular(62.53);
+$espacio-5784: calcular(57.84);
+$espacio-0139: calcular(1.39);
+$espacio-5664: calcular(56.64);
+$espacio-5211: calcular(52.11);
+$espacio-1981: calcular(19.81);
+$espacio-4143: calcular(41.43);
+$espacio-1232: calcular(12.32);
+$espacio-1116: calcular(11.16);
+$espacio-5360: calcular(53.6);
+$espacio-3418: calcular(34.18);
+$espacio-1310: calcular(13.1);
+$espacio-05: calcular(0.5);
+$espacio-267: calcular(2.67);
+$espacio-287: calcular(2.87);
+$espacio-178: calcular(1.78);
+$espacio-316: calcular(3.16);
+$espacio-089: calcular(0.89);
+$espacio-522: calcular(5.22);
+$espacio-622: calcular(6.22);
+$espacio-6545: calcular(6.545);
+$espacio-7045: calcular(7.045);
+$espacio-26: calcular(26);
+$espacio-4519: calcular(45.19);
+$espacio-1512: calcular(15.12);
+$espacio-1719: calcular(1.719);
+$espacio-1512: calcular(15.12);
+$espacio-0658: calcular(6.58);
+$espacio-677: calcular(6.77);
+$espacio-2744: calcular(27.44);
+$espacio-0518: calcular(5.18);
+$espacio-0875: calcular(8.75);
+$espacio-3035: calcular(3.035);
+// Prueba churon
+$espacio-4541: calcular(45.41);
+$espacio-326: calcular(3.26);
+$espacio-1590: calcular(15.9);
+$espacio-558: calcular(5.58);
+$espacio-159: calcular(1.59);
+
+// X blanca para Imagenes profile y album
+$diametro-x-blanca: calcular(6.87);
+$x-margen-perfil-abajo: calcular(5.2);
+$x-margen-perfil-derecha: calcular(7.71);
+$x-margen-album-abajo: calcular(1.78);
+$x-margen-album-derecha: calcular(3.16);
+
+/*Alto de input*/
+$alto-0782: calcular(7.82);
+
+//Error
+$letra-min-0218-i: (($ancho-pagina * 0.0218)/2) + $interlineado-1;
+
+// Tamano del item para el menu
+$item-menu-ancho-6920: calcular(69.2);
+$item-menu-alto-1948: calcular(19.48);
+$item-menu-alto-2621: calcular(26.21);
+$item-menu-alto-3149: calcular(31.49);
+$item-menu-alto-3774: calcular(37.74);
+$item-menu-alto-4255: calcular(42.55);
+
+// Padding interno del item para el menu
+$item-menu-padding-267: calcular(2.67);
+$item-menu-ancho-con-padding-6920: $item-menu-ancho-6920 - ($item-menu-padding-267 * 2);
+
+// Caja gaze anuncios
+$item-menu-padding-178: calcular(1.78);
+$item-menu-gaze-anuncios: $item-menu-ancho-6920 - ($item-menu-padding-267 * 2) - ($item-menu-padding-178 * 2);
+
+// Linea verde, color de fondo appbar, transparencia
+$ancho-6028: calcular(60.28);
+$ancho-6386: calcular(63.86);
+$ancho-6920: calcular(69.16);
+$ancho-6382: calcular(63.82);
+$ancho-6916: calcular(69.16);
+$ancho-100: $ancho-pagina;
+
+// Espesor para lineas
+$espesor-041: calcular(0.41);
+$espesor-071: calcular(0.71);
+$espesor-089: calcular(0.89);
+
+// Appbar
+$appbar-ancho: $ancho-pagina;
+$appbar-alto-default: calcular(26.21);
+
+$espesor-borde-barra-buscar: calcular(0.12);
+$radio-borde-barra-buscar: calcular(1.567);
+$ancho-barra-busqueda: calcular(94.66);
+$alto-barra-busqueda: calcular(9.6);
+
+$boton-back-icono-alto: calcular(5.15);
+$boton-back-icono-ancho: calcular(8.8);
+
+$boton-x-tamano-alto: calcular(8.44);
+$boton-x-tamano-icono-alto: calcular(8.44);
+$boton-x-tamano-icono-ancho: calcular(8.44);
+$boton-x-padding-der: calcular(3.77);
+$boton-x-padding-bot: calcular(2.75);
+
+// Cuerpo mesa 2, para otros casos realizar calculo en caso de que varien los valores
+// Para espesor de linea 0.89
+$cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316});
+$cuerpo-default-ancho: $ancho-pagina - ($espacio-267 * 2);
+
+// Portada Gazelook
+$portada-gaze-ancho-cortada: calcular(22.97);
+$portada-gaze-alto-cortada: calcular(16.09);
+
+$portada-gaze-ancho-completo: $ancho-pagina;
+$portada-gaze-alto-completo: calcular(35.24);
+
+//fecha
+$espacio-fecha-ancho: calcular(26.55);
+$espacio-fecha-alto: calcular(6.27);
+
+// Selector
+$selector-alto: calcular(108);
+$selector-border-radius: calcular(1.567);
+$selector-padding-iz: calcular(2);
+$selector-padding-tb: calcular(3);
+$selector-titulo-alto: calcular(7);
+$selector-lista-alto: calc(100% - #{$selector-titulo-alto});
+
+// Input
+$input-ancho-registro: calcular(99.68);
+
+$espacio-fecha-ancho: calcular(26.55);
+$espacio-fecha-alto: calcular(6.27);
+
+$espacio-4028: calcular(40.28);

@@ -1,0 +1,75 @@
+<div
+    [ngClass]="{
+        'modal': true,
+        'mostrar': configuracion.mostrarModal
+    }"
+>
+    <div
+        [ngClass]="{
+            'caja': true,
+            'box': true,
+            'mostrar': (configuracion && !mostrarLoader)
+        }"
+    >
+        <image-cropper
+            #crop
+            *ngIf="configuracion.imageURL !== null && !mensajeError.mostrarError"
+            style="--cropper-overlay-color:'#000';--cropper-outline-color:'#000'"
+            [imageURL]="configuracion.imageURL"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1/1"
+            [roundCropper]="true"
+            [resizeToWidth]="200"
+            [resizeToHeight]="200"
+            [cropperMinWidth]="100"
+            [cropperMinHeight]="100"
+            [autoCrop]="false"
+            [onlyScaleDown]="true"
+            format="jpeg"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+        <div class="botones">
+            <div
+            *ngIf="!mensajeError.mostrarError"
+                class="botonDone"
+                (tap)="getCropImage()"
+            ></div>
+            <div
+                *ngIf="mensajeError.mostrarError"
+                class="cerrarCropper"
+                (tap)="cerrarCropper()"
+            ></div>
+        </div>
+    </div>
+    <div
+        [ngClass]="{
+            'loader': true,
+            'box': true,
+            'mostrar': mostrarLoader
+        }"
+    >
+        <app-cargando></app-cargando>
+    </div>
+    <div
+        [ngClass]="{
+            'error': true,
+            'box': true,
+            'mostrar': mensajeError.mostrarError
+        }"
+    >
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD,
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2 
+            })"
+        >
+            {{ mensajeError.contenido }}
+        </p>
+    </div>
+</div>
+

@@ -1,0 +1,536 @@
+@import "./dimensiones.scss";
+
+$sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
+
+.enMayusculas {
+    text-transform: uppercase !important;
+}
+
+.regular {
+    font-weight: normal;
+}
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+// regular sombra
+.regularSombra {
+    font-weight: normal;
+    text-shadow: $sombraTexto;
+}
+//bold sombra
+.boldSombra {
+    font-weight: bold;
+    text-shadow: $sombraTexto;
+}
+// regular italic
+.regularItalic {
+    font-weight: normal;
+    font-style: italic;
+}
+// bold italic
+.boldItalic {
+    font-weight: bold;
+    font-style: italic;
+}
+// regular italic sombra
+.regularItalicSombra {
+    font-weight: normal;
+    font-style: italic;
+    text-shadow: $sombraTexto;
+}
+// bold italic sombra
+.boldItalicSombra {
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: $sombraTexto;
+}
+
+// Paddings
+.padding-izq-der-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.padding-izq-der-1512 {
+    padding-left: $espacio-1512 !important;
+    padding-right: $espacio-1512 !important;
+}
+.padding-izq-der-0658 {
+    padding-left: $espacio-0658 !important;
+    padding-right: $espacio-0658 !important;
+}
+
+// Letras
+.letra-1 {
+    font-size: $letra-1;
+}
+.letra-2 {
+    font-size: $letra-2;
+}
+.letra-3 {
+    font-size: $letra-3;
+}
+.letra-4 {
+    font-size: $letra-4;
+}
+.letra-5 {
+    font-size: $letra-5;
+}
+.letra-6 {
+    font-size: $letra-6;
+}
+.letra-7 {
+    font-size: $letra-7;
+}
+.letra-8 {
+    font-size: $letra-8;
+}
+
+.interlineado-1 {
+    line-height: $interlineado-1;
+}
+.interlineado-2 {
+    line-height: $interlineado-2;
+}
+.interlineado-3 {
+    line-height: $interlineado-3;
+}
+.interlineado-4 {
+    line-height: $interlineado-4;
+}
+.interlineado-5 {
+    line-height: $interlineado-5;
+}
+.interlineado-6 {
+    line-height: $interlineado-6;
+}
+.interlineado-7 {
+    line-height: $interlineado-7;
+}
+.interlineado-8 {
+    line-height: $interlineado-8;
+}
+.interlineado-9 {
+    line-height: $interlineado-9;
+}
+.interlineado-10 {
+    line-height: $interlineado-10;
+}
+.interlineado-11 {
+    line-height: $interlineado-11;
+}
+.interlineado-12 {
+    line-height: $interlineado-12;
+}
+.interlineado-13 {
+    line-height: $interlineado-13;
+}
+.interlineado-14 {
+    line-height: $interlineado-14;
+}
+.interlineado-15 {
+    line-height: $interlineado-15;
+}
+
+// Estilos de tamano e interlineado combinados
+.letra-1-con-interlineado-igual {
+    font-size: $letra-1;
+    line-height: 80%;
+}
+.letra-1-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-1, $interlineado-1);
+}
+.letra-1-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-1, $interlineado-2);
+}
+.letra-1-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-1, $interlineado-3);
+}
+.letra-1-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-1, $interlineado-4);
+}
+.letra-1-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-1, $interlineado-5);
+}
+.letra-1-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-1, $interlineado-6);
+}
+.letra-1-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-1, $interlineado-7);
+}
+.letra-1-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-1, $interlineado-8);
+}
+.letra-1-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-1, $interlineado-9);
+}
+.letra-1-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-1, $interlineado-10);
+}
+.letra-1-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-1, $interlineado-11);
+}
+.letra-1-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-1, $interlineado-12);
+}
+.letra-1-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-1, $interlineado-13);
+}
+.letra-1-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-1, $interlineado-14);
+}
+.letra-1-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-1, $interlineado-15);
+}
+
+.letra-2-con-interlineado-igual {
+    font-size: $letra-2;
+    line-height: 80%;
+}
+.letra-2-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-2, $interlineado-1);
+}
+.letra-2-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-2, $interlineado-2);
+}
+.letra-2-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-2, $interlineado-3);
+}
+.letra-2-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-2, $interlineado-4);
+}
+.letra-2-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-2, $interlineado-5);
+}
+.letra-2-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-2, $interlineado-6);
+}
+.letra-2-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-2, $interlineado-7);
+}
+.letra-2-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-2, $interlineado-8);
+}
+.letra-2-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-2, $interlineado-9);
+}
+.letra-2-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-2, $interlineado-10);
+}
+.letra-2-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-2, $interlineado-11);
+}
+.letra-2-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-2, $interlineado-12);
+}
+.letra-2-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-2, $interlineado-13);
+}
+.letra-2-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-2, $interlineado-14);
+}
+.letra-2-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-2, $interlineado-15);
+}
+
+.letra-3-con-interlineado-igual {
+    font-size: $letra-3;
+    line-height: 80%;
+}
+.letra-3-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-3, $interlineado-1);
+}
+.letra-3-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-3, $interlineado-2);
+}
+.letra-3-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-3, $interlineado-3);
+}
+.letra-3-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-3, $interlineado-4);
+}
+.letra-3-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-3, $interlineado-5);
+}
+.letra-3-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-3, $interlineado-6);
+}
+.letra-3-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-3, $interlineado-7);
+}
+.letra-3-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-3, $interlineado-8);
+}
+.letra-3-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-3, $interlineado-9);
+}
+.letra-3-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-3, $interlineado-10);
+}
+.letra-3-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-3, $interlineado-11);
+}
+.letra-3-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-3, $interlineado-12);
+}
+.letra-3-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-3, $interlineado-13);
+}
+.letra-3-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-3, $interlineado-14);
+}
+.letra-3-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-3, $interlineado-15);
+}
+
+.letra-4-con-interlineado-igual {
+    font-size: $letra-4;
+    line-height: 80%;
+}
+.letra-4-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-4, $interlineado-1);
+}
+.letra-4-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-4, $interlineado-2);
+}
+.letra-4-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-4, $interlineado-3);
+}
+.letra-4-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-4, $interlineado-4);
+}
+.letra-4-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-4, $interlineado-5);
+}
+.letra-4-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-4, $interlineado-6);
+}
+.letra-4-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-4, $interlineado-7);
+}
+.letra-4-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-4, $interlineado-8);
+}
+.letra-4-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-4, $interlineado-9);
+}
+.letra-4-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-4, $interlineado-10);
+}
+.letra-4-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-4, $interlineado-11);
+}
+.letra-4-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-4, $interlineado-12);
+}
+.letra-4-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-4, $interlineado-13);
+}
+.letra-4-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-4, $interlineado-14);
+}
+.letra-4-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-4, $interlineado-15);
+}
+
+.letra-5-con-interlineado-igual {
+    font-size: $letra-5;
+    line-height: 80%;
+}
+.letra-5-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-5, $interlineado-1);
+}
+.letra-5-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-5, $interlineado-2);
+}
+.letra-5-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-5, $interlineado-3);
+}
+.letra-5-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-5, $interlineado-4);
+}
+.letra-5-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-5, $interlineado-5);
+}
+.letra-5-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-5, $interlineado-6);
+}
+.letra-5-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-5, $interlineado-7);
+}
+.letra-5-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-5, $interlineado-8);
+}
+.letra-5-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-5, $interlineado-9);
+}
+.letra-5-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-5, $interlineado-10);
+}
+.letra-5-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-5, $interlineado-11);
+}
+.letra-5-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-5, $interlineado-12);
+}
+.letra-5-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-5, $interlineado-13);
+}
+.letra-5-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-5, $interlineado-14);
+}
+.letra-5-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-5, $interlineado-15);
+}
+
+.letra-6-con-interlineado-igual {
+    font-size: $letra-6;
+    line-height: 80%;
+}
+.letra-6-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-6, $interlineado-1);
+}
+.letra-6-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-6, $interlineado-2);
+}
+.letra-6-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-6, $interlineado-3);
+}
+.letra-6-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-6, $interlineado-4);
+}
+.letra-6-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-6, $interlineado-5);
+}
+.letra-6-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-6, $interlineado-6);
+}
+.letra-6-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-6, $interlineado-7);
+}
+.letra-6-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-6, $interlineado-8);
+}
+.letra-6-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-6, $interlineado-9);
+}
+.letra-6-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-6, $interlineado-10);
+}
+.letra-6-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-6, $interlineado-11);
+}
+.letra-6-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-6, $interlineado-12);
+}
+.letra-6-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-6, $interlineado-13);
+}
+.letra-6-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-6, $interlineado-14);
+}
+.letra-6-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-6, $interlineado-15);
+}
+
+.letra-7-con-interlineado-igual {
+    font-size: $letra-7;
+    line-height: 80%;
+}
+.letra-7-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-7, $interlineado-1);
+}
+.letra-7-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-7, $interlineado-2);
+}
+.letra-7-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-7, $interlineado-3);
+}
+.letra-7-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-7, $interlineado-4);
+}
+.letra-7-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-7, $interlineado-5);
+}
+.letra-7-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-7, $interlineado-6);
+}
+.letra-7-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-7, $interlineado-7);
+}
+.letra-7-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-7, $interlineado-8);
+}
+.letra-7-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-7, $interlineado-9);
+}
+.letra-7-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-7, $interlineado-10);
+}
+.letra-7-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-7, $interlineado-11);
+}
+.letra-7-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-7, $interlineado-12);
+}
+.letra-7-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-7, $interlineado-13);
+}
+.letra-7-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-7, $interlineado-14);
+}
+.letra-7-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-7, $interlineado-15);
+}
+
+.letra-8-con-interlineado-igual {
+    font-size: $letra-8;
+    line-height: 80%;
+}
+.letra-8-con-interlineado-1 {
+    @include fuenteConInterlineado($letra-8, $interlineado-1);
+}
+.letra-8-con-interlineado-2 {
+    @include fuenteConInterlineado($letra-8, $interlineado-2);
+}
+.letra-8-con-interlineado-3 {
+    @include fuenteConInterlineado($letra-8, $interlineado-3);
+}
+.letra-8-con-interlineado-4 {
+    @include fuenteConInterlineado($letra-8, $interlineado-4);
+}
+.letra-8-con-interlineado-5 {
+    @include fuenteConInterlineado($letra-8, $interlineado-5);
+}
+.letra-8-con-interlineado-6 {
+    @include fuenteConInterlineado($letra-8, $interlineado-6);
+}
+.letra-8-con-interlineado-7 {
+    @include fuenteConInterlineado($letra-8, $interlineado-7);
+}
+.letra-8-con-interlineado-8 {
+    @include fuenteConInterlineado($letra-8, $interlineado-8);
+}
+.letra-8-con-interlineado-9 {
+    @include fuenteConInterlineado($letra-8, $interlineado-9);
+}
+.letra-8-con-interlineado-10 {
+    @include fuenteConInterlineado($letra-8, $interlineado-10);
+}
+.letra-8-con-interlineado-11 {
+    @include fuenteConInterlineado($letra-8, $interlineado-11);
+}
+.letra-8-con-interlineado-12 {
+    @include fuenteConInterlineado($letra-8, $interlineado-12);
+}
+.letra-8-con-interlineado-13 {
+    @include fuenteConInterlineado($letra-8, $interlineado-13);
+}
+.letra-8-con-interlineado-14 {
+    @include fuenteConInterlineado($letra-8, $interlineado-14);
+}
+.letra-8-con-interlineado-15 {
+    @include fuenteConInterlineado($letra-8, $interlineado-15);
+}

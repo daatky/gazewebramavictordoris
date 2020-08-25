@@ -1,0 +1,54 @@
+$blanco: #ffffff;
+$negro: #000000;
+$amarillo-base: #f0b823; //Amarillo para toda la aplicación
+//TAMBIEN ES EL Color círculo botón grabación AMARILLO
+$tranparencia-base: rgba(61, 71, 72, 0.75); //transparencia en para toda la aplicación
+//Color transparencia central que esconde el mundo
+$rojo-base: #bd1218; //Rojo para toda la aplicación
+$verde-base: #05e005; //verde base para toda la aplicación
+//TAMBIEN ES EL Color círculo botón grabación VERDE
+$azul-base: #03486b; //Azul para toda la aplicación
+$azul-claro: #9fc5ee;
+//??$base-color: #052234; //Flecha azul del YES, encuadres resaltados mesa 2-10, fondo títulos mesa 6-1 y 5-13???
+$txt-btn-history: #bee4e5; //Letra del botón HISTORY
+$txt-btn-blanco: #ffffff;
+$txt-celeste: #a0c6ef; //Texto de la barra de búsqueda y todos los textos celestes == SUBSCRIBING
+$input-fondo: rgba(144, 159, 160, 0.75); //Color de franjas de cuadros de acción y franjas de formularios
+$txt-lacre: #770404; //Especifico de texto de la mesa (2-3), (2-4), (2-5),(2-6)
+$border-dark: rgba(144, 159, 160, 0.75); //Color de fondo de círculos de números en mesa 5-1, ??
+//fondo de encuadre de texto en log in mesa 1-6, INPUT LOGIN
+//contact us mesa 1-19,
+//y pago mesa 2-9,
+//recuadro de click to outside mesa 2-19
+$titulo-fecha: rgba(55, 73, 98, 0.8); //Fechas y short titles
+$error-formulario: #d80613; //Color de Error al llenar formularios 2,18% regular mesa (2-3), (2-4), (2-5),(2-6),(2-7),(2-8),
+//TAMBIEN ES EL Color círculo botón grabación ROJO
+$perfil-creado: #052234; //Color de recuadro cuando se ha creado un perfil mesa (2-10)
+$perfil-hibernado: #2d0224; //Color de recuadro cuando se ha hibernado un perfil mesa (2-10)
+$opacidad-cuadro-foto: rgba(
+    255,
+    187,
+    0,
+    0.5
+); //Color de cuadrado de transparencia fotos seleccionadas para borrar mesa (2-16)
+$btn-flecha-lacre: #660000; //Color flecha botón grabación
+$btn-flecha-verde: #016601; //Color flecha botón grabación
+$btn-flecha-amarillo: #845902; //Color flecha botón grabación
+
+//COMENTARIOS Y CHAT
+$comentario-uno: #efdcff; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+$comentario-dos: #fff4c3; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+//chat recibo
+$comentario-tres: #e6fbf8; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+$comentario-cuatro: #eeeeec; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+$comentario-cinco: #fce8d8; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+$comentario-seis: #e7f9bd; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+//chat envio
+$comentario-siete: #fdffa4; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
+
+$capa-opacidad-a: #ce363680; // Opacidad para las fotos por defecto del album
+$capa-opacidad-b: #73308e80; // Opacidad para las fotos por defecto del album
+$capa-opacidad-c: #307b8780; // Opacidad para las fotos por defecto del album
+
+$azul-pago-pendiente: #122340;
+$plateado: #b3b3b3;

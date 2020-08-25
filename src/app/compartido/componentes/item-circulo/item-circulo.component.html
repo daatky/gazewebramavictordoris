@@ -1,0 +1,79 @@
+<div
+    id="{{ 'itemCirculoCanvas' + configuracion.idInterno }}"
+    [ngClass]="itemMetodos.obtenerClasesParaItemCircular(configuracion)"
+    (press)="eventoClickLargo()"
+>
+    <img
+        [ngClass]="{
+            'capa': true,
+            'imagenFondo': true,
+            'mostrar': !configuracion.mostrarLoader && configuracion.urlMedia.length > 0 
+        }"
+        [src]="configuracion.urlMedia"
+        (load)="onImageLoad($event)"
+    >
+    <!-- Loader -->
+    <div
+        [ngClass]="{
+            'capa': true,
+            'loader': true,
+            'mostrar': configuracion.mostrarLoader
+        }"
+    >
+        <app-cargando></app-cargando>
+    </div>
+    <input 
+        #inputFile
+        type="file"
+        id="{{ 'itemCirculoInputFile' + configuracion.idInterno }}"
+        class="hide"
+        accept="image/*"
+        (change)="cambioEnInputTipoFile($event.target.files)"
+    />
+    <p [ngClass]="itemMetodos.obtenerClasesTextoBoton(configuracion.mostrarBoton)">{{ configuracion.textoBoton }}</p>
+    <!-- Capa opacidad a, b, c segun especificaciones -->
+    <div [ngClass]="itemMetodos.obtenerClasesCapaOpacidad(configuracion.capaOpacidad)"></div>
+</div>
+<!-- Modal elegir opcion foto -->
+<div
+    [ngClass]="{
+        'modalOrigenFoto': true,
+        'mostrar': confModalOrigenFoto.mostrar
+    }"
+    (tap)="cerrarModalOrigenFoto($event)"
+>
+    <div class="caja">
+        <div
+            class="opcion"
+            (tap)="eventoEnModalOrigenFoto(0)"
+        >
+            <img src="../../../../assets/recursos/fondos/fondo-camara-origen-foto.svg">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR,
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                Tomar foto
+            </p>
+        </div>
+        <div
+            class="opcion"
+            (tap)="eventoEnModalOrigenFoto(1)"
+        >
+            <img src="../../../../assets/recursos/fondos/fondo-galeria-origen-foto.svg">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR,
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                Subir foto
+            </p>
+        </div>
+    </div>
+</div>

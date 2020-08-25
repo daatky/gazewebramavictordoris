@@ -1,0 +1,86 @@
+<!-- Input del buscador -->
+<div
+    *ngIf="configuracion.inputPreview.mostrar"
+    class="inputBuscador"
+    (tap)="clickInputPreview()"
+>
+    <input
+        type="text"
+        [placeholder]="configuracion.inputPreview.input.placeholder"
+        [(ngModel)]="configuracion.inputPreview.input.valor"
+        autocomplete="disabled"
+        readonly="true"
+    >
+</div>
+<!-- Div del buscador -->
+<div
+    [ngClass]="{
+        'modal': true,
+        'mostrar': configuracion.mostrarModal
+    }"
+    (tap)="eventoModal($event.target)"
+>
+    <div class="caja">
+        <input
+            type="text"
+            class="buscador"
+            [placeholder]="configuracion.inputBuscador.placeholder"
+            [(ngModel)]="configuracion.inputBuscador.valor"
+            (keyup.enter)="buscar()"
+        />
+        <div
+            [ngClass]="{
+                'cargando': true,
+                'mostrar': configuracion.resultado.mostrarCargando
+            }"
+        >
+            <app-cargando></app-cargando>
+        </div>
+        <div
+            [ngClass]="{
+                'error': true,
+                'mostrar': configuracion.resultado.error.mostrarError,
+                'tamanoCompleto': configuracion.resultado.error.tamanoCompleto
+            }"
+        >
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_I2,
+                    paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                })"
+            >
+                {{ configuracion.resultado.error.contenido }}
+            </p>
+        </div>
+        <div
+            [ngClass]="{
+                'elegibles': true,
+                'mostrar': configuracion.resultado.mostrarElegibles
+            }"
+        >
+            <div
+                [ngClass]="{
+                    'elegible': true,
+                    'activo': validarElegibleActivo(item.codigo)
+                }"
+                *ngFor="let item of configuracion.resultado.items; let i = index"
+                (tap)="seleccionarItem(item)"
+            >
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                        enMayusculas: false,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I3,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ item.nombre + ' (CP: ' + item?.auxiliar + ')' }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

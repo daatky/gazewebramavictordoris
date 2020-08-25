@@ -1,0 +1,9 @@
+<div *ngIf="configuracionItem.data!=undefined" id="{{'itemPensamiento'+ configuracionItem.data.id}}">
+  <!--<div class="divFecha bold letra-3-con-interlineado-igual centrar">17/08/2020</div>-->
+  <!--<div class="divFecha bold letra-3-con-interlineado-igual centrar">{{datosItem.dataComponente.fecha | date:"dd/MM/yyyy"}}</div>-->
+  <app-item-fecha [fecha]="configuracionItem.data.fechaActualizacion"></app-item-fecha>
+  <div *ngIf='configuracionItem.data.texto' class="{{estilo}}">  
+    {{configuracionItem.data.texto}}
+  </div> 
+</div>
+

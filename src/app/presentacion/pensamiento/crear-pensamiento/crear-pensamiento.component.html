@@ -1,0 +1,8 @@
+<div style="background-color: aliceblue; width: 300px; height: 600px;">
+    <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataLista'></app-pensamiento-compartido>  
+    <form [formGroup]="actualizarPensamiento">
+        <app-input [inputCompartido]='inputPensamiento'></app-input>
+        <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
+    </form>
+</div>
+

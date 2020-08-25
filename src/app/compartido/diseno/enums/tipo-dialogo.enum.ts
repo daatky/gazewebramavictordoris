@@ -1,0 +1,5 @@
+export enum TipoDialogo {
+    CONFIRMACION,
+    MULTIPLE_ACCION,
+    MULTIPLE_ACCION_HORIZONTAL,
+}

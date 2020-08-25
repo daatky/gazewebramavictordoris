@@ -1,0 +1,9 @@
+    <div class="divIdiomas">
+        <div *ngFor='let idioma of idiomas; let i=index'>
+            <div *ngIf='i!==0' class="divLineaIdioma">
+            </div>
+            <div (click)='seleccionarIdioma(idioma)' [ngClass]="obtenerClasesLineasTexto(idiomaEstilo,idioma.codNombre)" class="centrar divLetrasIdioma notranslate">
+                {{idioma.codNombre}}
+            </div>
+        </div>
+    </div>
