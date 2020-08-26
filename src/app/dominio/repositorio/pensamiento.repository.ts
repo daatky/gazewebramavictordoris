@@ -29,8 +29,21 @@ export class PensamientoRepository {
                 })
             )
     }
+    /*
     obtenerPensamientoPublicos(idPerfil:string):Observable<Array<PensamientoModel>>{
         return this.pensamientoService.obtenerPensamientoPublicos(idPerfil)
+        .pipe(
+            map(data=> {
+                return this.pensamientoMapperService.transform(data.respuesta.datos);
+            }),
+            catchError(err => {
+                console.log(err)
+                return throwError(err)
+            })
+        )
+    }
+    obtenerPensamientosPrivados(idPerfil:string):Observable<Array<PensamientoModel>>{
+        return this.pensamientoService.obtenerPensamientosPrivados(idPerfil)
         .pipe(
             map(data=> {
                 console.log(data)
@@ -41,12 +54,11 @@ export class PensamientoRepository {
                 return throwError(err)
             })
         )
-    }
-    obtenerPensamientosPrivados(idPerfil:string):Observable<Array<PensamientoModel>>{
-        return this.pensamientoService.obtenerPensamientoPublicos(idPerfil)
+    }*/
+    obtenerPensamientos(idPerfil:string,esPrivado:boolean):Observable<Array<PensamientoModel>>{
+        return this.pensamientoService.obtenerPensamientos(idPerfil,esPrivado)
         .pipe(
             map(data=> {
-                console.log(data)
                 return this.pensamientoMapperService.transform(data.respuesta.datos);
             }),
             catchError(err => {
@@ -109,8 +121,8 @@ export class PensamientoRepository {
             })
         )
     }
-    cargarPensamientosPrivados(idPerfil:string,limite:number,pagina:number){
-        return this.pensamientoService.cargarPensamientosPrivados(idPerfil,limite,pagina)
+    cargarMasPensamientos(idPerfil:string,limite:number,pagina:number,esPrivado:boolean):Observable<Array<PensamientoModel>>{
+        return this.pensamientoService.cargarMasPensamientos(idPerfil,limite,pagina,esPrivado)
         .pipe(
             map(data => {
                 console.log(data)

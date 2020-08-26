@@ -28,26 +28,26 @@ export class PensamientoCompartidoComponent implements OnInit {
     this.clickLargo=new EventEmitter<object>();
   }
 
-  ngOnInit(): void {
-    this.cargarPensamiento() 
+  ngOnInit(): void {  
     //this.configurarDatos(0,{id:'uhf'})
-  }
-  /*ngDoCheck (){ 
-    console.log('=====')
-    console.log(this.pensamientos[0].pensamiento)
-  }*/
-
+    this.cargarPensamiento()
+  }    
   cargarPensamiento(){
+    console.log(this.pensamientoCompartido)
     if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){      
+      console.log("2")
       this.obtenerPensamientoAleatorio()          
     }else{
+      console.log("1")
       this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     }
   }
   obtenerPensamientoAleatorio(){
+    console.log("aleatorios")
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
     //PensamientoEntity
     .subscribe((res:PensamientoModel)=>{ 
+      console.log(res)
       this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
       this.dataPensamiento={data:res}
     },error=>{

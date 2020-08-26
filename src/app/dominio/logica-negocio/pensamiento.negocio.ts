@@ -10,7 +10,6 @@ import { VariablesGlobales, Paginacion } from 'src/app/nucleo/servicios/generale
     providedIn: 'root'
 })
 export class PensamientoNegocio {
-    isPublico:boolean
     constructor(
         private variablesGlobales:VariablesGlobales,
         //private pensamientoRepository:PensamientoRepository
@@ -29,14 +28,13 @@ export class PensamientoNegocio {
                 })
             )
     }
+    /*
     obtenerPensamientoPublicos(idPerfil:string): Observable<Array<PensamientoModel>> {
-        console.log("1")
         //Para saber que lista debo cargar mas
         this.isPublico=true
         return this.pensamientoRepository.obtenerPensamientoPublicos(idPerfil)
             .pipe(
-                map((data:Array<PensamientoModel>) => {
-                    console.log("2", data)
+                map((data:Array<PensamientoModel>) => {                    
                     return data
                 }),
                 catchError(err => {
@@ -47,7 +45,19 @@ export class PensamientoNegocio {
     }
     obtenerPensamientosPrivados(idPerfil:string){
         this.isPublico=false
-        return this.pensamientoRepository.obtenerPensamientoPublicos(idPerfil)
+        return this.pensamientoRepository.obtenerPensamientosPrivados(idPerfil)
+            .pipe(
+                map((data:Array<PensamientoModel>) => {
+                    return data
+                }),
+                catchError(err => {
+                    console.log(err)
+                    return throwError(err)
+                })
+            )
+    }*/
+    obtenerPensamientos(idPerfil:string,esPrivado:boolean){
+        return this.pensamientoRepository.obtenerPensamientos(idPerfil,esPrivado)
             .pipe(
                 map((data:Array<PensamientoModel>) => {
                     return data
@@ -107,7 +117,7 @@ export class PensamientoNegocio {
             )
     }
     cargarMasPensamientos(idPerfil:string,limite:number,pagina:number,esPrivado:boolean):Observable<Array<PensamientoModel>>{
-        return this.pensamientoRepository.cargarPensamientosPrivados(idPerfil,limite,pagina)
+        return this.pensamientoRepository.cargarMasPensamientos(idPerfil,limite,pagina,esPrivado)
             .pipe(
                 map(data => {
                     this.llenarDatos(this.variablesGlobales.paginacionPublico.actual,this.variablesGlobales.paginacionPublico.total,data.length,esPrivado)                    
@@ -119,19 +129,6 @@ export class PensamientoNegocio {
                 })
             )
     }
-    cargarPensamientosPrivados(idPerfil:string,limite:number,pagina:number):Observable<Array<PensamientoModel>>{
-        return this.pensamientoRepository.cargarPensamientosPrivados(idPerfil,limite,pagina)
-            .pipe(
-                map(data => {                    
-                    return data
-                }),
-                catchError(err => {
-                    console.log(err)
-                    return throwError(err)
-                })
-            )
-    }
-
     //LLega la pagina actual en la que nos encontramos,total que esta en la aplicacion, total de paginas que el backend envia, 
     llenarDatos(actual:number,total:number,nuevoTotal:number,esPrivado:boolean){
         //this.variablesGlobales.paginacionPublico=this.llenarDatos(this.variablesGlobales.paginacionPublico.actual,this.variablesGlobales.paginacionPublico.total,data.length)                    

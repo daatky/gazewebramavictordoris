@@ -17,6 +17,7 @@ import { PensamientoCompartidoComponent } from 'src/app/compartido/componentes/p
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   inputContrasena: InputCompartido
   botonCompartido: BotonCompartido
   botonSubmit: BotonCompartido
+  //configuracion: ConfiguracionToast
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild(PensamientoCompartidoComponent) pensamiento: PensamientoCompartidoComponent
   @ViewChild('portadaGazeComponent') portadaGazeComponent: PortadaGazeComponent
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.iniciarElementos()
   }
-
+  
   //Inicia todos los componentes
   async iniciarElementos() {
     this.loginForm = this.formBuilder.group({
@@ -56,10 +58,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
     this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.email }
     this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }    
-    //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
-    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }    
     this.botonCompartido = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('sitioWeb'), tamanoTexto: TamanoDeTextoConInterlineado.L6_IGUAL, colorTexto: ColorTextoBoton.BLANCO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarLanding() }
-    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }
+    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }    
+    //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
+    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
+    console.log(this.pensamientoCompartido)
   }
 
   ngAfterViewInit(): void {
@@ -74,19 +77,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
   //= () =>
   iniciarSesion() {
     if (this.loginForm.valid) {  
+     // this.configuracion={cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       //this.botonSubmit.enProgreso=true
       this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
       .subscribe(res=>{    
+        console.log(res)
         //this.botonSubmit.enProgreso=false
-        this.cuentaNegocio.guardarTokenAutenticacion(res['token'])
-        this.cuentaNegocio.guardarTokenRefresh(res['tokenRefresh'])
-        this.cuentaNegocio.almacenarCatalogoPerfiles(res['datos'])
       },error=>{
         //this.botonSubmit.enProgreso=false
         console.log(error)
+       // this.configuracion={cerrarClickOutside:true,mostrarLoader:false,mostrarToast:false,texto:error}
       })
     } else {
-      console.log('aqui 3')  
       this.inputEmail.error = true
       this.inputContrasena.error = true
     }

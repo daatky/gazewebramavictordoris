@@ -25,6 +25,8 @@ export class CrearPensamientoComponent implements OnInit {
   crearPensamientoForm: FormGroup;
   inputPensamiento: InputCompartido;
   botonCrearPensamiento: BotonCompartido;  
+  idPerfil="5f3e907015ae58647c0d3e1d"
+  esPrivado:boolean=false
   constructor(
     private variablesGlobales:VariablesGlobales,
     private pensamientoNegocio:PensamientoNegocio,
@@ -42,9 +44,9 @@ export class CrearPensamientoComponent implements OnInit {
     });      
     this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}        
     this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo', configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
-    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarPensamientosPrivados()}             
-    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.actualizarPensamiento }    
-    this.obtenerPensamientosPublicos()
+    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarMasPensamientos()}             
+    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }    
+    this.obtenerPensamientos()
   }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
@@ -64,16 +66,11 @@ export class CrearPensamientoComponent implements OnInit {
     this.eliminarPensamiento(objeto)
     return objeto
   }
+  /*
   // FIN  DE ESCUCHADORES EMIT
   obtenerPensamientosPublicos(){
-    //5f3afaea066f133b9003d2ff
-    /*this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 1'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 2'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 3'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 4'})
-    return*/
     console.log("VOY A OBTENER PENSAMIENTOS PRIVADOS")
-    this.pensamientoNegocio.obtenerPensamientoPublicos('5f3e907015ae58647c0d3e1d')
+    this.pensamientoNegocio.obtenerPensamientoPublicos(this.idPerfil)
     .subscribe((res:Array<PensamientoModel>)=>{ 
       console.log("+++++++++++++")
       this.dataLista.lista=res
@@ -82,10 +79,19 @@ export class CrearPensamientoComponent implements OnInit {
     })
   }
   obtenerPensamientosPrivados(){
-    this.pensamientoNegocio.obtenerPensamientosPrivados('5f3e907015ae58647c0d3e1d')
+    this.pensamientoNegocio.obtenerPensamientosPrivados(this.idPerfil)
     .subscribe(res=>{
       console.log("PENSAMIENTOS PRIVADOS") 
       console.log(res)
+    },error=>{
+      console.log(error)
+    })
+  }*/
+  obtenerPensamientos(){
+    this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
+    .subscribe((res:Array<PensamientoModel>)=>{ 
+      console.log("+++++++++++++")
+      this.dataLista.lista=res
     },error=>{
       console.log(error)
     })
@@ -93,7 +99,7 @@ export class CrearPensamientoComponent implements OnInit {
   crearPensamiento = () =>{
     if(this.crearPensamientoForm.valid){
       console.log('CORRECTO')
-      this.pensamientoNegocio.crearPensamiento('5f3e907015ae58647c0d3e1d',true,this.crearPensamientoForm.value.pensamiento)
+      this.pensamientoNegocio.crearPensamiento(this.idPerfil,true,this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{
         console.log(res)
         this.dataLista.lista.unshift(res)
@@ -147,34 +153,16 @@ export class CrearPensamientoComponent implements OnInit {
       console.log(error)
     })
   }
-  cargarMasPensamientos(esPrivado:boolean){
+  cargarMasPensamientos(){
     if(this.variablesGlobales.paginacionPublico.actual!=-1){
-      this.pensamientoNegocio.cargarMasPensamientos('5f3e907015ae58647c0d3e1d',10,this.variablesGlobales.paginacionPublico.actual,esPrivado)
+      this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,this.esPrivado)
       .subscribe(res=>{
         console.log("PENSAMIENTOS PRIVADOS") 
         console.log(res)    
+        //agregar a la lista de pensamientos
       },error=>{
         console.log(error)
       })
     }
-  }
-  //cargar mas: Se envia este metodo para que se ejecute cuando en la lista se da mas scrol
-  //Hay que controlar cuando ya no existan mas datos no mandar a cargar mas
-  cargarPensamientosPrivados(){    
-    //Leer de la cabezera los datos que viene    
-    console.log(this.variablesGlobales.paginacionPublico)
-    console.log(this.variablesGlobales.paginacionPublico.actual++)
-    if(this.variablesGlobales.paginacionPublico.actual!=-1){
-      this.pensamientoNegocio.cargarPensamientosPrivados('5f3e907015ae58647c0d3e1d',10,this.variablesGlobales.paginacionPublico.actual)
-      .subscribe(res=>{
-        console.log("PENSAMIENTOS PRIVADOS") 
-        console.log(res)    
-      },error=>{
-        console.log(error)
-      })
-    }
-  }
-  cargarPensamientosPublico(){
-    
   }
 }

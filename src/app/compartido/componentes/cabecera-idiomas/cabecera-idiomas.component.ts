@@ -39,7 +39,7 @@ export class CabeceraIdiomasComponent implements OnInit {
   }
 
     //OBTENER EL CATALOGO DE IDIOMAS
-    obtenerCatalogoIdiomas(){
+    obtenerCatalogoIdiomas(){      
       this.idiomaNegocio.obtenerCatalogoIdiomas()
         .subscribe(res => {
           this.idiomas = res

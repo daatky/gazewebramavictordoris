@@ -23,7 +23,6 @@ export class PeticionInterceptor implements HttpInterceptor {
         const token = this.localStorage.obtenerTokenAutenticacion()
         const apiKey = "d2e621a6646a4211768cd68e26f21228a81" // Aqui se debe obtener el ApiKey        
         const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
-
         // req = req.clone({
         //     headers: req.headers.set('Content-Type', 'application/json')
         // });
@@ -54,7 +53,7 @@ export class PeticionInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {                    
                     if(event.body){                        
                         if(event.body.codigoEstado){                            
-                            // console.log(event.body)
+                             console.log(event.body)
                             if(event.body.codigoEstado>=400){                                
                                 throw event.body.respuesta.mensaje
                             }

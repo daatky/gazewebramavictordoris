@@ -37,7 +37,6 @@ export class ButtonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    
     this.definirEstilo();
   }
 

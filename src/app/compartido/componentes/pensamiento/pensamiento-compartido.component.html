@@ -1,4 +1,4 @@
-<div class="{{divPensamiento}}">
+<div *ngIf="divPensamiento!==undefined || divPensamiento!==null" class="{{divPensamiento}}">
     <div *ngIf="pensamientoCompartido && pensamientoCompartido.tituloPensamiento">
         <p  class="boldSombra letra-3-con-interlineado-igual txt-blanco">            
             {{pensamientoCompartido.tituloPensamiento}}  
