@@ -11,7 +11,7 @@ export interface CatalogoTipoPerfilEntity {
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo: string
-    perfil: PerfilEntity
+    perfil?: PerfilEntity
     traducciones?: Array<TraduccionCatalogoTipoPerfilEntity>
 
 }

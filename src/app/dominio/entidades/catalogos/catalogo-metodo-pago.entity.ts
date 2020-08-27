@@ -11,7 +11,7 @@ export interface CatalogoMetodoPagoEntity {
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo: string
-    nombre: string
+    nombre?: string
     icono?: MediaEntity
     descripcion?: string
     traducciones?: Array<TraduccionCatalogoMetodoPagoEntity>
@@ -23,6 +23,13 @@ export interface TraduccionCatalogoMetodoPagoEntity {
     idioma?: CatalogoIdiomaEntity, //CATATLOGO IDIOMA
     original?: boolean,
     descripcion?: string
+}
+
+export interface PagoFacturacion {
+    nombres: string,
+    telefono?: string,
+    direccion?: string,
+    email?: string
 }
 
 export interface MetodoPagoStripeEntity {

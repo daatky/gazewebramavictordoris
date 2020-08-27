@@ -36,12 +36,12 @@ export class LocalStorage {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.AUTH_TOKEN, token)
     }
 
-    obtenerTokenRefresh(){
+    obtenerTokenRefresh() {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.REFRESH_TOKEN)
     }
     guardarTokenRefresh(token: string) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.REFRESH_TOKEN, token)
-    } 
+    }
     /*
     obtenerTipoPerfiles(){        
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.TIPO_PERFILES_USER)

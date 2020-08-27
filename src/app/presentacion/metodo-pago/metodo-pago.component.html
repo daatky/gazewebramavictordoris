@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="iconPago">
-                            <div *ngIf="item.estado.codigo==estadoPendiente; else elseBlock"
+                            <div *ngIf="item.estado.codigo==codigosEstadoMetodoPago.ACTIVA; else elseBlock"
                                 (click)=navegarMetodoPago(item)>
                                 <img [src]="item.icono">
                             </div>
@@ -60,9 +60,9 @@
             <input formControlName="telefono" type="text" placeholder="telefono" />
             <input formControlName="direccion" type="text" placeholder="direccion" />
             <div class="espacioMetodoPago"> </div>
-            
-                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
-                </ngx-stripe-card>            
+
+            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+            </ngx-stripe-card>
 
             <div class="espacioMetodoPago"> </div>
             <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
@@ -70,9 +70,9 @@
     </app-dialogo-contenido>
 
     <app-dialogo-contenido id="{{dialogoPaypalId}}" [data]="dataDialogo">
-        
+
         <ngx-paypal class="btnpaypal" id="btnpaypal" [config]="payPalConfig"></ngx-paypal>
-        
+
     </app-dialogo-contenido>
 
 </div>
