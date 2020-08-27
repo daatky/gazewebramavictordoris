@@ -1,3 +1,4 @@
+import { CatalogoPaisModel } from './../../modelo/catalogo-pais.model';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoPaisEntity } from "./catalogo-pais.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";
@@ -9,6 +10,6 @@ export interface CatalogoLocalidadEntity {
     fechaActualizacion?: Date
     codigo: string
     codigoPostal: string
-    pais: CatalogoPaisEntity
+    pais: CatalogoPaisModel
     nombre: string
 }

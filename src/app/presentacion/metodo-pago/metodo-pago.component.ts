@@ -105,11 +105,11 @@ export class MetodoPagoComponent implements OnInit {
     this.codigoPago = metodoPago.codigo;
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
-        this.dataDialogo.titulo = "PAGO PAYPAL";
+        this.dataDialogo.titulo = "PAGO CON PAYPAL";
         this.modalService.open(this.dialogoPaypalId);
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
-        this.dataDialogo.titulo = "PAGO TARJETA"
+        this.dataDialogo.titulo = "PAGO CON TARJETA"
         this.modalService.open(this.dialogoTarjetaId);
         break;
     }
@@ -132,11 +132,21 @@ export class MetodoPagoComponent implements OnInit {
   ngOnInit(): void {
     this.initConfigPaypal()
     this.pagoForm = this.fb.group({
-      nombre: ["Angular", [Validators.required]],
-      telefono: ["656566534"],
-      direccion: ["San pedro de vilcabamba"],
+      nombre: ["", [Validators.required]],
+      telefono: [""],
+      direccion: [""],
       email: ["", [Validators.required]],
     });
+
+  }
+
+  public getError(controlName: string): string {
+    let error = '';
+    const control = this.pagoForm.get(controlName);
+    if (control.touched && control.errors != null) {
+      error = "Campo requerido"
+    }
+    return error;
   }
 
   configurarAppBar() {
@@ -218,7 +228,7 @@ export class MetodoPagoComponent implements OnInit {
       },
       onClick: (data, actions) => {
         console.log("onClick", data, actions);
-        //this.modalService.close(this.dataDialogo.id);
+        this.modalService.close(this.dialogoPaypalId);
         // this.resetStatus();
       },
 
@@ -274,8 +284,7 @@ export class MetodoPagoComponent implements OnInit {
           console.log(err, "error servidor");
         }
       );
-    } else {
-      alert("Complete los datos de pago");
+
     }
   }
 

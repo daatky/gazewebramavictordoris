@@ -1,3 +1,4 @@
+import { PerfilResumenModel } from './perfil-resumen.model'
 import { PerfilModel } from "./perfil.model"
 
 export interface CatalogoTipoPerfilModel {
@@ -5,7 +6,7 @@ export interface CatalogoTipoPerfilModel {
     nombre: string,
     descripcion?: string
     mostrarDescripcion?: boolean
-    perfil?: PerfilModel
+    perfil?: PerfilResumenModel | PerfilModel
 }
 
 

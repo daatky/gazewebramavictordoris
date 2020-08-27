@@ -1,3 +1,5 @@
+import { PerfilEntityMapperServicePerfilresumenModelo, PerfilEntityMapperServicePerfil } from './../perfil.entity';
+import { PerfilModel } from './../../modelo/perfil.model';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";
 import { Injectable } from '@angular/core';
@@ -27,15 +29,49 @@ export interface TraduccionCatalogoTipoPerfilEntity {
 @Injectable({ providedIn: 'root' })
 export class CatalogoTipoPerfilMapperService extends MapedorService<CatalogoTipoPerfilEntity, CatalogoTipoPerfilModel> {
 
-    protected map(entity: CatalogoTipoPerfilEntity): CatalogoTipoPerfilModel {
+    constructor(
+        private mapearPerfilEntityAResumen: PerfilEntityMapperServicePerfilresumenModelo
+    ) {
+        super()
+    }
+
+    protected map(entity: CatalogoTipoPerfilEntity,): CatalogoTipoPerfilModel {
         return {
             codigo: entity.codigo,
             nombre: entity.traducciones[0].nombre,
             descripcion: entity.traducciones[0].descripcion,
-            perfil: entity.perfil
+            perfil: this.mapearPerfilEntityAResumen.transform(entity.perfil)
         };
     }
 
 }
+
+@Injectable({ providedIn: 'root' })
+export class CatalogoTipoPerfilMapperService2 extends MapedorService<CatalogoTipoPerfilEntity, CatalogoTipoPerfilModel> {
+
+    constructor(
+        private perfilEntityMapperServicePerfil: PerfilEntityMapperServicePerfil
+    ) {
+        super()
+    }
+
+    protected map(entity: CatalogoTipoPerfilEntity): CatalogoTipoPerfilModel {
+        return {
+            codigo: entity.codigo,
+            nombre: entity.traducciones[0].nombre,
+            descripcion: entity.traducciones[0].descripcion,            
+            perfil: this.perfilEntityMapperServicePerfil.transform(entity.perfil)            
+        };
+    }
+}
+
+enum MapperCatalogoTipoPerfil {
+    PERFIL_COMPLETO,
+    PERFIL_RESUME
+}
+
+
+
+
 
 

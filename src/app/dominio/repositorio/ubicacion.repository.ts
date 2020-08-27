@@ -22,19 +22,7 @@ export class UbicacionRepository {
 
     }
 
-    // Obtener catalogo de paises
-    obtenerCatalogoPaises(): Observable<CatalogoPaisModel[]> {
-        return this.ubicacionServiceRemoto.obtenerCatalogoPaises().pipe(
-            map(data => {
-                return this.mapearAEntidad.transform(data.respuesta.datos)
-            }),
-            catchError(error => {
-                return throwError(error)
-            })
-        )
-    }
-
-    // Obtener catalogo de paises
+    // Obtener catalogo de paises - Remoto
     obtenerCatalogoPaisesParaSelector(): Observable<ItemSelector[]> {
         return this.ubicacionServiceRemoto.obtenerCatalogoPaises().pipe(
             map(data => {
@@ -46,7 +34,7 @@ export class UbicacionRepository {
         )
     }
 
-    // Obtener catalogo de localidades por pais
+    // Obtener catalogo de localidades por pais - Remoto
     obtenerCatalogoLocalidadesPorNombrePorPaisParaSelector(pais:string, query:string): Observable<ItemSelector[]> {
         return this.ubicacionServiceRemoto.obtenerCatalogoLocalidadesPorNombrePorPaises(pais, query).pipe(
             map(data => {
@@ -58,16 +46,12 @@ export class UbicacionRepository {
         )
     }
 
-    // Local storage
-    guardarPaisesEnLocalStorage(paises : CatalogoPaisModel[]) {
-        this.ubicacionServiceLocal.guardarPaises(paises)
-    }
-
-    obtenerPaisesDelLocalStorage() : CatalogoPaisModel[] {
-        return this.ubicacionServiceLocal.obtenerPaises()
-    }
-
+    // Obtener paises del local storage - Local
     obtenerPaisesDelLocalStorageParaItemSelector() : ItemSelector[] {
-        return this.mapearPaisAItemSelector.transform(this.ubicacionServiceLocal.obtenerPaises())
+        return this.ubicacionServiceLocal.obtenerPaisesParaItemSelector()
+    }
+    // Guardar paises del local storage - Local
+    guardarPaisesEnElLocalStorageDesdeElItemSelector(paises: ItemSelector[]) {
+        this.ubicacionServiceLocal.guardarPaisesDelItemSelector(paises)
     }
 }

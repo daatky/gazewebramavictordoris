@@ -55,10 +55,12 @@
 
     <app-dialogo-contenido id="{{dialogoTarjetaId}}" [data]="dataDialogo">
         <div [formGroup]="pagoForm">
-            <input formControlName="nombre" type="text" placeholder="Nombres Completos" />
-            <input formControlName="email" type="text" placeholder="email" />
-            <input formControlName="telefono" type="text" placeholder="telefono" />
-            <input formControlName="direccion" type="text" placeholder="direccion" />
+            <input formControlName="nombre" type="text" placeholder="Nombre Tarjeta" />
+            <p>{{ getError('nombre')}}</p>
+            <input formControlName="email" type="text" placeholder="Email" />
+            <p>{{ getError('email')}}</p>
+            <input formControlName="telefono" type="text" placeholder="Telefono" />
+            <input formControlName="direccion" type="text" placeholder="Direccion" />
             <div class="espacioMetodoPago"> </div>
 
             <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">

@@ -1,7 +1,9 @@
+import { UsuarioModel } from './../modelo/usuario.model';
+import { CuentaServiceLocal } from './../../nucleo/servicios/locales/cuenta.service';
 import { Injectable } from '@angular/core'
 import { catchError, tap, map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
-import { CuentaService } from '../../nucleo/servicios/remotos/cuenta.service';
+import { CuentaServiceRemoto } from '../../nucleo/servicios/remotos/cuenta.service';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { UsuarioCrearCuentaEntity } from '../entidades/usuario.entity';
@@ -9,6 +11,7 @@ import { PagoEntity } from '../entidades/pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";
 import { IniciarSesionModel } from "../modelo/iniciar-sesion.model";
+import { IniciarSesionMapperService } from '../entidades/iniciar-sesion.entity';
 @Injectable({
     providedIn: 'root'
 })
@@ -16,14 +19,16 @@ export class CuentaRepository {
 
 
     constructor(
-        private cuentaService: CuentaService,
-        private localStorage: LocalStorage
+        private localStorage: LocalStorage,
+        private cuentaServiceRemoto: CuentaServiceRemoto,
+        private cuentaServiceLocal: CuentaServiceLocal,
+        private iniciarSesionMapperService: IniciarSesionMapperService
     ) { }
     iniciarSesion(datos: Object): Observable<IniciarSesionModel> {
-        return this.cuentaService.iniciarSesion(datos)
+        return this.cuentaServiceRemoto.iniciarSesion(datos)
             .pipe(
                 map(data => {
-                    return data.respuesta.datos as IniciarSesionModel;
+                    return this.iniciarSesionMapperService.transform(data.respuesta.datos);
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -43,6 +48,7 @@ export class CuentaRepository {
     guardarTokenRefresh(token: string) {
         this.localStorage.guardarTokenRefresh(token)
     }
+
     //GUARDA EL TIPO LA LISTA DE PERFILES DEL CATALOGO JUNTO A LOS PERFILES QUE TIENE EL USUARIO
     almacenarCatalogoPerfiles(tipoPerfiesUser: CatalogoTipoPerfilModel[]) {
         this.localStorage.almacenarCatalogoPerfiles(tipoPerfiesUser)
@@ -52,7 +58,7 @@ export class CuentaRepository {
     }
 
     crearCuenta(usuario: UsuarioCrearCuentaEntity): Observable<PagoEntity> {
-        return this.cuentaService.crearCuenta(usuario)
+        return this.cuentaServiceRemoto.crearCuenta(usuario)
             .pipe(
                 map(data => {
                     return data.respuesta.datos as PagoModel;
@@ -63,11 +69,11 @@ export class CuentaRepository {
             )
     }
 
-    activarCuenta(data: any) {
-        return this.cuentaService.activarCuenta(data)
+    activarCuenta(data: any): Observable<IniciarSesionModel> {
+        return this.cuentaServiceRemoto.activarCuenta(data)
             .pipe(
                 map(data => {
-                    return data.respuesta.datos as PagoModel;
+                    return this.iniciarSesionMapperService.transform(data.respuesta.datos);
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -76,7 +82,7 @@ export class CuentaRepository {
     }
 
     refrescarToken(tokenRefrescar: string): Observable<TokenModel> {
-        return this.cuentaService.refrescarToken(tokenRefrescar)
+        return this.cuentaServiceRemoto.refrescarToken(tokenRefrescar)
             .pipe(
                 map(data => {
                     return data.respuesta.datos as TokenModel;
@@ -85,5 +91,15 @@ export class CuentaRepository {
                     return throwError(err)
                 })
             )
+    }
+
+    // Guardar usuario en el local storage
+    guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
+        this.cuentaServiceLocal.guardarUsuario(usuario)
+    }
+
+    // Obtener usuario del local storage
+    obtenerUsuarioDelLocalStorage(): UsuarioModel {
+        return this.cuentaServiceLocal.obtenerUsuario()
     }
 }

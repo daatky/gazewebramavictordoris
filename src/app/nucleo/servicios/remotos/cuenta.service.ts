@@ -9,14 +9,11 @@ import { PagoEntity } from "../../../dominio/entidades/pago.entity";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { CuentaRepository } from 'src/app/dominio/repositorio/cuenta.repository';
 import { TokenEntity } from "../../../dominio/entidades/token.entity";
-import { IniciarSesionEntity } from "../../../dominio/entidades/cuenta.entity";
+import { IniciarSesionEntity } from "../../../dominio/entidades/iniciar-sesion.entity";
 
 @Injectable({ providedIn: 'root' })
-export class CuentaService {
-
-    constructor(
-        private http: HttpClient
-    ) {
+export class CuentaServiceRemoto {
+    constructor(private http: HttpClient) {
     }
     ///
 
@@ -30,8 +27,8 @@ export class CuentaService {
         return this.http.post<RespuestaRemota<PagoEntity>>(APIGAZE.BASE + Cuenta.CUENTA, usuario);
     }
 
-    activarCuenta(data: any) {
-        return this.http.post<RespuestaRemota<any>>(APIGAZE.BASE + Cuenta.VALIDAR_CUENTA, data);
+    activarCuenta(data: any): Observable<RespuestaRemota<IniciarSesionEntity>> {
+        return this.http.post<RespuestaRemota<IniciarSesionEntity>>(APIGAZE.BASE + Cuenta.VALIDAR_CUENTA, data);
     }
 
     refrescarToken(tokenRefrescar: string): Observable<RespuestaRemota<TokenEntity>> {

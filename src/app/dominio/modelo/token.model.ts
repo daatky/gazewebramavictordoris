@@ -1,4 +1,4 @@
 export interface TokenModel {
-    token: string,
+    tokenAccess: string,
     tokenRefresh: string
 }

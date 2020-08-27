@@ -1,7 +1,7 @@
+import { ItemSelector } from './../../../compartido/diseno/modelos/elegible.interface';
 import { Injectable } from '@angular/core'
 import { MetodosLocalStorageService } from './../../util/metodos-local-storage.service'
 import { LlavesLocalStorage } from './llaves/local-storage.enum'
-import { CatalogoPaisModel } from './../../../dominio/modelo/catalogo-pais.model'
 
 @Injectable({ providedIn: 'root' })
 export class UbicacionServiceLocal {
@@ -12,12 +12,13 @@ export class UbicacionServiceLocal {
 
     }
 
-    obtenerPaises() : CatalogoPaisModel[] {
+    obtenerPaisesParaItemSelector() : ItemSelector[] {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.PAISES)
     }
 
-    guardarPaises(paises:CatalogoPaisModel[]) {
+    guardarPaisesDelItemSelector(paises: ItemSelector[]) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.PAISES, paises)
     }
+
 
 }

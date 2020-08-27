@@ -58,4 +58,15 @@ export class PerfilNegocio {
         this.almacenarCatalogoPerfiles(tipoPerfiles);
     }
 
+    obtenerPerfilSegunCodigo(codigoPerfil: string) : CatalogoTipoPerfilModel {
+        let tipoPerfil: CatalogoTipoPerfilModel
+        const tipoPerfiles = this.obtenerCatalogoTipoPerfilLocal()
+        tipoPerfiles.forEach(perfil => {
+            if (perfil.codigo === codigoPerfil) {
+                tipoPerfil = perfil
+            }
+        })
+        return tipoPerfil
+    }
+
 }

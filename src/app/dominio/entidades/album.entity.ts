@@ -11,6 +11,7 @@ export interface AlbumEntity {
     media?:Array<MediaEntity>, //MEDIA
     portada?:MediaEntity, //MEDIA
 }
+
 export interface TraduccionAlbumEntity {
     id?: string,
     nombre?: string,

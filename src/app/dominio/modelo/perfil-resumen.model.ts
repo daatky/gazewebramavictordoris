@@ -13,19 +13,9 @@ import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.e
 import { AlbumEntity } from './../entidades/album.entity'
 import { UsuarioEntity } from './../entidades/usuario.entity'
 
-export interface PerfilModel {
+export interface PerfilResumenModel {
     _id?: string,
     nombreContacto?: string,
     nombre?: string,
-    tipoPerfil?: CatalogoTipoPerfilModel,
-    usuario?: UsuarioModel,
-    albums?: Array<AlbumModel>,
     estado?: CatalogoEstadoEntity,
-    direcciones?: Array<DireccionModel>,
-    telefonos?: Array<TelefonoModel>,
-    // Pendiente las opciones de abajo de crear modelos cuando se vaya a utilizar, por ahora dejo con la entidad
-    proyectos?: Array<ProyectoEntity>,
-    pensamientos?: Array<PensamientoEntity>,
-    noticias?: Array<NoticiaEntity>,
-    asociaciones?: Array<AsociacionEntity>,
 }

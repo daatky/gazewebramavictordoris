@@ -11,9 +11,9 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { LocalStorage } from '../locales/local-storage.service';
-import { CuentaService } from './cuenta.service';
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
+import { APIGAZE } from './rutas/api-gaze.enum';
+import { Cuenta } from './rutas/cuenta.enum';
 @Injectable()
 export class PeticionInterceptor implements HttpInterceptor {
     constructor(
@@ -23,14 +23,7 @@ export class PeticionInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<MediaDeviceInfo>> {
-        //const token = localStorage.getItem('auth_token'); // Aqui se debe obterner el token
-        //const token = this.localStorage.obtenerTokenAutenticacion()
         const apiKey = "d2e621a6646a4211768cd68e26f21228a81" // Aqui se debe obtener el ApiKey        
-        const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
-        // req = req.clone({
-        //     headers: req.headers.set('Content-Type', 'application/json')
-        // });
-
 
         if (apiKey) {
             //api key de autorizacion para consumo del api            
@@ -39,15 +32,25 @@ export class PeticionInterceptor implements HttpInterceptor {
             });
         }
 
-        if (idioma) {
-            //Idioma seleccionado por el usuario
-            req = req.clone({
-                headers: req.headers.set('idioma', idioma.codNombre)
-            });
+        if (!req.url.startsWith("http") || req.url == (APIGAZE.BASE.toString() + Cuenta.REFRESCAR_TOKEN.toString())) {
+            return next.handle(req).pipe(map((event: HttpEvent<any>) => {
+                return event;
+            }, (err: HttpErrorResponse) => {
+                const message = err.error.message;
+                return throwError(message);
+            }))
         }
 
-
         return this.cuentaNegocio.obtenerTokenAutenticacion().pipe(switchMap((token) => {
+
+            const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
+
+            if (idioma) {
+                //Idioma seleccionado por el usuario
+                req = req.clone({
+                    headers: req.headers.set('idioma', idioma.codNombre)
+                });
+            }
 
             //Se agrega el token 
             if (token) {

@@ -4,7 +4,7 @@ import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
 import { catchError, tap, map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
 import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
-import { PerfilService } from '../../nucleo/servicios/remotos/perfil.service';
+import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
 
@@ -13,7 +13,11 @@ import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.ser
 })
 export class PerfilRepository {
 
-    constructor(protected http: HttpClient, private perfilServicie: PerfilService, private mapeador: CatalogoTipoPerfilMapperService, private localStorage: LocalStorage) {
+    constructor(
+        protected http: HttpClient, 
+        private perfilServicie: PerfilServiceRemoto, 
+        private mapeador: CatalogoTipoPerfilMapperService, 
+        private localStorage: LocalStorage) {
 
     }
 
@@ -36,6 +40,8 @@ export class PerfilRepository {
     obtenerCatalogoTipoPerfilLocal(): CatalogoTipoPerfilModel[] {
         return this.localStorage.obtenerCatalogoPerfiles();
     }
+
+    // Album del perfil
 
 
 }

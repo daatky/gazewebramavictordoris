@@ -1,3 +1,6 @@
+import { PerfilResumenModel } from './../modelo/perfil-resumen.model';
+import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
+import { Injectable } from '@angular/core';
 import { UsuarioEntity } from "./usuario.entity";
 import { AlbumEntity } from "./album.entity"
 import { TelefonoEntity } from "./telefono.entity"
@@ -8,28 +11,60 @@ import { AsociacionEntity } from "./asociacion.entity";
 import { NoticiaEntity } from "./noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity } from "./catalogos/catalogo-tipo-perfil.entity";
+import { PerfilModel } from '../modelo/perfil.model';
 
 export interface PerfilEntity {
-  _id?: string,
-  nombreContacto?: string,
-  nombre?: string,
-  tipoPerfil?: CatalogoTipoPerfilEntity,
-  usuario?: UsuarioEntity,
-  albums?: Array<AlbumEntity>[],
-  estado?: CatalogoEstadoEntity,
-  direcciones?: Array<DireccionEntity>[],
-  telefonos?: Array<TelefonoEntity>[],
-  proyectos?: Array<ProyectoEntity>[],
-  pensamientos?: Array<PensamientoEntity>[],
-  noticias?: Array<NoticiaEntity>[],
-  asociaciones?: Array<AsociacionEntity>[],
-  fechaCreacion?: Date,
-  fechaActualizacion?: Date
+    _id: string,
+    nombreContacto: string,
+    nombre: string,
+    tipoPerfil: CatalogoTipoPerfilEntity,
+    usuario: UsuarioEntity,
+    albums: Array<AlbumEntity>,
+    estado?: CatalogoEstadoEntity,
+    direcciones: Array<DireccionEntity>,
+    telefonos?: Array<TelefonoEntity>,
+    proyectos?: Array<ProyectoEntity>,
+    pensamientos?: Array<PensamientoEntity>,
+    noticias?: Array<NoticiaEntity>,
+    asociaciones?: Array<AsociacionEntity>,
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date
 }
 
 export interface PerfilCrearCuentaEntity {
-  nombreContacto: string,
-  nombre: string,
-  tipoPerfil: string,
-  albums: Array<AlbumEntity>[]
+    nombreContacto: string,
+    nombre: string,
+    tipoPerfil: string,
+    albums: Array<AlbumEntity>[]
+}
+
+@Injectable({ providedIn: 'root' })
+export class PerfilEntityMapperServicePerfilresumenModelo extends MapedorService<PerfilEntity, PerfilResumenModel> {
+
+    protected map(entity: PerfilEntity): PerfilResumenModel {
+        return {
+            _id: entity._id,
+            nombreContacto: entity.nombreContacto,
+            nombre: entity.nombre,
+            estado: entity.estado,
+        };
+    }
+
+}
+
+@Injectable({ providedIn: 'root' })
+export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity, PerfilModel> {
+
+    protected map(entity: PerfilEntity): PerfilModel {
+        if (entity) {
+            return {
+                _id: entity._id,
+                nombreContacto: entity.nombreContacto,
+                nombre: entity.nombre,
+                estado: entity.estado,
+            };
+        }
+        return null;
+    }
+
 }

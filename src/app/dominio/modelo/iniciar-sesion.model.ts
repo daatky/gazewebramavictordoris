@@ -1,6 +1,6 @@
 import { PerfilModel } from "../modelo/perfil.model";
-export interface IniciarSesionModel {
-    perfil: PerfilModel[],
-    tokenAccess: string,
-    tokenRefresh: string
+import { TokenModel } from './token.model';
+import { CatalogoTipoPerfilModel } from './catalogo-tipo-perfil.model';
+export interface IniciarSesionModel extends TokenModel {
+    perfil?: CatalogoTipoPerfilModel[],
 }

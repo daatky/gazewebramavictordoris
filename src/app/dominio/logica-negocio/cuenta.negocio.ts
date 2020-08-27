@@ -1,48 +1,38 @@
+import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
+import { UsuarioModel } from './../modelo/usuario.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CuentaRepository } from "../repositorio/cuenta.repository";
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
-import { CatalogoMetodoPagoModel } from '../modelo/catalogo-metodo-pago.model';
 import { PerfilRepository } from '../repositorio/perfil.repository';
 import { IdiomaRepository } from '../repositorio/idioma.repository';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity';
 import { UsuarioCrearCuentaEntity, UsuarioEntity } from '../entidades/usuario.entity';
-import { PerfilCrearCuentaEntity } from '../entidades/perfil.entity';
-import { PerfilEntity } from '../entidades/perfil.entity';
 import { PagoFacturacion } from '../entidades/catalogos/catalogo-metodo-pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
-import { PerfilModel } from '../modelo/perfil.model';
 //CuentaRepository
 //iniciarSesion
 @Injectable({
     providedIn: 'root'
 })
-export class CuentaNegocio {
-    //private observadorItem$ = new BehaviorSubject<string>('');
+export class CuentaNegocio {    
     constructor(private cuentaRepository: CuentaRepository,
         private perfilRepository: PerfilRepository,
         private idiomaRepository: IdiomaRepository,
         private repository: CuentaRepository
     ) { }
 
-    iniciarSesion(email: string, contrasena: string): Observable<PerfilModel[]> {
+    iniciarSesion(email: string, contrasena: string): Observable<CatalogoTipoPerfilModel[]> {
         let data = { email: email, contrasena: contrasena }
         return this.cuentaRepository.iniciarSesion(data)
             .pipe(
                 map(data => {
-                    /*this.cuentaRepository.guardarTokenAutenticacion(data['datos']['token'])
-                    this.cuentaRepository.guardarTokenRefresh(data['datos']['tokenRefresh'])*/
-                    /*
-                    if(data['token']&&data['tokenRefresh']&&data['datos']){
-                        this.cuentaRepository.guardarTokenAutenticacion(data['token'])
-                        this.cuentaRepository.guardarTokenRefresh(data['tokenRefresh'])
-                        //this.cuentaRepository.almacenarCatalogoPerfiles(data['datos'])
-                        this.cuentaRepository.almacenarCatalogoPerfiles(this.formatearPerfilesLocalStorage(data['datos']))
-                    }      
-                    */
+                    this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
+                    this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
+                    this.cuentaRepository.almacenarCatalogoPerfiles(data.perfil)
                     return data.perfil
                 }),
                 catchError(err => {
@@ -50,28 +40,7 @@ export class CuentaNegocio {
                 })
             )
     }
-    /*guardarTokenAutenticacion(token:string){
-        this.cuentaRepository.guardarTokenAutenticacion(token)
-    }
-    guardarTokenRefresh(token: string) {
-        this.cuentaRepository.guardarTokenRefresh(token)
-    }
-    almacenarCatalogoPerfiles(tipoPerfiesUser: Array<any>) {
-        this.cuentaRepository.almacenarCatalogoPerfiles(this.formatearPerfilesLocalStorage(tipoPerfiesUser))
-    }*/
-    formatearPerfilesLocalStorage(tipoPerfiesUser: Array<any>): Array<CatalogoTipoPerfilModel> {
-        let catalogoTipoPerfilModel: Array<CatalogoTipoPerfilModel> = []
-        for (let i = 0; i < tipoPerfiesUser.length; i++) {
-            catalogoTipoPerfilModel.push({
-                descripcion: tipoPerfiesUser[i]['traducciones'][0]['descripcion'],
-                mostrarDescripcion: false,
-                nombre: tipoPerfiesUser[i]['traducciones'][0]['nombre'],
-                codigo: tipoPerfiesUser[i]['codigo'],
-                perfil: tipoPerfiesUser[i]['perfil']
-            })
-        }
-        return catalogoTipoPerfilModel
-    }
+
 
     crearCuenta(metodoPago: string, pago?: PagoFacturacion): Observable<PagoModel> {
         const idioma: CatalogoIdiomaEntity = this.idiomaRepository.obtenerIdiomaLocal();
@@ -105,11 +74,15 @@ export class CuentaNegocio {
             )
     }
 
-    activarCuenta(idTransaccion: string) {
-        return this.cuentaRepository.activarCuenta({ "idTransaccion": idTransaccion })
+    activarCuenta(idTransaccion: string): Observable<CatalogoTipoPerfilModel[]> {
+        let data = { "idTransaccion": idTransaccion };
+        return this.cuentaRepository.activarCuenta(data)
             .pipe(
                 map(data => {
-                    return data
+                    this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
+                    this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
+                    this.cuentaRepository.almacenarCatalogoPerfiles(data.perfil)
+                    return data.perfil
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -126,12 +99,13 @@ export class CuentaNegocio {
 
             if (isExpired) {
                 const tokenRefrescar = this.repository.obtenerTokenRefresh();
+
                 return this.repository.refrescarToken(tokenRefrescar)
                     .pipe(
                         map((data: TokenModel) => {
-                            this.repository.guardarTokenAutenticacion(data.token);
+                            this.repository.guardarTokenAutenticacion(data.tokenAccess);
                             this.repository.guardarTokenRefresh(data.tokenRefresh);
-                            return data.token
+                            return data.tokenAccess
                         }),
                         catchError(err => {
                             return throwError(err)
@@ -143,5 +117,30 @@ export class CuentaNegocio {
         } else {
             return of(tokenActual)
         }
+    }
+    // Guardar usuario en el local storage
+    guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
+        this.cuentaRepository.guardarUsuarioEnLocalStorage(usuario)
+    }
+
+    // Obtener usuario del local storage
+    obtenerUsuarioDelLocalStorage(): UsuarioModel {
+        return this.cuentaRepository.obtenerUsuarioDelLocalStorage()
+    }
+
+    // Valida si existe el usuario, caso contrario lo crea
+    validarUsuario(codigoPerfil: string) {
+        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
+        if (!usuario) {
+            usuario = {
+                id: '',
+                email: '',
+                contrasena: '',
+                perfiles: [],
+                perfilGrupo: (codigoPerfil === CodigosCatalogoTipoPerfil.GROUP),
+            }
+            this.guardarUsuarioEnLocalStorage(usuario)
+        }
+        return usuario
     }
 }
