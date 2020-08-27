@@ -51,16 +51,6 @@ export class LocalStorage {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.TIPO_PERFILES_USER, tipoPerfil)
     }*/
 
-    obtenerPaises(): Observable<CatalogoPaisModel[]> {
-        const data = this.metodosLocalStorageService.obtener(LlavesLocalStorage.PAISES)
-        this.observablePaises.next(data)
-        return this.observablePaises.asObservable()
-    }
-
-    guardarPaises(paises: CatalogoPaisModel[]) {
-        this.metodosLocalStorageService.guardar(LlavesLocalStorage.PAISES, paises)
-    }
-
     almacenarCatalogoPerfiles(tipoPerfiles: CatalogoTipoPerfilModel[]) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.TIPO_PERFILES, tipoPerfiles)
     }

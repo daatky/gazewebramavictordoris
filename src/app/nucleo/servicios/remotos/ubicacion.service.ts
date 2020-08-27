@@ -1,3 +1,4 @@
+import { CatalogoLocalidadEntity } from './../../../dominio/entidades/catalogos/catalogo-localidad.entity';
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
@@ -22,8 +23,8 @@ export class UbicacionServiceRemoto {
     }
 
     // Obtener el catalogo de localidades por pais
-    obtenerCatalogoLocalidadesPorNombrePorPaises(pais:string, query:string): Observable<RespuestaRemota<CatalogoLocalidadModel[]>> {
-        return this.http.get<RespuestaRemota<CatalogoLocalidadModel[]>>(APIGAZE.BASE + Catalogo.BUSCAR_LOCALIDAD.toString() + pais + '/' + query);
+    obtenerCatalogoLocalidadesPorNombrePorPaises(pais:string, query:string): Observable<RespuestaRemota<CatalogoLocalidadEntity[]>> {
+        return this.http.get<RespuestaRemota<CatalogoLocalidadEntity[]>>(APIGAZE.BASE + Catalogo.BUSCAR_LOCALIDAD.toString() + pais + '/' + query);
     }
 
 }

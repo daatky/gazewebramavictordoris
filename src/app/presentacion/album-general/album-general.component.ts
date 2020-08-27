@@ -1,33 +1,29 @@
-import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum';
-import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum';
-import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
-import { AlbumEntity } from './../../dominio/entidades/album.entity';
-import { AccionesAppBar } from './../../compartido/diseno/enums/acciones-appbar.enum';
-import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service';
-import { MediaSimpleModel } from './../../dominio/modelo/media-simple.model';
-import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface';
-import { ToastComponent } from './../../compartido/componentes/toast/toast.component';
-import { ConvertidorArchivos } from './../../nucleo/util/caster-archivo.service';
-import { CodigosCatalogoTipoMedia } from './../../nucleo/servicios/remotos/codigos-catalogos/catalgo-tipo-media.enum';
+import { AlbumModel } from './../../dominio/modelo/album.model'
+import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum'
+import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum'
+import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum'
+import { AlbumEntity } from './../../dominio/entidades/album.entity'
+import { AccionesAppBar } from './../../compartido/diseno/enums/acciones-appbar.enum'
+import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service'
+import { MediaModel } from '../../dominio/modelo/media.model'
+import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface'
+import { ToastComponent } from './../../compartido/componentes/toast/toast.component'
+import { ConvertidorArchivos } from './../../nucleo/util/caster-archivo.service'
+import { CodigosCatalogoTipoMedia } from '../../nucleo/servicios/remotos/codigos-catalogos/catalago-tipo-media.enum'
 import { ConfiguracionCamara, ConfiguracionCropper } from '../../compartido/diseno/modelos/foto-editor.interface'
 import { CamaraComponent } from './../../compartido/componentes/camara/camara.component'
 import { UsoItemCircular, UsoItemRectangular } from './../../compartido/diseno/enums/uso-item-cir-rec.enum'
 import { ItemCircularCompartido, ItemRectangularCompartido } from './../../compartido/diseno/modelos/item-cir-rec.interface'
 import { MediaNegocio } from './../../dominio/logica-negocio/media.negocio'
-import { MediaEntity } from './../../dominio/entidades/media.entity'
 import { LineaCompartida } from './../../compartido/diseno/modelos/linea.interface'
 import { EstiloDelTextoServicio } from './../../nucleo/servicios/diseno/estilo-del-texto.service'
 import { InfoAccionCirRec } from './../../compartido/diseno/modelos/info-accion-cir-rec.interface'
 import { VariablesGlobales } from './../../nucleo/servicios/generales/variables-globales.service'
 import { UsoAppBar } from './../../compartido/diseno/enums/uso-appbar.enum'
-import { TamanoDeTextoConInterlineado } from './../../compartido/diseno/enums/tamano-letra-con-interlineado.enum'
-import { EstilosDelTexto } from './../../compartido/diseno/enums/estilo-del-texto.enum'
-import { ColorDelTexto } from './../../compartido/diseno/enums/color-del-texto.enum'
 import { EspesorLineaItem } from './../../compartido/diseno/enums/espesor-linea-item.enum'
 import { ColorFondoLinea } from './../../compartido/diseno/enums/color-fondo-linea.enum'
 import { AnchoLineaItem } from './../../compartido/diseno/enums/ancho-linea-item.enum'
 import { TamanoColorDeFondoAppBar } from './../../compartido/diseno/enums/tamano-color-fondo-appbar.enum'
-import { TamanoDeAppBar } from './../../compartido/diseno/enums/tamano-appbar.enum'
 import { ConfiguracionAppbarCompartida } from './../../compartido/diseno/modelos/appbar.interface'
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 import { AppbarComponent } from './../../compartido/componentes/appbar/appbar.component'
@@ -37,7 +33,6 @@ import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums
 import { WebcamImage } from 'ngx-webcam'
 import { CropperComponent } from 'src/app/compartido/componentes/cropper/cropper.component'
 import { ImageCroppedEvent } from 'ngx-image-cropper'
-import { MediaSimpleEntity } from 'src/app/dominio/entidades/media-simple.entity';
 
 @Component({
   selector: 'app-album-general',
@@ -68,7 +63,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
   public confPortada: ItemRectangularCompartido // Portada del album
   public confBotonUpload: ItemRectangularCompartido // Boton siempre visible de upload photos
   public confLinea: LineaCompartida // Linea compartida
-  public listaMediaAlbum: Array<MediaSimpleEntity> // Para almacenar las medias a devolver en caso de crear
+  public listaMediaAlbum: Array<MediaModel> // Para almacenar las medias a devolver en caso de crear
   public itemsAlbum: Array<ItemRectangularCompartido> // Array de items compartido
   public itemsAlbumPorDefecto: Array<ItemRectangularCompartido> // Array de items compartido - fotos por defecto
   public cantidadItemsPorDefecto: number // Numero total de items por defecto a mostrar
@@ -455,34 +450,25 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
 
   // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
   crearAlbumPerfilYGuardarEnStorage() {
-    const portadaMedia: MediaSimpleEntity = this.obtenerMediaPorIdItem(this.confPortada.id)
-    const album: AlbumEntity = {
-      portada: {
-        tipo: {
-          codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
-        },
-        principal: {
-          ...portadaMedia,
-          tipo: {
-            codigo: CodigosCatalogoTipoArchivo.IMAGEN
-          },
-        },
-      },
-      tipo: {
-        codigo: CodigosCatalogoTipoAlbum.PERFIL,
-      },
-      media: this.listaMediaAlbum
-    }
-    console.log(album)
-    // Obtener lista del local storage
-    let albumsLocalStorage: AlbumEntity[] = this.mediaNegocio.obtenerListaAlbumDelLocalStorage()
-    if (!albumsLocalStorage || albumsLocalStorage === null) {
-      albumsLocalStorage = []
-    }
-    // Insertar el album
-    albumsLocalStorage.push(album)
-    // Guardar en el storage
-    this.mediaNegocio.guardarListaAlbumEnLocalStorage(albumsLocalStorage)
+    const portadaMedia: MediaModel = this.obtenerMediaPorIdItem(this.confPortada.id)
+    // const album: AlbumEntity = {
+    //   portada: {
+    //     tipo: {
+    //       codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
+    //     },
+    //     principal: {
+    //       ...portadaMedia,
+    //       tipo: {
+    //         codigo: CodigosCatalogoTipoArchivo.IMAGEN
+    //       },
+    //     },
+    //   },
+    //   tipo: {
+    //     codigo: CodigosCatalogoTipoAlbum.PERFIL,
+    //   },
+    //   media: this.listaMediaAlbum
+    // }
+    // console.log(album)
   }
 
   obtenerPosicionPorIdItem(id: string) {
@@ -495,7 +481,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
     return pos
   }
 
-  obtenerMediaPorIdItem(id: string) : MediaSimpleEntity {
+  obtenerMediaPorIdItem(id: string) : MediaModel {
     let media = null
     this.listaMediaAlbum.forEach((item, i) => {
       if (item._id === id) {

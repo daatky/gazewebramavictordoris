@@ -1,3 +1,6 @@
+import { MediaModel } from './../modelo/media.model';
+import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
+import { Injectable } from '@angular/core';
 import { ArchivoEntity } from "./archivo.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoMediaEntity } from "./catalogos/catalogo-media.entity";
@@ -20,4 +23,13 @@ export interface TraduccionMediaEntity {
     descripcion?: string,
     idioma?: CatalogoIdiomaEntity,
     original?: boolean
+}
+
+@Injectable({ providedIn: 'root' })
+export class MapearMediaEntityAlMediaModelo extends MapedorService<MediaEntity, MediaModel> {
+    
+    protected map(entity: MediaEntity): MediaModel {
+        return entity;
+    }
+
 }

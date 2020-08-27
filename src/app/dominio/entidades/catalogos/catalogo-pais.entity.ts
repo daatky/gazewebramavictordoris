@@ -12,13 +12,14 @@ export interface CatalogoPaisEntity{
     fechaActualizacion?: Date
     codigo?:string
     codigoTelefono?:string
+    codigoNombre?:string
     traducciones?:Array<TraduccionCatalogoPaisEntity>
 }
 
 export interface TraduccionCatalogoPaisEntity {
     id?: string,
     nombre?: string,
-    idioma?: CatalogoIdiomaEntity, //CATATLOGO IDIOMA
+    idioma?: CatalogoIdiomaEntity,
     original?: boolean
 }
 

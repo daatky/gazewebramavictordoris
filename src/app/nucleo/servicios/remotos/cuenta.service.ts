@@ -7,7 +7,7 @@ import { Cuenta } from './rutas/cuenta.enum';
 import { UsuarioEntity } from "../../../dominio/entidades/usuario.entity";
 
 @Injectable({ providedIn: 'root' })
-export class CuentaService {
+export class CuentaServiceRemoto {
     constructor(private http: HttpClient) {
     }
     ///

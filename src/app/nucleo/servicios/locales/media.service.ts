@@ -12,12 +12,4 @@ export class MediaServiceLocal {
 
     }
 
-    obtenerListaAlbum() : AlbumEntity[] {
-        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.LISTA_ALBUM_REGISTRO)
-    }
-
-    guardarListaAlbum(albums: AlbumEntity[]) {
-        this.metodosLocalStorageService.guardar(LlavesLocalStorage.LISTA_ALBUM_REGISTRO, albums)
-    }
-
 }

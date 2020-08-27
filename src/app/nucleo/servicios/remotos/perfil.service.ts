@@ -7,7 +7,7 @@ import { RespuestaRemota } from '../../util/respuesta';
 import { CatalogoTipoPerfilEntity } from '../../../dominio/entidades/catalogos/catalogo-tipo-perfil.entity';
 
 @Injectable({ providedIn: 'root' })
-export class PerfilService {
+export class PerfilServiceRemoto {
     constructor(private http: HttpClient) {
 
     }

@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private cuentaNegocio: CuentaNegocio,
   ) {
     this.iniciarElementos()
+    console.log(this.botonCompartido)
   }
 
   ngOnInit(): void {

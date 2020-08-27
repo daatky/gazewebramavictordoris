@@ -1,10 +1,16 @@
-import { RutasLocales } from './../../rutas-locales.enum';
-import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
-import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogo-tipo-perfil.model';
-import { PerfilNegocio } from './../../dominio/logica-negocio/perfil.negocio';
-import { UsoItemCircular, UsoItemRectangular } from './../../compartido/diseno/enums/uso-item-cir-rec.enum';
-import { ItemCircularCompartido, ItemRectangularCompartido } from './../../compartido/diseno/modelos/item-cir-rec.interface';
-import { UsoAppBar } from './../../compartido/diseno/enums/uso-appbar.enum';
+import { AlbumModel } from './../../dominio/modelo/album.model';
+import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
+import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun'
+import { PerfilModel } from './../../dominio/modelo/perfil.model'
+import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio'
+import { UsuarioModel } from './../../dominio/modelo/usuario.model'
+import { RutasLocales } from './../../rutas-locales.enum'
+import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum'
+import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogo-tipo-perfil.model'
+import { PerfilNegocio } from './../../dominio/logica-negocio/perfil.negocio'
+import { UsoItemCircular, UsoItemRectangular } from './../../compartido/diseno/enums/uso-item-cir-rec.enum'
+import { ItemCircularCompartido, ItemRectangularCompartido } from './../../compartido/diseno/modelos/item-cir-rec.interface'
+import { UsoAppBar } from './../../compartido/diseno/enums/uso-appbar.enum'
 import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
@@ -22,33 +28,22 @@ import { AppbarComponent } from 'src/app/compartido/componentes/appbar/appbar.co
 import { PortadaGazeComponent } from 'src/app/compartido/componentes/portada-gaze/portada-gaze.component'
 import { ItemRectanguloComponent } from 'src/app/compartido/componentes/item-rectangulo/item-rectangulo.component'
 import { ItemCirculoComponent } from 'src/app/compartido/componentes/item-circulo/item-circulo.component'
-import { DatosItem } from '../../compartido/diseno/modelos/datos-item-lista.interface'
-import { LineaDeTexto } from '../../compartido/diseno/modelos/linea-de-texto.interface'
-import { TamanoDeAppBar } from 'src/app/compartido/diseno/enums/tamano-appbar.enum'
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum'
-import { AnchoLineaItem } from 'src/app/compartido/diseno/enums/ancho-linea-item.enum'
-import { ColorFondoLinea } from 'src/app/compartido/diseno/enums/color-fondo-linea.enum'
-import { EspesorLineaItem } from 'src/app/compartido/diseno/enums/espesor-linea-item.enum'
-import { ColorDelTexto } from 'src/app/compartido/diseno/enums/color-del-texto.enum'
-import { EstilosDelTexto } from 'src/app/compartido/diseno/enums/estilo-del-texto.enum'
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum'
 import { TamanoPortadaGaze } from 'src/app/compartido/diseno/enums/tamano-portada-gaze.enum'
 import { EstiloDelTextoServicio } from 'src/app/nucleo/servicios/diseno/estilo-del-texto.service'
-import { TamanoDeTexto } from 'src/app/compartido/diseno/enums/tamano-letra.enum'
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum'
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface'
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component'
 import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface'
 import { UbicacionNegocio } from './../../dominio/logica-negocio/ubicacion.negocio'
-import { LocalStorage } from './../../nucleo/servicios/locales/local-storage.service'
 import { SelectorComponent } from './../../compartido/componentes/selector/selector.component'
-import { AccionesSelector } from 'src/app/compartido/diseno/enums/acciones-selector.enum';
-import { CatalogoPaisEntity } from 'src/app/dominio/entidades/catalogos/catalogo-pais.entity'
-import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
+import { AccionesSelector } from 'src/app/compartido/diseno/enums/acciones-selector.enum'
+import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum'
 import { ConfiguracionBuscadorModal } from '../../compartido/diseno/modelos/buscador-modal.interface'
 import { AccionesBuscadorModal } from 'src/app/compartido/diseno/enums/acciones-buscador-localidades.enum'
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
-import { AccionAlbum } from '../album-perfil/album-perfil.component';
+import { AccionAlbum } from '../album-perfil/album-perfil.component'
 
 @Component({
   selector: 'app-registro',
@@ -65,7 +60,6 @@ export class RegistroComponent implements OnInit, AfterViewInit {
 
   // Parametros url
   public codigoPerfil: string // Codigo del perfil activo
-  public tipoPerfil: CatalogoTipoPerfilModel // Catalogo tipo de perfil 
 
   // Parametros internos
   public confAppBar: ConfiguracionAppbarCompartida // Configuracion del appbar
@@ -73,10 +67,15 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   public confItemRec: ItemRectangularCompartido // Configuracion item del rectangulo
   public confSelector: ConfiguracionSelector // Configuracion del selector
   public confBuscador: ConfiguracionBuscadorModal // Configuracion buscador localidades
-
   public registroForm:FormGroup // Formulario de registro
   public inputsForm: Array<InputCompartido> // Configuracion de los inputs
   public botonSubmit: BotonCompartido // Configuracion del boton compartido
+
+  // Parametros
+  public tipoPerfil: CatalogoTipoPerfilModel // Perfil activo
+  public usuario: UsuarioModel // Usuario activo
+  public posPerfil: number // Posicion del perfil en la lista
+  public perfil: PerfilModel // Model del perfil
 
   constructor(
     private formBuilder: FormBuilder,
@@ -85,7 +84,8 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     private ubicacionNegocio: UbicacionNegocio,
     private rutaActual: ActivatedRoute,
     private router: Router,
-    private perfilNegocio: PerfilNegocio
+    private perfilNegocio: PerfilNegocio,
+    private cuentaNegocio: CuentaNegocio,
   ) {
     
   }
@@ -94,9 +94,9 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     this.variablesGlobales.mostrarMundo = false
     this.inputsForm = []
     this.obtenerParametrosUrl()
-    this.obtenerTipoPerfil()
-    this.configurarAppBar()
+    this.inicializarDataUsuario()
     this.inicializarControles()
+    this.configurarAppBar()
     this.configurarInputs()
     this.configurarBoton()
     this.configurarAlbumPerfil()
@@ -148,7 +148,6 @@ export class RegistroComponent implements OnInit, AfterViewInit {
   obtenerParametrosUrl() {
     if (this.rutaActual.snapshot.params.codigoPerfil) {
       this.codigoPerfil = this.rutaActual.snapshot.params.codigoPerfil
-      // Obtener parametro del storage
     }
   }
 
@@ -160,6 +159,41 @@ export class RegistroComponent implements OnInit, AfterViewInit {
         this.tipoPerfil = perfil
       }
     })
+  }
+
+  // Validar si existe el usuario en el storage
+  inicializarDataUsuario() {
+    // Obtener el tipo de perfil
+    this.tipoPerfil = this.perfilNegocio.obtenerPerfilSegunCodigo(this.codigoPerfil)
+    // Obtener el usuario
+    this.usuario = this.cuentaNegocio.validarUsuario(this.codigoPerfil)
+    // Obtener el perfil
+
+    console.log(this.usuario)
+    // Validar si perfil a llenar existe
+    this.usuario.perfiles.forEach(item => {
+      if (item.tipoPerfil.codigo === this.codigoPerfil) {
+        this.perfil = item
+      }
+    })
+    // Si perfil no existe, se crea el perfil
+    if (!this.perfil) {
+      this.perfil = {
+        _id: '',
+        nombre: '',
+        nombreContacto: '',
+        direcciones: [],
+        telefonos: [],
+        tipoPerfil: this.tipoPerfil,
+        estado: {
+          codigo: CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR
+        },
+        albums: []
+      }
+      // Se inserta en el usuario
+      this.usuario.perfiles.push(this.perfil)
+    }
+    console.log(this.usuario)
   }
 
   // Inicializar controles para el formulario
@@ -413,9 +447,9 @@ export class RegistroComponent implements OnInit, AfterViewInit {
     this.selectorPaises.configuracion.cargando.mostrar = true
     this.selectorPaises.configuracion.mostrarModal = true
 
-    this.ubicacionNegocio.obtenerCatalogoPaises()
+    this.ubicacionNegocio.obtenerCatalogoPaisesParaSelector()
       .subscribe(res => {
-        this.ubicacionNegocio.guardarPaisesEnLocalStorage(res)
+        this.ubicacionNegocio.guardarPaisesDelSelectorEnLocalStorage(res)
         this.selectorPaises.configuracion.elegibles = res
         this.selectorPaises.configuracion.cargando.mostrar = false
       }, error => {
@@ -455,6 +489,12 @@ export class RegistroComponent implements OnInit, AfterViewInit {
       ruta = ruta.replace(':nombreUsuario', userName)
       ruta = ruta.replace(':accionAlbum', accionAlbum)
       this.router.navigateByUrl(ruta)
+
+
+      // Validar si album existe en el perfil
+      let album: AlbumModel = this.obtenerValidarAlbumSegunTipo(CodigosCatalogoTipoAlbum.PERFIL)
+      // Si el album no existe, se crea
+      
       return
     }
 
@@ -469,6 +509,18 @@ export class RegistroComponent implements OnInit, AfterViewInit {
       this.router.navigateByUrl(ruta)
       return
     }
+  }
+
+  // Valida si el album existe en el perfilactivo
+  obtenerValidarAlbumSegunTipo(tipo: CodigosCatalogoTipoAlbum) {
+    let album: AlbumModel
+    // Validar si existe
+    this.perfil.albums.forEach(item => {
+      if (item.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
+        album = album
+      }
+    })
+    return album
   }
 
   obtenerLlaveSegunPerfil() {

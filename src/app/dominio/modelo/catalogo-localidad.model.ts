@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { CatalogoPaisModel } from './catalogo-pais.model'
+import { Injectable } from '@angular/core'
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface'
 import { ItemSelector } from './../../compartido/diseno/modelos/elegible.interface'
 
 export interface CatalogoLocalidadModel {
-    codigo: string,
-    id_catalogoPais: string,
-    nombre: string,
-    codigoPostal: string,
+    id?: string
+    codigo?: string
+    nombre?: string
+    codigoPostal?: string
+    pais?: CatalogoPaisModel,
 }
 
 @Injectable({ providedIn: 'root' })

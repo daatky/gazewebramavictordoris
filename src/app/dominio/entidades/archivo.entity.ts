@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
-import { CatalogoTipoMediaEntity } from "./catalogos/catalogo-tipo-media.entity";
-import { ArchivoDefaultModelo } from "../modelo/archivo-default.model";
-import { MapedorService } from "./../../nucleo/base/mapeador.interface";
+import { ArchivoModel } from './../modelo/archivo.model'
+import { Injectable } from '@angular/core'
+import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity"
+import { CatalogoTipoMediaEntity } from "./catalogos/catalogo-tipo-media.entity"
+import { MapedorService } from "./../../nucleo/base/mapeador.interface"
 
 export interface ArchivoEntity {
     _id?: string,
@@ -18,11 +18,11 @@ export interface ArchivoEntity {
 }
 
 @Injectable({ providedIn: 'root' })
-export class MapearArchivoAlArchivoDefaultModelo extends MapedorService<ArchivoEntity, ArchivoDefaultModelo> {
+export class MapearArchivoAlArchivoDefaultModelo extends MapedorService<ArchivoEntity, ArchivoModel> {
     
-    protected map(entity: ArchivoEntity): ArchivoDefaultModelo {
+    protected map(entity: ArchivoEntity): ArchivoModel {
         return {
-            id: entity._id,
+            _id: entity._id,
             url: entity.url,
             catalogoArchivoDefault: entity.catalogoArchivoDefault
         };

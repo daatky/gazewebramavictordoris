@@ -1,5 +1,10 @@
+import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.entity'
+
 export interface CatalogoPaisModel {
-    codigo: string,
-    nombre: string,
-    codigoTelefono?: string,
+    id?: string
+    codigo?: string
+    estado?: CatalogoEstadoEntity
+    nombre?: string
+    codigoTelefono?: string
+    codigoNombre?: string
 }

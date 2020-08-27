@@ -1,13 +1,13 @@
+import { MapearMediaEntityAlMediaModelo } from './../entidades/media.entity';
+import { ArchivoModel } from './../modelo/archivo.model';
 import { AlbumEntity } from './../entidades/album.entity';
 import { MediaServiceLocal } from './../../nucleo/servicios/locales/media.service';
-import { MediaSimpleModel } from './../modelo/media-simple.model';
+import { MediaModel } from '../modelo/media.model';
 import { Injectable } from "@angular/core"
 import { Observable, throwError } from "rxjs"
 import { catchError, map } from "rxjs/operators"
 import { MediaServiceRemoto } from "./../../nucleo/servicios/remotos/media.service"
-import { ArchivoDefaultModelo } from "../modelo/archivo-default.model"
 import { MapearArchivoAlArchivoDefaultModelo } from "./../entidades/archivo.entity"
-import { MediaSimpleEntity, MapearMediaSimpleEntity } from '../entidades/media-simple.entity'
 
 @Injectable({ providedIn: 'root'})
 export class MediaRepository {
@@ -16,13 +16,13 @@ export class MediaRepository {
         private mediaServiceRemoto: MediaServiceRemoto,
         private mediaServiceLocal: MediaServiceLocal,
         private mapearArchivoAlArchivoDefaultModelo: MapearArchivoAlArchivoDefaultModelo,
-        private mapearMediaSimpleEntity: MapearMediaSimpleEntity
+        private mapearMediaEntityAlMediaModelo: MapearMediaEntityAlMediaModelo
     ) {
 
     }
 
     // Obtener catalogo de paises
-    obtenerListaArchivosDefault(): Observable<ArchivoDefaultModelo[]> {
+    obtenerListaArchivosDefault(): Observable<ArchivoModel[]> {
         return this.mediaServiceRemoto.obtenerListaArchivosDefault().pipe(
             map(data => {
                 return this.mapearArchivoAlArchivoDefaultModelo.transform(data.respuesta.datos)
@@ -33,22 +33,14 @@ export class MediaRepository {
         )
     }
 
-    subirArchivoAlservidor(body: any) : Observable<MediaSimpleEntity> {
+    subirArchivoAlservidor(body: any) : Observable<MediaModel> {
         return this.mediaServiceRemoto.subirArchivoAlservidor(body).pipe(
             map(data => {
-                return this.mapearMediaSimpleEntity.transform(data.respuesta.datos)
+                return this.mapearMediaEntityAlMediaModelo.transform(data.respuesta.datos)
             }),
             catchError(error => {
                 return throwError(error)
             })
         )
-    }
-
-    guardarListaAlbumEnLocalStorage(albums: AlbumEntity[]) {
-        return this.mediaServiceLocal.guardarListaAlbum(albums)
-    }
-
-    obtenerListaAlbumDelLocalStorage() : AlbumEntity[] {
-        return this.mediaServiceLocal.obtenerListaAlbum()
     }
 }

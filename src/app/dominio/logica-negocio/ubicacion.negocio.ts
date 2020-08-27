@@ -16,19 +16,9 @@ export class UbicacionNegocio {
 
     }
 
-    // Obtene catalogo de paises
-    obtenerCatalogoPaises(): Observable<CatalogoPaisModel[]> {
-        const data: CatalogoPaisModel[] = this.ubicacionRepository.obtenerPaisesDelLocalStorage()
-        if (data && data.length > 0) {
-            return of(data)
-        } else {
-            return this.ubicacionRepository.obtenerCatalogoPaises()
-        }
-    }
-
-    // Paises
+    // Paises para selector - Remoto
     obtenerCatalogoPaisesParaSelector(): Observable<ItemSelector[]> {
-        const data: ItemSelector[] = this.ubicacionRepository.obtenerPaisesDelLocalStorage()
+        const data: ItemSelector[] = this.ubicacionRepository.obtenerPaisesDelLocalStorageParaItemSelector()
         if (data && data.length > 0) {
             return of(data)
         } else {
@@ -36,20 +26,16 @@ export class UbicacionNegocio {
         }
     }
 
-    // Localidades
+    // Localidades por nombre y pais para selector - Remoto
     obtenerCatalogoLocalidadesPorNombrePorPaisParaSelector(pais:string, query:string): Observable<ItemSelector[]> {
         return this.ubicacionRepository.obtenerCatalogoLocalidadesPorNombrePorPaisParaSelector(pais, query)
     }
 
-    // Local Storage
-    guardarPaisesEnLocalStorage(paises: CatalogoPaisModel[]) {
-        this.ubicacionRepository.guardarPaisesEnLocalStorage(paises)
+    // - Local
+    guardarPaisesDelSelectorEnLocalStorage(paises: ItemSelector[]) {
+        this.ubicacionRepository.guardarPaisesEnElLocalStorageDesdeElItemSelector(paises)
     }
-
-    obtenerPaisesDelLocalStorage() : CatalogoPaisModel[] {
-        return this.ubicacionRepository.obtenerPaisesDelLocalStorage()
-    }
-
+    // - Local
     obtenerPaisesParaSelectorDelLocalStorage() : ItemSelector[] {
         return this.ubicacionRepository.obtenerPaisesDelLocalStorageParaItemSelector()
     }

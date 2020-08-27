@@ -1,38 +1,35 @@
-import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogo-tipo-perfil.model';
-import { PerfilNegocio } from './../../dominio/logica-negocio/perfil.negocio';
-import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
-import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum';
-import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum';
+import { MediaEntity } from './../../dominio/entidades/media.entity';
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
-import { AlbumEntity } from './../../dominio/entidades/album.entity';
-import { AccionesAppBar } from './../../compartido/diseno/enums/acciones-appbar.enum';
-import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service';
-import { MediaSimpleModel } from './../../dominio/modelo/media-simple.model';
-import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface';
-import { ToastComponent } from './../../compartido/componentes/toast/toast.component';
-import { ConvertidorArchivos } from './../../nucleo/util/caster-archivo.service';
-import { CodigosCatalogoTipoMedia } from './../../nucleo/servicios/remotos/codigos-catalogos/catalgo-tipo-media.enum';
+import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum';
+import { AlbumModel } from './../../dominio/modelo/album.model';
+import { RutasLocales } from './../../rutas-locales.enum'
+import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogo-tipo-perfil.model'
+import { PerfilNegocio } from './../../dominio/logica-negocio/perfil.negocio'
+import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum'
+import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum'
+import { AccionesAppBar } from './../../compartido/diseno/enums/acciones-appbar.enum'
+import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service'
+import { MediaModel } from '../../dominio/modelo/media.model'
+import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface'
+import { ToastComponent } from './../../compartido/componentes/toast/toast.component'
+import { ConvertidorArchivos } from './../../nucleo/util/caster-archivo.service'
+import { CodigosCatalogoTipoMedia } from '../../nucleo/servicios/remotos/codigos-catalogos/catalago-tipo-media.enum'
 import { ConfiguracionCamara, ConfiguracionCropper } from '../../compartido/diseno/modelos/foto-editor.interface'
 import { CamaraComponent } from './../../compartido/componentes/camara/camara.component'
 import { UsoItemCircular } from './../../compartido/diseno/enums/uso-item-cir-rec.enum'
 import { ItemCircularCompartido } from './../../compartido/diseno/modelos/item-cir-rec.interface'
 import { MediaNegocio } from './../../dominio/logica-negocio/media.negocio'
-import { MediaEntity } from './../../dominio/entidades/media.entity'
 import { LineaCompartida } from './../../compartido/diseno/modelos/linea.interface'
 import { EstiloDelTextoServicio } from './../../nucleo/servicios/diseno/estilo-del-texto.service'
 import { InfoAccionCirRec } from './../../compartido/diseno/modelos/info-accion-cir-rec.interface'
 import { VariablesGlobales } from './../../nucleo/servicios/generales/variables-globales.service'
 import { UsoAppBar } from './../../compartido/diseno/enums/uso-appbar.enum'
-import { TamanoDeTextoConInterlineado } from './../../compartido/diseno/enums/tamano-letra-con-interlineado.enum'
-import { EstilosDelTexto } from './../../compartido/diseno/enums/estilo-del-texto.enum'
-import { ColorDelTexto } from './../../compartido/diseno/enums/color-del-texto.enum'
 import { EspesorLineaItem } from './../../compartido/diseno/enums/espesor-linea-item.enum'
 import { ColorFondoLinea } from './../../compartido/diseno/enums/color-fondo-linea.enum'
 import { AnchoLineaItem } from './../../compartido/diseno/enums/ancho-linea-item.enum'
 import { TamanoColorDeFondoAppBar } from './../../compartido/diseno/enums/tamano-color-fondo-appbar.enum'
-import { TamanoDeAppBar } from './../../compartido/diseno/enums/tamano-appbar.enum'
 import { ConfiguracionAppbarCompartida } from './../../compartido/diseno/modelos/appbar.interface'
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core'
 import { AppbarComponent } from './../../compartido/componentes/appbar/appbar.component'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ColorCapaOpacidadItem } from 'src/app/compartido/diseno/enums/item-cir-rec-capa-opacidad.enum'
@@ -40,14 +37,13 @@ import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums
 import { WebcamImage } from 'ngx-webcam'
 import { CropperComponent } from 'src/app/compartido/componentes/cropper/cropper.component'
 import { ImageCroppedEvent } from 'ngx-image-cropper'
-import { MediaSimpleEntity } from 'src/app/dominio/entidades/media-simple.entity';
 
 @Component({
   selector: 'app-album-perfil',
   templateUrl: './album-perfil.component.html',
   styleUrls: ['./album-perfil.component.scss']
 })
-export class AlbumPerfilComponent implements OnInit, AfterViewInit {
+export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('appbar', { static: false }) appbar: AppbarComponent
   @ViewChild('camara', { static: false }) camara: CamaraComponent
   @ViewChild('cropper', { static: false }) cropper: CropperComponent
@@ -62,8 +58,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
   public nombreUsuario: string
   public esVisitante: boolean // Visitante true 1, propietario false 0
   public accionAlbum: AccionAlbum // Accion para la que el album esta siendo utilizado
-  public listaTipoPerfiles: CatalogoTipoPerfilModel[]  // Lista de perfiles del local
-  public tipoPerfil: CatalogoTipoPerfilModel // Perfil activo
+
+  // Parametros internos
+  public album: AlbumModel // Album en uso
 
   // Parametros internos
   public cantidadMaximaFotos:number
@@ -74,10 +71,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
   public confPortada: ItemCircularCompartido // Portada del album
   public confBotonUpload: ItemCircularCompartido // Boton siempre visible de upload photos
   public confLinea: LineaCompartida // Linea compartida
-  public album: AlbumEntity // Entidad del album
 
 
-  public listaMediaAlbum: Array<MediaSimpleEntity> // Para almacenar las medias a devolver en caso de crear
+  public listaMediaAlbum: Array<MediaModel> // Para almacenar las medias a devolver en caso de crear
   public itemsAlbum: Array<ItemCircularCompartido> // Array de items compartido
   public itemsAlbumPorDefecto: Array<ItemCircularCompartido> // Array de items compartido - fotos por defecto
   public cantidadItemsPorDefecto: number // Numero total de items por defecto a mostrar
@@ -109,7 +105,6 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.variablesGlobales.mostrarMundo = false
     this.configurarParametrosDeUrl()
-    this.obtenerTipoPerfil()
     this.configurarCamara()
     this.configurarCropper()
     this.configurarToast()
@@ -118,8 +113,6 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
     this.configurarLinea()
     this.confgurarBotonUploadPhotos()
     this.configurarItemsAlbumPorDefecto()
-
-    // Validar album
     this.validarAlbumExistente()
   }
 
@@ -130,8 +123,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
         if (data === AccionesAppBar.IR_A_PAGINA_O_ESTADO_ANTERIOR) {
           // Cuando el album es usado para Crear
           if (this.accionAlbum === AccionAlbum.CREAR) {
-            this.crearAlbumPerfilYGuardarEnStorage()
-            // this.router.navigateByUrl(RutasPresentacion.REGISTRO)
+            this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigoPerfil))
             return
           }
           // Cuando el album es usado para actualizar
@@ -156,6 +148,11 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
     })
   }
 
+  ngOnDestroy(): void {
+    console.log('destruyendo')
+    this.guardarAlbum()
+  }
+
   configurarParametrosDeUrl() {
     if (this.rutaActual.snapshot.params.codigoPerfil) {
       this.codigoPerfil = this.rutaActual.snapshot.params.codigoPerfil
@@ -170,32 +167,61 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Define el tipo de perfil activo
-  obtenerTipoPerfil() {
-    this.listaTipoPerfiles = this.perfilNegocio.obtenerCatalogoTipoPerfilLocal()
-    this.listaTipoPerfiles.forEach(perfil => {
-      if (perfil.codigo === this.codigoPerfil) {
-        this.tipoPerfil = perfil
-      }
-    })
-  }
-
   // Configurar album
   validarAlbumExistente() {
-    // Si el perfil no existe
-    if (!this.tipoPerfil.perfil) {
-      this.tipoPerfil.perfil = {
-        albums: []
+
+    // Validar si album existe
+    // this.variablesGlobales.perfilActivo.albums.forEach(album => {
+    //   if (album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
+    //     this.album = album
+    //   }
+    // })
+    // Si no existe el album, inicializa parametros para usar en el componente
+    if (!this.album) {
+      console.log('el album no existe')
+      // Inicializar el album
+      this.album = {
+        id: '',
+        portada: {},
+        tipo: {
+          codigo: CodigosCatalogoTipoAlbum.PERFIL,
+        },
+        media: []
       }
+      console.log(this.album)
+    } else {
+      // Si el album existe, inicializar variables del componente
+      this.configurarItemsAlbum()
     }
+  }
 
-    // Si el album no existe
-    if (!this.tipoPerfil.perfil.albums) {
-      this.tipoPerfil.perfil['albums'] = []
-    }
-
-    console.log(this.tipoPerfil)
-
+  configurarItemsAlbum() {
+    // Items para el album
+    this.album.media.forEach(media => {
+      this.itemsAlbum.push({
+        id: media._id,
+        idInterno: '',
+        usoDelItem: UsoItemCircular.CIRALBUM,
+        esVisitante: false,
+        urlMedia: media.principal.url,
+        activarClick: false,
+        activarDobleClick: true,
+        activarLongPress: true,
+        mostrarBoton: false,
+        mostrarLoader: true,
+        textoBoton: 'Click to upload',
+        capaOpacidad: {
+          mostrar: false
+        },
+        eventoEnItem: this.eventoEnitemFuncion
+      })
+    })
+    // Definir la portada
+    const portada: MediaModel = this.album.portada
+    this.confPortada.mostrarLoader = true
+    this.confPortada.id = portada._id
+    this.confPortada.urlMedia = portada.principal.url
+    this.confPortada.mostrarBoton = false
   }
 
   configurarCamara() {
@@ -228,7 +254,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
       searchBarAppBar: {
         nombrePerfil: {
           mostrar: true,
-          llaveTexto: 'clasico'
+          llaveTexto: this.obtenerLlaveSegunPerfil()
         },
         mostrarTextoBack: true,
         mostrarTextoHome: false,
@@ -383,16 +409,18 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
       console.log(data)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum[pos] = (data)
+        this.album.media[pos] = data
+        // this.listaMediaAlbum[pos] = (data)
         this.itemsAlbum[pos].id = data._id
         this.itemsAlbum[pos].urlMedia = data.principal.url
+        console.log(this.album.media)
       }
     }, error => {
       console.log(error)
       this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.splice(pos, 1)
+        this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
       }
     })
@@ -424,15 +452,17 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
       console.log(data)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.push(data)
+        this.album.media[pos] = data
+        // this.listaMediaAlbum.push(data)
         this.itemsAlbum[pos].id = data._id
         this.itemsAlbum[pos].urlMedia = data.principal.url
+        console.log(this.album.media)
       }
     }, error => {
       this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.splice(pos, 1)
+        this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
       }
     })
@@ -495,45 +525,48 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
     if (data.accion === AccionesItemCircularRectangular.ESTABLECER_ITEM_PREDETERMINADO) {
       // Cuando la accion del album es Crear
       if (this.accionAlbum === AccionAlbum.CREAR) {
+        // Item portada
         this.confPortada.mostrarBoton = false
         this.confPortada.id = data.informacion.id
         this.confPortada.mostrarLoader = true
         this.confPortada.urlMedia = data.informacion.urlMedia
+
+        // Portada en item album
+        const portadaMedia: MediaModel = this.obtenerMediaPorIdItem(this.confPortada.id)
+        // Definir tipo a la portada
+        portadaMedia.principal.tipo = {
+          codigo: CodigosCatalogoTipoArchivo.IMAGEN
+        }
+        // Setear portada en el album activo
+        this.album.portada = {
+          ...portadaMedia,
+          tipo: {
+            codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
+          },
+        }
         return
       }
     }
   }
 
   // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
-  crearAlbumPerfilYGuardarEnStorage() {
-    const portadaMedia: MediaSimpleEntity = this.obtenerMediaPorIdItem(this.confPortada.id)
-    const album: AlbumEntity = {
-      portada: {
-        tipo: {
-          codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
-        },
-        principal: {
-          ...portadaMedia,
-          tipo: {
-            codigo: CodigosCatalogoTipoArchivo.IMAGEN
-          },
-        },
-      },
-      tipo: {
-        codigo: CodigosCatalogoTipoAlbum.PERFIL,
-      },
-      media: this.listaMediaAlbum
-    }
-    console.log(album)
-    // Obtener lista del local storage
-    // let albumsLocalStorage: AlbumEntity[] = this.mediaNegocio.obtenerListaAlbumDelLocalStorage()
-    // if (!albumsLocalStorage || albumsLocalStorage === null) {
-    //   albumsLocalStorage = []
+  guardarAlbum() {
+    console.log(this.album)
+    // let pos = -1
+    // this.variablesGlobales.perfilActivo.albums.forEach((album, i) => {
+    //   if (this.album.tipo.codigo === album.tipo.codigo) {
+    //     pos = i
+    //   }
+    // })
+    
+    // if (pos >=0 ) {
+    //   // Si el album existe se reemplza en el perfil con las modificaciones
+    //   this.variablesGlobales.perfilActivo.albums[pos] = this.album
+    // } else {
+    //   // Si el album no existe, se inserta en el array de albums
+    //   this.variablesGlobales.perfilActivo.albums.push(this.album)
     // }
-    // // Insertar el album
-    // albumsLocalStorage.push(album)
-    // Guardar en el storage
-    // this.mediaNegocio.guardarListaAlbumEnLocalStorage(albumsLocalStorage)
+    // console.log(this.variablesGlobales.perfilActivo)
   }
 
   obtenerPosicionPorIdItem(id: string) {
@@ -546,9 +579,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit {
     return pos
   }
 
-  obtenerMediaPorIdItem(id: string) : MediaSimpleEntity {
+  obtenerMediaPorIdItem(id: string) : MediaModel {
     let media = null
-    this.listaMediaAlbum.forEach((item, i) => {
+    this.album.media.forEach((item, i) => {
       if (item._id === id) {
         media = item
       }
