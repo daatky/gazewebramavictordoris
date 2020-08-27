@@ -12,7 +12,7 @@ import { PerfilCrearCuentaEntity } from '../entidades/perfil.entity';
 import { PerfilEntity } from '../entidades/perfil.entity';
 import { PagoFacturacion } from '../entidades/catalogos/catalogo-metodo-pago.entity';
 import { PagoModel } from '../modelo/pago.model';
-import { JwtHelperService } from '@auth0/angular-jwt/lib/jwthelper.service';
+import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
 //CuentaRepository
 //iniciarSesion
@@ -108,23 +108,29 @@ export class CuentaNegocio {
 
     obtenerTokenAutenticacion(): Observable<string> {
         const tokenActual = this.repository.obtenerTokenAutenticacion()
-        const helper = new JwtHelperService();
-        const isExpired = helper.isTokenExpired(tokenActual);
-        if (isExpired) {
-            const tokenRefrescar = this.repository.obtenerTokenRefresh();
-            return this.repository.refrescarToken(tokenRefrescar)
-                .pipe(
-                    map((data: TokenModel) => {
-                        this.repository.guardarTokenAutenticacion(data.token);
-                        this.repository.guardarTokenRefresh(data.tokenRefresh);
-                        return data.token
-                    }),
-                    catchError(err => {
-                        return throwError(err)
-                    })
-                )
+
+        if (tokenActual) {
+            const helper = new JwtHelperService();
+            const isExpired = helper.isTokenExpired(tokenActual);
+
+            if (isExpired) {
+                const tokenRefrescar = this.repository.obtenerTokenRefresh();
+                return this.repository.refrescarToken(tokenRefrescar)
+                    .pipe(
+                        map((data: TokenModel) => {
+                            this.repository.guardarTokenAutenticacion(data.token);
+                            this.repository.guardarTokenRefresh(data.tokenRefresh);
+                            return data.token
+                        }),
+                        catchError(err => {
+                            return throwError(err)
+                        })
+                    )
+            } else {
+                return of(tokenActual);
+            }
         } else {
-            return of(tokenActual);
+            return of(tokenActual)
         }
     }
 }

@@ -1,6 +1,6 @@
 export enum Cuenta {
-    INICIAR_SESION = "auth/login",
+    INICIAR_SESION = "auth/iniciar-sesion",
     CUENTA = "cuenta",
     VALIDAR_CUENTA = "cuenta/validar",
-    REFRESCAR_TOKEN = "auth/refreshToken"
+    REFRESCAR_TOKEN = "auth/refrescar-token"
 }
