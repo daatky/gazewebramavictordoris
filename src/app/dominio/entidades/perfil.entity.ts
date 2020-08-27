@@ -10,7 +10,7 @@ import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity } from "./catalogos/catalogo-tipo-perfil.entity";
 
 export interface PerfilEntity {
-  id?: string,
+  _id?: string,
   nombreContacto?: string,
   nombre?: string,
   tipoPerfil?: CatalogoTipoPerfilEntity,
@@ -33,39 +33,3 @@ export interface PerfilCrearCuentaEntity {
   tipoPerfil: string,
   albums: Array<AlbumEntity>[]
 }
-
-/*
-    {
-      "nombreContacto": "string",
-      "nombre": "string",
-      "tipoPerfil": "TIPERFIL_2 | TIPERFIL_1 ",
-      "album": [
-        {
-          "nombre": "string",
-          "tipoAlbum": "CATALB_1 | CATALB_2 ",
-          "archivos": [
-            {
-              "idMedia": "string"
-            }
-          ],
-          "portada": {
-            "idMedia": "string"
-          }
-        }
-      ],
-      "telefono": [
-        {
-          "numero": "string"
-        }
-      ],
-      "direccion": [
-        {
-          "latitud": 0,
-          "longitud": 0,
-          "descripcion": " | TIPERFIL_1 "
-        }
-      ],
-      "codigoLocalidad": "LOC_745",
-      "codigoPais": "PAI_31"
-    }
-*/

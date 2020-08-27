@@ -16,16 +16,22 @@ export class IdiomaRepository {
     ) { }
     guardarIdiomaLocal(idioma: CatalogoIdiomaEntity){
         this.localStorage.guardarIdiomaLocal(idioma)
-    }
-
+    }    
     obtenerIdiomaLocal():CatalogoIdiomaEntity{
         return this.localStorage.obtenerIdiomaLocal()
+    }
+    guardarIdiomas(idiomas:Array<CatalogoIdiomaEntity>){
+        this.localStorage.guardarIdiomas(idiomas)
+    }   
+    obtenerIdiomas(): Array<CatalogoIdiomaEntity>{
+        return this.localStorage.obtenerIdiomas()
     }
     //  obtenerCatalogoIdiomas():Observable<RespuestaRepositorio<any>>{
     obtenerCatalogoIdiomas(): Observable<CatalogoIdiomaEntity[]> {
         return this.idiomaService.obtenerCatalogoIdiomas()
             .pipe(
                 map(data => {
+                    console.log(data)
                     return data.respuesta.datos;
                 }),
                 catchError(err => {

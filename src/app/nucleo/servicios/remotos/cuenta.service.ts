@@ -9,6 +9,7 @@ import { PagoEntity } from "../../../dominio/entidades/pago.entity";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { CuentaRepository } from 'src/app/dominio/repositorio/cuenta.repository';
 import { TokenEntity } from "../../../dominio/entidades/token.entity";
+import { IniciarSesionEntity } from "../../../dominio/entidades/cuenta.entity";
 
 @Injectable({ providedIn: 'root' })
 export class CuentaService {
@@ -20,8 +21,8 @@ export class CuentaService {
     ///
 
     // OBTENER el catalo
-    iniciarSesion(datos: Object): Observable<RespuestaRemota<any>> {
-        return this.http.post<RespuestaRemota<any>>(APIGAZE.BASE + Cuenta.INICIAR_SESION.toString(), datos);
+    iniciarSesion(datos: Object): Observable<RespuestaRemota<IniciarSesionEntity>> {
+        return this.http.post<RespuestaRemota<IniciarSesionEntity>>(APIGAZE.BASE + Cuenta.INICIAR_SESION.toString(), datos);
 
     }
 

@@ -23,7 +23,7 @@
                         {{ 'visiteSitio' | translate}}
                     </p>
             </div>
-            <div class="divBoton">
+            <div *ngIf="botonCompartido" class="divBoton">
                 <app-button class="centrar" [botonCompartido]='botonCompartido'></app-button>
             </div>
             <p class="centrarText divLetraLogin boldSombra enMayusculas letra-7-con-interlineado-4 txt-amarillo-base">
@@ -39,13 +39,14 @@
                 <app-input [inputCompartido]='inputContrasena'></app-input>
                 <div class="div249"></div>
                 <div class="textOlvideContrasena letra-2-con-interlineado-igual regular txt-blanco">{{ 'olvideContrasena' | translate }}</div>
-                <div class="div522">
+                <div *ngIf="botonSubmit" class="div522">
                     <app-button class="centrar" [botonCompartido]='botonSubmit' type="submit"></app-button>
                 </div>
             </form> 
-            <div class="divEspacioReflexion">
+            <div *ngIf="pensamientoCompartido">
                 <app-pensamiento-compartido [pensamientoCompartido]='pensamientoCompartido'></app-pensamiento-compartido> 
-            </div> 
+            </div>            
         </div>
     </div>
 </div>
+<!--<app-toast [configuracion]='configuracion'></app-toast>-->

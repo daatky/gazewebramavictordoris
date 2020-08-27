@@ -17,6 +17,7 @@ import { PensamientoCompartidoComponent } from 'src/app/compartido/componentes/p
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 
 @Component({
   selector: 'app-login',
@@ -24,13 +25,13 @@ import { RutasLocales } from 'src/app/rutas-locales.enum';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-
+  loginForm: FormGroup;
   pensamientoCompartido: PensamientoCompartido
   inputEmail: InputCompartido
   inputContrasena: InputCompartido
-  loginForm: FormGroup;
   botonCompartido: BotonCompartido
   botonSubmit: BotonCompartido
+  //configuracion: ConfiguracionToast
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild(PensamientoCompartidoComponent) pensamiento: PensamientoCompartidoComponent
   @ViewChild('portadaGazeComponent') portadaGazeComponent: PortadaGazeComponent
@@ -43,26 +44,25 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private cuentaNegocio: CuentaNegocio,
   ) {
+    
+  }
+  ngOnInit(): void {
     this.iniciarElementos()
   }
-
-  ngOnInit(): void {
-  }
-
+  
   //Inicia todos los componentes
   async iniciarElementos() {
-    //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
-    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
-    //this.idiomas=['EN','FR','ES','DE','IT','PT']    
-    this.botonCompartido = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('sitioWeb'), tamanoTexto: TamanoDeTextoConInterlineado.L6_IGUAL, colorTexto: ColorTextoBoton.BLANCO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarLanding() }
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[a-z0-9_-]{6,18}$/)]],
     });
     this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.email }
-    this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }
-    //L7_IGUAL 
-    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.iniciarSesion }
+    this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }    
+    this.botonCompartido = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('sitioWeb'), tamanoTexto: TamanoDeTextoConInterlineado.L6_IGUAL, colorTexto: ColorTextoBoton.BLANCO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarLanding() }
+    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }    
+    //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
+    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
+    console.log(this.pensamientoCompartido)
   }
 
   ngAfterViewInit(): void {
@@ -74,22 +74,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
   enviarLanding() {
     this.router.navigateByUrl(RutasLocales.BIENVENIDO);
   }
-
-  iniciarSesion = () => {
+  //= () =>
+  iniciarSesion() {
     if (this.loginForm.valid) {  
+     // this.configuracion={cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       //this.botonSubmit.enProgreso=true
       this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
       .subscribe(res=>{    
+        console.log(res)
         //this.botonSubmit.enProgreso=false
-        this.cuentaNegocio.guardarTokenAutenticacion(res['token'])
-        this.cuentaNegocio.guardarTokenRefresh(res['tokenRefresh'])
-        this.cuentaNegocio.almacenarCatalogoPerfiles(res['datos'])
       },error=>{
         //this.botonSubmit.enProgreso=false
         console.log(error)
+       // this.configuracion={cerrarClickOutside:true,mostrarLoader:false,mostrarToast:false,texto:error}
       })
     } else {
-      console.log('aqui 3')  
       this.inputEmail.error = true
       this.inputContrasena.error = true
     }

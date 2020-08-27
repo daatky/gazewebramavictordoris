@@ -14,6 +14,7 @@ import { PagoFacturacion } from '../entidades/catalogos/catalogo-metodo-pago.ent
 import { PagoModel } from '../modelo/pago.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
+import { PerfilModel } from '../modelo/perfil.model';
 //CuentaRepository
 //iniciarSesion
 @Injectable({
@@ -27,19 +28,29 @@ export class CuentaNegocio {
         private repository: CuentaRepository
     ) { }
 
-    iniciarSesion(email: string, contrasena: string): Observable<Array<any>> {
+    iniciarSesion(email: string, contrasena: string): Observable<PerfilModel[]> {
         let data = { email: email, contrasena: contrasena }
         return this.cuentaRepository.iniciarSesion(data)
             .pipe(
                 map(data => {
-                    return data
+                    /*this.cuentaRepository.guardarTokenAutenticacion(data['datos']['token'])
+                    this.cuentaRepository.guardarTokenRefresh(data['datos']['tokenRefresh'])*/
+                    /*
+                    if(data['token']&&data['tokenRefresh']&&data['datos']){
+                        this.cuentaRepository.guardarTokenAutenticacion(data['token'])
+                        this.cuentaRepository.guardarTokenRefresh(data['tokenRefresh'])
+                        //this.cuentaRepository.almacenarCatalogoPerfiles(data['datos'])
+                        this.cuentaRepository.almacenarCatalogoPerfiles(this.formatearPerfilesLocalStorage(data['datos']))
+                    }      
+                    */
+                    return data.perfil
                 }),
                 catchError(err => {
                     return throwError(err)
                 })
             )
     }
-    guardarTokenAutenticacion(token: string) {
+    /*guardarTokenAutenticacion(token:string){
         this.cuentaRepository.guardarTokenAutenticacion(token)
     }
     guardarTokenRefresh(token: string) {
@@ -47,7 +58,7 @@ export class CuentaNegocio {
     }
     almacenarCatalogoPerfiles(tipoPerfiesUser: Array<any>) {
         this.cuentaRepository.almacenarCatalogoPerfiles(this.formatearPerfilesLocalStorage(tipoPerfiesUser))
-    }
+    }*/
     formatearPerfilesLocalStorage(tipoPerfiesUser: Array<any>): Array<CatalogoTipoPerfilModel> {
         let catalogoTipoPerfilModel: Array<CatalogoTipoPerfilModel> = []
         for (let i = 0; i < tipoPerfiesUser.length; i++) {

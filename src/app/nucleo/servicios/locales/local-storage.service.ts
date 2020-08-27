@@ -27,7 +27,14 @@ export class LocalStorage {
     guardarIdiomaLocal(idioma: CatalogoIdiomaEntity) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.IDIOMA, idioma)
     }
+    //=======================IDIOMAS
+    obtenerIdiomas(): Array<CatalogoIdiomaEntity> {
+        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.IDIOMAS)
+    }
 
+    guardarIdiomas(idiomas: Array<CatalogoIdiomaEntity>) {
+        this.metodosLocalStorageService.guardar(LlavesLocalStorage.IDIOMAS, idiomas)
+    }
     //===================== TOKEN AUTENTICACION
     obtenerTokenAutenticacion() {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.AUTH_TOKEN)

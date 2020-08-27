@@ -1,12 +1,12 @@
-<div class="{{divPensamiento}}">
-    <div *ngIf="pensamientoCompartido.tituloPensamiento">
+<div *ngIf="divPensamiento!==undefined || divPensamiento!==null" class="{{divPensamiento}}">
+    <div *ngIf="pensamientoCompartido && pensamientoCompartido.tituloPensamiento">
         <p  class="boldSombra letra-3-con-interlineado-igual txt-blanco">            
             {{pensamientoCompartido.tituloPensamiento}}  
         </p>
         <div class="div249">                    
         </div>
     </div> 
-    <div class="{{pensamientoCompartido.tipoPensamiento}}" >   
+    <div  *ngIf="pensamientoCompartido" class="{{pensamientoCompartido.tipoPensamiento}}" >   
         <div *ngIf="pensamientoCompartido.subtitulo">{{pensamientoCompartido.subtitulo}}</div> 
         <app-lista-vertical *ngIf="pensamientoCompartido.esLista; else noLista" [dataLista]='dataLista'> 
             <div *ngFor='let pensamiento of dataLista.lista; let i=index'>

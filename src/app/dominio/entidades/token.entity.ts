@@ -1,4 +1,4 @@
 export interface TokenEntity {
-    token: string,
+    tokenAccess: string,
     tokenRefresh: string
 }

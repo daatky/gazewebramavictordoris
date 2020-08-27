@@ -8,6 +8,7 @@ import { UsuarioCrearCuentaEntity } from '../entidades/usuario.entity';
 import { PagoEntity } from '../entidades/pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";
+import { IniciarSesionModel } from "../modelo/iniciar-sesion.model";
 @Injectable({
     providedIn: 'root'
 })
@@ -18,11 +19,11 @@ export class CuentaRepository {
         private cuentaService: CuentaService,
         private localStorage: LocalStorage
     ) { }
-    iniciarSesion(datos: Object): Observable<any> {
+    iniciarSesion(datos: Object): Observable<IniciarSesionModel> {
         return this.cuentaService.iniciarSesion(datos)
             .pipe(
                 map(data => {
-                    return data.respuesta;
+                    return data.respuesta.datos as IniciarSesionModel;
                 }),
                 catchError(err => {
                     return throwError(err)
