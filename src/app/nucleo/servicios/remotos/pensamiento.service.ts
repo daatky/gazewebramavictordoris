@@ -6,7 +6,7 @@ import { Pensamiento } from './rutas/pensamientos.enum';
 import { RespuestaRemota } from '../../util/respuesta';
 import { PensamientoEntity } from "../../../../app/dominio/entidades/pensamiento.entity";
 import { APIGAZE } from './rutas/api-gaze.enum';
-import { PensamientoRemotoModel } from 'src/app/dominio/modelo/pensamiento.model';
+
 
 @Injectable({ providedIn: 'root' })
 export class PensamientoService {
@@ -33,7 +33,8 @@ export class PensamientoService {
     obtenerPensamientosPrivados(idPerfil:string):Observable<RespuestaRemota<Array<PensamientoEntity>>>{
         return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO_PRIVADO.toString()+`/${idPerfil}`);
     }*/
-    crearPensamiento(data:PensamientoRemotoModel):Observable<RespuestaRemota<PensamientoEntity>>{
+    //PensamientoRemotoModel
+    crearPensamiento(data:PensamientoEntity):Observable<RespuestaRemota<PensamientoEntity>>{
         return this.http.post<RespuestaRemota<PensamientoEntity>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString(),data);
     }
     actualizarPensamiento(data:object):Observable<RespuestaRemota<string>> {

@@ -10,14 +10,14 @@ import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity } from "./catalogos/catalogo-tipo-perfil.entity";
 
 export interface PerfilEntity {
-    id: string,
-    nombreContacto: string,
-    nombre: string,
-    tipoPerfil: CatalogoTipoPerfilEntity,
-    usuario: UsuarioEntity,
-    albums: Array<AlbumEntity>[],
+    _id?: string,
+    nombreContacto?: string,
+    nombre?: string,
+    tipoPerfil?: CatalogoTipoPerfilEntity,
+    usuario?: UsuarioEntity,
+    albums?: Array<AlbumEntity>[],
     estado?: CatalogoEstadoEntity,
-    direcciones: Array<DireccionEntity>[],
+    direcciones?: Array<DireccionEntity>[],
     telefonos?: Array<TelefonoEntity>[],
     proyectos?: Array<ProyectoEntity>[],
     pensamientos?: Array<PensamientoEntity>[],

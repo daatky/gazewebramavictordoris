@@ -43,10 +43,7 @@
                     <app-button class="centrar" [botonCompartido]='botonSubmit' type="submit"></app-button>
                 </div>
             </form> 
-            <div *ngIf="pensamientoCompartido">
-                <app-pensamiento-compartido [pensamientoCompartido]='pensamientoCompartido'></app-pensamiento-compartido> 
-            </div>            
+            <app-pensamiento-compartido *ngIf="pensamientoCompartido" [pensamientoCompartido]='pensamientoCompartido'></app-pensamiento-compartido>           
         </div>
     </div>
 </div>
-<!--<app-toast [configuracion]='configuracion'></app-toast>-->

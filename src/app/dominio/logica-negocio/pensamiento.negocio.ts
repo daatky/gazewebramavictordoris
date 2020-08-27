@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
-import { PensamientoEntity } from "../entidades/pensamiento.entity";
+import { PensamientoEntity, TraduccionPensamientoEntity } from "../entidades/pensamiento.entity";
 import { map, catchError } from "rxjs/operators";
 import { PensamientoRepository } from "../repositorio/pensamiento.repository";
 import { PensamientoModel } from '../modelo/pensamiento.model';
@@ -18,12 +18,10 @@ export class PensamientoNegocio {
     obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
         return this.pensamientoRepository.obtenerPensamientoAleatorio()
             .pipe(
-                map((data: PensamientoModel) => {    
-                    console.log(data)                
+                map((data: PensamientoModel) => {                
                     return data
                 }),
                 catchError(err => {
-                    console.log(err)
                     return throwError(err)
                 })
             )
@@ -69,7 +67,8 @@ export class PensamientoNegocio {
             )
     }
     crearPensamiento(idPerfil:string,publico:boolean,pensamiento:string):Observable<PensamientoModel> {
-        return this.pensamientoRepository.crearPensamiento({perfil:idPerfil,texto:pensamiento,publico:publico})
+        let traduccionTexto:Array<TraduccionPensamientoEntity>=[{texto:pensamiento}]        
+        return this.pensamientoRepository.crearPensamiento({perfil:{_id:idPerfil},traducciones:traduccionTexto,publico:publico})
             .pipe(
                 map((data: PensamientoModel) => {
                     return data

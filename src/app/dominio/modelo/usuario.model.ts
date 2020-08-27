@@ -1,4 +1,4 @@
-interface UsuarioModel {
+export interface UsuarioModel {
     id?: string,
     email?: string,
     fechaNacimiento?: Date,

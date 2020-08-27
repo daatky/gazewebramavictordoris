@@ -17,7 +17,6 @@ import { PensamientoCompartidoComponent } from 'src/app/compartido/componentes/p
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
-import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 
 @Component({
   selector: 'app-login',
@@ -62,7 +61,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }    
     //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
     this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
-    console.log(this.pensamientoCompartido)
   }
 
   ngAfterViewInit(): void {

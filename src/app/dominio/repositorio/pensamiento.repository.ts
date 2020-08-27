@@ -3,7 +3,8 @@ import { PensamientoService } from "../../nucleo/servicios/remotos/pensamiento.s
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from 'rxjs/operators'
 import { PensamientoEntity, PensamientoMapperService } from "../entidades/pensamiento.entity";
-import { PensamientoModel, PensamientoRemotoModel } from '../modelo/pensamiento.model';
+import { PensamientoModel } from '../modelo/pensamiento.model';
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,44 +18,16 @@ export class PensamientoRepository {
     }
 
     obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
-        console.log('VOY A ONTENER LOS PENSAMIENTO ALEATORIOS')
         return this.pensamientoService.obtenerPensamientoAleatorio()
             .pipe(
                 map(data => {
                     return this.pensamientoMapperService.transform(data.respuesta.datos);            
                 }),
                 catchError(err => {
-                    console.log(err)
                     return throwError(err)
                 })
             )
     }
-    /*
-    obtenerPensamientoPublicos(idPerfil:string):Observable<Array<PensamientoModel>>{
-        return this.pensamientoService.obtenerPensamientoPublicos(idPerfil)
-        .pipe(
-            map(data=> {
-                return this.pensamientoMapperService.transform(data.respuesta.datos);
-            }),
-            catchError(err => {
-                console.log(err)
-                return throwError(err)
-            })
-        )
-    }
-    obtenerPensamientosPrivados(idPerfil:string):Observable<Array<PensamientoModel>>{
-        return this.pensamientoService.obtenerPensamientosPrivados(idPerfil)
-        .pipe(
-            map(data=> {
-                console.log(data)
-                return this.pensamientoMapperService.transform(data.respuesta.datos);
-            }),
-            catchError(err => {
-                console.log(err)
-                return throwError(err)
-            })
-        )
-    }*/
     obtenerPensamientos(idPerfil:string,esPrivado:boolean):Observable<Array<PensamientoModel>>{
         return this.pensamientoService.obtenerPensamientos(idPerfil,esPrivado)
         .pipe(
@@ -67,7 +40,8 @@ export class PensamientoRepository {
             })
         )
     }
-    crearPensamiento(datos:PensamientoRemotoModel):Observable<PensamientoModel>{
+    //PensamientoRemotoModel
+    crearPensamiento(datos:PensamientoEntity):Observable<PensamientoModel>{
         return this.pensamientoService.crearPensamiento(datos)
         .pipe(
             map(data => {

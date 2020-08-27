@@ -17,7 +17,7 @@ export interface PensamientoEntity {
 }
 
 export interface TraduccionPensamientoEntity {
-    id?:string,
+    _id?:string,
     texto?:string,
     idioma?:CatalogoIdiomaEntity,
     original?:string
