@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
-import { PensamientoEntity } from "../entidades/pensamiento.entity";
+import { PensamientoEntity, TraduccionPensamientoEntity } from "../entidades/pensamiento.entity";
 import { map, catchError } from "rxjs/operators";
 import { PensamientoRepository } from "../repositorio/pensamiento.repository";
 import { PensamientoModel } from '../modelo/pensamiento.model';
@@ -11,19 +11,17 @@ import { VariablesGlobales, Paginacion } from 'src/app/nucleo/servicios/generale
 })
 export class PensamientoNegocio {
     constructor(
-        private variablesGlobales:VariablesGlobales,
+        private variablesGlobales: VariablesGlobales,
         //private pensamientoRepository:PensamientoRepository
         private pensamientoRepository: PensamientoRepository
     ) { }
     obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
         return this.pensamientoRepository.obtenerPensamientoAleatorio()
             .pipe(
-                map((data: PensamientoModel) => {    
-                    console.log(data)                
+                map((data: PensamientoModel) => {
                     return data
                 }),
                 catchError(err => {
-                    console.log(err)
                     return throwError(err)
                 })
             )
@@ -56,10 +54,10 @@ export class PensamientoNegocio {
                 })
             )
     }*/
-    obtenerPensamientos(idPerfil:string,esPrivado:boolean){
-        return this.pensamientoRepository.obtenerPensamientos(idPerfil,esPrivado)
+    obtenerPensamientos(idPerfil: string, esPrivado: boolean) {
+        return this.pensamientoRepository.obtenerPensamientos(idPerfil, esPrivado)
             .pipe(
-                map((data:Array<PensamientoModel>) => {
+                map((data: Array<PensamientoModel>) => {
                     return data
                 }),
                 catchError(err => {
@@ -68,8 +66,9 @@ export class PensamientoNegocio {
                 })
             )
     }
-    crearPensamiento(idPerfil:string,publico:boolean,pensamiento:string):Observable<PensamientoModel> {
-        return this.pensamientoRepository.crearPensamiento({perfil:idPerfil,texto:pensamiento,publico:publico})
+    crearPensamiento(idPerfil: string, publico: boolean, pensamiento: string): Observable<PensamientoModel> {
+        let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
+        return this.pensamientoRepository.crearPensamiento({ perfil: { _id: idPerfil }, traducciones: traduccionTexto, publico: publico })
             .pipe(
                 map((data: PensamientoModel) => {
                     return data
@@ -80,8 +79,8 @@ export class PensamientoNegocio {
                 })
             )
     }
-    actualizarPensamiento(idPensamiento:string,pensamiento:string):Observable<string>{
-        return this.pensamientoRepository.actualizarPensamiento({_id:idPensamiento,texto:pensamiento})
+    actualizarPensamiento(idPensamiento: string, pensamiento: string): Observable<string> {
+        return this.pensamientoRepository.actualizarPensamiento({ _id: idPensamiento, texto: pensamiento })
             .pipe(
                 map((data: string) => {
                     return data
@@ -92,7 +91,7 @@ export class PensamientoNegocio {
                 })
             )
     }
-    actualizarEstadoPensamiento(idPensamiento:string):Observable<PensamientoModel>{
+    actualizarEstadoPensamiento(idPensamiento: string): Observable<PensamientoModel> {
         return this.pensamientoRepository.actualizarEstadoPensamiento(idPensamiento)
             .pipe(
                 map((data: PensamientoModel) => {
@@ -104,7 +103,7 @@ export class PensamientoNegocio {
                 })
             )
     }
-    eliminarPensamiento(idPensamiento:string):Observable<string>{
+    eliminarPensamiento(idPensamiento: string): Observable<string> {
         return this.pensamientoRepository.eliminarPensamiento(idPensamiento)
             .pipe(
                 map(data => {
@@ -116,11 +115,11 @@ export class PensamientoNegocio {
                 })
             )
     }
-    cargarMasPensamientos(idPerfil:string,limite:number,pagina:number,esPrivado:boolean):Observable<Array<PensamientoModel>>{
-        return this.pensamientoRepository.cargarMasPensamientos(idPerfil,limite,pagina,esPrivado)
+    cargarMasPensamientos(idPerfil: string, limite: number, pagina: number, esPrivado: boolean): Observable<Array<PensamientoModel>> {
+        return this.pensamientoRepository.cargarMasPensamientos(idPerfil, limite, pagina, esPrivado)
             .pipe(
                 map(data => {
-                    this.llenarDatos(this.variablesGlobales.paginacionPublico.actual,this.variablesGlobales.paginacionPublico.total,data.length,esPrivado)                    
+                    this.llenarDatos(this.variablesGlobales.paginacionPublico.actual, this.variablesGlobales.paginacionPublico.total, data.length, esPrivado)
                     return data
                 }),
                 catchError(err => {
@@ -130,24 +129,24 @@ export class PensamientoNegocio {
             )
     }
     //LLega la pagina actual en la que nos encontramos,total que esta en la aplicacion, total de paginas que el backend envia, 
-    llenarDatos(actual:number,total:number,nuevoTotal:number,esPrivado:boolean){
+    llenarDatos(actual: number, total: number, nuevoTotal: number, esPrivado: boolean) {
         //this.variablesGlobales.paginacionPublico=this.llenarDatos(this.variablesGlobales.paginacionPublico.actual,this.variablesGlobales.paginacionPublico.total,data.length)                    
-        let respuesta={actual:1,total:undefined}
-        if(!total){
+        let respuesta = { actual: 1, total: undefined }
+        if (!total) {
             console.log('NO EXISTE')
             //Guardar total paginacion
-            respuesta.total=nuevoTotal
+            respuesta.total = nuevoTotal
         }
-        if(total===actual){
-            respuesta.actual=-1
-        }else{
+        if (total === actual) {
+            respuesta.actual = -1
+        } else {
             respuesta.actual++
         }
         //Para asignar a la varible que le corresponda 
-        if(esPrivado){
-            this.variablesGlobales.paginacionPrivado=respuesta
-        }else{
-            this.variablesGlobales.paginacionPublico=respuesta
+        if (esPrivado) {
+            this.variablesGlobales.paginacionPrivado = respuesta
+        } else {
+            this.variablesGlobales.paginacionPublico = respuesta
         }
     }
 }

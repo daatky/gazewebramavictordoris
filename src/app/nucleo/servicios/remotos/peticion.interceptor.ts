@@ -75,14 +75,18 @@ export class PeticionInterceptor implements HttpInterceptor {
                     return event;
                 }),
                 catchError((error: HttpErrorResponse) => {
-                    let data = {};
-                    data = {
-                        reason: error && error.error && error.error.reason ? error.error.reason : '',
-                        //status: error.status
-                    };
-                    //this.errorDialogService.openDialog(data);
-                    console.log("Interceptor Error", data);
-                    return throwError(error);
+                    if (error.status) {
+                        if (error.status === 401) {
+                            return throwError("No tienes autorizacion");
+                        } else {
+                            if (error.status === 404) {
+                                return throwError("No encontrado");
+                            } else {
+                                return throwError("Lo sentimos ocurrio un error al procesar tu solicitid, intenta mas tarde");
+                            }
+                        }
+                    }
+                    return throwError(error)
                 }));
         }))
 

@@ -1,20 +1,23 @@
-<div *ngIf="divPensamiento!==undefined || divPensamiento!==null" class="{{divPensamiento}}">
-    <div *ngIf="pensamientoCompartido && pensamientoCompartido.tituloPensamiento">
-        <p  class="boldSombra letra-3-con-interlineado-igual txt-blanco">            
-            {{pensamientoCompartido.tituloPensamiento}}  
-        </p>
-        <div class="div249">                    
+<div *ngIf="divPensamiento!==undefined || divPensamiento!==null">
+    <div class="{{divPensamiento}}">
+        <div *ngIf="pensamientoCompartido && pensamientoCompartido.tituloPensamiento">
+            <p  class="boldSombra letra-3-con-interlineado-igual txt-blanco">            
+                {{pensamientoCompartido.tituloPensamiento}}  
+            </p>
+            <div class="div249">                    
+            </div>
+        </div> 
+        <div  *ngIf="pensamientoCompartido" class="{{pensamientoCompartido.tipoPensamiento}}" >   
+            <div *ngIf="pensamientoCompartido.subtitulo">{{pensamientoCompartido.subtitulo}}</div> 
+            <app-lista-vertical *ngIf="pensamientoCompartido.esLista; else noLista" [dataLista]='dataLista'> 
+                <div *ngFor='let pensamiento of dataLista.lista; let i=index'>
+                    <app-item-pensamiento (press)="eventoClickLargo(i, pensamiento)"  [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='configurarDatos(i,pensamiento)'></app-item-pensamiento>
+                </div>         
+            </app-lista-vertical>
+            <ng-template #noLista>
+                <app-item-pensamiento [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='dataPensamiento'></app-item-pensamiento>
+            </ng-template>
+            <label class="error italic txt-rojo-base">{{error}}</label>
         </div>
-    </div> 
-    <div  *ngIf="pensamientoCompartido" class="{{pensamientoCompartido.tipoPensamiento}}" >   
-        <div *ngIf="pensamientoCompartido.subtitulo">{{pensamientoCompartido.subtitulo}}</div> 
-        <app-lista-vertical *ngIf="pensamientoCompartido.esLista; else noLista" [dataLista]='dataLista'> 
-            <div *ngFor='let pensamiento of dataLista.lista; let i=index'>
-                <app-item-pensamiento (press)="eventoClickLargo(i, pensamiento)"  [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='configurarDatos(i,pensamiento)'></app-item-pensamiento>
-            </div>         
-        </app-lista-vertical>
-        <ng-template #noLista>
-            <app-item-pensamiento [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='dataPensamiento'></app-item-pensamiento>
-        </ng-template>
     </div>
 </div>
