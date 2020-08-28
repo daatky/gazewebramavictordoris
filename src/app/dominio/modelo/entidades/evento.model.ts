@@ -4,13 +4,13 @@ import { ConfiguracionEventoModel } from "../catalogos/configuracion-evento.mode
 import { ProyectoModel } from "./proyecto.model";
 
 export interface EventoModel {
-    id: string,
-    estado: CatalogoEstadoModel,
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    fechaInicio: Date,
-    fechaFin: Date,
-    configuracionEvento: ConfiguracionEventoModel, //CONFIGURACION EVENTO
-    formulas: Array<CatalogoFormulaEventoModel>,
-    proyectos: Array<ProyectoModel>
+    id?: string,
+    estado?: CatalogoEstadoModel,
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    fechaInicio?: Date,
+    fechaFin?: Date,
+    configuracionEvento?: ConfiguracionEventoModel, //CONFIGURACION EVENTO
+    formulas?: Array<CatalogoFormulaEventoModel>,
+    proyectos?: Array<ProyectoModel>
 }

@@ -4,11 +4,11 @@ import { NoticiaModel } from "./noticia.model";
 import { PerfilModel } from "../perfil.model";
 
 export interface VotoNoticiaModel {
-    id: string
-    estado: CatalogoEstadoModel
-    fechaCreacion: Date
-    fechaActualizacion: Date
-    perfil: PerfilModel
-    noticia: NoticiaModel
-    descripcion: string 
+    id?: string
+    estado?: CatalogoEstadoModel
+    fechaCreacion?: Date
+    fechaActualizacion?: Date
+    perfil?: PerfilModel
+    noticia?: NoticiaModel
+    descripcion?: string 
 }

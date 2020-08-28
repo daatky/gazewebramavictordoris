@@ -7,15 +7,15 @@ import { CatalogoMetodoPagoModel } from "../catalogo-metodo-pago.model";
 
 
 export interface TransaccionModel {
-    id: string,
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    estado: CatalogoEstadoModel,
-    monto: number,
-    moneda: CatalogoTipoMonedaModel,
-    descripcion: string,
-    origen: CatalogoOrigenModel,
-    balance: Array<BalanceModel>,
-    beneficiario: BeneficiarioModel,
-    metodoPago: CatalogoMetodoPagoModel
+    id?: string,
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    estado?: CatalogoEstadoModel,
+    monto?: number,
+    moneda?: CatalogoTipoMonedaModel,
+    descripcion?: string,
+    origen?: CatalogoOrigenModel,
+    balance?: Array<BalanceModel>,
+    beneficiario?: BeneficiarioModel,
+    metodoPago?: CatalogoMetodoPagoModel
 }

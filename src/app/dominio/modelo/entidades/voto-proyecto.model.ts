@@ -6,14 +6,14 @@ import { CatalogoFormulaEventoModel } from "../catalogos/catalogo-formula-evento
 import { CatalogoIdiomaModel } from "../catalogos/catalogo-idioma.model";
 
 export interface VotoProyectoModel {
-    id: string,
-    estado: CatalogoEstadoModel
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    proyecto: ProyectoModel,
-    perfil: PerfilModel,
-    descripcion: string
-    tipo: CatalogoTipoVotoModel,
-    numeroVoto: number,
-    formulaEvento: CatalogoFormulaEventoModel
+    id?: string,
+    estado?: CatalogoEstadoModel
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    proyecto?: ProyectoModel,
+    perfil?: PerfilModel,
+    descripcion?: string
+    tipo?: CatalogoTipoVotoModel,
+    numeroVoto?: number,
+    formulaEvento?: CatalogoFormulaEventoModel
 }

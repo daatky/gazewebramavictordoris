@@ -6,14 +6,14 @@ import { ProyectoModel } from "./proyecto.model";
 import { ComentarioModel } from "./comentario.model";
 
 export interface ParticipanteProyectoModel {
-    id: string,
-    estado: CatalogoEstadoModel,
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    roles: Array<RolModel>,
-    configuraciones: Array<ConfiguracionModel>,
-    comentarios: Array<ComentarioModel>,
-    proyecto: ProyectoModel,
-    coautor: PerfilModel,
-    totalComentarios: number
+    id?: string,
+    estado?: CatalogoEstadoModel,
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    roles?: Array<RolModel>,
+    configuraciones?: Array<ConfiguracionModel>,
+    comentarios?: Array<ComentarioModel>,
+    proyecto?: ProyectoModel,
+    coautor?: PerfilModel,
+    totalComentarios?: number
 }

@@ -10,25 +10,25 @@ import { EstrategiaModel } from "./estrategia.model";
 import { CatalogoTipoMonedaModel } from "../catalogos/catalogo-tipo-moneda.model";
 
 export interface ProyectoModel {
-    id: string,
-    estado: CatalogoEstadoModel,
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    totalVotos: number,
-    actualizado: boolean,
-    paticipantes: Array<ParticipanteProyectoModel>,
-    recomendadoAdmin: boolean,
-    valorEstimado: number,
-    tipo: CatalogoTipoProyectoModel,
-    perfil: PerfilModel,
+    id?: string,
+    estado?: CatalogoEstadoModel,
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    totalVotos?: number,
+    actualizado?: boolean,
+    paticipantes?: Array<ParticipanteProyectoModel>,
+    recomendadoAdmin?: boolean,
+    valorEstimado?: number,
+    tipo?: CatalogoTipoProyectoModel,
+    perfil?: PerfilModel,
     //adjuntos: Array<AlbumModel>,
-    localidad: CatalogoLocalidadModel,
-    votos: Array<VotoProyectoModel>,
-    estrategia: EstrategiaModel,
-    comentarios: Array<ComentarioModel>,
-    moneda: CatalogoTipoMonedaModel,
-    titulo:string
-    tituloCorto:string
-    descripcion: string
-    tags:Array<string>
+    localidad?: CatalogoLocalidadModel,
+    votos?: Array<VotoProyectoModel>,
+    estrategia?: EstrategiaModel,
+    comentarios?: Array<ComentarioModel>,
+    moneda?: CatalogoTipoMonedaModel,
+    titulo?:string
+    tituloCorto?:string
+    descripcion?: string
+    tags?:Array<string>
 }
