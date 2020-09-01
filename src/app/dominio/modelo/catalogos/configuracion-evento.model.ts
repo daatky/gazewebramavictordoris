@@ -1,6 +1,6 @@
 import { CatalogoEstadoModel } from "./catalogo-estado.model";
-import { CatalogoTipoConfiguracionEventoModel } from "./catalogo-tipo-configuracion-evento.model";
-
+import { FormulaEventoModel } from "./formula-evento.model";
+import { CatalogoEventoModel } from "./catalogo-evento.model";
 export interface ConfiguracionEventoModel {
     id?: string,
     codigo?: string,
@@ -9,6 +9,7 @@ export interface ConfiguracionEventoModel {
     fechaActualizacion?: Date,
     intervalo?:number,
     duracion?:number,
-    tipo?:CatalogoTipoConfiguracionEventoModel,
     ciclico?:boolean
+    catalogoEvento?:CatalogoEventoModel,
+    formulas?:Array<FormulaEventoModel>    
 }

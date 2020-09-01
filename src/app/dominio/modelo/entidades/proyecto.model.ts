@@ -1,5 +1,5 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { ParticipanteProyectoModel } from "./participanteProyecto.model";
+import { ParticipanteProyectoModel } from "./participante-proyecto.model";
 import { PerfilModel } from "../perfil.model";
 import { ComentarioModel } from "./comentario.model";
 import { CatalogoTipoProyectoModel } from "../catalogos/catalogo-tipo-proyecto.model";
@@ -8,6 +8,7 @@ import { VotoProyectoModel } from "./voto-proyecto.model";
 import { CatalogoIdiomaModel } from "../catalogos/catalogo-idioma.model";
 import { EstrategiaModel } from "./estrategia.model";
 import { CatalogoTipoMonedaModel } from "../catalogos/catalogo-tipo-moneda.model";
+import { AlbumModel } from "../album.model";
 
 export interface ProyectoModel {
     id?: string,
@@ -21,12 +22,12 @@ export interface ProyectoModel {
     valorEstimado?: number,
     tipo?: CatalogoTipoProyectoModel,
     perfil?: PerfilModel,
-    //adjuntos: Array<AlbumModel>,
+    adjuntos?: Array<AlbumModel>,
     localidad?: CatalogoLocalidadModel,
-    votos?: Array<VotoProyectoModel>,
+    votos?: Array<VotoProyectoModel>,    
     estrategia?: EstrategiaModel,
     comentarios?: Array<ComentarioModel>,
-    moneda?: CatalogoTipoMonedaModel,
+    moneda?: CatalogoTipoMonedaModel
     titulo?:string
     tituloCorto?:string
     descripcion?: string

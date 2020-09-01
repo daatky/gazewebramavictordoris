@@ -1,17 +1,17 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { RolModel } from "./rol.model";
-import { ConfiguracionModel } from "./configuracion.model";
+import { ConfiguracionEstiloModel } from "./configuracion-estilo.model";
 import { PerfilModel } from "../perfil.model";
 import { ProyectoModel } from "./proyecto.model";
 import { ComentarioModel } from "./comentario.model";
+import { RolEntidadModel } from "./rol-entidad.model";
 
 export interface ParticipanteProyectoModel {
     id?: string,
     estado?: CatalogoEstadoModel,
     fechaCreacion?: Date,
     fechaActualizacion?: Date,
-    roles?: Array<RolModel>,
-    configuraciones?: Array<ConfiguracionModel>,
+    roles?: Array<RolEntidadModel>,
+    configuraciones?: Array<ConfiguracionEstiloModel>,
     comentarios?: Array<ComentarioModel>,
     proyecto?: ProyectoModel,
     coautor?: PerfilModel,

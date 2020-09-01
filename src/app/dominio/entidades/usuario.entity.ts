@@ -5,6 +5,7 @@ import { DispositivoEntity } from "./dispositivo.entity"
 import { CatalogoIdiomaEntity } from "./catalogos/catalogo-idioma.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { PagoFacturacion, CatalogoMetodoPagoEntity } from './catalogos/catalogo-metodo-pago.entity';
+import { RolSistemaEntity } from "./rol-sistema.entity";
 
 export interface UsuarioEntity {
   id?: string,
@@ -24,7 +25,8 @@ export interface UsuarioEntity {
   responsableVerificado?: boolean,
   transacciones?: Array<TransaccionEntity>,
   suscripciones?: Array<SuscripcionEntity>,
-  dispositivos?: Array<DispositivoEntity>
+  dispositivos?: Array<DispositivoEntity>,
+  rolSistema?:Array<RolSistemaEntity>
 }
 
 export class UsuarioEntityClass implements UsuarioEntity {

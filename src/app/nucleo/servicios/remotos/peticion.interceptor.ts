@@ -65,8 +65,9 @@ export class PeticionInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
                         if (event.body) {
                             if (event.body.codigoEstado) {
-                                // console.log(event.body)
+                                console.log(event.body)
                                 if (event.body.codigoEstado >= 400) {
+                                    console.log('sdsdfsf',);
                                     throw event.body.respuesta.mensaje
                                 }
                             }
@@ -74,7 +75,9 @@ export class PeticionInterceptor implements HttpInterceptor {
                     }
                     return event;
                 }),
-                catchError((error: HttpErrorResponse) => {
+                catchError((error: HttpErrorResponse) => { 
+                    console.error(error);
+                                       
                     if (error.status) {
                         if (error.status === 401) {
                             return throwError("No tienes autorizacion");
@@ -86,6 +89,7 @@ export class PeticionInterceptor implements HttpInterceptor {
                             }
                         }
                     }
+                    console.log("------")
                     return throwError(error)
                 }));
         }))

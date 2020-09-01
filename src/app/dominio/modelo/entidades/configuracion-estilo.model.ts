@@ -2,8 +2,9 @@ import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
 import { CatalogoEntidadModel } from "../catalogos/catalogo-entidad.model";
 import { EstiloModel } from "./estilo.model";
 import { CatalogoConfiguracionModel } from "../catalogos/catalogo-configuracion.model";
+import { CatalogoPaticipanteConfiguracionModel } from "../catalogos/catalogo-participante-configuracion.model";
 
-export interface ConfiguracionModel {
+export interface ConfiguracionEstiloModel {
     id?: string
     estado?: CatalogoEstadoModel
     fechaCreacion?: Date
@@ -14,4 +15,5 @@ export interface ConfiguracionModel {
     tonoNotificacion?: string
     estilos?: Array<EstiloModel>
     tipo?: CatalogoConfiguracionModel
+    catalogoPaticipante?:CatalogoPaticipanteConfiguracionModel
 }

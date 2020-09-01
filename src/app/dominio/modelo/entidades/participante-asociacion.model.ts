@@ -1,16 +1,16 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { RolModel } from "./rol.model";
-import { ConfiguracionModel } from "./configuracion.model";
 import { PerfilModel } from "../perfil.model";
+import { ConfiguracionEstiloModel } from "./configuracion-estilo.model";
+import { RolEntidadModel } from "./rol-entidad.model";
 
 export interface ParticipanteAsociacionModel {
     id?: string
     estado?: CatalogoEstadoModel
     fechaCreacion?: Date
     fechaActualizacion?: Date
-    roles?: Array<RolModel> 
+    roles?: Array<RolEntidadModel> 
     invitadoPor?:ParticipanteAsociacionModel
-    configuraciones?:Array<ConfiguracionModel>
+    configuraciones?:Array<ConfiguracionEstiloModel>
     perfil?:PerfilModel
-    sobrenombre?:string 
+    sobrenombre?:string  
 }

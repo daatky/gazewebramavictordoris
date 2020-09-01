@@ -6,5 +6,5 @@ export interface CatalogoConfiguracionModel{
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo?:string
-    codigoPostal?:string
+    nombre?:string
 }

@@ -133,8 +133,3 @@ p {
     height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
     overflow-y:auto;
 }
-.cargandoCompleto{
-    height:$ancho-pagina;
-    width: $altura-pagina;
-    background-color: aqua;
-}

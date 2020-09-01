@@ -34,7 +34,8 @@ export class PensamientoCompartidoComponent implements OnInit {
   }    
   cargarPensamiento(){
     this.error=""
-    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){      
+    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){            
+      
       this.obtenerPensamientoAleatorio()          
     }else{
       this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
