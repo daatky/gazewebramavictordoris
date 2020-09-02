@@ -1,3 +1,5 @@
+import { PerfilServiceLocal } from './../../nucleo/servicios/locales/perfil.service';
+import { AlbumModel } from './../modelo/album.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
@@ -15,14 +17,16 @@ export class PerfilRepository {
 
     constructor(
         protected http: HttpClient, 
-        private perfilServicie: PerfilServiceRemoto, 
+        private perfilServicieRemoto: PerfilServiceRemoto,
+        private perfilServicieLocal: PerfilServiceLocal,
         private mapeador: CatalogoTipoPerfilMapperService, 
-        private localStorage: LocalStorage) {
+        private localStorage: LocalStorage
+    ) {
 
     }
 
     obtenerCatalogoTipoPerfil(): Observable<CatalogoTipoPerfilModel[]> {
-        return this.perfilServicie.obtenerCatalogoTipoPerfil()
+        return this.perfilServicieRemoto.obtenerCatalogoTipoPerfil()
             .pipe(
                 map(data => {
                     return this.mapeador.transform(data.respuesta.datos);
@@ -42,6 +46,12 @@ export class PerfilRepository {
     }
 
     // Album del perfil
+    guardarAlbumActivo(album: AlbumModel) {
+        this.perfilServicieLocal.guardarAlbum(album)
+    }
 
+    obtenerAlbumActivo() : AlbumModel {
+        return this.perfilServicieLocal.obtenerAlbum()
+    }
 
 }

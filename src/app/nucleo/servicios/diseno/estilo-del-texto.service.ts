@@ -40,6 +40,9 @@ export class EstiloDelTextoServicio {
         if (configuracion.paddingIzqDerDelTexto) {
             clases[configuracion.paddingIzqDerDelTexto.toString()] =  true
         }
+        if (configuracion.enCapitalize) {
+            clases['enCapitalize'] =  true
+        }
         return clases
     }
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core'
+import { AccionAlbum } from './../../../presentacion/album-perfil/album-perfil.component';
+import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service';
+import { OrigenFoto } from './../../diseno/enums/origen-foto.enum';
+import { ModalOrigenFoto } from './../../diseno/modelos/modal-opciones-foto.interface';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
 
 import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.service'
 import { ItemCircularRectangularMetodosCompartidos } from 'src/app/nucleo/servicios/diseno/item-cir-rec.service'
@@ -21,15 +25,17 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
     - La configuracion debe ser almacenada en una variable de tipo modelo ItemRectangularCompartido y asignada al paremetro @Input() configuracion
     - Las acciones que se disparan en el item segun el tipo de evento, estan catalogadas por el enum AccionesItemCirRec
   */
-
+  @ViewChild('inputFile', { static: false }) inputFile: ElementRef
   @Input() configuracion: ItemRectangularCompartido // Configuracion del item, para dibujar el item los valores de dataItemCRCompartido deben ser establecidos
   
   public infoAccion: InfoAccionCirRec // Informacion de que accion se va a ejecutar en el padre cuando se dispare un evento
   public itemMetodos: ItemCircularRectangularMetodosCompartidos // Contiene metodos generales para el item
   public bordesEsquinas: Array<number> // El numero de bordes (esquinas)
+  public confModalOrigenFoto: ModalOrigenFoto // Modal origen foto
 
   constructor(
-    private generadorId:GeneradorId
+    private generadorId:GeneradorId,
+    public estiloDelTextoServicio: EstiloDelTextoServicio
   ) {
     this.itemMetodos = new ItemCircularRectangularMetodosCompartidos()
     this.bordesEsquinas = [0, 1, 2, 3]
@@ -37,6 +43,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.configuracion.idInterno = this.generadorId.generarIdConSemilla() // Generar id interno
+    this.configurarOrigenFoto()
   }
 
   ngAfterViewInit(): void {
@@ -53,20 +60,61 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
     })
   }
 
+  configurarOrigenFoto() {
+    this.confModalOrigenFoto = {
+      mostrar: false,
+      origenFoto: OrigenFoto.SIN_DEFINIR
+    }
+  }
+
+  eventoEnModalOrigenFoto(evento: number) {
+    this.confModalOrigenFoto.mostrar = false
+    if (evento === 0) {
+      // Tomar Foto
+      this.infoAccion = {
+        accion: AccionesItemCircularRectangular.TOMAR_FOTO
+      }
+      this.configuracion.eventoEnItem(this.infoAccion)
+      return
+    }
+
+    if (evento === 1) {
+      // Subir foto
+      const selector = document.getElementById("itemRectangularInputFile" + this.configuracion.idInterno)
+      selector.click()
+      return
+    }
+  }
+
   // Se ejecuta cuando se dispara un evento de click en el item
   eventoClick() {
     try {
       // Si el item no tiene eventos
-      if (!this.configuracion.activarClick) {
+      if (!this.configuracion.activarClick || this.configuracion.mostrarLoader) {
         return
       }
 
       // Cuando el item se usa en el perfil de otro usuario o mi perfil
       if (this.configuracion.usoDelItem === UsoItemRectangular.RECPERFIL) {
-        this.infoAccion = {
-          accion: (this.configuracion.esVisitante) ? AccionesItemCircularRectangular.VISITAR_ALBUM_GENERAL : AccionesItemCircularRectangular.ABRIR_ADMIN_ALBUM_GENERAL
+
+        // Si es visitante
+        if (this.configuracion.esVisitante) {
+          this.infoAccion = {
+            accion: AccionesItemCircularRectangular.VISITAR_ALBUM_GENERAL
+          }
+          this.configuracion.eventoEnItem(this.infoAccion)
+          return
         }
-        this.configuracion.eventoEnItem(this.infoAccion)
+
+        // Si no es visitante
+        if (!this.configuracion.esVisitante) {
+          this.infoAccion = {
+            accion: AccionesItemCircularRectangular.ABRIR_ADMIN_ALBUM_GENERAL
+          }
+          this.configuracion.eventoEnItem(this.infoAccion)
+          return  
+        }
+
         return
       }
 
@@ -80,14 +128,29 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
           }
           // Se cambia el item a modo RECALBUMPREVIEW, mostrar la descripcion, mostrar el icono de expandir
           this.configuracion.usoDelItem = UsoItemRectangular.RECALBUMPREVIEW
-          this.configuracion.mostrarIconoExpandirFoto = true
           this.configuracion.eventoEnItem(this.infoAccion)
           return
         }
 
-        // Accion por defecto, elegir archivo para subir - click en input tipo file
-        const selector = document.getElementById("itemRectangularInputFile" + this.configuracion.idInterno)
-        selector.click()
+        // Si no esta modo visita
+        if (!this.configuracion.esVisitante) {
+          if (this.configuracion.esBotonUpload) {
+            // Modal origen foto
+            this.confModalOrigenFoto.mostrar = true
+            return
+          }
+
+          // Por defecto cambia a modo preview para editar la descripcion
+          this.infoAccion = {
+            accion: AccionesItemCircularRectangular.CAMBIAR_A_MODO_ALBUM_PREVIEW_ADMIN,
+            informacion: this.configuracion.id
+          }
+          // Se cambia el item a modo RECALBUMPREVIEW, mostrar la descripcion, mostrar el icono de expandir
+          this.configuracion.usoDelItem = UsoItemRectangular.RECALBUMPREVIEW
+          this.configuracion.eventoEnItem(this.infoAccion)
+          return
+        }
+
         return
       }
 
@@ -120,11 +183,13 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
         }
 
         // Accion por defecto
+        // Se muestra la capa de imagen seleccionada con borde
         this.infoAccion = {
           accion: AccionesItemCircularRectangular.EDITAR_DESCRIPCION,
           informacion: this.configuracion.id
         }
-        // Se muestra la capa de imagen seleccionada con borde
+        
+        this.configuracion.mostrarIconoExpandirFoto = false
         this.configuracion.mostrarCapaImagenSeleccionadaConBorde = true
         this.configuracion.eventoEnItem(this.infoAccion)
         return
@@ -138,7 +203,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   eventoDobleClick() {
     try {
       // Si el item no tiene eventos
-      if (!this.configuracion.activarDobleClick) {
+      if (!this.configuracion.activarDobleClick || this.configuracion.mostrarLoader) {
         return
       }
 
@@ -150,14 +215,21 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
 
       // Para uso en el album que muestra la miniaturas
       if (this.configuracion.usoDelItem === UsoItemRectangular.RECALBUMMINI) {
-        // Si hay un doble click, se cambia el item a modo RECALBUMPREVIEw, afecta a todos los demas items de la lista
-        this.infoAccion = {
-          accion: AccionesItemCircularRectangular.CAMBIAR_A_MODO_ALBUM_PREVIEW_ADMIN,
-          informacion: this.configuracion.id
+
+        // Si es propietario
+        if (!this.configuracion.esVisitante) {
+          this.infoAccion = {
+            accion: AccionesItemCircularRectangular.ESTABLECER_ITEM_PREDETERMINADO,
+            informacion: {
+              id: this.configuracion.id,
+              urlMedia: this.configuracion.urlMedia
+            }
+          }
+          this.configuracion.eventoEnItem(this.infoAccion)  
+          return
         }
-        // Se cambia el item a modo RECALBUMPREVIEW y mostrar la descripcion
-        this.configuracion.usoDelItem = UsoItemRectangular.RECALBUMPREVIEW
-        this.configuracion.eventoEnItem(this.infoAccion)
+
+        // Si es visitante, no hay accion para la vista
         return
       }
 
@@ -175,7 +247,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   eventoClickLargo() {
     try {
       // Si el item no tiene eventos
-      if (!this.configuracion.activarLongPress) {
+      if (!this.configuracion.activarLongPress || this.configuracion.mostrarLoader) {
         return
       }
 
@@ -187,19 +259,32 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
 
       // Para uso en el album que muestra la miniaturas
       if (this.configuracion.usoDelItem === UsoItemRectangular.RECALBUMMINI) {
-        // Borrar imagen en click largo
-        this.infoAccion = {
-          accion: AccionesItemCircularRectangular.BORRAR_ITEM,
-          informacion: {
-            id: this.configuracion.id
+        // Si es propietario
+        if (!this.configuracion.esVisitante) {
+          // Borrar imagen en click largo
+          this.infoAccion = {
+            accion: AccionesItemCircularRectangular.BORRAR_ITEM,
+            informacion: {
+              id: this.configuracion.id
+            }
           }
+          this.configuracion.eventoEnItem(this.infoAccion)
+          return
         }
+
+        // Accion por defecto
         return
       }
 
       // Para uso en el album que muestra la preview
       if (this.configuracion.usoDelItem === UsoItemRectangular.RECALBUMPREVIEW) {
         // No hay evento denifinido aun en este caso
+        this.infoAccion = {
+          accion: AccionesItemCircularRectangular.BORRAR_ITEM,
+          informacion: {
+            id: this.configuracion.id
+          }
+        }
         return
       }
     } catch (error) {
@@ -218,8 +303,8 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
             archivo: file
           }
         }
-        console.log(this.infoAccion)
         this.configuracion.eventoEnItem(this.infoAccion)
+        this.inputFile.nativeElement.value = ""
       }
     } catch (error) {
       console.log(error) 
@@ -238,5 +323,12 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
       this.configuracion.mostrarLoader = false
     }
  }
+
+ cerrarModalOrigenFoto(event: any) {
+  if (event.target.className.indexOf('modalOrigenFoto') >= 0) {
+    this.confModalOrigenFoto.mostrar = false
+    this.confModalOrigenFoto.origenFoto = OrigenFoto.SIN_DEFINIR
+  }
+}
 
 }

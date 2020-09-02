@@ -24,7 +24,7 @@ $margin-descripcion: $interlineado-2;
 $ancho-descripcion: $album-preview-tamano-ancho - ($padding-descripcion * 2);
 $border-descripcion-ancho: calcular(63.86);
 $border-descripcion-alto: calcular(0.71);
-$margen-descripcion-linea: $interlineado-2;
+$margen-descripcion-linea: $espacio-01245; // 2.49 divido para 2
 // Album preview editando descripcion
 $capa-border-rojo-espesor-borde: calcular(1.19);
 $capa-border-rojo-ancho: $album-preview-tamano-ancho - ($capa-border-rojo-espesor-borde * 2);
@@ -34,6 +34,7 @@ $capa-border-rojo-cancelar-alto: calcular(8.86);
 $capa-border-rojo-cancelar-padding-izquierdo: calcular(5.22);
 $capa-border-rojo-cancelar-mensaje-ancho: calcular(79.34);
 $capa-border-rojo-cancelar-mensaje-margen-derecha: calcular(3.16);
+$capa-border-rojo-cancelar-mensaje-margen-fondo: rgba(55, 73, 98, 0.8);
 // Album preview con icono expandir
 $expandir-icono-margen: calcular(2.67);
 
@@ -62,6 +63,7 @@ $expandir-icono-margen: calcular(2.67);
 
 .itemRectangulo .esquina.mostrar {
     display: block;
+    z-index: 300;
 }
 
 .itemRectangulo .esquina.a {
@@ -127,9 +129,6 @@ $expandir-icono-margen: calcular(2.67);
 .itemDescripcion p {
     text-align: center;
     margin: 0;
-    font-size: $letra-2;
-    font-style: italic;
-    line-height: $interlineado-4;
 }
 .itemDescripcion .linea {
     background-color: $verde-base;
@@ -145,27 +144,19 @@ $expandir-icono-margen: calcular(2.67);
     top: 0;
     left: 0;
     z-index: 2;
+    box-sizing: border-box;
 
-    width: $album-mini-tamano-ancho;
-    height: $album-mini-tamano-alto;
+    width: 100%;
+    height: 100%;
 }
 
 .capa.mostrar {
     display: flex;
 }
 
-// Capa X
-.capa.capax {
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.capa.capax img {
-    width: $diametro-x-blanca;
-    height: $diametro-x-blanca;
-
-    margin-right: $x-margen-album-derecha;
-    margin-bottom: $x-margen-album-abajo;
+.itemRectangulo.albumPreview .capa {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 // Capa - albumPreview
@@ -179,39 +170,41 @@ $expandir-icono-margen: calcular(2.67);
 .capa.dos .cancelar {
     position: absolute;
     bottom: 0;
+    left: $capa-border-rojo-espesor-borde * -1;
 
     width: $capa-border-rojo-cancelar-ancho;
     height: $capa-border-rojo-cancelar-alto;
     display: flex;
     flex-flow: row;
     align-items: flex-end;
-
-    padding-left: $capa-border-rojo-cancelar-padding-izquierdo;
+    justify-content: center;
+    padding-left: 0;
 }
 
 .capa.dos .cancelar .mensaje {
-    background-color: $border-dark;
+    background-color: $capa-border-rojo-cancelar-mensaje-margen-fondo;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     width: $capa-border-rojo-cancelar-mensaje-ancho;
-    height: $capa-border-rojo-cancelar-alto -($interlineado-1 * 2);
-
-    margin-right: $capa-border-rojo-cancelar-mensaje-margen-derecha;
-    padding: $interlineado-1 0;
-    
+    height: $capa-border-rojo-cancelar-alto;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .capa.dos .cancelar .mensaje p {
+    padding: $interlineado-1 0;
+    height: 100%;
+    box-sizing: border-box;
+
     margin: 0;
-    color: $blanco;
-    font-size: $letra-2;
-    line-height: $interlineado-4;
-    font-weight: bold;
     text-align: center;
-    text-transform: uppercase;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .capa.dos .cancelar img {
@@ -251,7 +244,7 @@ $expandir-icono-margen: calcular(2.67);
 
 // Capa imagen de fondo
 .capa.imagenFondo {
-
+    
 }
 
 // Capa Opacidad

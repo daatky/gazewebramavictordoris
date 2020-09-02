@@ -1,11 +1,16 @@
+import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio';
+import { UsuarioModel } from './../../dominio/modelo/usuario.model';
+import { MediaModel } from './../../dominio/modelo/media.model';
+import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { TranslateService } from '@ngx-translate/core';
+import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
+import { CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { AlbumModel } from './../../dominio/modelo/album.model'
 import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum'
 import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum'
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum'
 import { AlbumEntity } from './../../dominio/entidades/album.entity'
-import { AccionesAppBar } from './../../compartido/diseno/enums/acciones-appbar.enum'
 import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service'
-import { MediaModel } from '../../dominio/modelo/media.model'
 import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface'
 import { ToastComponent } from './../../compartido/componentes/toast/toast.component'
 import { ConvertidorArchivos } from './../../nucleo/util/caster-archivo.service'
@@ -25,48 +30,51 @@ import { ColorFondoLinea } from './../../compartido/diseno/enums/color-fondo-lin
 import { AnchoLineaItem } from './../../compartido/diseno/enums/ancho-linea-item.enum'
 import { TamanoColorDeFondoAppBar } from './../../compartido/diseno/enums/tamano-color-fondo-appbar.enum'
 import { ConfiguracionAppbarCompartida } from './../../compartido/diseno/modelos/appbar.interface'
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core'
 import { AppbarComponent } from './../../compartido/componentes/appbar/appbar.component'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ColorCapaOpacidadItem } from 'src/app/compartido/diseno/enums/item-cir-rec-capa-opacidad.enum'
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
 import { WebcamImage } from 'ngx-webcam'
-import { CropperComponent } from 'src/app/compartido/componentes/cropper/cropper.component'
-import { ImageCroppedEvent } from 'ngx-image-cropper'
 
 @Component({
   selector: 'app-album-general',
   templateUrl: './album-general.component.html',
   styleUrls: ['./album-general.component.scss']
 })
-export class AlbumGeneralComponent implements OnInit, AfterViewInit {
+export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('appbar', { static: false }) appbar: AppbarComponent
   @ViewChild('camara', { static: false }) camara: CamaraComponent
-  @ViewChild('cropper', { static: false }) cropper: CropperComponent
   @ViewChild('toast', { static: false }) toast: ToastComponent
 
   // Utils
   public accionAlbumEnum = AccionAlbum
   public eventoEnitemFuncion: Function
 
+  // Parametros de texto en items
+  public textoCerrarDescripcion: string // Texto que se muestra cuando se empiece a editar la descripcion de la foto
+
   // Parametros de url
-  public idTipoPerfil: string
-  public nombreUsuario: string
+  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
+  public codigo: string // Indica el codigo de la entidad
+  public titulo: string // El titulo a mostrar en el album
   public esVisitante: boolean // Visitante true 1, propietario false 0
   public accionAlbum: AccionAlbum // Accion para la que el album esta siendo utilizado
 
   // Parametros internos
+  public idItemActivo: string // Item activo editando la descripcion
+  public itemDescripcionActivo: string // Descricion activo
+  public album: AlbumModel // Album en uso
   public confCamara: ConfiguracionCamara // Configuracion camara
-  public confCropper: ConfiguracionCropper // Configuracion del cropper de imagenes
   public confToast: ConfiguracionToast // Configuracion del toast
   public confAppBar: ConfiguracionAppbarCompartida // Configuracion appbar compartida
   public confPortada: ItemRectangularCompartido // Portada del album
   public confBotonUpload: ItemRectangularCompartido // Boton siempre visible de upload photos
   public confLinea: LineaCompartida // Linea compartida
-  public listaMediaAlbum: Array<MediaModel> // Para almacenar las medias a devolver en caso de crear
   public itemsAlbum: Array<ItemRectangularCompartido> // Array de items compartido
   public itemsAlbumPorDefecto: Array<ItemRectangularCompartido> // Array de items compartido - fotos por defecto
   public cantidadItemsPorDefecto: number // Numero total de items por defecto a mostrar
+  public albumEnModoPreview: boolean // Album pasa a modo preview
 
 
   constructor(
@@ -76,15 +84,21 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
     public estiloDelTextoServicio:EstiloDelTextoServicio,
     private mediaNegocio: MediaNegocio,
     private convertidorArchivos: ConvertidorArchivos,
-    private generadorId: GeneradorId
+    private generadorId: GeneradorId,
+    private perfilNegocio: PerfilNegocio,
+    private cuentaNegocio: CuentaNegocio,
+    private translateService: TranslateService
   ) {
-    this.nombreUsuario = ''
+    this.idItemActivo = ''
+    this.itemDescripcionActivo = ''
+    this.titulo = ''
     this.esVisitante = true
     this.accionAlbum = AccionAlbum.CREAR
-    this.listaMediaAlbum = []
     this.itemsAlbum = []
     this.itemsAlbumPorDefecto = []
     this.cantidadItemsPorDefecto = 7
+    this.albumEnModoPreview = false
+    this.textoCerrarDescripcion = ''
     this.eventoEnitemFuncion = (data: InfoAccionCirRec) => {
       this.eventoEnItem(data)
     }
@@ -93,75 +107,124 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.variablesGlobales.mostrarMundo = false
     this.configurarParametrosDeUrl()
+    this.validarAlbum()
     this.configurarCamara()
-    this.configurarCropper()
     this.configurarToast()
     this.configurarAppBar()
     this.configurarPortada()
     this.configurarLinea()
     this.confgurarBotonUploadPhotos()
     this.configurarItemsAlbumPorDefecto()
+    this.configurarItemsAlbum()
+
+    // En caso la pagina sea recargada, se guarda el estado del album en el local sotarage
+    window.onbeforeunload = () => this.ngOnDestroy()
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      // Appbar
-      this.appbar.evento.subscribe((data: AccionesAppBar) => {
-        if (data === AccionesAppBar.IR_A_PAGINA_O_ESTADO_ANTERIOR) {
-          // Cuando el album es usado para Crear
-          if (this.accionAlbum === AccionAlbum.CREAR) {
-            this.crearAlbumPerfilYGuardarEnStorage()
-            // this.router.navigateByUrl(RutasPresentacion.REGISTRO)
-            return
-          }
-          // Cuando el album es usado para actualizar
-          if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
-            return
-          }
-          return
-        }
-      })
-
       // Foto capturada
       this.camara.fotoCapturada.subscribe((webcamImage: WebcamImage) => {
-        this.cropper.configuracion.imageURL = webcamImage.imageAsDataUrl
-        this.cropper.configuracion.mostrarModal = true
+        this.subirArchivoDeCamaraAlServidor(webcamImage)
       })
 
-      // Imagen cortada
-      this.cropper.imagenCortada.subscribe((imagen: ImageCroppedEvent) => {
-        this.cropper.cambiarStatusCropper(false, true, false)
-        this.subirArchivoDeCamaraAlServidor(imagen)
-      })
     })
   }
 
+  ngOnDestroy(): void {
+    this.guardarAlbum()
+  }
+
   configurarParametrosDeUrl() {
-    if (this.rutaActual.snapshot.params.idTipoPerfil) {
-      this.idTipoPerfil = this.rutaActual.snapshot.params.idTipoPerfil
+    if (this.rutaActual.snapshot.params.entidad) {
+      this.entidad = this.rutaActual.snapshot.params.entidad
     }
 
-    if (this.rutaActual.snapshot.params.nombreUsuario) {
-      this.nombreUsuario = this.rutaActual.snapshot.params.nombreUsuario
+    if (this.rutaActual.snapshot.params.codigo) {
+      this.codigo = this.rutaActual.snapshot.params.codigo
+    }
+
+    if (this.rutaActual.snapshot.params.titulo) {
+      this.titulo = this.rutaActual.snapshot.params.titulo
     }
     
-    if (this.rutaActual.snapshot.params.accionAlbum) { 
-      this.accionAlbum =  this.rutaActual.snapshot.params.accionAlbum
+    if (this.rutaActual.snapshot.params.accion) { 
+      this.accionAlbum =  this.rutaActual.snapshot.params.accion
     }
+  }
+
+  validarAlbum() {
+    this.album = this.perfilNegocio.obtenerAlbumActivo()
+    // Si album activo no esta definido
+    if (!this.album) {
+      // Validar la entidad
+      // Entidad perfil
+      if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
+        const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
+        // Si el usuario existe
+        if (usuario) {
+          usuario.perfiles.forEach(perfil => {
+            if (perfil.tipoPerfil.codigo === this.codigo) {
+              // Sacar el album de tipo general
+              perfil.albums.forEach(album => {
+                if (album.tipo.codigo === CodigosCatalogoTipoAlbum.GENERAL) {
+                  this.album = album
+                }
+              })
+            }
+          })
+        } else {
+          this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
+        }
+        return
+      }
+    }
+  }
+
+  async configurarItemsAlbum() {
+    // Items para el album
+    this.album.media.forEach(media => {
+      this.itemsAlbum.push({
+        id: media._id,
+        idInterno: '',
+        usoDelItem: UsoItemRectangular.RECALBUMMINI,
+        esVisitante: false,
+        urlMedia: media.principal.url,
+        activarClick: true,
+        activarDobleClick: true,
+        activarLongPress: true,
+        mostrarBoton: false,
+        mostrarLoader: true,
+        textoBoton: 'Click to upload',
+        capaOpacidad: {
+          mostrar: false
+        },
+        eventoEnItem: this.eventoEnitemFuncion,
+        descripcion: media.descripcion,
+        textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
+        mostrarIconoExpandirFoto: false,
+        mostrarCapaImagenSeleccionadaConBorde: false,
+        esBotonUpload: false
+      })
+    })
+    // Definir la portada
+    if (this.album.portada && this.album.portada.principal) {
+      const portada: MediaModel = this.album.portada
+      this.confPortada.mostrarLoader = true
+      this.confPortada.id = portada._id
+      this.confPortada.urlMedia = portada.principal.url
+      this.confPortada.mostrarBoton = false
+    }
+
+    this.textoCerrarDescripcion = await this.translateService.get('clickSalirDescripcion').toPromise()
+    this.itemsAlbum.forEach(item => {
+      item.textoCerrarEditarDescripcion = this.textoCerrarDescripcion
+    })
   }
 
   configurarCamara() {
     this.confCamara = {
       mostrarModal: false,
-    }
-  }
-
-  configurarCropper() {
-    this.confCropper = {
-      mostrarModal: false,
-      imageChangedEvent: null,
-      imageBase64: null,
-      imageFile: null
     }
   }
 
@@ -189,7 +252,10 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
           llaveTexto: 'fotoPerfil'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+      },
+      accionAtras: () => {
+        this.accionAppBarBack()
       }
     }
   }
@@ -210,7 +276,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       eventoEnItem: this.eventoEnitemFuncion,
       capaOpacidad: {
         mostrar: false
-      }
+      },
+      esBotonUpload: false
     }
   }
 
@@ -239,7 +306,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       eventoEnItem: this.eventoEnitemFuncion,
       capaOpacidad: {
         mostrar: false
-      }
+      },
+      esBotonUpload: true
     }
   }
 
@@ -284,7 +352,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
           capaOpacidad: {
             mostrar: true,
             colorOpacidad: this.obtenerColorCapaOpacidad(pos)
-          }
+          },
+          esBotonUpload: false
         }
       )
       pos += 1
@@ -308,8 +377,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       })
   }
 
-  subirArchivoDeCamaraAlServidor(event: ImageCroppedEvent) {
-    const imagen = this.convertidorArchivos.dataURItoBlob(event.base64)
+  subirArchivoDeCamaraAlServidor(image: WebcamImage) {
+    const imagen = this.convertidorArchivos.dataURItoBlob(image.imageAsDataUrl)
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
       id: idItem,
@@ -317,7 +386,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       usoDelItem: UsoItemRectangular.RECALBUMMINI,
       esVisitante: false,
       urlMedia: '',
-      activarClick: false,
+      activarClick: true,
       activarDobleClick: true,
       activarLongPress: true,
       mostrarBoton: false,
@@ -326,25 +395,29 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       capaOpacidad: {
         mostrar: false
       },
-      eventoEnItem: this.eventoEnitemFuncion
+      eventoEnItem: this.eventoEnitemFuncion,
+      descripcion: '',
+      textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
+      mostrarIconoExpandirFoto: false,
+      mostrarCapaImagenSeleccionadaConBorde: false,
+      esBotonUpload: false
     })
 
 
     // Subir archivo al servidor
     this.mediaNegocio.subirMediaSimpleAlServidor( { archivo: imagen, nombre: 'imagen.jpeg' }, '1:1', '').subscribe(data => {
-      console.log(data)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum[pos] = (data)
+        this.album.media[pos] = data
         this.itemsAlbum[pos].id = data._id
         this.itemsAlbum[pos].urlMedia = data.principal.url
+        this.itemsAlbum[pos].descripcion = data.descripcion
       }
     }, error => {
-      console.log(error)
       this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.splice(pos, 1)
+        this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
       }
     })
@@ -358,7 +431,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       usoDelItem: UsoItemRectangular.RECALBUMMINI,
       esVisitante: false,
       urlMedia: '',
-      activarClick: false,
+      activarClick: true,
       activarDobleClick: true,
       activarLongPress: true,
       mostrarBoton: false,
@@ -367,33 +440,37 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
       capaOpacidad: {
         mostrar: false
       },
-      eventoEnItem: this.eventoEnitemFuncion
+      eventoEnItem: this.eventoEnitemFuncion,
+      descripcion: '',
+      textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
+      mostrarIconoExpandirFoto: false,
+      mostrarCapaImagenSeleccionadaConBorde: false,
+      esBotonUpload: false
     })
 
 
     // Subir archivo al servidor
     this.mediaNegocio.subirMediaSimpleAlServidor( { archivo: file, nombre: file.name }, '1:1', '').subscribe(data => {
-      console.log(data)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.push(data)
+        this.album.media[pos] = data
         this.itemsAlbum[pos].id = data._id
         this.itemsAlbum[pos].urlMedia = data.principal.url
+        this.itemsAlbum[pos].descripcion = data.descripcion
       }
     }, error => {
       this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
-        this.listaMediaAlbum.splice(pos, 1)
+        this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
       }
     })
   }
-
+  
 
   // Evento en items
   eventoEnItem(data: InfoAccionCirRec) {
-    console.log(data)
     // Tomar Foto
     if (data.accion === AccionesItemCircularRectangular.TOMAR_FOTO) {
       this.camara.reiniciarCamara()
@@ -424,6 +501,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
           this.confPortada.mostrarLoader = false
           this.confPortada.mostrarBoton = true
         }
+        this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
         return
       }
@@ -439,36 +517,96 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
     if (data.accion === AccionesItemCircularRectangular.ESTABLECER_ITEM_PREDETERMINADO) {
       // Cuando la accion del album es Crear
       if (this.accionAlbum === AccionAlbum.CREAR) {
-        this.confPortada.mostrarBoton = false
-        this.confPortada.id = data.informacion.id
-        this.confPortada.mostrarLoader = true
-        this.confPortada.urlMedia = data.informacion.urlMedia
+        // Item portada, se valida que no se re asigne el mismo item
+        if (this.confPortada.id !== data.informacion.id) {
+          this.confPortada.mostrarBoton = false
+          this.confPortada.id = data.informacion.id
+          this.confPortada.mostrarLoader = true
+          this.confPortada.urlMedia = data.informacion.urlMedia
+          // Portada en item album
+          const portadaMedia: MediaModel = this.obtenerMediaPorIdItem(this.confPortada.id)
+          
+          // Definir tipo a la portada
+          portadaMedia.principal.tipo = {
+            codigo: CodigosCatalogoTipoArchivo.IMAGEN
+          }
+          // Setear portada en el album activo
+          this.album.portada = {
+            ...portadaMedia,
+            tipo: {
+              codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
+            },
+          }
+        }
+
         return
       }
-    }
-  }
 
-  // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
-  crearAlbumPerfilYGuardarEnStorage() {
-    const portadaMedia: MediaModel = this.obtenerMediaPorIdItem(this.confPortada.id)
-    // const album: AlbumEntity = {
-    //   portada: {
-    //     tipo: {
-    //       codigo: CodigosCatalogoTipoMedia.TIPO_MEDIA_SIMPLE
-    //     },
-    //     principal: {
-    //       ...portadaMedia,
-    //       tipo: {
-    //         codigo: CodigosCatalogoTipoArchivo.IMAGEN
-    //       },
-    //     },
-    //   },
-    //   tipo: {
-    //     codigo: CodigosCatalogoTipoAlbum.PERFIL,
-    //   },
-    //   media: this.listaMediaAlbum
-    // }
-    // console.log(album)
+      // Cuando la accion del album es actualizar
+      if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+        return
+      }
+
+      return
+    }
+
+    // Cambiar a modo preview admin
+    if (data.accion === AccionesItemCircularRectangular.CAMBIAR_A_MODO_ALBUM_PREVIEW_ADMIN) {
+      if (this.accionAlbum === AccionAlbum.CREAR) {
+        this.albumEnModoPreview = true
+        // Avisar a los item para que pasen a modo preview admin
+        this.itemsAlbum.forEach(item => {
+          item.mostrarIconoExpandirFoto = true
+          item.usoDelItem = UsoItemRectangular.RECALBUMPREVIEW
+          item.mostrarIconoExpandirFoto = (this.accionAlbum === AccionAlbum.VISITA)
+        })
+      }
+
+      if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+        return
+      }
+
+      return
+    }
+
+    // Editar descripcion
+    if (data.accion === AccionesItemCircularRectangular.EDITAR_DESCRIPCION) {
+      if (this.accionAlbum === AccionAlbum.CREAR) {
+        this.idItemActivo = data.informacion
+        this.itemsAlbum.forEach(item => {
+          if (item.id === this.idItemActivo) {
+            this.itemDescripcionActivo = item.descripcion
+          } else {
+            // Cambiar los demas items a estado dejar de editar descripcion
+            item.mostrarCapaImagenSeleccionadaConBorde = false
+          }
+        })
+        // Cambiar los demas
+        return
+      }
+
+      if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+        return
+      }
+
+      return
+    }
+
+    // Dejar de editar descripcion
+    if (data.accion === AccionesItemCircularRectangular.DEJAR_DE_EDITAR_DESCRIPCION) {
+      if (this.accionAlbum === AccionAlbum.CREAR) {
+        this.idItemActivo = ''
+        this.itemDescripcionActivo = ''
+        return
+      }
+
+      if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+        return
+      }
+
+      return
+    }
+
   }
 
   obtenerPosicionPorIdItem(id: string) {
@@ -482,8 +620,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
   }
 
   obtenerMediaPorIdItem(id: string) : MediaModel {
-    let media = null
-    this.listaMediaAlbum.forEach((item, i) => {
+    let media : MediaModel
+    this.album.media.forEach((item, i) => {
       if (item._id === id) {
         media = item
       }
@@ -491,10 +629,74 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit {
     return media
   }
 
+  // Actualizar la descripcion del item
+  actualizarDescripcion() {
+    if (this.accionAlbum === AccionAlbum.CREAR) {
+      // Actualizar item
+      this.itemsAlbum.forEach(item => {
+        if (item.id === this.idItemActivo) {
+          item.descripcion = this.itemDescripcionActivo
+          item.mostrarCapaImagenSeleccionadaConBorde = false
+        }
+      })
+
+      // Actualizar media
+      this.album.media.forEach(item => {
+        if (item._id === this.idItemActivo) {
+          item.descripcion = this.itemDescripcionActivo
+        }
+      })
+
+      this.idItemActivo = ''
+      this.itemDescripcionActivo = ''
+      return
+    }
+
+    if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+      return
+    }
+
+  }
+
+  accionAppBarBack() {
+    if (this.accionAlbum === AccionAlbum.CREAR) {
+      // Si el album esta en modo preview
+      if (this.albumEnModoPreview) {
+        this.albumEnModoPreview = false
+        this.itemsAlbum.forEach(item => {
+          item.usoDelItem = UsoItemRectangular.RECALBUMMINI
+          item.mostrarIconoExpandirFoto = false
+          item.mostrarCapaImagenSeleccionadaConBorde = false
+        })
+        this.idItemActivo = ''
+        this.itemDescripcionActivo = ''
+        return
+      }
+
+      // Back
+      if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
+        this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
+        return
+      }
+    }
+
+    // Cuando el album es usado para actualizar
+    if (this.accionAlbum === AccionAlbum.ACTUALIZAR) {
+      return
+    }
+  }
+
+  // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
+  guardarAlbum() {
+    if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
+      this.perfilNegocio.insertarAlbunEnPerfil(this.codigo, this.album)
+    }
+  }
+
 }
 
-
 export enum AccionAlbum {
+    VISITA = 'visita',
     CREAR = 'creando',
     ACTUALIZAR = 'actualizando',
 }

@@ -68,7 +68,7 @@ export class CuentaNegocio {
     }
 
     // Valida si existe el usuario, caso contrario lo crea
-    validarUsuario(codigoPerfil: string) {
+    validarUsuario(codigoPerfil: string) : UsuarioModel {
         let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
         if (!usuario) {
             usuario = {
@@ -81,5 +81,25 @@ export class CuentaNegocio {
             this.guardarUsuarioEnLocalStorage(usuario)
         }
         return usuario
+    }
+
+    // Eliminar perfil de usuario
+    eliminarPerfilDelUsuario(codigoPerfil: string) {
+        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
+        let pos = -1
+        usuario.perfiles.forEach((perfil, i) => {
+            if (perfil.tipoPerfil.codigo === codigoPerfil) {
+                pos = i
+            }
+        })
+        if (pos >= 0) {
+            usuario.perfiles.splice(pos, 1)
+            // Borrar email y contrasena
+            if (usuario.perfiles.length === 0) {
+                usuario.email = ''
+                usuario.contrasena = ''
+            }
+            this.guardarUsuarioEnLocalStorage(usuario)
+        }
     }
 }

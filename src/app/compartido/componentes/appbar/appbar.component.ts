@@ -1,23 +1,21 @@
-import { LineaCompartida } from './../../diseno/modelos/linea.interface';
-import { BotonCompartido } from './../../diseno/modelos/boton.interface';
-import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
-import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service';
+import { LineaCompartida } from './../../diseno/modelos/linea.interface'
+import { BotonCompartido } from './../../diseno/modelos/boton.interface'
+import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio'
+import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service'
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { ConfiguracionAppbarCompartida } from '../../diseno/modelos/appbar.interface'
-import { AccionesAppBar } from '../../diseno/enums/acciones-appbar.enum'
 import { TamanoColorDeFondoAppBar } from '../../diseno/enums/tamano-color-fondo-appbar.enum'
 import { LineaDeTexto } from '../../diseno/modelos/linea-de-texto.interface'
 import { UsoAppBar } from '../../diseno/enums/uso-appbar.enum'
 import { TranslateService } from '@ngx-translate/core'
-import { ColorTextoBoton, TipoBoton } from '../button/button.component';
-import { TamanoDeTextoConInterlineado } from '../../diseno/enums/tamano-letra-con-interlineado.enum';
-import { AnchoLineaItem } from '../../diseno/enums/ancho-linea-item.enum';
-import { ColorFondoLinea } from '../../diseno/enums/color-fondo-linea.enum';
-import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { RutasLocales } from 'src/app/rutas-locales.enum';
-import { utf8Encode } from '@angular/compiler/src/util';
+import { ColorTextoBoton, TipoBoton } from '../button/button.component'
+import { TamanoDeTextoConInterlineado } from '../../diseno/enums/tamano-letra-con-interlineado.enum'
+import { AnchoLineaItem } from '../../diseno/enums/ancho-linea-item.enum'
+import { ColorFondoLinea } from '../../diseno/enums/color-fondo-linea.enum'
+import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
+import { Location } from '@angular/common'
+import { Router } from '@angular/router'
+import { RutasLocales } from 'src/app/rutas-locales.enum'
 
 @Component({
   selector: 'app-appbar',
@@ -26,15 +24,7 @@ import { utf8Encode } from '@angular/compiler/src/util';
 })
 export class AppbarComponent implements OnInit {
 
-  /*
-    Especificaciones generales,
-
-    - El appbar debe ser configurado segun el modelo ConfiguracionAppbarCompartida
-    - Las acciones del appbar se emiten al Ouput eventoClick y estan catalogadas segun enum AccionesAppBar
-  */
-
   @Input() configuracion: ConfiguracionAppbarCompartida
-  @Output() evento: EventEmitter<AccionesAppBar>
 
   public usoAppBar = UsoAppBar
   public textoNombrePerfil: string
@@ -54,7 +44,6 @@ export class AppbarComponent implements OnInit {
     private _location: Location,
     private router: Router,
   ) {
-    this.evento = new EventEmitter<AccionesAppBar>()
     this.textoNombrePerfil = ''
     this.textoTituloPrincipal = ''
     this.textoSubtitulo = ''
@@ -72,59 +61,6 @@ export class AppbarComponent implements OnInit {
       this.configurarLinea()
     }
   }
-
-  // // Inicializar por defecto el appbar
-  // inicializarConfiguracionPorDefecto() {
-  //   this.configuracion = {
-  //     usoAppBar: UsoAppBar.USO_DEMO_APPBAR,
-  //     // demoAppbar: {
-  //     //   nombrePerfil: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'clasico'
-  //     //   },
-  //     //   subtitulo: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'DEMO'
-  //     //   },
-  //     //   boton: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'suscribirse'
-  //     //   },
-  //     //   mostrarLineaVerde: true,
-  //     //   tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
-  //     // }
-  //     // gazeAppBar: {
-  //     //   tituloPrincipal: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'miPerfil'
-  //     //   },
-  //     //   subtituloDemo: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'DEMO'
-  //     //   },
-  //     //   // subtituloNormal: {
-  //     //   //   mostrar: true,
-  //     //   //   llaveTexto: 'clasico'
-  //     //   // },
-  //     //   mostrarBotonXRoja: false,
-  //     //   tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
-  //     // }
-  //     // searchBarAppBar: {
-  //     //   nombrePerfil: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'clasico'
-  //     //   },
-  //     //   mostrarTextoBack: true,
-  //     //   mostrarTextoHome: true,
-  //     //   subtitulo: {
-  //     //     mostrar: true,
-  //     //     llaveTexto: 'SUBTITULO'
-  //     //   },
-  //     //   mostrarLineaVerde: true,
-  //     //   tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
-  //     // }
-  //   }
-  // }
 
   // Inicializar textos
   async inicializarTextos() {
@@ -201,13 +137,12 @@ export class AppbarComponent implements OnInit {
       this.configuracion.accionAtras();
     } else {
       this._location.back();
-      this.evento.emit(AccionesAppBar.IR_A_PAGINA_O_ESTADO_ANTERIOR)
     }
   }
   clickBotonXRoja() {
-    this.evento.emit(AccionesAppBar.ABRIR_DIALOGO_CERRAR_SESION)
+    
   }
   clickBotonPrincipal() {
-    this.evento.emit(AccionesAppBar.CLICK_BOTON_PRINCIPAL)
+    
   }
 }

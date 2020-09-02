@@ -20,7 +20,7 @@ export class PerfilServiceLocal {
     }
 
     obtenerAlbum(): AlbumModel {
-        return this.metodosLocalStorageService.obtener(:LlavesLocalStorage.ALBUM_ACTIVO)
+        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.ALBUM_ACTIVO)
     } 
 
 }

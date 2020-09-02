@@ -132,19 +132,6 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
 
       // Cuando el item es usado en el album
       if (this.configuracion.usoDelItem === UsoItemCircular.CIRALBUM) {
-        // if (this.origenFoto === OrigenFoto.TOMAR_FOTO) {
-        //   // Tomar foto
-
-        //   return
-        // }
-
-        // if (this.origenFoto === OrigenFoto.IMAGEN_GALERIA) {
-        //   // Elegir de la galeria
-        //   const selector = document.getElementById("itemCirculoInputFile" + this.configuracion.idInterno)
-        //   selector.click()
-        //   return
-        // }
-
         // Accion por defecto
         // Mostrar modal definir opcion origen foto
         this.confModalOrigenFoto.mostrar = true

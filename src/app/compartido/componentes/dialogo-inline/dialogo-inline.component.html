@@ -1,0 +1,20 @@
+<div class="dialogo">
+    <!-- Descripcion del dialogo -->
+    <div
+        [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+            color: estiloDelTextoServicio.colorDelTexto.TEXTOAZULBASE, 
+            estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+            enMayusculas: true,
+            tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2,
+            paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+        })"
+    >
+        {{ configuracion.descripcion }}   
+    </div>
+    <div
+        *ngFor="let boton of configuracion.listaBotones"
+        class="cajaBoton"
+    >
+        <app-button [botonCompartido]="boton"></app-button>
+    </div>
+</div>

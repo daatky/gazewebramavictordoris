@@ -94,6 +94,7 @@ export class BuscadorModalComponent implements OnInit {
   seleccionarItem(item: ItemSelector) {
     this.configuracion.seleccionado = item
     this.configuracion.inputPreview.input.valor = this.configuracion.seleccionado.nombre + ' (CP: ' + this.configuracion.seleccionado?.auxiliar + ')'
+    this.configuracion.inputPreview.input.auxiliar = this.configuracion.seleccionado?.auxiliar
     this.reiniciarBuscador()
   }
 

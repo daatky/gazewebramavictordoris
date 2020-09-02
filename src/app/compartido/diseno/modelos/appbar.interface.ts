@@ -43,5 +43,5 @@ export interface ConfiguracionAppbarCompartida {
     demoAppbar?: DemoAppBar, // Enviar en caso el uso de appbar sea DemoAppBar
     searchBarAppBar?: SearchBarAppBar, // Enviar en caso el uso del appbar sea SearchBarAppBar
     gazeAppBar?: GazeAppBar, // Enviar en caso el uso del appbar sea GazeAppBar
-    accionAtras?: Function // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior    
+    accionAtras?: Function, // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior
 }

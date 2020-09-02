@@ -28,6 +28,7 @@ import { ToastComponent } from './componentes/toast/toast.component';
 import { DialogoContenidoComponent } from './componentes/dialogo-contenido/dialogo-contenido.component'
 import { ItemFechaComponent } from './componentes/item-fecha/item-fecha.component'
 import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensamiento-compartido.component';
+import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    DialogoInlineComponent,
   ],
   exports: [
     CrearComponenteDirective,
@@ -88,6 +90,7 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    DialogoInlineComponent
   ]
 })
 

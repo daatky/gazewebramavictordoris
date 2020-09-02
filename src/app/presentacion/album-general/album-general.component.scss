@@ -4,10 +4,16 @@
 // Grilla
 // Ancho item cirular + esspacio 178 + ancho item circular
 $ancho-row-grilla: calcular(88.38);
+$ancho-row-grilla-completo: $ancho-pagina;
+$grilla-margin-left: $espacio-267;
 $grilla-left-right: $ancho-pagina - $ancho-row-grilla;
 
 .cuerpo {
     background: $tranparencia-base;
+}
+.cuerpo.albumPreview {
+    height: $cuerpo-con-bottom-bar-alto;
+    width: $cuerpo-con-bottom-bar-ancho;
 }
 
 // portada
@@ -49,13 +55,19 @@ $grilla-left-right: $ancho-pagina - $ancho-row-grilla;
 .indicaciones.actualizar {
     margin-bottom: $espacio-0316;
 }
+.indicaciones.albumpreview {
+    margin-bottom: $espacio-0316;
+}
 .indicaciones p {
     text-align: center;
-    line-height: $interlineado-17 !important;
 }
 .espaciador-178 {
     width: 100%;
     height: $espacio-0178;
+}
+.espaciador-154 {
+    width: 100%;
+    height: $espacio-0154;
 }
 // Grilla
 .grilla {
@@ -69,6 +81,11 @@ $grilla-left-right: $ancho-pagina - $ancho-row-grilla;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+}
+
+.grilla.modoPreview {
+    width: $ancho-row-grilla-completo;
+    left: -$grilla-margin-left;
 }
 
 .grilla .cajaItem {
@@ -87,6 +104,9 @@ $grilla-left-right: $ancho-pagina - $ancho-row-grilla;
     width: $espacio-0178;
     min-height: 2vw;
 }
+.grilla.modoPreview .divisorVertical {
+    display: none;
+}
 .divisorHorizontal {
     width: 100%;
     height: $espacio-0316;
@@ -103,4 +123,80 @@ $grilla-left-right: $ancho-pagina - $ancho-row-grilla;
 .mensajeDeFotos p {
     line-height: $interlineado-18;
     text-align: center;
+}
+
+// Barra inferior
+.barrainferior {
+    width: $bottom-bar-ancho;
+    height: $bottom-bar-alto;
+    background: $tranparencia-base;
+
+    border-top: $bottom-bar-border-top solid $celeste-base;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0 calcular(1.39) 0 calcular(2.67);
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.barrainferior.activa > * {
+    pointer-events: auto;
+}
+.barrainferior .cajablanca {
+    width: $bottom-bar-caja-ancho;
+    height: $bottom-bar-caja-alto;
+    border-radius: $bottom-bar-caja-borde-radio;
+    background: #ffffff;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+
+    margin-right: calcular(1.39);
+}
+.barrainferior .cajablanca .icono {
+    width: $bottom-bar-caja-icono-ancho;
+    border-top-left-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-left-radius: $bottom-bar-caja-borde-radio;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.barrainferior .cajablanca .icono .iconotexto {
+    width: $bottom-bar-caja-icono-texto-ancho;
+    height: $bottom-bar-caja-icono-texto-alto;
+}
+.barrainferior .cajablanca input {
+    width: calc(100% - #{ $bottom-bar-caja-icono-ancho });
+    height: 100%;
+
+    border: none;
+    box-sizing: border-box;
+    border-top-right-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-right-radius: $bottom-bar-caja-borde-radio;
+    padding: 0 $espacio-0178;
+    outline: 0;
+
+    font-size: $letra-2;
+    line-height: 80%;
+    font-style: italic;
+
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        outline: 0;
+    }
+}
+.barrainferior .boton {
+    width: $bottom-bar-boton-diametro;
+    height: $bottom-bar-boton-diametro;
+    cursor: pointer;
+}
+.barrainferior .boton img {
+    width: 100%;
+    height: 100%;
 }
