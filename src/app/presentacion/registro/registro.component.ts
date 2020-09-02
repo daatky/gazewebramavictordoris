@@ -142,35 +142,31 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // Suscribirse a eventos de click en el selector de pais
-      if (this.selectorPaises) {
-        this.selectorPaises.evento.subscribe((info:InfoAccionSelector) => {
-          if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
-            this.abrirSelectorPaises()
-            return
-          }
-          if (info.accion === AccionesSelector.SELECCIONAR_ITEM) {
-            this.buscadorLocalidades.pais = info.informacion
-            this.confBuscador.seleccionado.codigo = ''
-            this.confBuscador.seleccionado.nombre = ''
-            this.confBuscador.inputPreview.input.valor = ''
-            return
-          }
-        })
-      }
+      this.selectorPaises.evento.subscribe((info:InfoAccionSelector) => {
+        if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
+          this.abrirSelectorPaises()
+          return
+        }
+        if (info.accion === AccionesSelector.SELECCIONAR_ITEM) {
+          this.buscadorLocalidades.pais = info.informacion
+          this.confBuscador.seleccionado.codigo = ''
+          this.confBuscador.seleccionado.nombre = ''
+          this.confBuscador.inputPreview.input.valor = ''
+          return
+        }
+      })
 
       // Suscribirse a eventos de click en el buscador de localidades
-      if (this.buscadorLocalidades) {
-        this.buscadorLocalidades.evento.subscribe((info:InfoAccionBuscadorLocalidades) => {
-          if (info.accion === AccionesBuscadorModal.ABRIR_BUSCADOR) {
-            this.abrirBuscadorLocalidades()
-            return
-          }
-          if (info.accion === AccionesBuscadorModal.REALIZAR_BUSQUEDA) {
-            this.buscarLocalidades(info.informacion.pais, info.informacion.query)
-            return
-          }
-        })
-      }
+      this.buscadorLocalidades.evento.subscribe((info:InfoAccionBuscadorLocalidades) => {
+        if (info.accion === AccionesBuscadorModal.ABRIR_BUSCADOR) {
+          this.abrirBuscadorLocalidades()
+          return
+        }
+        if (info.accion === AccionesBuscadorModal.REALIZAR_BUSQUEDA) {
+          this.buscarLocalidades(info.informacion.pais, info.informacion.query)
+          return
+        }
+      })
     })
   }
 
@@ -913,17 +909,20 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Submit formulario
   submitFormPerfil() {
     let error = true
+    this.botonSubmit.enProgreso = true
     if (this.registroForm.valid) {
       if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
         if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
           this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_CREADO)
           this.perfilCreado = true
+          this.botonSubmit.enProgreso = false
           error = false
         } 
       }
     }
 
     if (error) {
+      this.botonSubmit.enProgreso = false
       this.confToast.texto = 'Existen campos incompletos'
       this.confToast.cerrarClickOutside = true
       this.confToast.mostrarToast = true
