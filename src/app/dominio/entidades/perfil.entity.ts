@@ -11,16 +11,17 @@ import { AsociacionEntity } from "./asociacion.entity";
 import { NoticiaEntity } from "./noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity } from "./catalogos/catalogo-tipo-perfil.entity";
+import { PerfilModel } from '../modelo/perfil.model';
 
 export interface PerfilEntity {
     _id: string,
-    nombreContacto: string,
-    nombre: string,
-    tipoPerfil: CatalogoTipoPerfilEntity,
-    usuario: UsuarioEntity,
-    albums: Array<AlbumEntity>,
+    nombreContacto?: string,
+    nombre?: string,
+    tipoPerfil?: CatalogoTipoPerfilEntity,
+    usuario?: UsuarioEntity,
+    albums?: Array<AlbumEntity>,
     estado?: CatalogoEstadoEntity,
-    direcciones: Array<DireccionEntity>,
+    direcciones?: Array<DireccionEntity>,
     telefonos?: Array<TelefonoEntity>,
     proyectos?: Array<ProyectoEntity>,
     pensamientos?: Array<PensamientoEntity>,
@@ -34,7 +35,7 @@ export interface PerfilCrearCuentaEntity {
     nombreContacto: string,
     nombre: string,
     tipoPerfil: string,
-    albums: Array<AlbumEntity>[]   
+    albums: Array<AlbumEntity>[]
 }
 
 @Injectable({ providedIn: 'root' })
@@ -42,11 +43,28 @@ export class PerfilEntityMapperServicePerfilresumenModelo extends MapedorService
 
     protected map(entity: PerfilEntity): PerfilResumenModel {
         return {
-          _id: entity._id,
-          nombreContacto: entity.nombreContacto,
-          nombre: entity.nombre,
-          estado: entity.estado,
+            _id: entity._id,
+            nombreContacto: entity.nombreContacto,
+            nombre: entity.nombre,
+            estado: entity.estado,
         };
+    }
+
+}
+
+@Injectable({ providedIn: 'root' })
+export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity, PerfilModel> {
+
+    protected map(entity: PerfilEntity): PerfilModel {
+        if (entity) {
+            return {
+                _id: entity._id,
+                nombreContacto: entity.nombreContacto,
+                nombre: entity.nombre,
+                estado: entity.estado,
+            };
+        }
+        return null;
     }
 
 }

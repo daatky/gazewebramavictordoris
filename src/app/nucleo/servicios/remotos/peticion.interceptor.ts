@@ -9,25 +9,21 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { LocalStorage } from '../locales/local-storage.service';
+import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
+import { APIGAZE } from './rutas/api-gaze.enum';
+import { Cuenta } from './rutas/cuenta.enum';
 @Injectable()
 export class PeticionInterceptor implements HttpInterceptor {
     constructor(
-        private localStorage: LocalStorage
+        private localStorage: LocalStorage,
+        private cuentaNegocio: CuentaNegocio
     ) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<MediaDeviceInfo>> {
-        //const token = localStorage.getItem('auth_token'); // Aqui se debe obterner el token
-        const token = this.localStorage.obtenerTokenAutenticacion()
         const apiKey = "d2e621a6646a4211768cd68e26f21228a81" // Aqui se debe obtener el ApiKey        
-        const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
-
-        // req = req.clone({
-        //     headers: req.headers.set('Content-Type', 'application/json')
-        // });
-
 
         if (apiKey) {
             //api key de autorizacion para consumo del api            
@@ -36,42 +32,69 @@ export class PeticionInterceptor implements HttpInterceptor {
             });
         }
 
-        if (idioma) {
-            //Idioma seleccionado por el usuario
-            req = req.clone({
-                headers: req.headers.set('idioma', idioma.codNombre)
-            });
+        if (!req.url.startsWith("http") || req.url == (APIGAZE.BASE.toString() + Cuenta.REFRESCAR_TOKEN.toString())) {
+            return next.handle(req).pipe(map((event: HttpEvent<any>) => {
+                return event;
+            }, (err: HttpErrorResponse) => {
+                const message = err.error.message;
+                return throwError(message);
+            }))
         }
-        if (token) {
-            //Token de autenticacion
-            req = req.clone({
-                headers: req.headers.set('Authorization', `Bearer ${token}`)
-            });
-        }
-        //Cambios para manejar el handle error
-        return next.handle(req).pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {                    
-                    if(event.body){                        
-                        if(event.body.codigoEstado){                            
-                            // console.log(event.body)
-                            if(event.body.codigoEstado>=400){                                
-                                throw event.body.respuesta.mensaje
+
+        return this.cuentaNegocio.obtenerTokenAutenticacion().pipe(switchMap((token) => {
+
+            const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
+
+            if (idioma) {
+                //Idioma seleccionado por el usuario
+                req = req.clone({
+                    headers: req.headers.set('idioma', idioma.codNombre)
+                });
+            }
+
+            //Se agrega el token 
+            if (token) {
+                //Token de autenticacion
+                req = req.clone({
+                    headers: req.headers.set('Authorization', `Bearer ${token}`)
+                });
+            }
+
+            return next.handle(req).pipe(
+                map((event: HttpEvent<any>) => {
+                    if (event instanceof HttpResponse) {
+                        if (event.body) {
+                            if (event.body.codigoEstado) {
+                                console.log(event.body)
+                                if (event.body.codigoEstado >= 400) {
+                                    console.log('sdsdfsf',);
+                                    throw event.body.respuesta.mensaje
+                                }
                             }
                         }
                     }
-                }
-                return event;
-            }),
-            catchError((error: HttpErrorResponse) => {
-                let data = {};
-                data = {
-                    reason: error && error.error && error.error.reason ? error.error.reason : '',
-                    //status: error.status
-                };
-                //this.errorDialogService.openDialog(data);
-                console.log("Interceptor Error", data);
-                return throwError(error);
-            }));
+                    return event;
+                }),
+                catchError((error: HttpErrorResponse) => { 
+                    console.error(error);
+                                       
+                    if (error.status) {
+                        if (error.status === 401) {
+                            return throwError("No tienes autorizacion");
+                        } else {
+                            if (error.status === 404) {
+                                return throwError("No encontrado");
+                            } else {
+                                return throwError("Lo sentimos ocurrio un error al procesar tu solicitid, intenta mas tarde");
+                            }
+                        }
+                    }
+                    console.log("------")
+                    return throwError(error)
+                }));
+        }))
+
+
     }
+
 }

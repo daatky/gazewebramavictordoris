@@ -1,4 +1,4 @@
-export enum Catalogo {
+export enum Catalogo {    
     IDIOMAS = "catalogos/catalogo-idiomas",
     PAIS = "catalogos/catalogo-pais",
     BUSCAR_LOCALIDAD = "catalogos/buscar-localidad/",

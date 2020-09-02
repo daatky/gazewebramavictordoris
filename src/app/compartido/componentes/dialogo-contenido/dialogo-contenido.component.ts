@@ -35,7 +35,7 @@ export class DialogoContenidoComponent implements OnInit {
 
   // remove self from modal service when component is destroyed
   ngOnDestroy(): void {
-    this.modalService.remove(this.data.id);
+    this.modalService.remove(this.id);
     this.element.remove();
   }
 
@@ -46,7 +46,7 @@ export class DialogoContenidoComponent implements OnInit {
 
   // open modal
   abrir(): void {
-   this.element.style.display = 'block';
+    this.element.style.display = 'block';
     document.body.classList.add('modalAbierto');
   }
 
@@ -58,7 +58,6 @@ export class DialogoContenidoComponent implements OnInit {
 
 }
 
-export interface DialogoContenido {
-  id: string,
+export interface DialogoContenido {  
   titulo: string
 }

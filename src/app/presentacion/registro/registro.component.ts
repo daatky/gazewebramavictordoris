@@ -310,7 +310,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         mostrarLineaVerde: true,
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
-        mostrarBotonXRoja: true
       },
       accionAtras: () => {
         this.accionAtrasAppbar()
@@ -383,7 +382,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar boton
   async configurarBoton() {
     this.botonSubmit = {
-      text: '',
+      text: 'enviar',
       tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
       colorTexto: ColorTextoBoton.AMARRILLO,
       tipoBoton: TipoBoton.TEXTO,
@@ -615,7 +614,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.CLASSIC) {
       // Substituto
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'sustituto',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.AZUL,
@@ -627,7 +626,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       // Ludico
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'ludico',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.ROJO,
@@ -649,7 +648,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.PLAYFUL) {
       // Clasico y substituto
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'clasico',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.AZUL,
@@ -661,7 +660,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       // Substituto
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'sustituto',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.ROJO,
@@ -683,7 +682,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.SUBSTITUTE) {
       // Clasico y ludico
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'clasico',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.AZUL,
@@ -695,7 +694,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       // Ludico
       this.confDialogo.listaBotones.push({
-        text: '',
+        text: 'ludico',
         tipoBoton: TipoBoton.TEXTO,
         tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
         colorTexto: ColorTextoBoton.ROJO,
@@ -750,10 +749,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // 
-  irAlPerfil() {
-    
-  }
 
   // Click en input pais
   abrirSelectorPaises() {

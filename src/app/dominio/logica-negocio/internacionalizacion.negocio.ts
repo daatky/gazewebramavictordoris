@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { InternacionalizacionRepository } from '../repositorio/internacionalizacion.repository';
 import { IdiomaNegocio } from './idioma.negocio';
+import { CodigosCatalogoIdioma } from '../../nucleo/servicios/remotos/codigos-catalogos/catalogo-idioma.enum'
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +17,11 @@ export class InternacionalizacionNegocio {
         this.internacionalizacionRepository.guardarIdiomaDefecto(this.obtenerIdiomaInternacionalizacion())
     }    
     obtenerIdiomaInternacionalizacion():string{        
-        let idioma='en'
-        if(this.idiomaNegocio.obtenerIdiomaSeleccionado()){
-            idioma=this.idiomaNegocio.obtenerIdiomaSeleccionado().codNombre
+        //let idioma='en'
+        let idioma = CodigosCatalogoIdioma.INGLES.toString()
+        let idiomaGuardado = this.idiomaNegocio.obtenerIdiomaSeleccionado()
+        if(idiomaGuardado){
+            idioma=idiomaGuardado.codNombre
         }
         return idioma
     }
@@ -27,7 +30,7 @@ export class InternacionalizacionNegocio {
         this.internacionalizacionRepository.usarIidoma(idioma)
     }
 
-    obtenerTextoLlave(llave:string){
+    obtenerTextoLlave(llave:string):Promise<string>{
         return this.internacionalizacionRepository.obtenerTextoLlave(llave)
     }
 }

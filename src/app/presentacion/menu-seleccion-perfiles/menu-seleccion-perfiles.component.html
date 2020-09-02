@@ -1,0 +1,14 @@
+<app-appbar [configuracion]="configuracionAppBar"> </app-appbar>
+
+
+<app-lista-vertical [dataLista]='dataLista' class="centrar">
+
+    <div *ngIf="listaTipoPerfil">
+        <app-item-menu [configuracionItem]=" prepareItemInstrucciones()">
+        </app-item-menu>
+        <div *ngFor="let item of listaTipoPerfil">
+            <app-item-menu [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
+        </div>
+    </div>
+
+</app-lista-vertical>

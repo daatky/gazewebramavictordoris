@@ -43,6 +43,7 @@ export class PagoNegocio {
         }
     }
 
+    //Metodo pendiente, considererar la actualizaicon para integrar las donaciones o pagos.
     prepararPagoStripe(data: any): Observable<MetodoPagoStripeEntity> {
         return this.metodoPagoRepository.prepararPagoStripe(data).pipe(
             map((data: MetodoPagoStripeEntity) => {
@@ -54,6 +55,7 @@ export class PagoNegocio {
         );
     }
 
+    //Metodo pendiente, considererar la actualizaicon para integrar las donaciones o pagos.
     prepararPagoPaypal(data: any): Observable<string> {
         return this.metodoPagoRepository.prepararPagoPaypal(data).pipe(
             map((data: string) => {
@@ -63,18 +65,5 @@ export class PagoNegocio {
                 return throwError(err)
             })
         )
-    }
-
-    preprerarInformacionCrearCuenta() {
-        const tipoPerfiles: CatalogoTipoPerfilModel[] = this.perfilRepository.obtenerCatalogoTipoPerfilLocal();
-        const idioma: CatalogoIdiomaEntity = this.idiomaRepository.obtenerIdiomaLocal();
-        let usuario: UsuarioCrearCuentaEntity = {
-            email: "",
-            contrasena: "",
-            idioma: idioma.codigo,
-            menorEdad: false,
-            perfilGrupo: true,
-            // perfiles: tipoPerfiles.map((tipo) => tipo.perfil)
-        }
     }
 }

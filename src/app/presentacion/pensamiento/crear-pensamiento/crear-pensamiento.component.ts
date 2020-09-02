@@ -13,6 +13,10 @@ import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interfa
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum';
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
+import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
+import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
+import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 
 @Component({
   selector: 'app-crear-pensamiento',
@@ -23,32 +27,56 @@ export class CrearPensamientoComponent implements OnInit {
   pensamientoCompartido:PensamientoCompartido
   dataLista:DatosLista
   crearPensamientoForm: FormGroup;
-  inputPensamiento: InputCompartido;
+  inputPensamiento: InputCompartido;  
   botonCrearPensamiento: BotonCompartido;  
+  idPerfil="5f3e907015ae58647c0d3e1d"
+  esPrivado:boolean=false;
+  configuracionToast:ConfiguracionToast;
+  cargando:boolean;
+  configuracionAppBar: ConfiguracionAppbarCompartida
   constructor(
     private variablesGlobales:VariablesGlobales,
     private pensamientoNegocio:PensamientoNegocio,
-    private formBuilder: FormBuilder,      
-  ) {  
+    private formBuilder: FormBuilder,   
+  ) {
+    this.cargando=true  
+    this.prepararAppBar()
+    this.iniciarDatos()
     //this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: 'Titulo', esLista: false, configuracionItem: EstiloItemPensamiento.ITEM_ALEATORIO }    
   }
 
-  ngOnInit(): void {   
-    this.iniciarDatos()
+  ngOnInit(): void {       
   }
-
   iniciarDatos(){
     this.crearPensamientoForm = this.formBuilder.group({
       pensamiento: ['', [Validators.required, Validators.maxLength(230)]],
     });      
-    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo',
-    configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
     this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}        
-    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarPensamientosPrivados()}         
-    this.obtenerPensamientosPublicos()
-    //await this.internacionalizacionNegocio.obtenerTextoLlave('enviar')
-//    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }    
-    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.actualizarPensamiento }    
+
+    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo', configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
+    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarMasPensamientos()}             
+    this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }            
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+    this.obtenerPensamientos()
+  }
+  async prepararAppBar() {
+    this.configuracionAppBar = {
+      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
+      searchBarAppBar: {
+        nombrePerfil: {
+          mostrar: false
+        },
+        mostrarDivBack: true,
+        mostrarTextoHome: false,
+        subtitulo: {
+          mostrar: true,
+          llaveTexto: 'CLASICO'
+        },
+        mostrarLineaVerde: true,
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+      }
+    }
+
   }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
@@ -68,39 +96,30 @@ export class CrearPensamientoComponent implements OnInit {
     this.eliminarPensamiento(objeto)
     return objeto
   }
-  // FIN  DE ESCUCHADORES EMIT
-  obtenerPensamientosPublicos(){
-    //5f3afaea066f133b9003d2ff
-    /*this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 1'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 2'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 3'})
-    this.dataLista.lista.push({id:'123123',fechaActualizacion:new Date(),texto:'HOLA 4'})
-    return*/
-    this.pensamientoNegocio.obtenerPensamientoPublicos('5f3e907015ae58647c0d3e1d')
-    .subscribe((res:Array<PensamientoModel>)=>{ 
+  
+  obtenerPensamientos(){
+    console.log("00000")    
+    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
+    .subscribe((res:Array<PensamientoModel>)=>{
+      this.cargando=false   
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       this.dataLista.lista=res
     },error=>{
-      console.log(error)
-    })
-  }
-  obtenerPensamientosPrivados(){
-    this.pensamientoNegocio.obtenerPensamientosPrivados('5f3e907015ae58647c0d3e1d')
-    .subscribe(res=>{
-      console.log("PENSAMIENTOS PRIVADOS") 
-      console.log(res)
-    },error=>{
-      console.log(error)
+      this.cargando=false  
+      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
     })
   }
   crearPensamiento = () =>{
     if(this.crearPensamientoForm.valid){
       console.log('CORRECTO')
-      this.pensamientoNegocio.crearPensamiento('5f3e907015ae58647c0d3e1d',true,this.crearPensamientoForm.value.pensamiento)
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+      this.pensamientoNegocio.crearPensamiento(this.idPerfil,true,this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{
-        console.log(res)
+        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
         this.dataLista.lista.unshift(res)
-      },error=>{
-        console.log(error)
+      },error=>{        
+        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
       })
     }else{
       this.inputPensamiento.error = true
@@ -108,16 +127,17 @@ export class CrearPensamientoComponent implements OnInit {
   }
 
   actualizarPensamiento = (objeto:object) =>{ 
-    console.log(objeto)
     if(this.crearPensamientoForm.valid){
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
       this.pensamientoNegocio.actualizarPensamiento(objeto['pensamientoModel']['id'],this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{
-        console.log(objeto)
         console.log(res)
+        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
         this.dataLista.lista[objeto['index']].texto=this.crearPensamientoForm.value.pensamiento
         this.dataLista.lista[objeto['index']].fechaActualizacion=new Date()
       },error=>{
         console.log(error)
+        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
       })
     }else{
       this.inputPensamiento.error = true
@@ -125,58 +145,47 @@ export class CrearPensamientoComponent implements OnInit {
   }
 
   actualizarEstadoPensamiento = (objeto:object) =>{
-    console.log(objeto)
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
     this.pensamientoNegocio.actualizarEstadoPensamiento(objeto['pensamientoModel']['id'])
     .subscribe(res=>{
       console.log('se actualizo estado del pensamiento')
-      console.log(objeto)
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       console.log(res)
       this.dataLista.lista.splice(objeto['index'],1)
       //Agregar en la otra lista
     },error=>{
       console.log(error)
+      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
     })
   }
   eliminarPensamiento = (objeto:object)=>{
     console.log(objeto)
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
     this.pensamientoNegocio.eliminarPensamiento(objeto['pensamientoModel']['id'])
     .subscribe(res=>{
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       console.log(objeto)
       console.log(res)
       this.dataLista.lista.splice(objeto['index'],1)
       //Agregar en la otra lista
     },error=>{
       console.log(error)
+      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
     })
   }
-  cargarMasPensamientos(esPrivado:boolean){
+  cargarMasPensamientos(){
     if(this.variablesGlobales.paginacionPublico.actual!=-1){
-      this.pensamientoNegocio.cargarMasPensamientos('5f3e907015ae58647c0d3e1d',10,this.variablesGlobales.paginacionPublico.actual,esPrivado)
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+      this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,this.esPrivado)
       .subscribe(res=>{
+        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
         console.log("PENSAMIENTOS PRIVADOS") 
         console.log(res)    
+        //agregar a la lista de pensamientos
       },error=>{
         console.log(error)
+        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
       })
     }
-  }
-  //cargar mas: Se envia este metodo para que se ejecute cuando en la lista se da mas scrol
-  //Hay que controlar cuando ya no existan mas datos no mandar a cargar mas
-  cargarPensamientosPrivados(){    
-    //Leer de la cabezera los datos que viene    
-    console.log(this.variablesGlobales.paginacionPublico)
-    console.log(this.variablesGlobales.paginacionPublico.actual++)
-    if(this.variablesGlobales.paginacionPublico.actual!=-1){
-      this.pensamientoNegocio.cargarPensamientosPrivados('5f3e907015ae58647c0d3e1d',10,this.variablesGlobales.paginacionPublico.actual)
-      .subscribe(res=>{
-        console.log("PENSAMIENTOS PRIVADOS") 
-        console.log(res)    
-      },error=>{
-        console.log(error)
-      })
-    }
-  }
-  cargarPensamientosPublico(){
-    
   }
 }

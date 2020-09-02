@@ -1,6 +1,9 @@
 export enum LlavesLocalStorage {
     PAISES = 'paises',
     LOCALIDADES = 'localidades',
+    IDIOMAS = 'idiomas',
+    //TIPO_PERFILES_USER="tipo_perfiles_user"    
+    LISTA_ALBUM_REGISTRO = 'lista_album_registro',
     IDIOMA = 'idiomaSeleccionado',
     AUTH_TOKEN = 'auth_token',
     REFRESH_TOKEN = 'refresh_token',

@@ -8,6 +8,7 @@ import { PortadaGazeComponent } from '../portada-gaze/portada-gaze.component';
 import { IdiomaNegocio } from 'src/app/dominio/logica-negocio/idioma.negocio';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { TamanoPortadaGaze } from '../../diseno/enums/tamano-portada-gaze.enum';
+import { ConfiguracionToast } from '../../diseno/modelos/toast.interface';
 
 @Component({
   selector: 'app-cabecera-idiomas',
@@ -19,13 +20,15 @@ export class CabeceraIdiomasComponent implements OnInit {
   idiomaEstilo: LineaDeTexto
   idiomaSeleccionado:string
   @Output() cambiarIdioma=new EventEmitter()  
+  configuracionToast:ConfiguracionToast
   constructor(
     private idiomaNegocio: IdiomaNegocio,  
     //private localStorageNegocio:LocalStorageNegocio,
-    private internacionalizacionNegocio:InternacionalizacionNegocio,    
+    private internacionalizacionNegocio:InternacionalizacionNegocio,        
   ) { }
 
   ngOnInit(): void {
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     //VERIFICAR SI ESTA GUARDADO UN IDIOMA EN LOCALSTORAGE    
     this.idiomaSeleccionado=this.internacionalizacionNegocio.obtenerIdiomaInternacionalizacion()
     this.idiomaEstilo = {
@@ -39,13 +42,16 @@ export class CabeceraIdiomasComponent implements OnInit {
   }
 
     //OBTENER EL CATALOGO DE IDIOMAS
-    obtenerCatalogoIdiomas(){
+    obtenerCatalogoIdiomas(){   
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}   
       this.idiomaNegocio.obtenerCatalogoIdiomas()
-        .subscribe(res => {
+        .subscribe(res => {          
+          this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
           this.idiomas = res
           //this.idiomaNegocio.ordenarIdioma()
         }, error => {
           console.log(error)
+          this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
         })
     }
   // Obtener clases lineas texto 

@@ -1,4 +1,4 @@
-import { PerfilEntityMapperServicePerfilresumenModelo } from './../perfil.entity';
+import { PerfilEntityMapperServicePerfilresumenModelo, PerfilEntityMapperServicePerfil } from './../perfil.entity';
 import { PerfilModel } from './../../modelo/perfil.model';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";
@@ -13,7 +13,7 @@ export interface CatalogoTipoPerfilEntity {
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo: string
-    perfil: PerfilEntity
+    perfil?: PerfilEntity
     traducciones?: Array<TraduccionCatalogoTipoPerfilEntity>
 
 }
@@ -35,7 +35,7 @@ export class CatalogoTipoPerfilMapperService extends MapedorService<CatalogoTipo
         super()
     }
 
-    protected map(entity: CatalogoTipoPerfilEntity): CatalogoTipoPerfilModel {
+    protected map(entity: CatalogoTipoPerfilEntity,): CatalogoTipoPerfilModel {
         return {
             codigo: entity.codigo,
             nombre: entity.traducciones[0].nombre,
@@ -45,5 +45,33 @@ export class CatalogoTipoPerfilMapperService extends MapedorService<CatalogoTipo
     }
 
 }
+
+@Injectable({ providedIn: 'root' })
+export class CatalogoTipoPerfilMapperService2 extends MapedorService<CatalogoTipoPerfilEntity, CatalogoTipoPerfilModel> {
+
+    constructor(
+        private perfilEntityMapperServicePerfil: PerfilEntityMapperServicePerfil
+    ) {
+        super()
+    }
+
+    protected map(entity: CatalogoTipoPerfilEntity): CatalogoTipoPerfilModel {
+        return {
+            codigo: entity.codigo,
+            nombre: entity.traducciones[0].nombre,
+            descripcion: entity.traducciones[0].descripcion,            
+            perfil: this.perfilEntityMapperServicePerfil.transform(entity.perfil)            
+        };
+    }
+}
+
+enum MapperCatalogoTipoPerfil {
+    PERFIL_COMPLETO,
+    PERFIL_RESUME
+}
+
+
+
+
 
 

@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DatosLista } from '../../diseno/modelos/datos-lista.interface';
-import { DatosItem } from '../../diseno/modelos/datos-item-lista.interface';
-import { ItemPensamientoComponent } from '../item-pensamiento/item-pensamiento.component'
 import { PensamientoCompartido, Configuracion } from "../../diseno/modelos/pensamiento";
 import { TipoPensamiento, EstiloItemPensamiento } from '../../diseno/enums/tipo-pensamiento.enum';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
@@ -20,6 +18,8 @@ export class PensamientoCompartidoComponent implements OnInit {
   @Output() dobleClick:EventEmitter<object>
   @Output() clickLargo:EventEmitter<object>
   dataPensamiento:Configuracion
+  error:string
+  
   constructor(
     private pensamientoNegocio:PensamientoNegocio,
   ) { 
@@ -28,17 +28,14 @@ export class PensamientoCompartidoComponent implements OnInit {
     this.clickLargo=new EventEmitter<object>();
   }
 
-  ngOnInit(): void {
-    this.cargarPensamiento() 
+  ngOnInit(): void {  
     //this.configurarDatos(0,{id:'uhf'})
-  }
-  /*ngDoCheck (){ 
-    console.log('=====')
-    console.log(this.pensamientos[0].pensamiento)
-  }*/
-
+    this.cargarPensamiento()
+  }    
   cargarPensamiento(){
-    if(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO){      
+    this.error=""
+    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){            
+      
       this.obtenerPensamientoAleatorio()          
     }else{
       this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
@@ -46,12 +43,13 @@ export class PensamientoCompartidoComponent implements OnInit {
   }
   obtenerPensamientoAleatorio(){
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
-    //PensamientoEntity
     .subscribe((res:PensamientoModel)=>{ 
+      console.log(res)
       this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
       this.dataPensamiento={data:res}
     },error=>{
       console.log(error)
+      this.error=error
     })
   }
   eventoClick(index:number,pensamientoModel:PensamientoModel){

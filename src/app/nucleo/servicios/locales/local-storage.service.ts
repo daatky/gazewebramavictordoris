@@ -27,7 +27,14 @@ export class LocalStorage {
     guardarIdiomaLocal(idioma: CatalogoIdiomaEntity) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.IDIOMA, idioma)
     }
+    //=======================IDIOMAS
+    obtenerIdiomas(): Array<CatalogoIdiomaEntity> {
+        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.IDIOMAS)
+    }
 
+    guardarIdiomas(idiomas: Array<CatalogoIdiomaEntity>) {
+        this.metodosLocalStorageService.guardar(LlavesLocalStorage.IDIOMAS, idiomas)
+    }
     //===================== TOKEN AUTENTICACION
     obtenerTokenAutenticacion() {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.AUTH_TOKEN)
@@ -36,12 +43,12 @@ export class LocalStorage {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.AUTH_TOKEN, token)
     }
 
-    obtenerTokenRefresh(){
+    obtenerTokenRefresh() {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.REFRESH_TOKEN)
     }
     guardarTokenRefresh(token: string) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.REFRESH_TOKEN, token)
-    } 
+    }
     /*
     obtenerTipoPerfiles(){        
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.TIPO_PERFILES_USER)

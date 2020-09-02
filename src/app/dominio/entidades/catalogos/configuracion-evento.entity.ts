@@ -1,14 +1,16 @@
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
-import { CatalogoTipoConfiguracionEventoEntity } from "./catalogo-tipo-configuracion-evento.entity";
+import { CatalogoEventoEntity } from "./catalogo-evento.entity";
+import { FormulaEventoEntity } from "./formula-evento.entity";
 
 export interface ConfiguracionEventoEntity {
-    id: string,
-    codigo: string,
-    estado: CatalogoEstadoEntity, // CatalogoEstado
-    fechaCreacion: Date,
-    fechaActualizacion: Date,
-    intervalo:number,
-    duracion:number,
-    tipo:CatalogoTipoConfiguracionEventoEntity,
-    ciclico:boolean
+    _id?: string,
+    codigo?: string,
+    estado?: CatalogoEstadoEntity, // CatalogoEstado
+    fechaCreacion?: Date,
+    fechaActualizacion?: Date,
+    intervalo?:number,
+    duracion?:number,
+    ciclico?:boolean
+    catalogoEvento?:CatalogoEventoEntity,
+    formulas?:Array<FormulaEventoEntity>    
 }

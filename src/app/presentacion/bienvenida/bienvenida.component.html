@@ -27,7 +27,7 @@
                         {{'visitarRed' | translate | uppercase}}
                     </div>
                 </div>                            
-                <app-button class="btnEnviar centrar" [botonCompartido]='botonEnter' type="submit"></app-button>
+                <app-button *ngIf="botonEnter" class="btnEnviar centrar" [botonCompartido]='botonEnter' type="submit"></app-button>
                     <div class="lineaInferior">
                         <app-linea class="posicionRelativa" [configuracionLinea]="configuracionLinea2"></app-linea>
                 </div>

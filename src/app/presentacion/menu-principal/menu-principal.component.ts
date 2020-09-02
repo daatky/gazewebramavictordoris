@@ -14,8 +14,12 @@ import { EspesorLineaItem } from 'src/app/compartido/diseno/enums/espesor-linea-
 import { ColorFondoLinea } from 'src/app/compartido/diseno/enums/color-fondo-linea.enum';
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { Catalogo } from 'src/app/nucleo/servicios/remotos/rutas/catalogos.enum';
+import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
+import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
+import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 
 
 
@@ -28,25 +32,47 @@ export class MenuPrincipalComponent implements OnInit {
   configuracionAppBar: ConfiguracionAppbarCompartida;
   listaMenu: ItemMenuModel[]
   itemSubMenu: ItemSubMenu;
+  sesionIniciada = false;
   dataLista: DatosLista = {
     cargando: false,
     reintentar: () => { },
     tamanoLista: TamanoLista.TIPO_MENU_PRINCIPAL
   }
+  tipoPerfilSeleccionado: CatalogoTipoPerfilModel
+
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private _location: Location,
     private router: Router,
+    private route: ActivatedRoute,
+    private perfilNegocio: PerfilNegocio,
+    private cuentaNegocio: CuentaNegocio
   ) {
-    this.prepararAppBar();
     this.prepararItemsMenu();
     this.prepararDataSubMenu();
   }
 
   ngOnInit(): void {
-
+    this.obtenerParametrosUrl();
+    this.sesionIniciada = this.cuentaNegocio.sesionIniciada();
+    this.prepararAppBar();
   }
 
+  obtenerParametrosUrl() {
+    this.route.params.subscribe(params => {
+      if (params['codigoPerfil']) {
+        this.tipoPerfilSeleccionado = {
+          codigo: params['codigoPerfil']
+        }
+
+        this.obtenerInfoPerfilSeleccionado();
+      }
+    });
+  }
+
+  obtenerInfoPerfilSeleccionado() {
+    this.tipoPerfilSeleccionado = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.tipoPerfilSeleccionado.codigo);
+  }
 
 
   async prepararAppBar() {
@@ -60,11 +86,23 @@ export class MenuPrincipalComponent implements OnInit {
         },
         subtituloDemo: {
           mostrar: true,
-          llaveTexto: "DEMO"
+          llaveTexto: this.obtenerTituloPrincipal()
         },
         mostrarBotonXRoja: false,
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
       }
+    }
+  }
+
+  obtenerTituloPrincipal() {
+    if (this.sesionIniciada) {
+      if (this.tipoPerfilSeleccionado && this.tipoPerfilSeleccionado.perfil) {
+        return this.tipoPerfilSeleccionado.nombre
+      } else {
+        return "NO TIENE UN PERFIL CREADO"
+      }
+    } else {
+      return "demo"
     }
   }
 

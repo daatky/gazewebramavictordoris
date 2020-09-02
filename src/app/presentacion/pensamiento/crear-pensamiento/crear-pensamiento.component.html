@@ -1,8 +1,14 @@
-<div style="background-color: aliceblue; width: 300px; height: 600px;">
-    <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataLista'></app-pensamiento-compartido>  
-    <form [formGroup]="actualizarPensamiento">
-        <app-input [inputCompartido]='inputPensamiento'></app-input>
-        <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
-    </form>
+<app-appbar [configuracion]="configuracionAppBar"></app-appbar>
+<div *ngIf="cargando;else presentar" class="cargandoCompleto cuerpo centrar">
+    <app-cargando></app-cargando>
 </div>
-
+<ng-template #presentar>    
+    <div class="cuerpoPensamiento cuerpo">
+        <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataLista'></app-pensamiento-compartido>  
+        <form [formGroup]="crearPensamientoForm">
+            <app-input [inputCompartido]='inputPensamiento'></app-input>
+            <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
+        </form>
+    </div>
+    <app-toast [configuracion]='configuracionToast'></app-toast>
+</ng-template>

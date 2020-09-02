@@ -1,16 +1,16 @@
-import { ConfiguracionEntity } from "./configuracion.entity";
-import { RolEntity } from "./rol.entity";
+import { ConfiguracionEstiloEntity } from "./configuracion-estilo.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { PerfilEntity } from "./perfil.entity";
+import { RolEntidadEntity } from './rol-entidad.entity';
 
 export interface ParticipanteAsociacionEntity {
-    id: string
-    estado: CatalogoEstadoEntity
-    fechaCreacion: Date
-    fechaActualizacion: Date
-    roles: Array<RolEntity> 
-    invitadoPor:ParticipanteAsociacionEntity
-    configuraciones:Array<ConfiguracionEntity>
-    perfil:PerfilEntity
-    sobrenombre:string 
+    _id?: string
+    estado?: CatalogoEstadoEntity
+    fechaCreacion?: Date
+    fechaActualizacion?: Date
+    roles?: Array<RolEntidadEntity> 
+    invitadoPor?:ParticipanteAsociacionEntity
+    configuraciones?:Array<ConfiguracionEstiloEntity>
+    perfil?:PerfilEntity
+    sobrenombre?:string 
 }

@@ -1,8 +1,8 @@
-import { MediaEntity } from './media.entity'
-import { ConversacionEntity } from "./conversacion.entity"
-import { CatalogoTipoAsociacionEntity } from "./catalogos/catalogo-tipo-asociacion"
-import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity"
-import { ParticipanteAsociacionEntity } from "./participante-asociacion.entity"
+import { MediaEntity } from "./media.entity";
+import { ConversacionEntity } from "./conversacion.entity";
+import { CatalogoTipoAsociacionEntity } from "./catalogos/catalogo-tipo-asociacion";
+import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
+import { ParticipanteAsociacionEntity } from "./participante-asociacion.entity";
 
 export interface AsociacionEntity {
     id: string,

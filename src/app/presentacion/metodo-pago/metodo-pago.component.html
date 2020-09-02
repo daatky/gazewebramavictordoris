@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="iconPago">
-                            <div *ngIf="item.estado.codigo==estadoPendiente; else elseBlock"
+                            <div *ngIf="item.estado.codigo==codigosEstadoMetodoPago.ACTIVA; else elseBlock"
                                 (click)=navegarMetodoPago(item)>
                                 <img [src]="item.icono">
                             </div>
@@ -55,14 +55,17 @@
 
     <app-dialogo-contenido id="{{dialogoTarjetaId}}" [data]="dataDialogo">
         <div [formGroup]="pagoForm">
-            <input formControlName="nombre" type="text" placeholder="Nombres Completos" />
-            <input formControlName="email" type="text" placeholder="email" />
-            <input formControlName="telefono" type="text" placeholder="telefono" />
-            <input formControlName="direccion" type="text" placeholder="direccion" />
+            <app-input [inputCompartido]='inputNombre'></app-input>
             <div class="espacioMetodoPago"> </div>
-            
-                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
-                </ngx-stripe-card>            
+            <app-input [inputCompartido]='inputEmail'></app-input>
+            <div class="espacioMetodoPago"> </div>
+            <app-input [inputCompartido]='inputTelefono'></app-input>
+            <div class="espacioMetodoPago"> </div>
+            <app-input [inputCompartido]='inputDireccion'></app-input>
+            <div class="espacioMetodoPago"> </div>
+
+            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+            </ngx-stripe-card>
 
             <div class="espacioMetodoPago"> </div>
             <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
@@ -70,9 +73,9 @@
     </app-dialogo-contenido>
 
     <app-dialogo-contenido id="{{dialogoPaypalId}}" [data]="dataDialogo">
-        
+
         <ngx-paypal class="btnpaypal" id="btnpaypal" [config]="payPalConfig"></ngx-paypal>
-        
+
     </app-dialogo-contenido>
 
 </div>

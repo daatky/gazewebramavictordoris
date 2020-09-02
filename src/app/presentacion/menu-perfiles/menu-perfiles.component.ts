@@ -28,6 +28,12 @@ import { InstruccionModel } from 'src/app/dominio/modelo/instruccion.model';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { DialogoContenido } from 'src/app/compartido/componentes/dialogo-contenido/dialogo-contenido.component';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
+import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
+import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
+import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 
 
 /*
@@ -42,10 +48,17 @@ export class MenuPerfilesComponent implements OnInit {
   configuracionAppBar: ConfiguracionAppbarCompartida;
   tipoPerfilSeleccionado: CatalogoTipoPerfilModel;
   listaTipoPerfil: CatalogoTipoPerfilModel[];
-  idDialogo = "aviso-tipo-perfil";
+  idPerfilIncompatibleDialogo = "aviso-tipo-perfil";
+  idMenorEdadDialogo = "menor-edad-dia";
   itemInformacion: InformacionModel;
-  itemInstrucciones: InstruccionModel;
-  itemMenu: any;
+  dataBoton: BotonCompartido;
+  dataBotonGuardarInfoMenorEdad: BotonCompartido;
+  dataPerfilIncompatibleDialogo: DialogoContenido;
+  dataMenorEdadDialogo: DialogoContenido;
+  menorEdadForm: FormGroup;
+  inputFechaNacimiento: InputCompartido
+  inputNombresResponsable: InputCompartido
+  inputCorreoResponsable: InputCompartido
 
 
   dataLista: DatosLista = {
@@ -55,27 +68,20 @@ export class MenuPerfilesComponent implements OnInit {
     tamanoLista: TamanoLista.TIPO_PERFILES
   }
 
-  dataDialogo: DialogoCompartido = {
-    completo: true,
-    tipo: TipoDialogo.CONFIRMACION,
-    descripcion: "SE ELIMINARAN LOS AVANCES ACTUALES",
-    listaAcciones: [
-      ButtonComponent.crearBotonAfirmativo(() => this.limpiarPerfiles(this.tipoPerfilSeleccionado)),
-      ButtonComponent.crearBotonNegativo(() => this.dialogoServicie.close(this.idDialogo))
-    ]
-  }
-
   constructor(
     private perfilNegocio: PerfilNegocio,
-    private generadorId: GeneradorId,
     private dialogoServicie: DialogoServicie,
     private router: Router,
-    private internacionalizacionNegocio: InternacionalizacionNegocio
+    private internacionalizacionNegocio: InternacionalizacionNegocio,
+    private formBuilder: FormBuilder,
+    private cuentaNegocio: CuentaNegocio
   ) {
+    this.configurarBotonAceptar();
+    this.configurarBotonGuardarInfoMenorEdad();
     this.prepararAppBar()
     this.prepararInfoTipoPerfiles();
-    this.prepararInstrucciones();
-    this.prepareInfoItemPerfil()
+    this.configurarDialogoContenido();
+    this.iniciarFormMenorEdad();
   }
 
 
@@ -99,10 +105,10 @@ export class MenuPerfilesComponent implements OnInit {
       tamano: TamanoItemMenu.ITEMMENUCREARPERFIL, // Indica el tamano del item (altura)
       colorFondo: (tipoPerfil.perfil) ? ColorFondoItemMenu.PERFILCREADO : ColorFondoItemMenu.PREDETERMINADO,
       mostrarDescripcion: tipoPerfil.mostrarDescripcion ?? false,
-      texto1: this.itemMenu.titulo,
+      texto1: "crear",
       texto2: tipoPerfil.nombre,
-      texto3: this.itemMenu.subtitulo,
-      tipoMenu: TipoMenu.CREATE_PROFILE_INFO,
+      texto3: "perfil",
+      tipoMenu: TipoMenu.GESTION_PROFILE,
       descripcion: [
         {
           texto: tipoPerfil.descripcion,
@@ -141,7 +147,7 @@ export class MenuPerfilesComponent implements OnInit {
 
   limpiarPerfiles(tipoPerfil: CatalogoTipoPerfilModel) {
     this.perfilNegocio.limpiarPerfiles(this.listaTipoPerfil);
-    this.dialogoServicie.close(this.idDialogo)
+    this.dialogoServicie.close(this.idPerfilIncompatibleDialogo)
     this.navegarCrearPerfil(tipoPerfil);
   }
 
@@ -160,16 +166,16 @@ export class MenuPerfilesComponent implements OnInit {
     }
   }
 
-  prepareItemInstrucciones(instrucciones: InstruccionModel): ItemMenuCompartido {
+  prepareItemInstrucciones(): ItemMenuCompartido {
     return {
       id: '',
       tamano: TamanoItemMenu.ITEMMENUCREARPERFIL, // Indica el tamano del item (altura)
       colorFondo: ColorFondoItemMenu.PREDETERMINADO, // El color de fondo que tendra el item
       mostrarDescripcion: false,
       tipoMenu: TipoMenu.INSTRUCCIONES,
-      texto1: instrucciones.titulo,
-      texto2: instrucciones.instruccion1,
-      texto3: instrucciones.instruccion2,
+      texto1: "explicacionSuscripcion",
+      texto2: "ONE CLICK: OVERVIEW",
+      texto3: 'TWO CLICKS, CREATE PROFILE',
       descripcion: null,
       linea: {
         mostrar: true,
@@ -182,7 +188,7 @@ export class MenuPerfilesComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: "",
-      onclick: () => { },
+      onclick: () => { this.dialogoServicie.open(this.idMenorEdadDialogo) },
       dobleClick: () => { }
 
     };
@@ -271,7 +277,7 @@ export class MenuPerfilesComponent implements OnInit {
           llaveTexto: 'bienvenidos'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
       }
     }
 
@@ -291,19 +297,58 @@ export class MenuPerfilesComponent implements OnInit {
     }
   }
 
-  async prepararInstrucciones() {
-    this.itemInstrucciones = {
-      codigo: "a",
-      titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("explicacionSuscripcion"),
-      instruccion1: "ONE CLICK: OVERVIEW",
-      instruccion2: 'TWO CLICKS, CREATE PROFILE'
+  configurarBotonAceptar() {
+    this.dataBoton = {
+      colorTexto: ColorTextoBoton.AMARRILLO,
+      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
+      text: "ACEPTAR",
+      ejecutar: () => this.dialogoServicie.close(this.idMenorEdadDialogo),
+      enProgreso: false,
+      tipoBoton: TipoBoton.TEXTO
     }
   }
 
-  async prepareInfoItemPerfil() {
-    this.itemMenu = {
-      titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("crear"),
-      subtitulo: await this.internacionalizacionNegocio.obtenerTextoLlave("perfil")
+  configurarBotonGuardarInfoMenorEdad() {
+    this.dataBotonGuardarInfoMenorEdad = {
+      colorTexto: ColorTextoBoton.AMARRILLO,
+      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
+      text: "ACEPTAR",
+      ejecutar: () => this.aceptarTerminosCondicionesMenorEdad(),
+      enProgreso: false,
+      tipoBoton: TipoBoton.TEXTO
     }
   }
+
+  aceptarTerminosCondicionesMenorEdad() {
+    if (this.menorEdadForm.valid) {
+      this.dialogoServicie.close(this.idMenorEdadDialogo)
+      this.cuentaNegocio.guardarAceptacionMenorEdad
+        (
+          this.menorEdadForm.value.correoResponsable,
+          this.menorEdadForm.value.nombreResposanble,
+          this.menorEdadForm.value.fechaNacimiento
+        );
+    }
+  }
+
+  configurarDialogoContenido() {
+    this.dataPerfilIncompatibleDialogo = {
+      titulo: "PERFIL INCOMPATIBLE",
+    }
+    this.dataMenorEdadDialogo = {
+      titulo: "MENOR DE EDAD"
+    };
+  }
+
+  async iniciarFormMenorEdad() {
+    this.menorEdadForm = this.formBuilder.group({
+      fechaNacimiento: ['', [Validators.required]],
+      nombreResposanble: ['', [Validators.required, Validators.minLength(5)]],
+      correoResponsable: ['', [Validators.required, Validators.email]],
+    });
+    this.inputFechaNacimiento = { tipo: 'date', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Tu fecha de nacimiento', data: this.menorEdadForm.controls.fechaNacimiento }
+    this.inputNombresResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Nombres Responsable', data: this.menorEdadForm.controls.nombreResposanble }
+    this.inputCorreoResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Correo Responsable', data: this.menorEdadForm.controls.correoResponsable }
+  }
+
 }

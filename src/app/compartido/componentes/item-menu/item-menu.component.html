@@ -5,60 +5,55 @@
             <div class="contenedor-texto">
                 <!-- ITEM PARA PERFIL CREATE, TIPO, PROFILE-->
                 <div [ngSwitch]="configuracionItem.tipoMenu">
-                    <div *ngSwitchCase="tipoMenu.CREATE_PROFILE_INFO">
-                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
-                    color: estiloTexto.colorDelTexto.TEXTOAMARILLOBASE, 
-                    estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
-                    enMayusculas: true,
-                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I4 
-                })">{{configuracionItem.texto1}}</p>
-
-                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
-                    color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
-                    estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
-                    enMayusculas: true,
-                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I4 
-                })">{{configuracionItem.texto2}}</p>
-
-                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
-                    color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
-                    estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
-                    enMayusculas: true,
-                    tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I4 
-                })">{{configuracionItem.texto3}}</p>
-                    </div>
                     <div *ngSwitchCase="tipoMenu.GESTION_PROFILE">
-
+                        <p [ngClass]="estiloTexto1()">{{ texto1 | async }}</p>
+                        <div class="espacioPalabra"></div>
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_IGUAL 
+                        })">{{ texto2 | async }}</p>
+                        <div class="espacioPalabra"></div>
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+                        })">{{ texto3 | async }}</p>
                     </div>
                     <div *ngSwitchCase="tipoMenu.ACCION">
                         <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                         color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
                         estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
                         enMayusculas: true,
-                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I8 
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_IGUAL
                     })">{{configuracionItem.texto1}}</p>
                     </div>
                     <div *ngSwitchCase="tipoMenu.INSTRUCCIONES">
-                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        <p *ngIf="configuracionItem.texto1" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                         color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
                         estiloTexto: estiloTexto.estilosDelTexto.BOLD, 
                         enMayusculas: true,
-                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
-                    })">{{configuracionItem.texto1}}</p>
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_IGUAL 
+                    })">{{ texto1 | async }}</p>
 
-                        <p class="instruccion-separacion" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                        <div *ngIf="configuracionItem.texto1" class="instruccion-separacion"></div>
+
+                        <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                         color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
                         estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
                         enMayusculas: true,
-                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
-                    })">{{configuracionItem.texto2}}</p>
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_IGUAL 
+                    })">{{ texto2 | async }}</p>
 
+                        <div class="instruccion-separacion-min"></div>
                         <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                         color: estiloTexto.colorDelTexto.TEXTOAMARILLOBASE, 
                         estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
                         enMayusculas: true,
-                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_I2 
-                    })">{{configuracionItem.texto3}}</p>
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L2_IGUAL
+                    })">{{ texto3 | async }}</p>
                     </div>
                     <div *ngSwitchCase="tipoMenu.SUBMENU">
                         <div class="boton-puntos"></div>
@@ -85,7 +80,6 @@
                         })" class="texto-submenu test">
                         {{ item.titulo }}
                     </p>
-
 
                 </div>
             </div>

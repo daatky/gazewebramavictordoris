@@ -13,5 +13,6 @@ export enum ColorDelTexto {
     TEXTOLACRE = 'txt-lacre',
     TEXTOTITULOFECHA = 'titulo-fecha',
     TEXTOERRORFORMULARIO = 'error-formulario',
-    TEXTO_COLOR_PLATEADO = 'txt-color-plateado'
+    TEXTO_COLOR_PLATEADO = 'txt-color-plateado',
+    AZUL_HIBERNATE='txt-color-azul-hibernate'
 }
