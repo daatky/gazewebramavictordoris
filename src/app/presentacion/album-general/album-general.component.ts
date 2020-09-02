@@ -245,7 +245,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
           mostrar: true,
           llaveTexto: 'clasico'
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

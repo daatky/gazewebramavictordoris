@@ -138,7 +138,7 @@ export class MetodoPagoComponent implements OnInit {
         nombrePerfil: {
           mostrar: false
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

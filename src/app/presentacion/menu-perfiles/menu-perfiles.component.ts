@@ -264,7 +264,7 @@ export class MenuPerfilesComponent implements OnInit {
         nombrePerfil: {
           mostrar: false
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

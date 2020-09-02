@@ -251,7 +251,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           mostrar: true,
           llaveTexto: this.obtenerLlaveSegunEntidadCodigo()
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

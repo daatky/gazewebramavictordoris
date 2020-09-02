@@ -302,14 +302,15 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         nombrePerfil: {
           mostrar: false,
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,
           llaveTexto: this.obtenerLlaveSegunPerfil() // Obtener nombre de perfil del local storage
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+        mostrarBotonXRoja: true
       },
       accionAtras: () => {
         this.accionAtrasAppbar()

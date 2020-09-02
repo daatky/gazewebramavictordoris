@@ -33,9 +33,13 @@
     <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_SEARCHBAR_APPBAR" class="box">
         <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.searchBarAppBar.tamanoColorFondo)"></div>
         <div class="barraBuscar"></div>
-        <div class="botonAtras" (tap)="clickBotonAtras()">
+        <div
+            *ngIf="configuracion.searchBarAppBar.mostrarDivBack"
+            class="botonAtras"
+            (tap)="clickBotonAtras()"
+        >
             <div class="icono"></div>
-            <p *ngIf="configuracion.searchBarAppBar?.mostrarTextoBack" [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                     color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
                     estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
                     enMayusculas: true,
@@ -73,6 +77,9 @@
                 })">
                 {{ textoSubtitulo }}
             </p>
+        </div>
+        <div *ngIf="configuracion.searchBarAppBar?.mostrarBotonXRoja" class="botonX" (tap)="clickBotonXRoja()">
+            <div class="icono"></div>
         </div>
     </div>
     <!-- USO_GAZE_BAR -->
