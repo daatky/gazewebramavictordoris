@@ -1,19 +1,10 @@
-<div class="centrar login">
+<div class="centrar login">    
     <div class="fondoTransparente">
         <div class="divCabecera">
             <div class="centrar escogerLeng txt-celeste regular letra-3-con-interlineado-2 enMayusculas">                
                 {{ 'escogerIdioma' | translate | uppercase}}
             </div>
             <app-cabecera-idiomas (cambiarIdioma)="cambiarIdioma()"></app-cabecera-idiomas>
-            <!--<div class="divIdiomas">
-                <div *ngFor='let idioma of idiomas; let i=index'>
-                    <div *ngIf='i!==0' class="divLineaIdioma">
-                    </div>
-                    <div (click)='seleccionarIdioma(idioma)' [ngClass]="obtenerClasesLineasTexto(idiomaEstilo,idioma.codNombre)" class="centrar divLetrasIdioma notranslate">
-                        {{idioma.codNombre}}
-                    </div>
-                </div>
-            </div>-->
         </div>        
         <app-portada-gaze #portadaGazeComponent></app-portada-gaze>
         <div class="divContenido">

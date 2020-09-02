@@ -4,6 +4,7 @@ import { PerfilModel } from './perfil.model'
 import { DispositivoEntity } from './../entidades/dispositivo.entity'
 import { SuscripcionEntity } from './../entidades/suscripcion.entity'
 import { TransaccionEntity } from './../entidades/transaccion.entity'
+import { RolSistemaEntity } from '../entidades/rol-sistema.entity'
 
 export interface UsuarioModel {
     id?: string,
@@ -24,7 +25,8 @@ export interface UsuarioModel {
     responsableVerificado?: boolean,
     transacciones?: Array<TransaccionEntity>,
     suscripciones?: Array<SuscripcionEntity>,
-    dispositivos?: Array<DispositivoEntity>
+    dispositivos?: Array<DispositivoEntity>,
+    rolSistema?:Array<RolSistemaEntity>
 }
 
 

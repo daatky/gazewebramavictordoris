@@ -3,10 +3,10 @@ import { CatalogoTipoBeneficiarioModel } from "../catalogos/catalogo-tipo-benefi
 import { ProyectoModel } from "./proyecto.model";
 
 export interface BeneficiarioModel{
-    id:string,
-    fechaCreacion:Date,
-    fechaActualizacion:Date,
-    tipo:CatalogoTipoBeneficiarioModel,
-    usuario:UsuarioModel,
-    proyecto:ProyectoModel 
+    id?:string,
+    fechaCreacion?:Date,
+    fechaActualizacion?:Date,
+    tipo?:CatalogoTipoBeneficiarioModel,
+    usuario?:UsuarioModel,
+    proyecto?:ProyectoModel 
 }

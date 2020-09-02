@@ -1,19 +1,19 @@
 import { CanActivateChild, Router } from "@angular/router";
 import { Injectable } from "@angular/core";
+import { LocalStorage } from "../../locales/local-storage.service";
 
 @Injectable()
 export class RestriccionRutasHijas implements CanActivateChild {
   constructor(
-    //private sessionService:SessionService, 
+    private localStorage:LocalStorage,
     private router: Router) { };
 
   canActivateChild() {  
-    /*if((this.sessionService.getUser()!=null)&&(this.sessionService.getUser()!=undefined)){  
+    if((this.localStorage.obtenerCatalogoPerfiles()!=null)&&(this.localStorage.obtenerCatalogoPerfiles()!=undefined)){  
       return true;            
     }else{      
-      this.router.navigateByUrl('/m1/m1v6');
+      this.router.navigateByUrl('');
       return false;  
-    }*/
-    return false
+    }
   }
 }

@@ -36,4 +36,13 @@
   transform: translate3d(-50%, -50%, 0);
   will-change: transform;
 }
-
+.padreSpinner {
+  position: relative;
+  min-width: 38px;
+  min-height: 38px;
+  max-width: 38px;
+  max-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

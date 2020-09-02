@@ -1,3 +1,13 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
 .letra{
     font-size: x-small;
+}
+.cargandoCompleto{
+    //height:$altura-pagina;    
+    background-color: $tranparencia-base;  
+}
+.cuerpoPensamiento{
+    //height: $cuerpo-default-alto;
+    background-color: aliceblue;
 }

@@ -14,6 +14,9 @@ import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/ta
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
+import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
+import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
+import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 
 @Component({
   selector: 'app-crear-pensamiento',
@@ -27,13 +30,17 @@ export class CrearPensamientoComponent implements OnInit {
   inputPensamiento: InputCompartido;  
   botonCrearPensamiento: BotonCompartido;  
   idPerfil="5f3e907015ae58647c0d3e1d"
-  esPrivado:boolean=false
-  configuracionToast:ConfiguracionToast
+  esPrivado:boolean=false;
+  configuracionToast:ConfiguracionToast;
+  cargando:boolean;
+  configuracionAppBar: ConfiguracionAppbarCompartida
   constructor(
     private variablesGlobales:VariablesGlobales,
     private pensamientoNegocio:PensamientoNegocio,
     private formBuilder: FormBuilder,   
-  ) {  
+  ) {
+    this.cargando=true  
+    this.prepararAppBar()
     this.iniciarDatos()
     //this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: 'Titulo', esLista: false, configuracionItem: EstiloItemPensamiento.ITEM_ALEATORIO }    
   }
@@ -51,6 +58,25 @@ export class CrearPensamientoComponent implements OnInit {
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }            
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     this.obtenerPensamientos()
+  }
+  async prepararAppBar() {
+    this.configuracionAppBar = {
+      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
+      searchBarAppBar: {
+        nombrePerfil: {
+          mostrar: false
+        },
+        mostrarTextoBack: true,
+        mostrarTextoHome: false,
+        subtitulo: {
+          mostrar: true,
+          llaveTexto: 'CLASICO'
+        },
+        mostrarLineaVerde: true,
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+      }
+    }
+
   }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
@@ -72,12 +98,15 @@ export class CrearPensamientoComponent implements OnInit {
   }
   
   obtenerPensamientos(){
-    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    console.log("00000")    
+    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
     this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
-    .subscribe((res:Array<PensamientoModel>)=>{ 
+    .subscribe((res:Array<PensamientoModel>)=>{
+      this.cargando=false   
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       this.dataLista.lista=res
     },error=>{
+      this.cargando=false  
       this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
     })
   }
