@@ -12,6 +12,7 @@ import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";
 import { IniciarSesionModel } from "../modelo/iniciar-sesion.model";
 import { IniciarSesionMapperService } from '../entidades/iniciar-sesion.entity';
+import { SessionStorageServicie } from "../../nucleo/servicios/locales/session-storage.service";
 @Injectable({
     providedIn: 'root'
 })
@@ -20,6 +21,7 @@ export class CuentaRepository {
 
     constructor(
         private localStorage: LocalStorage,
+        private sessionStorage: SessionStorageServicie,
         private cuentaServiceRemoto: CuentaServiceRemoto,
         private cuentaServiceLocal: CuentaServiceLocal,
         private iniciarSesionMapperService: IniciarSesionMapperService
@@ -95,11 +97,13 @@ export class CuentaRepository {
 
     // Guardar usuario en el local storage
     guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
-        this.cuentaServiceLocal.guardarUsuario(usuario)
+        //this.cuentaServiceLocal.guardarUsuario(usuario)
+        this.sessionStorage.guardarUsuario(usuario)
     }
 
     // Obtener usuario del local storage
     obtenerUsuarioDelLocalStorage(): UsuarioModel {
-        return this.cuentaServiceLocal.obtenerUsuario()
+        //return this.cuentaServiceLocal.obtenerUsuario()
+        return this.sessionStorage.obtenerUsuario()
     }
 }

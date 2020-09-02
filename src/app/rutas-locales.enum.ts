@@ -7,8 +7,9 @@ export enum RutasLocales {
   BIENVENIDO = 'bienvenido',
   MODULO_PENSAMIENTO = 'pensamiento',
   CREAR_PENSAMIENTO = 'crear-pensamiento',
-  MENU_PRINCIPAL = "menuprincipal",
+  MENU_PRINCIPAL = "menuprincipal/:codigoPerfil",
   MIS_CONTACTOS = "miscontactos",
   ALBUM_PERFIL = 'albumperfil/:codigoPerfil/:nombreUsuario/:accionAlbum',
-  ALBUM_GENERAL = 'albumgeneral/:codigoPerfil/:nombreUsuario/:accionAlbum'
+  ALBUM_GENERAL = 'albumgeneral/:codigoPerfil/:nombreUsuario/:accionAlbum',
+  MENU_SELECCION_PERFILES = "menuseleccionperfiles"
 }

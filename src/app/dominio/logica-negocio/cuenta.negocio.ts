@@ -18,7 +18,8 @@ import { TokenModel } from '../modelo/token.model';
 @Injectable({
     providedIn: 'root'
 })
-export class CuentaNegocio {    
+export class CuentaNegocio {
+
     constructor(private cuentaRepository: CuentaRepository,
         private perfilRepository: PerfilRepository,
         private idiomaRepository: IdiomaRepository,
@@ -142,5 +143,34 @@ export class CuentaNegocio {
             this.guardarUsuarioEnLocalStorage(usuario)
         }
         return usuario
+    }
+
+    guardarAceptacionMenorEdad(correoResponsable: string, nombreResponsable: string, fechaNacimiento: Date) {
+        let cuenta: UsuarioModel = {
+            aceptoTerminosCondiciones: true,
+            emailResponsable: correoResponsable,
+            menorEdad: true,
+            fechaNacimiento: fechaNacimiento,
+            nombreResponsable: nombreResponsable,
+            perfiles: []
+        }
+        this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta);
+    }
+
+    eliminarAceptacionTerminosCondiciones() {
+        this.cuentaRepository.guardarUsuarioEnLocalStorage(null);
+    }
+
+    aceptoTerminosCondiciones() {
+        let cuenta: UsuarioModel = {
+            aceptoTerminosCondiciones: true,
+            menorEdad: true,
+            perfiles: []
+        }
+        this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta)
+    }
+
+    sesionIniciada(): boolean {
+        return this.repository.obtenerTokenAutenticacion() != null
     }
 }

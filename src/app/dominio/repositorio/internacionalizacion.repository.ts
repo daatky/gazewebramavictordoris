@@ -16,7 +16,7 @@ export class InternacionalizacionRepository {
         this.internacionalizacionService.usarIidoma(idioma)
     }
 
-    obtenerTextoLlave(llave:string){
+    obtenerTextoLlave(llave:string):Promise<string>{
         return this.internacionalizacionService.obtenerTextoLlave(llave)
     }
 }

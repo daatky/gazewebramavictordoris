@@ -20,6 +20,7 @@ export interface UsuarioModel {
     menorEdad?: boolean,
     perfiles?: Array<PerfilModel>,
     emailResponsable?: string,
+    nombreResponsable?: string,
     responsableVerificado?: boolean,
     transacciones?: Array<TransaccionEntity>,
     suscripciones?: Array<SuscripcionEntity>,

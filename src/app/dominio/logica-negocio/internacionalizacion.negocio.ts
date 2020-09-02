@@ -30,7 +30,7 @@ export class InternacionalizacionNegocio {
         this.internacionalizacionRepository.usarIidoma(idioma)
     }
 
-    obtenerTextoLlave(llave:string){
+    obtenerTextoLlave(llave:string):Promise<string>{
         return this.internacionalizacionRepository.obtenerTextoLlave(llave)
     }
 }

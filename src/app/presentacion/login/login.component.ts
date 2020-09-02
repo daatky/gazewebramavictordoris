@@ -43,12 +43,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private cuentaNegocio: CuentaNegocio,
   ) {
-    
+
   }
   ngOnInit(): void {
     this.iniciarElementos()
   }
-  
+
   //Inicia todos los componentes
   async iniciarElementos() {
     this.loginForm = this.formBuilder.group({
@@ -56,11 +56,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
       contrasena: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[a-z0-9_-]{6,18}$/)]],
     });
     this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.email }
-    this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }    
+    this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }
     this.botonCompartido = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('sitioWeb'), tamanoTexto: TamanoDeTextoConInterlineado.L6_IGUAL, colorTexto: ColorTextoBoton.BLANCO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarLanding() }
-    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }    
+    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }
     //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
-    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
+    this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem: { estilo: EstiloItemPensamiento.ITEM_ALEATORIO } }
   }
 
   ngAfterViewInit(): void {
@@ -74,23 +74,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   //= () =>
   iniciarSesion() {
-    if (this.loginForm.valid) {  
-     // this.configuracion={cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+    if (this.loginForm.valid) {
+      // this.configuracion={cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       //this.botonSubmit.enProgreso=true
-      this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
-      .subscribe(res=>{    
-        console.log(res)
-        //this.botonSubmit.enProgreso=false
-      },error=>{
-        //this.botonSubmit.enProgreso=false
-        console.log(error)
-       // this.configuracion={cerrarClickOutside:true,mostrarLoader:false,mostrarToast:false,texto:error}
-      })
+      this.cuentaNegocio.iniciarSesion(this.loginForm.value.email, this.loginForm.value.contrasena)
+        .subscribe(res => {
+          console.log(res)
+          this.navegarmenuSeleccionarPerfiles();
+          //this.botonSubmit.enProgreso=false
+        }, error => {
+          //this.botonSubmit.enProgreso=false
+          console.log(error)
+          // this.configuracion={cerrarClickOutside:true,mostrarLoader:false,mostrarToast:false,texto:error}
+        })
     } else {
       this.inputEmail.error = true
       this.inputContrasena.error = true
     }
   }
+
+  navegarmenuSeleccionarPerfiles() {
+    this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES)
+  }
+
+
   //Cuando el usuario cambie de idioma los elemento cambia de idioma
   async cambiarIdioma() {
     this.pensamientoCompartido.tituloPensamiento = await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion')

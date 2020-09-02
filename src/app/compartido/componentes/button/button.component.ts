@@ -37,7 +37,10 @@ export class ButtonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.definirEstilo();
+    if (!this.botonCompartido.enProgreso) {
+      this.definirEstilo();
+    }
+
   }
 
 

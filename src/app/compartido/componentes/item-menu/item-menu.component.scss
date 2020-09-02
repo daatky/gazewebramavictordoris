@@ -6,13 +6,22 @@
     position: relative;
     width: $item-menu-ancho-6920;
     box-sizing: border-box;
-    padding-top: $espacio-0316;
-    padding-bottom: $espacio-522;
+    padding-top: $espacio-0316;    
     padding-left: $espacio-267;
     padding-right: $espacio-267;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.paddig-button-linea1 {
+    padding-bottom: $espacio-0316 + $espesor-041 !important;
+}
+.paddig-button-linea2 {
+    padding-bottom: $espacio-0316 + $espesor-071 !important;
+}
+.paddig-button-linea3 {
+    padding-bottom: $espacio-0316 + $espesor-089 !important;
 }
 
 .itemMenu .caja {
@@ -90,7 +99,10 @@
 }
 
 .instruccion-separacion {
-    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(5.22, $arriba: true);
+    height: $espacio-522;
+}
+.instruccion-separacion-min {
+    height: $espacio-0178;
 }
 
 .contener-descripcion {
@@ -120,4 +132,7 @@
         border-radius: 50%;
         background: $plateado;
     }
+}
+.espacioPalabra {
+    height: $espacio-0249;
 }

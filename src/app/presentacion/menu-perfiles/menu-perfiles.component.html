@@ -4,11 +4,11 @@
 <app-lista-vertical [dataLista]='dataLista' class="centrar">
 
     <div *ngIf="listaTipoPerfil">
-        <app-item-menu *ngIf="itemInstrucciones" [configuracionItem]=" prepareItemInstrucciones(itemInstrucciones)">
+        <app-item-menu [configuracionItem]=" prepareItemInstrucciones()">
         </app-item-menu>
 
         <div *ngFor="let item of listaTipoPerfil">
-            <app-item-menu *ngIf="itemMenu" [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
+            <app-item-menu [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
         </div>
 
         <app-item-menu *ngIf="itemInformacion" [configuracionItem]="prepareItemInformacion(itemInformacion)">
@@ -17,4 +17,26 @@
 
 </app-lista-vertical>
 
-<app-dialogo id="{{idDialogo}}" [data]="dataDialogo"></app-dialogo>
+
+<app-dialogo-contenido id="{{idPerfilIncompatibleDialogo}}" [data]="dataPerfilIncompatibleDialogo">
+    <p>
+        El perfil seleccionado es incompatible, con el perfil anteriormente creado
+    </p>
+    <div class="espacioInput"> </div>
+    <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
+</app-dialogo-contenido>
+
+
+<app-dialogo-contenido id="{{idMenorEdadDialogo}}" [data]="dataMenorEdadDialogo">
+    <div [formGroup]="menorEdadForm">
+        <app-input [inputCompartido]='inputFechaNacimiento'></app-input>
+        <div class="espacioInput"> </div>
+        <app-input [inputCompartido]='inputNombresResponsable'></app-input>
+        <div class="espacioInput"> </div>
+        <app-input [inputCompartido]='inputCorreoResponsable'></app-input>
+        <div class="espacioInput"> </div>
+        <app-button class="centrar" *ngIf="dataBotonGuardarInfoMenorEdad"
+            [botonCompartido]="dataBotonGuardarInfoMenorEdad"></app-button>
+    </div>
+
+</app-dialogo-contenido>

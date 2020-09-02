@@ -34,6 +34,9 @@ import { CatalogoIdiomaEntity } from 'src/app/dominio/entidades/catalogos/catalo
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { PagoModel } from 'src/app/dominio/modelo/pago.model';
 import { CodigosEstadoMetodoPago, CodigosCatalogoMetodoPago } from "../../nucleo/servicios/remotos/codigos-catalogos/catalogo-metodo-pago.enum";
+import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
+import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
+import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 
 @Component({
   selector: 'app-metodo-pago',
@@ -49,6 +52,10 @@ export class MetodoPagoComponent implements OnInit {
   codigoPago: string
   pagoForm: FormGroup;
   idiomaSeleccionado: CatalogoIdiomaEntity;
+  inputNombre: InputCompartido
+  inputTelefono: InputCompartido
+  inputDireccion: InputCompartido
+  inputEmail: InputCompartido
 
   dataDialogo: DialogoContenido;
   dataLista: DatosLista;
@@ -132,21 +139,17 @@ export class MetodoPagoComponent implements OnInit {
   ngOnInit(): void {
     this.initConfigPaypal()
     this.pagoForm = this.fb.group({
-      nombre: ["", [Validators.required]],
+      nombre: ["", [Validators.required, Validators.maxLength(5)]],
       telefono: [""],
       direccion: [""],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
     });
 
-  }
+    this.inputNombre = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'NOMBRE TARJETA', data: this.pagoForm.controls.nombre }
+    this.inputTelefono = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'TELEFONO', data: this.pagoForm.controls.telefono }
+    this.inputDireccion = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'DIRECCION DE FACTURACION', data: this.pagoForm.controls.direccion }
+    this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'EMAIL', data: this.pagoForm.controls.email }
 
-  public getError(controlName: string): string {
-    let error = '';
-    const control = this.pagoForm.get(controlName);
-    if (control.touched && control.errors != null) {
-      error = "Campo requerido"
-    }
-    return error;
   }
 
   configurarAppBar() {
@@ -290,7 +293,6 @@ export class MetodoPagoComponent implements OnInit {
 
   configurarDialogoContenido() {
     this.dataDialogo = {
-      id: "metodoPago",
       titulo: "PAGAR CON TARJETA",
     }
   }
