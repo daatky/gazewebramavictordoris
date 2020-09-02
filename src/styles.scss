@@ -13,14 +13,18 @@
 }
 
 :root {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
 }
-  
+
 //Firefox
-html { overflow: -moz-scrollbars-none; }
-  
+html {
+    overflow: -moz-scrollbars-none;
+}
+
 //Internet Explorer, Edge
-html { -ms-overflow-style: none; }
+html {
+    -ms-overflow-style: none;
+}
 
 body {
     margin: 0;
@@ -79,13 +83,12 @@ p {
 
     right: $mundo-derecha;
     bottom: $mundo-abajo;
-
 }
 .canvas {
     position: absolute;
     top: 0;
     z-index: 10;
-    
+
     width: $ancho-pagina;
     height: $altura-pagina;
     min-width: $ancho-pagina;
@@ -96,21 +99,19 @@ p {
     width: $cuerpo-default-ancho;
     height: $cuerpo-default-alto;
     padding: $espacio-316 $espacio-267 $espacio-522 $espacio-267;
-    
+
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-
-
 //ERRORES
-.error{
+.error {
     //color: $rojo-base;
     padding-left: $espacio-0139;
     @include fuenteConInterlineado($letra-2, $interlineado-1);
 }
-.fondoTransparente{
-    background-color: $tranparencia-base;    
+.fondoTransparente {
+    background-color: $tranparencia-base;
     width: $ancho-6920;
     height: $altura-pagina;
     padding-left: $espacio-267;
@@ -119,17 +120,23 @@ p {
     //margin-left: 2.67vw;
     //margin-right: 2.67vw;
     /*margin-left: $padding-267;
-    margin-right: $padding-267;*/    
+    margin-right: $padding-267;*/
 }
-.centrar{
+.centrar {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.centrarText{
+.centrarText {
     text-align: center;
 }
-.contenedorTransparencia{
+.contenedorTransparencia {
     height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
-    overflow-y:auto;
+    overflow-y: auto;
+}
+.botondefecto {
+    font-size: $letra-3;
+}
+.letradefecto{
+    font-size: $letra-2;
 }

@@ -1,7 +1,6 @@
-<input *ngIf="inputCompartido" type="{{inputCompartido.tipo}}" placeholder="{{inputCompartido.placeholder}}" [formControl]="inputCompartido.data" class="{{inputCompartido.estilo.estiloInput}} regular" autocomplete="disabled">
+<input *ngIf="inputCompartido" type="{{inputCompartido.tipo}}" placeholder="{{inputCompartido.placeholder}}"
+    [formControl]="inputCompartido.data" class="{{inputCompartido.estilo.estiloInput}} regular" autocomplete="disabled">
 <!--error-->
 <div *ngIf="inputCompartido" class="{{inputCompartido.estilo.estiloError}} italic">
     {{obtenerError(inputCompartido.data)}}
 </div>
-
-

@@ -34,6 +34,7 @@ import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interfa
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
+import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/modal-inferior.component';
 
 
 /*
@@ -49,16 +50,14 @@ export class MenuPerfilesComponent implements OnInit {
   tipoPerfilSeleccionado: CatalogoTipoPerfilModel;
   listaTipoPerfil: CatalogoTipoPerfilModel[];
   idPerfilIncompatibleDialogo = "aviso-tipo-perfil";
-  idMenorEdadDialogo = "menor-edad-dia";
   itemInformacion: InformacionModel;
   dataBoton: BotonCompartido;
-  dataBotonGuardarInfoMenorEdad: BotonCompartido;
   dataPerfilIncompatibleDialogo: DialogoContenido;
-  dataMenorEdadDialogo: DialogoContenido;
   menorEdadForm: FormGroup;
-  inputFechaNacimiento: InputCompartido
+  //inputFechaNacimiento: InputCompartido
   inputNombresResponsable: InputCompartido
   inputCorreoResponsable: InputCompartido
+  dataModalTerminosCondiciones: ModalInferior
 
 
   dataLista: DatosLista = {
@@ -77,11 +76,11 @@ export class MenuPerfilesComponent implements OnInit {
     private cuentaNegocio: CuentaNegocio
   ) {
     this.configurarBotonAceptar();
-    this.configurarBotonGuardarInfoMenorEdad();
     this.prepararAppBar()
     this.prepararInfoTipoPerfiles();
     this.configurarDialogoContenido();
     this.iniciarFormMenorEdad();
+    this.prepararModalTerminosCondiciones();
   }
 
 
@@ -188,7 +187,7 @@ export class MenuPerfilesComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: "",
-      onclick: () => { this.dialogoServicie.open(this.idMenorEdadDialogo) },
+      onclick: () => { },
       dobleClick: () => { }
 
     };
@@ -302,53 +301,57 @@ export class MenuPerfilesComponent implements OnInit {
       colorTexto: ColorTextoBoton.AMARRILLO,
       tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
       text: "ACEPTAR",
-      ejecutar: () => this.dialogoServicie.close(this.idMenorEdadDialogo),
+      ejecutar: () => { },
       enProgreso: false,
       tipoBoton: TipoBoton.TEXTO
     }
   }
 
-  configurarBotonGuardarInfoMenorEdad() {
-    this.dataBotonGuardarInfoMenorEdad = {
-      colorTexto: ColorTextoBoton.AMARRILLO,
-      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
-      text: "ACEPTAR",
-      ejecutar: () => this.aceptarTerminosCondicionesMenorEdad(),
-      enProgreso: false,
-      tipoBoton: TipoBoton.TEXTO
-    }
-  }
+
 
   aceptarTerminosCondicionesMenorEdad() {
-    if (this.menorEdadForm.valid) {
-      this.dialogoServicie.close(this.idMenorEdadDialogo)
-      this.cuentaNegocio.guardarAceptacionMenorEdad
-        (
-          this.menorEdadForm.value.correoResponsable,
-          this.menorEdadForm.value.nombreResposanble,
-          this.menorEdadForm.value.fechaNacimiento
-        );
+    if (this.menorEdadForm.value.nombreResposanble.length >= 1 || this.menorEdadForm.value.nombreResposanble.length >= 1) {
+      if (this.menorEdadForm.valid) {
+        this.dataModalTerminosCondiciones.abierto = false;
+        this.cuentaNegocio.guardarAceptacionMenorEdad
+          (
+            this.menorEdadForm.value.correoResponsable,
+            this.menorEdadForm.value.nombreResposanble,
+            new Date()
+          );
+      }
+      this.inputNombresResponsable.error = true;
+      this.inputCorreoResponsable.error = true;
+    } else {
+      this.dataModalTerminosCondiciones.abierto = false;
+      this.cuentaNegocio.aceptoTerminosCondiciones();
     }
+
   }
 
   configurarDialogoContenido() {
     this.dataPerfilIncompatibleDialogo = {
       titulo: "PERFIL INCOMPATIBLE",
     }
-    this.dataMenorEdadDialogo = {
-      titulo: "MENOR DE EDAD"
-    };
   }
 
   async iniciarFormMenorEdad() {
     this.menorEdadForm = this.formBuilder.group({
-      fechaNacimiento: ['', [Validators.required]],
-      nombreResposanble: ['', [Validators.required, Validators.minLength(5)]],
-      correoResponsable: ['', [Validators.required, Validators.email]],
+      //fechaNacimiento: ['', [Validators.required]],
+      nombreResposanble: ['', [Validators.minLength(5)]],
+      correoResponsable: ['', [Validators.email, Validators.minLength(3)]],
     });
-    this.inputFechaNacimiento = { tipo: 'date', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Tu fecha de nacimiento', data: this.menorEdadForm.controls.fechaNacimiento }
-    this.inputNombresResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Nombres Responsable', data: this.menorEdadForm.controls.nombreResposanble }
-    this.inputCorreoResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.REGISTRO }, placeholder: 'Correo Responsable', data: this.menorEdadForm.controls.correoResponsable }
+    // this.inputFechaNacimiento = { tipo: 'date', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'Tu fecha de nacimiento', data: this.menorEdadForm.controls.fechaNacimiento }
+    this.inputNombresResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'Nombres Responsable', data: this.menorEdadForm.controls.nombreResposanble }
+    this.inputCorreoResponsable = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'Correo Responsable', data: this.menorEdadForm.controls.correoResponsable }
+  }
+
+  prepararModalTerminosCondiciones() {
+    this.dataModalTerminosCondiciones = {
+      abierto: true,
+      bloqueado: true,
+      id: "modal-terms"
+    }
   }
 
 }
