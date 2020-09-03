@@ -21,11 +21,13 @@ export class CuentaRepository {
 
     constructor(
         private localStorage: LocalStorage,
-        private sessionStorage: SessionStorageServicie,
         private cuentaServiceRemoto: CuentaServiceRemoto,
         private cuentaServiceLocal: CuentaServiceLocal,
         private iniciarSesionMapperService: IniciarSesionMapperService
-    ) { }
+    ) {
+
+    }
+    
     iniciarSesion(datos: Object): Observable<IniciarSesionModel> {
         return this.cuentaServiceRemoto.iniciarSesion(datos)
             .pipe(
@@ -97,13 +99,11 @@ export class CuentaRepository {
 
     // Guardar usuario en el local storage
     guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
-        //this.cuentaServiceLocal.guardarUsuario(usuario)
-        this.sessionStorage.guardarUsuario(usuario)
+        this.cuentaServiceLocal.guardarUsuario(usuario)
     }
 
     // Obtener usuario del local storage
     obtenerUsuarioDelLocalStorage(): UsuarioModel {
-        //return this.cuentaServiceLocal.obtenerUsuario()
-        return this.sessionStorage.obtenerUsuario()
+        return this.cuentaServiceLocal.obtenerUsuario()
     }
 }

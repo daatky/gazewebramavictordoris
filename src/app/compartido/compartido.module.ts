@@ -29,6 +29,7 @@ import { DialogoContenidoComponent } from './componentes/dialogo-contenido/dialo
 import { ItemFechaComponent } from './componentes/item-fecha/item-fecha.component'
 import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensamiento-compartido.component';
 import { ModalInferiorComponent } from './componentes/modal-inferior/modal-inferior.component';
+import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { ModalInferiorComponent } from './componentes/modal-inferior/modal-infer
     ItemFechaComponent,
     DialogoContenidoComponent,
     ModalInferiorComponent,
+    DialogoInlineComponent,
   ],
   exports: [
     CrearComponenteDirective,
@@ -91,6 +93,7 @@ import { ModalInferiorComponent } from './componentes/modal-inferior/modal-infer
     ItemFechaComponent,
     DialogoContenidoComponent,
     ModalInferiorComponent,
+    DialogoInlineComponent
   ]
 })
 

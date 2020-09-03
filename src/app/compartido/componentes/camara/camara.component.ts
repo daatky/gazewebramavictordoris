@@ -107,7 +107,6 @@ export class CamaraComponent implements OnInit {
 
   // Cerrar Camara
   cerrarCamara() {
-
     this.configuracion.mostrarModal = false
   }
 

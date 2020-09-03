@@ -35,6 +35,8 @@ import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-i
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/modal-inferior.component';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 
 
 /*
@@ -58,14 +60,7 @@ export class MenuPerfilesComponent implements OnInit {
   inputNombresResponsable: InputCompartido
   inputCorreoResponsable: InputCompartido
   dataModalTerminosCondiciones: ModalInferior
-
-
-  dataLista: DatosLista = {
-    cargando: true,
-    reintentar: this.obtenerCatalogoTipoPerfil,
-    lista: this.listaTipoPerfil,
-    tamanoLista: TamanoLista.TIPO_PERFILES
-  }
+  dataLista: DatosLista;
 
   constructor(
     private perfilNegocio: PerfilNegocio,
@@ -81,11 +76,20 @@ export class MenuPerfilesComponent implements OnInit {
     this.configurarDialogoContenido();
     this.iniciarFormMenorEdad();
     this.prepararModalTerminosCondiciones();
+    this.preperarListaMenuTipoPerfil();
   }
 
 
   ngOnInit(): void {
     this.obtenerCatalogoTipoPerfil()
+    this.verificarAceptacionTerminosCondiciones()
+  }
+
+  verificarAceptacionTerminosCondiciones() {
+    let cuenta = this.cuentaNegocio.obtenerUsuarioDelLocalStorage();
+    if (cuenta) {
+      this.dataModalTerminosCondiciones.abierto = false;
+    }
   }
 
   obtenerCatalogoTipoPerfil() {
@@ -102,9 +106,9 @@ export class MenuPerfilesComponent implements OnInit {
     return {
       id: '',
       tamano: TamanoItemMenu.ITEMMENUCREARPERFIL, // Indica el tamano del item (altura)
-      colorFondo: (tipoPerfil.perfil) ? ColorFondoItemMenu.PERFILCREADO : ColorFondoItemMenu.PREDETERMINADO,
+      colorFondo: this.obtenerColorPerfil(tipoPerfil.perfil),
       mostrarDescripcion: tipoPerfil.mostrarDescripcion ?? false,
-      texto1: "crear",
+      texto1: this.obtenerEstadoPerfil(tipoPerfil.perfil),
       texto2: tipoPerfil.nombre,
       texto3: "perfil",
       tipoMenu: TipoMenu.GESTION_PROFILE,
@@ -136,10 +140,10 @@ export class MenuPerfilesComponent implements OnInit {
   gestionarPerfil(tipoPerfil: CatalogoTipoPerfilModel) {
     this.tipoPerfilSeleccionado = tipoPerfil;
     if (this.perfilNegocio.conflictoCrearPerfil(tipoPerfil, this.listaTipoPerfil)) {
-      //this.dialogoServicie.open(this.idDialogo);
+
       this.navegarCrearPerfil(tipoPerfil);
     } else {
-      //this.dialogoServicie.open(this.idDialogo);
+
       this.navegarCrearPerfil(tipoPerfil);
     }
   }
@@ -269,7 +273,7 @@ export class MenuPerfilesComponent implements OnInit {
         nombrePerfil: {
           mostrar: false
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,
@@ -351,6 +355,42 @@ export class MenuPerfilesComponent implements OnInit {
       abierto: true,
       bloqueado: true,
       id: "modal-terms"
+    }
+  }
+
+  obtenerEstadoPerfil(perfil: PerfilModel) {
+    if (perfil) {
+      // return "crear";//codigo temporal
+      switch (perfil.estado.codigo) {
+        case CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO:
+          return "creado"
+        case CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO:
+          return "hibernar"
+      }
+    }
+    return "crear";
+  }
+
+  obtenerColorPerfil(perfil: PerfilModel) {
+    if (perfil) {
+      // return ColorFondoItemMenu.PERFILHIBERNADO; //codigo temporal
+      switch (perfil.estado.codigo) {
+        case CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO:
+          return ColorFondoItemMenu.PERFILCREADO
+        case CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO:
+          return ColorFondoItemMenu.PERFILHIBERNADO
+
+      }
+    }
+    return ColorFondoItemMenu.PREDETERMINADO
+  }
+
+  preperarListaMenuTipoPerfil() {
+    this.dataLista = {
+      cargando: true,
+      reintentar: this.obtenerCatalogoTipoPerfil,
+      lista: this.listaTipoPerfil,
+      tamanoLista: TamanoLista.TIPO_PERFILES
     }
   }
 

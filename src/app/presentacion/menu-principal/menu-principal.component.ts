@@ -71,7 +71,7 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   obtenerInfoPerfilSeleccionado() {
-    this.tipoPerfilSeleccionado = this.perfilNegocio.obtenerPerfilSegunCodigo(this.tipoPerfilSeleccionado.codigo);
+    this.tipoPerfilSeleccionado = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.tipoPerfilSeleccionado.codigo);
   }
 
 

@@ -96,7 +96,8 @@ export enum ColorTextoBoton {
   VERDE = "txt-verde-base",
   ROJO = "txt-rojo-base",
   CELESTE = "txt-btn-history",
-  BLANCO = "txt-btn-blanco"
+  BLANCO = "txt-btn-blanco",
+  AZUL = "txt-azul-base",
 }
 
 export enum TipoBoton {

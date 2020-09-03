@@ -12,4 +12,5 @@ export interface ConfiguracionTexto {
     tamano?: TamanoDeTexto, // Tamano de letra con interlineado por defecto que pone el navegador 
     tamanoConInterlineado?: TamanoDeTextoConInterlineado, // Tamano del texto con interlineado personalizado
     paddingIzqDerDelTexto?: PaddingIzqDerDelTexto, // Indica el valor del padding a la izquierda y derecha del texto
+    enCapitalize?: boolean, // Texto en Capitalize
 }

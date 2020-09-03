@@ -4,6 +4,7 @@ import { ItemSelector } from './elegible.interface'
 export interface BuscadorModalInput {
     placeholder: string, // Placeholder del input donde se ingresa el texto que se va a mandar a buscar
     valor: string, // Texto que se va a mandar a buscar
+    auxiliar?: string, // Para valores adicionales    
 }
 
 export interface BuscadorModalInputPreview {

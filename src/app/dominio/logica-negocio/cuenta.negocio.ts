@@ -130,7 +130,7 @@ export class CuentaNegocio {
     }
 
     // Valida si existe el usuario, caso contrario lo crea
-    validarUsuario(codigoPerfil: string) {
+    validarUsuario(codigoPerfil: string): UsuarioModel {
         let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
         if (!usuario) {
             usuario = {
@@ -139,20 +139,52 @@ export class CuentaNegocio {
                 contrasena: '',
                 perfiles: [],
                 perfilGrupo: (codigoPerfil === CodigosCatalogoTipoPerfil.GROUP),
+                aceptoTerminosCondiciones: false,
+                emailResponsable: '',
+                menorEdad: false,
+                fechaNacimiento: new Date(),
+                nombreResponsable: '',
             }
             this.guardarUsuarioEnLocalStorage(usuario)
+        } else {
+            usuario.perfilGrupo = (codigoPerfil === CodigosCatalogoTipoPerfil.GROUP)
+            this.guardarUsuarioEnLocalStorage(usuario)
+            usuario = this.obtenerUsuarioDelLocalStorage()
         }
         return usuario
     }
 
+    // Eliminar perfil de usuario
+    eliminarPerfilDelUsuario(codigoPerfil: string) {
+        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
+        let pos = -1
+        usuario.perfiles.forEach((perfil, i) => {
+            if (perfil.tipoPerfil.codigo === codigoPerfil) {
+                pos = i
+            }
+        })
+        if (pos >= 0) {
+            usuario.perfiles.splice(pos, 1)
+            // Borrar email y contrasena
+            if (usuario.perfiles.length === 0) {
+                usuario.email = ''
+                usuario.contrasena = ''
+            }
+            this.guardarUsuarioEnLocalStorage(usuario)
+        }
+    }
+
     guardarAceptacionMenorEdad(correoResponsable: string, nombreResponsable: string, fechaNacimiento: Date) {
         let cuenta: UsuarioModel = {
+            id: '',
+            email: '',
+            contrasena: '',
+            perfiles: [],
             aceptoTerminosCondiciones: true,
             emailResponsable: correoResponsable,
             menorEdad: true,
             fechaNacimiento: fechaNacimiento,
             nombreResponsable: nombreResponsable,
-            perfiles: []
         }
         this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta);
     }
@@ -163,9 +195,12 @@ export class CuentaNegocio {
 
     aceptoTerminosCondiciones() {
         let cuenta: UsuarioModel = {
+            id: '',
+            email: '',
+            contrasena: '',
+            perfiles: [],
             aceptoTerminosCondiciones: true,
             menorEdad: true,
-            perfiles: []
         }
         this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta)
     }
