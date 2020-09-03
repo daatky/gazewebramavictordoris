@@ -5,6 +5,6 @@ export interface CatalogoPaisModel {
     codigo?: string
     estado?: CatalogoEstadoEntity
     nombre?: string
-    codigoTelefono?: string
+    codigoTelefono?: any
     codigoNombre?: string
 }

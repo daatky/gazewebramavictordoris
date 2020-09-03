@@ -2,6 +2,16 @@
 @import "../../../../assets/estilos/colores.scss";
 @import "../../../../assets/estilos/imagenes.scss";
 
+.paddig-button-linea1 {
+    padding-bottom: $espacio-0316 + $espesor-041 !important;
+}
+.paddig-button-linea2 {
+    padding-bottom: $espacio-0316 + $espesor-071 !important;
+}
+.paddig-button-linea3 {
+    padding-bottom: $espacio-0316 + $espesor-089 !important;
+}
+
 .itemMenu {
     position: relative;
     width: $item-menu-ancho-6920;
@@ -13,18 +23,15 @@
     align-items: center;
     justify-content: center;
 }
-
-.paddig-button-linea1 {
-    padding-bottom: $espacio-0316 + $espesor-041 !important;
-}
-.paddig-button-linea2 {
-    padding-bottom: $espacio-0316 + $espesor-071 !important;
-}
-.paddig-button-linea3 {
-    padding-bottom: $espacio-0316 + $espesor-089 !important;
+.itemMenu.gazeAnuncios {
+    background: transparent !important;
+    padding: 0 !important;
+    border-left: $espacio-267 + $espacio-178 solid $tranparencia-base;
+    border-right: $espacio-267 + $espacio-178 solid $tranparencia-base;
 }
 
 .itemMenu .caja {
+    width: $item-menu-ancho-con-padding-6920;
     height: 100%;
     overflow: hidden;
     display: flex;
@@ -33,23 +40,31 @@
     justify-content: center;
 }
 
-.itemMenu .cajaNormal {
-    width: $item-menu-ancho-con-padding-6920;
-}
-
-.itemMenu .cajaGaze {
-    display: none;
-}
-
-.itemMenu.gazeAnuncios .cajaGaze {
-    display: flex !important;
-    background-color: transparent;
+.itemMenu.gazeAnuncios .caja {
     width: $item-menu-gaze-anuncios;
 }
 
-.itemMenu.gazeAnuncios .cajaNormal {
-    display: none !important;
-}
+// .itemMenu .cajaNormal {
+//     width: $item-menu-ancho-con-padding-6920;
+// }
+
+// .itemMenu .cajaGaze {
+//     display: none;
+// }
+
+// .itemMenu.gazeAnuncios .cajaGaze {
+//     display: flex !important;
+//     background-color: transparent;
+//     width: $item-menu-gaze-anuncios;
+// }
+
+// .itemMenu.gazeAnuncios .cajaNormal {
+//     display: none !important;
+// }
+
+
+
+
 
 // Tamanos del item
 .item-menu-alto-1948 {
@@ -80,7 +95,6 @@
     height: $espacio-0518;
     width: $espacio-0875;
     margin-top: calcularPaddingAfectadoPorInterlineadoTemp(3.16, $arriba: true);
-    //margin-bottom: $espacio-522;
 }
 
 .boton-puntos {
@@ -103,6 +117,20 @@
 }
 .instruccion-separacion-min {
     height: $espacio-0178;
+}
+
+.contenedor-texto {
+    width: 100%;
+}
+.contenedor-texto .main {
+    width: 100%;
+}
+.contenedor-texto .main .second {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
 }
 
 .contener-descripcion {
@@ -134,5 +162,6 @@
     }
 }
 .espacioPalabra {
+    width: 100%;
     height: $espacio-0249;
 }
