@@ -767,7 +767,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Click en input localidades
   abrirBuscadorLocalidades() {
-    if (! this.buscadorLocalidades.pais ) {
+    console.log(this.buscadorLocalidades.pais)
+    if (! this.buscadorLocalidades.pais || this.buscadorLocalidades.pais.codigo.length === 0) {
       this.buscadorLocalidades.mostrarError( 'Error, debes seleccionar el pais antes de buscar una localidad', true, true)
     }
     this.buscadorLocalidades.configuracion.mostrarModal = true

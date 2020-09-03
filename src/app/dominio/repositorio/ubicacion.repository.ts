@@ -26,7 +26,6 @@ export class UbicacionRepository {
     obtenerCatalogoPaisesParaSelector(): Observable<ItemSelector[]> {
         return this.ubicacionServiceRemoto.obtenerCatalogoPaises().pipe(
             map(data => {
-                console.log(data.respuesta.datos)
                 return this.mapearPaisAItemSelector.transform(this.mapearAEntidad.transform(data.respuesta.datos))
             }),
             catchError(error => {
