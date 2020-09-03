@@ -126,14 +126,16 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       // Foto capturada
       this.camara.fotoCapturada.subscribe((webcamImage: WebcamImage) => {
-        this.cropper.configuracion.imageURL = webcamImage.imageAsDataUrl
-        this.cropper.configuracion.mostrarModal = true
+        this.confCropper = {
+          mostrarModal: true,
+          imageURL: webcamImage.imageAsDataUrl
+        }
       })
 
       // Imagen cortada
       this.cropper.imagenCortada.subscribe((imagen: ImageCroppedEvent) => {
         this.cropper.cambiarStatusCropper(false, true, false)
-        this.subirArchivoDeCamaraAlServidor(imagen)
+        this.subirArchivoAlServidor(imagen)
       })
     })
   }
@@ -173,7 +175,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           usuario.perfiles.forEach(perfil => {
             if (perfil.tipoPerfil.codigo === this.codigo) {
               // Sacar el album de tipo general
-              perfil.albums.forEach(album => {
+              perfil.album.forEach(album => {
                 if (album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
                   this.album = album
                 }
@@ -227,10 +229,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarCropper() {
     this.confCropper = {
-      mostrarModal: false,
-      imageChangedEvent: null,
-      imageBase64: null,
-      imageFile: null
+      mostrarModal: false
     }
   }
 
@@ -380,7 +379,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       })
   }
 
-  subirArchivoDeCamaraAlServidor(event: ImageCroppedEvent) {
+  subirArchivoAlServidor(event: ImageCroppedEvent) {
     const imagen = this.convertidorArchivos.dataURItoBlob(event.base64)
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
@@ -420,47 +419,6 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  subirArchivoDeSelectorAlServidor(file: File) {
-    const idItem: string = this.generadorId.generarIdConSemilla()
-    this.itemsAlbum.push({
-      id: idItem,
-      idInterno: '',
-      usoDelItem: UsoItemCircular.CIRALBUM,
-      esVisitante: false,
-      urlMedia: '',
-      activarClick: false,
-      activarDobleClick: true,
-      activarLongPress: true,
-      mostrarBoton: false,
-      mostrarLoader: true,
-      textoBoton: 'Click to upload',
-      capaOpacidad: {
-        mostrar: false
-      },
-      eventoEnItem: this.eventoEnitemFuncion
-    })
-
-
-    // Subir archivo al servidor
-    this.mediaNegocio.subirMediaSimpleAlServidor( { archivo: file, nombre: file.name }, '1:1', '').subscribe(data => {
-      console.log(data)
-      const pos = this.obtenerPosicionPorIdItem(idItem)
-      if (pos >= 0) {
-        this.album.media[pos] = data
-        this.itemsAlbum[pos].id = data._id
-        this.itemsAlbum[pos].urlMedia = data.principal.url
-      }
-    }, error => {
-      this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
-      const pos = this.obtenerPosicionPorIdItem(idItem)
-      if (pos >= 0) {
-        this.album.media.splice(pos, 1)
-        this.itemsAlbum.splice(pos, 1)
-      }
-    })
-  }
-
-
   // Evento en items
   eventoEnItem(data: InfoAccionCirRec) {
     // Tomar Foto
@@ -476,8 +434,12 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Subir archivo
     if (data.accion === AccionesItemCircularRectangular.SUBIR_ARCHIVO) {
-      if (this.itemsAlbum.length < this.cantidadMaximaFotos) {  
-        this.subirArchivoDeSelectorAlServidor(data.informacion.archivo[0])
+      if (this.itemsAlbum.length < this.cantidadMaximaFotos) {
+        this.confCropper = {
+          mostrarModal: true,
+          imageFile: data.informacion.archivo[0]
+        }
+        // this.subirArchivoDeSelectorAlServidor(data.informacion.archivo[0])
       } else {
         this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
       }

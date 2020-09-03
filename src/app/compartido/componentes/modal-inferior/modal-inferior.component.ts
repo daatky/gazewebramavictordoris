@@ -17,11 +17,12 @@ export class ModalInferiorComponent implements OnInit {
 
   }
 
+  
   eventoModal(target: any) {
     target.classList.forEach((clase: any) => {
       if (clase === 'fondo-modal-inferior') {
         if (!this.data.bloqueado) {
-          //this.data.abierto = false;
+          this.data.abierto = false;
         }
       }
     })

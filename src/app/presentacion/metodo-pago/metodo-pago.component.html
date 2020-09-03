@@ -53,26 +53,28 @@
         </app-lista-vertical>
     </div>
 
-    <app-dialogo-contenido id="{{dialogoTarjetaId}}" [data]="dataDialogo">
+    <app-dialogo-contenido [data]="dataModalStripe">
         <div [formGroup]="pagoForm">
             <app-input [inputCompartido]='inputNombre'></app-input>
-            <div class="espacioMetodoPago"> </div>
+            <br>
             <app-input [inputCompartido]='inputEmail'></app-input>
-            <div class="espacioMetodoPago"> </div>
+            <br>
             <app-input [inputCompartido]='inputTelefono'></app-input>
-            <div class="espacioMetodoPago"> </div>
+            <br>
             <app-input [inputCompartido]='inputDireccion'></app-input>
-            <div class="espacioMetodoPago"> </div>
+            <br>
 
             <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
             </ngx-stripe-card>
 
-            <div class="espacioMetodoPago"> </div>
-            <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
+            <br>
+            <div class="centrar">
+                <button class="botondefecto" (tap)="pagarStripe()"> ACEPTAR</button>
+            </div>            
         </div>
     </app-dialogo-contenido>
 
-    <app-dialogo-contenido id="{{dialogoPaypalId}}" [data]="dataDialogo">
+    <app-dialogo-contenido [data]="dataModalPaypal">
 
         <ngx-paypal class="btnpaypal" id="btnpaypal" [config]="payPalConfig"></ngx-paypal>
 

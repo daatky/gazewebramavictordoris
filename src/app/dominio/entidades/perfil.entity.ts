@@ -19,7 +19,7 @@ export interface PerfilEntity {
     nombre?: string,
     tipoPerfil?: CatalogoTipoPerfilEntity,
     usuario?: UsuarioEntity,
-    albums?: Array<AlbumEntity>,
+    album?: Array<AlbumEntity>,
     estado?: CatalogoEstadoEntity,
     direcciones?: Array<DireccionEntity>,
     telefonos?: Array<TelefonoEntity>,
@@ -42,12 +42,12 @@ export interface PerfilCrearCuentaEntity {
 export class PerfilEntityMapperServicePerfilresumenModelo extends MapedorService<PerfilEntity, PerfilResumenModel> {
 
     protected map(entity: PerfilEntity): PerfilResumenModel {
-        return {
+        return (entity) ? {
             _id: entity._id,
             nombreContacto: entity.nombreContacto,
             nombre: entity.nombre,
             estado: entity.estado,
-        };
+        } : null
     }
 
 }

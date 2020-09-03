@@ -25,7 +25,7 @@ export interface TraduccionCatalogoMetodoPagoEntity {
     descripcion?: string
 }
 
-export interface PagoFacturacion {
+export interface PagoFacturacionEntity {
     nombres: string,
     telefono?: string,
     direccion?: string,

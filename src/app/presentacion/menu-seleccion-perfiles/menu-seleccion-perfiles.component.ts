@@ -49,7 +49,7 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
   }
 
   obtenerCatalogoTipoPerfil() {
-    this.perfilNegocio.obtenerCatalogoTipoPerfil().subscribe((res: CatalogoTipoPerfilModel[]) => {
+    this.perfilNegocio.obtenerCatalogoTipoPerfilConPerfil().subscribe((res: CatalogoTipoPerfilModel[]) => {
       this.listaTipoPerfil = res
       this.dataLista.cargando = false;
     }, error => {

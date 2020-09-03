@@ -407,7 +407,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album perfil
   configurarAlbumPerfil() {
     let portadaPerfil: AlbumModel
-    this.perfil.albums.forEach(item => {
+    this.perfil.album.forEach(item => {
       if (item.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
         portadaPerfil = item
       }
@@ -447,7 +447,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album generarl
   configurarAlbumGeneral() {
     let portadaGeneral: AlbumModel
-    this.perfil.albums.forEach(item => {
+    this.perfil.album.forEach(item => {
       if (item.tipo.codigo === CodigosCatalogoTipoAlbum.GENERAL) {
         portadaGeneral = item
       }
@@ -716,7 +716,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async determinarBotonNoBotonPaymente(pos: number) {
     const configuracion: BotonCompartido = {
-      text: '',
+      text: 'no',
       tipoBoton: TipoBoton.TEXTO,
       tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
       colorTexto: ColorTextoBoton.AMARRILLO,
@@ -749,7 +749,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   // Click en input pais
   abrirSelectorPaises() {
     this.selectorPaises.configuracion.cargando.mostrar = true
@@ -761,13 +760,15 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectorPaises.configuracion.elegibles = res
         this.selectorPaises.configuracion.cargando.mostrar = false
       }, error => {
+        console.log(error)
         this.selectorPaises.mostrarError('Lo sentimos, ocurrio un error al obtener la informacion')
       })
   }
 
   // Click en input localidades
   abrirBuscadorLocalidades() {
-    if (! this.buscadorLocalidades.pais ) {
+    console.log(this.buscadorLocalidades.pais)
+    if (! this.buscadorLocalidades.pais || this.buscadorLocalidades.pais.codigo.length === 0) {
       this.buscadorLocalidades.mostrarError( 'Error, debes seleccionar el pais antes de buscar una localidad', true, true)
     }
     this.buscadorLocalidades.configuracion.mostrarModal = true
@@ -909,7 +910,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.registroForm.valid) {
       if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
         if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
-          this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_CREADO)
+          this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO)
           this.perfilCreado = true
           this.botonSubmit.enProgreso = false
           error = false

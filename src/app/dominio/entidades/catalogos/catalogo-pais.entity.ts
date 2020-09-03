@@ -11,7 +11,7 @@ export interface CatalogoPaisEntity{
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo?:string
-    codigoTelefono?:string
+    codigoTelefono?:Array<any>
     codigoNombre?:string
     traducciones?:Array<TraduccionCatalogoPaisEntity>
 }
@@ -27,6 +27,7 @@ export interface TraduccionCatalogoPaisEntity {
 export class CatalogoPaisMapperService extends MapedorService<CatalogoPaisEntity, CatalogoPaisModel> {
 
     protected map(entity: CatalogoPaisEntity): CatalogoPaisModel {
+        console.log(entity)
         return {
             codigo: entity.codigo,
             nombre: entity.traducciones[0].nombre,
