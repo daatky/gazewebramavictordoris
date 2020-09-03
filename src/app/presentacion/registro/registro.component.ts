@@ -716,7 +716,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async determinarBotonNoBotonPaymente(pos: number) {
     const configuracion: BotonCompartido = {
-      text: '',
+      text: 'no',
       tipoBoton: TipoBoton.TEXTO,
       tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
       colorTexto: ColorTextoBoton.AMARRILLO,
@@ -749,7 +749,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   // Click en input pais
   abrirSelectorPaises() {
     this.selectorPaises.configuracion.cargando.mostrar = true
@@ -761,6 +760,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectorPaises.configuracion.elegibles = res
         this.selectorPaises.configuracion.cargando.mostrar = false
       }, error => {
+        console.log(error)
         this.selectorPaises.mostrarError('Lo sentimos, ocurrio un error al obtener la informacion')
       })
   }
@@ -909,7 +909,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.registroForm.valid) {
       if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
         if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
-          this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_CREADO)
+          this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO)
           this.perfilCreado = true
           this.botonSubmit.enProgreso = false
           error = false

@@ -15,7 +15,8 @@
             #crop
             *ngIf="configuracion.imageURL !== null && !mensajeError.mostrarError"
             style="--cropper-overlay-color:'#000';--cropper-outline-color:'#000'"
-            [imageURL]="configuracion.imageURL"
+            [imageURL]="configuracion?.imageURL"
+            [imageFile]="configuracion?.imageFile"
             [maintainAspectRatio]="true"
             [aspectRatio]="1/1"
             [roundCropper]="true"

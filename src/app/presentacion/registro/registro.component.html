@@ -48,7 +48,7 @@
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
                 enMayusculas: false,
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
-                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512
+                paddingIzqDerDelTexto: (perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC) ? estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512 : estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
             })"
         >
             {{ perfil.tipoPerfil.descripcion }}
@@ -60,7 +60,7 @@
             'mostrar': !perfilCreado
         }"
     >
-        <form [formGroup]="registroForm">
+        <form [formGroup]="registroForm" autocomplete="off">
             <div
                 *ngFor="let item of inputsForm"
                 class="input"

@@ -42,12 +42,12 @@ export interface PerfilCrearCuentaEntity {
 export class PerfilEntityMapperServicePerfilresumenModelo extends MapedorService<PerfilEntity, PerfilResumenModel> {
 
     protected map(entity: PerfilEntity): PerfilResumenModel {
-        return {
+        return (entity) ?  {
             _id: entity._id,
             nombreContacto: entity.nombreContacto,
             nombre: entity.nombre,
             estado: entity.estado,
-        };
+        } : null
     }
 
 }
