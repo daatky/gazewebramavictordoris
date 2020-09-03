@@ -245,7 +245,7 @@ export class MetodoPagoComponent implements OnInit {
         nombres: this.pagoForm.value.nombre,
         telefono: this.pagoForm.value.telefono,
         direccion: this.pagoForm.value.direccion,
-        email: this.pagoForm.value.nombre.email,
+        email: this.pagoForm.value.email,
       }
       this.dataModalStripe.abierto = false;
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(

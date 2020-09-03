@@ -54,7 +54,9 @@ export class CuentaNegocio {
         usuario.datosFacturacion = {
             direccion: pago.direccion,
             nombres: pago.nombres,
-            telefono: pago.telefono
+            telefono: pago.telefono,
+            email: pago.email
+
         }
         usuario.metodoPago = {
             codigo: metodoPago
