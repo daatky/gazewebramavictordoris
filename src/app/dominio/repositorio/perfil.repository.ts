@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
 import { catchError, tap, map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
-import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
+import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipoPerfilMapperService2 } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
@@ -16,10 +16,10 @@ import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.ser
 export class PerfilRepository {
 
     constructor(
-        protected http: HttpClient, 
+        protected http: HttpClient,
         private perfilServicieRemoto: PerfilServiceRemoto,
         private perfilServicieLocal: PerfilServiceLocal,
-        private mapeador: CatalogoTipoPerfilMapperService, 
+        private mapeador: CatalogoTipoPerfilMapperService2,
         private localStorage: LocalStorage
     ) {
 
@@ -50,7 +50,7 @@ export class PerfilRepository {
         this.perfilServicieLocal.guardarAlbum(album)
     }
 
-    obtenerAlbumActivo() : AlbumModel {
+    obtenerAlbumActivo(): AlbumModel {
         return this.perfilServicieLocal.obtenerAlbum()
     }
 

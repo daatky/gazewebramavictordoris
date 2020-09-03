@@ -1,0 +1,26 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+.fondo-modal-inferior {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 900;
+}
+
+.modal-abierto {
+    display: flex !important;
+}
+
+.contenido-modal-inferior {
+    background-color: white;
+    height: fit-content;
+    width: 100%;
+    padding: $espacio-0316;
+    z-index: 1000;
+}

@@ -26,17 +26,28 @@
     <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
 </app-dialogo-contenido>
 
-
-<app-dialogo-contenido id="{{idMenorEdadDialogo}}" [data]="dataMenorEdadDialogo">
+<app-modal-inferior [data]="dataModalTerminosCondiciones">
+    <p class="letradefecto">
+        Al continuar, aceptas nuestros CGU y la Política de privacidad. Gazelook SA recopila esta información con el fin
+        de crear tu cuenta, gestionar tus reservas, usar y mejorar nuestros servicios, así como garantizar la seguridad
+        de nuestra plataforma. Tienes derechos sobre tus datos personales y puedes ejercerlos contactando con BlaBlaCar
+        a través de nuestro formulario de contacto.
+    </p>
+    <br>
+    <p class="letradefecto">Si eres menor de edad, completa el formulario con los datos de tu tutor o reponsable legal
+    </p>
+    <br>
     <div [formGroup]="menorEdadForm">
+        <!--
         <app-input [inputCompartido]='inputFechaNacimiento'></app-input>
-        <div class="espacioInput"> </div>
+        <br>
+        -->
         <app-input [inputCompartido]='inputNombresResponsable'></app-input>
-        <div class="espacioInput"> </div>
+        <br>
         <app-input [inputCompartido]='inputCorreoResponsable'></app-input>
-        <div class="espacioInput"> </div>
-        <app-button class="centrar" *ngIf="dataBotonGuardarInfoMenorEdad"
-            [botonCompartido]="dataBotonGuardarInfoMenorEdad"></app-button>
+        <br>
+        <div class="centrar">
+            <button class="botondefecto" (tap)="aceptarTerminosCondicionesMenorEdad()"> ACEPTAR</button>
+        </div>
     </div>
-
-</app-dialogo-contenido>
+</app-modal-inferior>

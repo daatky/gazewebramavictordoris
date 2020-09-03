@@ -26,8 +26,10 @@ import { ImageCropperModule } from 'ngx-image-cropper'
 import { ToastComponent } from './componentes/toast/toast.component'
 import { DialogoContenidoComponent } from './componentes/dialogo-contenido/dialogo-contenido.component'
 import { ItemFechaComponent } from './componentes/item-fecha/item-fecha.component'
-import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensamiento-compartido.component'
-import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component'
+import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensamiento-compartido.component';
+import { ModalInferiorComponent } from './componentes/modal-inferior/modal-inferior.component';
+import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
+import { ListoComponent } from './componentes/listo/listo.component';
 
 @NgModule({
   imports: [
@@ -61,7 +63,9 @@ import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inl
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    ModalInferiorComponent,
     DialogoInlineComponent,
+    ListoComponent,
   ],
   exports: [
     CrearComponenteDirective,
@@ -87,6 +91,7 @@ import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inl
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    ModalInferiorComponent,
     DialogoInlineComponent
   ]
 })

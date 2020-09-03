@@ -1,5 +1,5 @@
 import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
-import { UsuarioModel } from './../modelo/usuario.model';
+import { UsuarioModel, UsuarioModelMapperService } from './../modelo/usuario.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -8,11 +8,11 @@ import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { PerfilRepository } from '../repositorio/perfil.repository';
 import { IdiomaRepository } from '../repositorio/idioma.repository';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity';
-import { UsuarioCrearCuentaEntity, UsuarioEntity } from '../entidades/usuario.entity';
-import { PagoFacturacion } from '../entidades/catalogos/catalogo-metodo-pago.entity';
+import { PagoFacturacionEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
+import { Codigos2CatalogoIdioma } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-idioma.enum';
 //CuentaRepository
 //iniciarSesion
 @Injectable({
@@ -23,7 +23,8 @@ export class CuentaNegocio {
     constructor(private cuentaRepository: CuentaRepository,
         private perfilRepository: PerfilRepository,
         private idiomaRepository: IdiomaRepository,
-        private repository: CuentaRepository
+        private repository: CuentaRepository,
+        private usuarioModelMapper: UsuarioModelMapperService
     ) { }
 
     iniciarSesion(email: string, contrasena: string): Observable<CatalogoTipoPerfilModel[]> {
@@ -43,25 +44,24 @@ export class CuentaNegocio {
     }
 
 
-    crearCuenta(metodoPago: string, pago?: PagoFacturacion): Observable<PagoModel> {
+    crearCuenta(metodoPago: string, pago?: PagoFacturacionEntity): Observable<PagoModel> {
         const idioma: CatalogoIdiomaEntity = this.idiomaRepository.obtenerIdiomaLocal();
-        let usuario: UsuarioEntity;
+        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage();
 
         usuario.idioma = {
-            codigo: idioma.codigo
+            codigo: (idioma) ? idioma.codigo : Codigos2CatalogoIdioma.INGLES
         };
-
-        let usuarioCrear: UsuarioCrearCuentaEntity = {
-            ...usuario,
-            datosPago: {
-                direccion: pago.direccion,
-                nombres: pago.nombres,
-                telefono: pago.telefono
-            },
-            metodoPago: {
-                codigo: metodoPago
-            },
+        usuario.datosFacturacion = {
+            direccion: pago.direccion,
+            nombres: pago.nombres,
+            telefono: pago.telefono
         }
+        usuario.metodoPago = {
+            codigo: metodoPago
+        }
+
+        let usuarioCrear = this.usuarioModelMapper.transform(usuario)
+
         console.log(usuarioCrear)
 
         return this.cuentaRepository.crearCuenta(usuarioCrear)
@@ -130,7 +130,7 @@ export class CuentaNegocio {
     }
 
     // Valida si existe el usuario, caso contrario lo crea
-    validarUsuario(codigoPerfil: string) : UsuarioModel {
+    validarUsuario(codigoPerfil: string): UsuarioModel {
         let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
         if (!usuario) {
             usuario = {
@@ -195,9 +195,12 @@ export class CuentaNegocio {
 
     aceptoTerminosCondiciones() {
         let cuenta: UsuarioModel = {
+            id: '',
+            email: '',
+            contrasena: '',
+            perfiles: [],
             aceptoTerminosCondiciones: true,
-            menorEdad: true,
-            perfiles: []
+            menorEdad: false,
         }
         this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta)
     }

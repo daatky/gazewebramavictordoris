@@ -177,7 +177,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           usuario.perfiles.forEach(perfil => {
             if (perfil.tipoPerfil.codigo === this.codigo) {
               // Sacar el album de tipo general
-              perfil.albums.forEach(album => {
+              perfil.album.forEach(album => {
                 if (album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
                   this.album = album
                 }

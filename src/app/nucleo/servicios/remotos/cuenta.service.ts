@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { APIGAZE } from './rutas/api-gaze.enum';
 import { RespuestaRemota } from '../../util/respuesta';
 import { Cuenta } from './rutas/cuenta.enum';
-import { UsuarioEntity, UsuarioCrearCuentaEntity } from "../../../dominio/entidades/usuario.entity";
+import { UsuarioEntity } from "../../../dominio/entidades/usuario.entity";
 import { PagoEntity } from "../../../dominio/entidades/pago.entity";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { CuentaRepository } from 'src/app/dominio/repositorio/cuenta.repository';
@@ -23,7 +23,7 @@ export class CuentaServiceRemoto {
 
     }
 
-    crearCuenta(usuario: UsuarioCrearCuentaEntity): Observable<RespuestaRemota<PagoEntity>> {
+    crearCuenta(usuario: UsuarioEntity): Observable<RespuestaRemota<PagoEntity>> {
         return this.http.post<RespuestaRemota<PagoEntity>>(APIGAZE.BASE + Cuenta.CUENTA, usuario);
     }
 

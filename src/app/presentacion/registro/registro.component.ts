@@ -434,7 +434,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album perfil
   configurarAlbumPerfil() {
     let portadaPerfil: AlbumModel
-    this.perfil.albums.forEach(item => {
+    this.perfil.album.forEach(item => {
       if (item.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
         portadaPerfil = item
       }
@@ -474,7 +474,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album generarl
   configurarAlbumGeneral() {
     let portadaGeneral: AlbumModel
-    this.perfil.albums.forEach(item => {
+    this.perfil.album.forEach(item => {
       if (item.tipo.codigo === CodigosCatalogoTipoAlbum.GENERAL) {
         portadaGeneral = item
       }

@@ -1,5 +1,7 @@
-<div #fondo class="modal fondoModal">
-    <div #principal class="contenedorPrincipal">
+<div class="fondo-modal" [ngClass]="{
+    'modal-abierto':data.abierto
+}" (tap)="eventoModal($event.target)">
+    <div #principal class="contenido-modal">
         <div #descripcion class="contenedorDescripcion">
             <p class="letraDescripcion">{{data.titulo}}</p>
         </div>
