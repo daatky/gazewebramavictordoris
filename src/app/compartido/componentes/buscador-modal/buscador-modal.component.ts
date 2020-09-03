@@ -1,6 +1,9 @@
+import { map, debounceTime } from 'rxjs/operators';
+import { GeneradorId } from './../../../nucleo/servicios/generales/generador-id.service';
+import { Observable, fromEvent } from 'rxjs';
 import { EstiloDelTextoServicio } from '../../../nucleo/servicios/diseno/estilo-del-texto.service';
 import { ItemSelector } from '../../diseno/modelos/elegible.interface';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
 import { ConfiguracionBuscadorModal } from '../../diseno/modelos/buscador-modal.interface'
 import { InfoAccionBuscadorLocalidades } from '../../diseno/modelos/info-acciones-buscador-localidades.interface'
 import { AccionesBuscadorModal } from '../../diseno/enums/acciones-buscador-localidades.enum'
@@ -10,20 +13,45 @@ import { AccionesBuscadorModal } from '../../diseno/enums/acciones-buscador-loca
   templateUrl: './buscador-modal.component.html',
   styleUrls: ['./buscador-modal.component.scss']
 })
-export class BuscadorModalComponent implements OnInit {
+export class BuscadorModalComponent implements OnInit, AfterViewInit {
+  @ViewChild('inputBuscador', { static: false }) inputBuscador: ElementRef
 
   @Input() pais:ItemSelector // Pais seleccionado
   @Input() configuracion: ConfiguracionBuscadorModal
   @Output() evento: EventEmitter<InfoAccionBuscadorLocalidades>
 
+  public barraBusqueda$: Observable<string>
+  public stringBasico: string
+  public idInterno: string
+
   constructor(
-    public estiloDelTextoServicio:EstiloDelTextoServicio
+    public estiloDelTextoServicio: EstiloDelTextoServicio,
+    public generadorId: GeneradorId,
   ) {
+    this.stringBasico = 'inputBuscador_'
     this.evento = new EventEmitter<InfoAccionBuscadorLocalidades>()
   }
 
   ngOnInit() {
+    this.idInterno = this.generadorId.generarIdConSemilla()
+  }
+
+  ngAfterViewInit(): void {
+    this.configurarObservable()
+  }
+
+  // Inicializar observable
+  configurarObservable() {
+    this.barraBusqueda$ = fromEvent<any>(this.inputBuscador.nativeElement, 'keyup')
+      .pipe(
+        map(event => event.target.value),
+        debounceTime(1000),
+      )
     
+    this.barraBusqueda$.subscribe(query => {
+      this.configuracion.inputBuscador.valor = query
+      this.buscar()
+    })
   }
 
   // Abrir selector
@@ -35,14 +63,16 @@ export class BuscadorModalComponent implements OnInit {
 
   // Buscar
   buscar() {
-    const data = {
-      accion: AccionesBuscadorModal.REALIZAR_BUSQUEDA,
-      informacion: {
-        pais: this.pais.codigo,
-        query: this.configuracion.inputBuscador.valor    
+    if (this.configuracion.inputBuscador.valor.length > 0) {
+      const data = {
+        accion: AccionesBuscadorModal.REALIZAR_BUSQUEDA,
+        informacion: {
+          pais: this.pais.codigo,
+          query: this.configuracion.inputBuscador.valor
+        }
       }
+      this.evento.emit(data)
     }
-    this.evento.emit(data)
   }
 
   // Reiniciar selector
@@ -106,6 +136,11 @@ export class BuscadorModalComponent implements OnInit {
         return
       }
     })
+  }
+
+
+  test() {
+    console.log(this.configuracion.inputBuscador.valor)
   }
 
 }

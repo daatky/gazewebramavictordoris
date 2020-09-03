@@ -7,6 +7,7 @@ import { Catalogo } from './rutas/catalogos.enum';
 import { CatalogoPaisEntity } from 'src/app/dominio/entidades/catalogos/catalogo-pais.entity'
 import { CatalogoLocalidadModel } from '../../../dominio/modelo/catalogo-localidad.model'
 import { RespuestaRemota } from '../../util/respuesta'
+import { debounceTime } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UbicacionServiceRemoto {

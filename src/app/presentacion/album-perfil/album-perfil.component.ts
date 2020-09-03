@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { UsuarioModel } from './../../dominio/modelo/usuario.model';
 import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio';
 import { CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
@@ -31,7 +32,7 @@ import { ColorFondoLinea } from './../../compartido/diseno/enums/color-fondo-lin
 import { AnchoLineaItem } from './../../compartido/diseno/enums/ancho-linea-item.enum'
 import { TamanoColorDeFondoAppBar } from './../../compartido/diseno/enums/tamano-color-fondo-appbar.enum'
 import { ConfiguracionAppbarCompartida } from './../../compartido/diseno/modelos/appbar.interface'
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, HostListener } from '@angular/core'
 import { AppbarComponent } from './../../compartido/componentes/appbar/appbar.component'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ColorCapaOpacidadItem } from 'src/app/compartido/diseno/enums/item-cir-rec-capa-opacidad.enum'
@@ -54,6 +55,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   // Utils
   public accionAlbumEnum = AccionAlbum
   public eventoEnitemFuncion: Function
+  public observable: any
 
   // Parametros de url
   public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
@@ -212,7 +214,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     })
     // Definir la portada
-    if (this.album.portada && this.album.portada.principal) {
+    if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
       const portada: MediaModel = this.album.portada
       this.confPortada.mostrarLoader = true
       this.confPortada.id = portada._id
@@ -439,7 +441,6 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           mostrarModal: true,
           imageFile: data.informacion.archivo[0]
         }
-        // this.subirArchivoDeSelectorAlServidor(data.informacion.archivo[0])
       } else {
         this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
       }
@@ -462,6 +463,11 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           this.confPortada.urlMedia = ''
           this.confPortada.mostrarLoader = false
           this.confPortada.mostrarBoton = true
+
+          // Actualizar el album
+          this.album.portada._id = ''
+          this.album.portada.principal._id = ''
+          this.album.portada.principal.url = ''
         }
         this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)

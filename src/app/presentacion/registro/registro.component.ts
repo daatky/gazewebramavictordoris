@@ -444,7 +444,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     let urlMedia = ''
     let mostrarBoton = true
     let mostrarLoader = false
-    if (portadaPerfil && portadaPerfil.portada && portadaPerfil.portada.principal) {
+    if (portadaPerfil && portadaPerfil.portada && portadaPerfil.portada.principal && portadaPerfil.portada.principal.url.length > 0) {
       urlMedia = portadaPerfil.portada.principal.url
       mostrarBoton = false
       mostrarLoader = true
@@ -484,7 +484,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     let urlMedia = ''
     let mostrarBoton = true
     let mostrarLoader = false
-    if (portadaGeneral && portadaGeneral.portada && portadaGeneral.portada.principal) {
+    if (portadaGeneral && portadaGeneral.portada && portadaGeneral.portada.principal && portadaGeneral.portada.principal.url.length > 0) {
       urlMedia = portadaGeneral.portada.principal.url
       mostrarBoton = false
       mostrarLoader = true

@@ -208,7 +208,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     })
     // Definir la portada
-    if (this.album.portada && this.album.portada.principal) {
+    if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
       const portada: MediaModel = this.album.portada
       this.confPortada.mostrarLoader = true
       this.confPortada.id = portada._id
@@ -500,6 +500,11 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
           this.confPortada.urlMedia = ''
           this.confPortada.mostrarLoader = false
           this.confPortada.mostrarBoton = true
+
+          // Actualizar el album
+          this.album.portada._id = ''
+          this.album.portada.principal._id = ''
+          this.album.portada.principal.url = ''
         }
         this.album.media.splice(pos, 1)
         this.itemsAlbum.splice(pos, 1)
