@@ -102,8 +102,12 @@ export class BuscadorModalComponent implements OnInit, AfterViewInit {
 
   // Mostrar Elegibles
   mostrarElegibles(lista:ItemSelector[]) {
-    this.configuracion.resultado.items = lista
-    this.configuracion.resultado.mostrarElegibles = true
+    if (lista.length > 0) {
+      this.configuracion.resultado.items = lista
+      this.configuracion.resultado.mostrarElegibles = true
+    } else {
+      this.mostrarError('No existen coincidencias', true)
+    }
   }
 
   // Mostrar Cargando
@@ -137,10 +141,4 @@ export class BuscadorModalComponent implements OnInit, AfterViewInit {
       }
     })
   }
-
-
-  test() {
-    console.log(this.configuracion.inputBuscador.valor)
-  }
-
 }
