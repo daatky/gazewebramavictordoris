@@ -27,7 +27,6 @@ export interface TraduccionCatalogoPaisEntity {
 export class CatalogoPaisMapperService extends MapedorService<CatalogoPaisEntity, CatalogoPaisModel> {
 
     protected map(entity: CatalogoPaisEntity): CatalogoPaisModel {
-        console.log(entity)
         return {
             codigo: entity.codigo,
             nombre: entity.traducciones[0].nombre,

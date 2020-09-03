@@ -1,11 +1,13 @@
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component'
 
 export interface ItemMenuModel {
     id: any,
     titulo: string,
     subtitulo?: string
     action?: Function,
-    ruta?: RutasLocales
+    ruta?: RutasLocales,
+    tipo?: TipoMenu
 }
 
 export interface ItemSubMenu {

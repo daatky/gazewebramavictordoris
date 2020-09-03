@@ -118,7 +118,7 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     clases['itemMenu'] = true
     clases[this.configuracionItem.tamano.toString()] = true
     clases[this.configuracionItem.colorFondo.toString()] = true
-    clases['gazeAnuncios'] = (this.configuracionItem.gazeAnuncios) ? this.configuracionItem.gazeAnuncios : false
+    clases['gazeAnuncios'] = (this.configuracionItem.tipoMenu === TipoMenu.ANUNCIOS)
     clases['paddig-button-linea1'] = EspesorLineaItem.ESPESOR041 == this.configuracionItem.linea.configuracion.espesor
     clases['paddig-button-linea2'] = EspesorLineaItem.ESPESOR071 == this.configuracionItem.linea.configuracion.espesor
     clases['paddig-button-linea3'] = EspesorLineaItem.ESPESOR089 == this.configuracionItem.linea.configuracion.espesor
@@ -129,8 +129,8 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   obtenerClasesItemCaja() {
     return {
       'caja': true,
-      'cajaNormal': (this.configuracionItem.gazeAnuncios) ? false : true,
-      'cajaGaze': (this.configuracionItem.gazeAnuncios) ? this.configuracionItem.gazeAnuncios : false
+      // 'cajaNormal': (this.configuracionItem.tipoMenu !== TipoMenu.ANUNCIOS) ? false : true,
+      // 'cajaGaze': (this.configuracionItem.tipoMenu === TipoMenu.ANUNCIOS) ? this.configuracionItem.gazeAnuncios : false
     }
   }
 
@@ -152,9 +152,10 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
 
 
 export enum TipoMenu {
-  CREATE_PROFILE_INFO, //registrar perfiles
-  GESTION_PROFILE, //gestionar perfiles
+  CREATE_PROFILE_INFO, // Registrar perfiles
+  GESTION_PROFILE, // Gestionar perfiles
   ACCION, // Menu principal
   INSTRUCCIONES,
-  SUBMENU, //PARA EL SUBMENU DE LOS TRES PUNTOS
+  SUBMENU, // PARA EL SUBMENU DE LOS TRES PUNTOS
+  ANUNCIOS, // Para el item menu de gaze anouncement
 }

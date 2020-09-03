@@ -39,6 +39,7 @@ export class LineaComponent implements OnInit {
     clases[this.configuracionLinea.espesor.toString()] = true
     clases[this.configuracionLinea.colorFondo.toString()] = true
     clases['forzarAlFinal'] = (this.configuracionLinea.forzarAlFinal) ? this.configuracionLinea.forzarAlFinal : false
+    clases['cajaGaze'] = (this.configuracionLinea.cajaGaze) ? this.configuracionLinea.cajaGaze : false
     return clases
   }
 

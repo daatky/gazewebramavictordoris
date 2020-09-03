@@ -115,43 +115,51 @@ export class MenuPrincipalComponent implements OnInit {
       {
         id: MenuPrincipal.MIS_PENSAMIENTOS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("MY PENSAMIENTOS"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.MIS_CONTACTOS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("misContactos"),
         subtitulo: "",
-        ruta: RutasLocales.MIS_CONTACTOS
+        ruta: RutasLocales.MIS_CONTACTOS,
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.PUBLICAR,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("publicar"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.PROYECTOS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("proyectos"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.NOTICIAS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("noticiasEnlaces"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.COMPRAS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("comprarPermutar"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.FINANZAS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("finanzas"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ACCION,
       },
       {
         id: MenuPrincipal.ANUNCIOS,
         titulo: await this.internacionalizacionNegocio.obtenerTextoLlave("gazelookAnuncios"),
-        subtitulo: ""
+        subtitulo: "",
+        tipo: TipoMenu.ANUNCIOS,
       },
     ]
   }
@@ -162,14 +170,15 @@ export class MenuPrincipalComponent implements OnInit {
       tamano: TamanoItemMenu.ITEM_MENU_GENERAL, // Indica el tamano del item (altura)
       colorFondo: (item.id == MenuPrincipal.ANUNCIOS) ? ColorFondoItemMenu.TRANSPARENTE : ColorFondoItemMenu.PREDETERMINADO,
       texto1: item.titulo,
-      tipoMenu: TipoMenu.ACCION,
+      tipoMenu: item.tipo,
       linea: {
         mostrar: true,
         configuracion: {
           ancho: (item.id == MenuPrincipal.ANUNCIOS || item.id == MenuPrincipal.FINANZAS) ? AnchoLineaItem.ANCHO6028 : AnchoLineaItem.ANCHO6382,
           espesor: EspesorLineaItem.ESPESOR071,
           colorFondo: ColorFondoLinea.FONDOLINEAVERDE,
-          forzarAlFinal: true
+          forzarAlFinal: true,
+          cajaGaze: (item.id == MenuPrincipal.ANUNCIOS)
         }
       },
       gazeAnuncios: item.id == MenuPrincipal.ANUNCIOS,

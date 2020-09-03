@@ -8,4 +8,5 @@ export interface LineaCompartida {
     espesor:EspesorLineaItem,
     colorFondo:ColorFondoLinea,
     forzarAlFinal?:boolean, // Ubica la linea con posicion absoluta al final del elemento padre, tomar en cuenta que el padre debe tener position relative
+    cajaGaze?:boolean,
 }

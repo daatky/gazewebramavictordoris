@@ -3,6 +3,7 @@
 
 .listaScroll {
     height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
+    overflow-x: hidden;
     overflow-y: auto;
     width: $ancho-6920;
 }

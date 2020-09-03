@@ -126,7 +126,11 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configurarDialogoPerfilNormal()
 
     // En caso la pagina sea recargada, se actualiza la informacion ingresada
-    window.onbeforeunload = () => this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR)
+    window.onbeforeunload = () => {
+      console.log('pagina recargando')
+      
+      this.guardarInformacionPerfil(this.obtenerEstadoActualDelPerfil())
+    }
   }
 
   ngAfterViewInit() {
@@ -171,6 +175,29 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() { }
+
+  obtenerEstadoActualDelPerfil() : CodigosCatalogosEstadoPerfiles {
+    const codigo = this.perfil.estado.codigo
+    if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR) {
+      return CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR
+    }
+
+    if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_CREADO) {
+      return CodigosCatalogosEstadoPerfiles.PERFIL_CREADO
+    }
+
+    if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO) {
+      return CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO
+    }
+
+    if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO) {
+      return CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO
+    }
+    
+    if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO) {
+      return CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO
+    }
+  }
 
   // Reiniciar informacion
   reiniciarInformacionParaCambioDePerfil(codigoPerfil: string) {
@@ -417,7 +444,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     let urlMedia = ''
     let mostrarBoton = true
     let mostrarLoader = false
-    if (portadaPerfil && portadaPerfil.portada && portadaPerfil.portada.principal) {
+    if (portadaPerfil && portadaPerfil.portada && portadaPerfil.portada.principal && portadaPerfil.portada.principal.url.length > 0) {
       urlMedia = portadaPerfil.portada.principal.url
       mostrarBoton = false
       mostrarLoader = true
@@ -457,7 +484,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     let urlMedia = ''
     let mostrarBoton = true
     let mostrarLoader = false
-    if (portadaGeneral && portadaGeneral.portada && portadaGeneral.portada.principal) {
+    if (portadaGeneral && portadaGeneral.portada && portadaGeneral.portada.principal && portadaGeneral.portada.principal.url.length > 0) {
       urlMedia = portadaGeneral.portada.principal.url
       mostrarBoton = false
       mostrarLoader = true
