@@ -18,8 +18,12 @@
 }
 
 .divPensamientoAmarillo{
-    background-image: $forma-amarilla-pensamientos-login;
+    background-image: $forma-amarilla-pensamientos-login;    
     //border-image-source: $forma-amarilla-pensamientos-login;
+    background-repeat: no-repeat;     
+}
+.divFormasPensamientoAmarillo{    
+    background-image: $forma-amarilla-pensamientos;    
     background-repeat: no-repeat;
 }
 .divPensamientoRojo{
@@ -32,23 +36,31 @@
     //$ancho-pagina*0.4143;
     height: fit-content;
     //max-height: $ancho-pagina*0.6143;
-    background-color: blue($color: #000000);
     //height: fit-content;
     padding-top: $espacio-677;    
     padding-left: $espacio-267;
     padding-right: $espacio-267;
+    //padding-bottom: $espacio-677;  
     padding-bottom: $espacio-677 - $espacio-0249;  
     box-sizing: border-box;
-    margin-bottom: $interlineado-10;
+    //margin-bottom: $interlineado-10;
 }
-/*
-.divFecha{
-    width: fit-content;
-    height: fit-content;
-    border-radius: $interlineado-15;
-    padding: $interlineado-6;
+.tamanoPensamiento{    
+    height: calcular(131.8643);    
+    padding: calcular(6.84) ($espacio-267 + $espacio-0658) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78));
+    //padding-bottom: calcular(9.212);    
     box-sizing: border-box;
-    font-size: $letra-3;
-    background-color: $titulo-fecha;
-    color: $blanco;
+}
+.divPensamiento{
+    //width: $ancho-pagina - ($espacio-0658 * 2);   
+    width: $ancho-pagina - $espacio-0658;   
+    height: calcular(131.8643);    
+    box-sizing: border-box;     
+}
+.divError{
+    height: calcular(41.43)-($espacio-677*2)
+}
+/*.divIndicacionesPensamientos{
+    width: 100%;
+    box-sizing: border-box;
 }*/

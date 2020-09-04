@@ -70,11 +70,12 @@ export function createTranslateLoader(http: HttpClient) {
     CompartidoModule,    
     TranslateModule.forRoot({
       loader: {
-        provide: TranslateLoader,
+        provide:TranslateLoader,
         useFactory: (createTranslateLoader),        
-        deps: [HttpClient]
+        deps: [HttpClient]        
       },
-      isolate: true
+      isolate: true,
+      //extend:true
     }),
     HammerModule,
     WebcamModule,
@@ -93,6 +94,8 @@ export function createTranslateLoader(http: HttpClient) {
     HandleError,
     IdiomaService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,
+    //[{provide: PLATFORM_PIPES, useValue: TranslatePipe, multi: true} ]    
+  ]
 })
 export class AppModule { }

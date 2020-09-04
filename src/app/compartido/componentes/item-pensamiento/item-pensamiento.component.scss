@@ -12,7 +12,13 @@
     min-height: calcular(41.43)-($espacio-677*2) - $letra-3 - $interlineado-6 -$interlineado-6;
     //($ancho-pagina*0.4143)-($espacio-677*2)- $letra-3 - $interlineado-6 -$interlineado-6;
     height: fit-content;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
+}
+.textPensamientoLista{
+    width: 100%;
+    padding-top: $espacio-0249;
+    padding-bottom: $espacio-0316;
     box-sizing: border-box;
 }

@@ -111,5 +111,14 @@
     "clickDescripcionImagen": "CLICK FOR IMAGE DESCRIPTION",
     "clickSalirDescripcion": "CLICK OUTSIDE TO EXIT DESCRIPTION",
     "caracteres105": " 105 CHARACTERS MAXIMUM",
-    "clickAmpliar": "CLICK TO ENLARGE"
+    "clickAmpliar": "CLICK TO ENLARGE",
+    "misReflexiones": "MY THOUGHTS",
+    "antesEscribir": "BEFORE WRITING, FIRST SELECT PUBLIC OR PRIVATE",
+    "230Caracteres": "230 CHARACTERS MAXIMUM PER MESSAGE",
+    "publico": "PUBLIC",
+    "privado": "PRIVATE",
+    "reflexionesPublicas": "MY PUBLIC THOUGHTS",
+    "actualizarReflexion": "UPDATE: 2 CLICKS ON THE THOUGHT",
+    "cambiarEstadoReflexion": "MOVE TO PRIVATE: LONG PRESS ON THE THOUGHT",
+    "reflexionesPrivadas": "MY PRIVATE THOUGHTS"
 }

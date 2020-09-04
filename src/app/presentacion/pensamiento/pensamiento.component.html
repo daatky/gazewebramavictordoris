@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<app-appbar *ngIf="configuracionAppBar" [configuracion]="configuracionAppBar"></app-appbar>
+<div class="contenidoGeneral">
+    <div class="contenidoPensamientos">
+        <div class="centrarText div230Caracteres">
+            <p class="txt-azul-base bold letra-3-con-interlineado-2" >{{ 'antesEscribir' | translate | uppercase}}</p>    
+            <div class="div249"></div>
+            <p class="txt-rojo-base regular letra-2-con-interlineado-2 ">{{ '230Caracteres' | translate | uppercase}}</p>    
+        </div> 
+        <div class="centrar">
+            <div *ngIf="botonPublico" class="divBoton">
+                <app-button class="centrar" [botonCompartido]='botonPublico'></app-button>
+            </div>
+            <div class="div1542"></div>
+            <div *ngIf="botonPrivado" class="divBoton">
+                <app-button class="centrar" [botonCompartido]='botonPrivado'></app-button>
+            </div>
+        </div>   
+        <router-outlet></router-outlet>        
+    </div>
+    <div class="barraMensajes">coksodckoskdcok</div>
+</div>
+<!---->

@@ -140,6 +140,7 @@ $espacio-326: calcular(3.26);
 $espacio-1590: calcular(15.9);
 $espacio-558: calcular(5.58);
 $espacio-159: calcular(1.59);
+$espacio-1542: calcular(15.42);
 
 // X blanca para Imagenes profile y album
 $diametro-x-blanca: calcular(6.87);
@@ -178,6 +179,7 @@ $ancho-6382: calcular(63.82);
 $ancho-6916: calcular(69.16);
 $ancho-100: $ancho-pagina;
 
+
 // Espesor para lineas
 $espesor-041: calcular(0.41);
 $espesor-071: calcular(0.71);
@@ -206,6 +208,9 @@ $boton-x-padding-bot: calcular(2.75);
 $cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316});
 $cuerpo-default-ancho: $ancho-pagina - ($espacio-267 * 2);
 
+//
+$cuerpo-general:calc(100vh - #{$espesor-071 + $appbar-alto-default});
+
 // Portada Gazelook
 $portada-gaze-ancho-cortada: calcular(22.97);
 $portada-gaze-alto-cortada: calcular(16.09);
@@ -232,3 +237,10 @@ $espacio-fecha-ancho: calcular(26.55);
 $espacio-fecha-alto: calcular(6.27);
 
 $espacio-4028: calcular(40.28);
+$barra-mensajes: calcular(20.28);
+
+$sombra-1:calcular(0.17);
+$sombra-2:calcular(0.07);
+$sombra-3:calcular(0.41);
+$sombra-4:calcular(0.30);
+

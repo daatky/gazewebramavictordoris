@@ -17,6 +17,7 @@ import { PensamientoCompartidoComponent } from 'src/app/compartido/componentes/p
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   inputContrasena: InputCompartido
   botonCompartido: BotonCompartido
   botonSubmit: BotonCompartido
+  configuracionToast:ConfiguracionToast;
   //configuracion: ConfiguracionToast
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild(PensamientoCompartidoComponent) pensamiento: PensamientoCompartidoComponent
@@ -55,11 +57,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[a-z0-9_-]{6,18}$/)]],
     });
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.email }
     this.inputContrasena = { tipo: 'password', error: false, estilo: { estiloError: EstiloErrorInput.BLANCO, estiloInput: EstiloInput.LOGIN }, placeholder: 'Lorem ipsum', data: this.loginForm.controls.contrasena }    
     this.botonCompartido = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('sitioWeb'), tamanoTexto: TamanoDeTextoConInterlineado.L6_IGUAL, colorTexto: ColorTextoBoton.BLANCO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarLanding() }
-    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }    
+    this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }        
     //SE ENVIA EL TIPO DE PESAMIENTO A CARGA JUNTO CON EL TITULO DEL PENSAMIENTO    
+    console.log("aqui voy")
     this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: await this.internacionalizacionNegocio.obtenerTextoLlave('reflexion'), esLista: false, configuracionItem:{estilo:EstiloItemPensamiento.ITEM_ALEATORIO} }
   }
 
@@ -74,19 +78,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   //= () =>
   iniciarSesion() {
+    this.botonSubmit.enProgreso=true
+    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
     if (this.loginForm.valid) {  
-     // this.configuracion={cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-      //this.botonSubmit.enProgreso=true
       this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
-      .subscribe(res=>{    
+      .subscribe(res=>{
+        //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+        this.botonSubmit.enProgreso=false    
         console.log(res)
-        //this.botonSubmit.enProgreso=false
+        this.loginForm.reset()
       },error=>{
-        //this.botonSubmit.enProgreso=false
+        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+        this.botonSubmit.enProgreso=false        
         console.log(error)
-       // this.configuracion={cerrarClickOutside:true,mostrarLoader:false,mostrarToast:false,texto:error}
       })
     } else {
+      //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+      this.botonSubmit.enProgreso=false
       this.inputEmail.error = true
       this.inputContrasena.error = true
     }

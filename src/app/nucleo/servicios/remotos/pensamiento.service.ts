@@ -35,6 +35,7 @@ export class PensamientoService {
     }*/
     //PensamientoRemotoModel
     crearPensamiento(data:PensamientoEntity):Observable<RespuestaRemota<PensamientoEntity>>{
+        console.log(data)
         return this.http.post<RespuestaRemota<PensamientoEntity>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString(),data);
     }
     actualizarPensamiento(data:object):Observable<RespuestaRemota<string>> {

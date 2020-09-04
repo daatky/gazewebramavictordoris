@@ -1,7 +1,6 @@
 @import "./dimensiones.scss";
 
-$sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
-
+$sombraTexto: $sombra-1 $sombra-1 $sombra-2 rgba(0, 0, 0, 0.99), $sombra-3 $sombra-3 $sombra-4 rgba(0, 0, 0, 0.75);
 .enMayusculas {
     text-transform: uppercase !important;
 }

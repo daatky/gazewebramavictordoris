@@ -7,8 +7,21 @@
             <div class="div249">                    
             </div>
         </div> 
-        <div  *ngIf="pensamientoCompartido" class="{{pensamientoCompartido.tipoPensamiento}}" >   
-            <div *ngIf="pensamientoCompartido.subtitulo">{{pensamientoCompartido.subtitulo}}</div> 
+        <div  *ngIf="pensamientoCompartido" class="{{pensamientoCompartido.tipoPensamiento}} centrarHorizontal" >   
+            <div *ngIf="pensamientoCompartido.subtitulo">
+                <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->
+                <!--<div class="divIndicacionesPensamientos">
+                    <p class="boldSombra letra-3-con-interlineado-2 txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
+                    
+                    <div class="div316"></div>
+                    <p class="bold letra-1-con-interlineado-2 centrarText">{{ 'actualizarReflexion' | translate | uppercase}}</p>
+                    <p class="bold letra-1-con-interlineado-igual txt-rojo-base  centrarText">{{ 'cambiarEstadoReflexion' | translate | uppercase}}</p>                
+                    <div class="div316"></div>
+                </div> -->
+                <ng-content>
+
+                </ng-content>
+            </div> 
             <app-lista-vertical *ngIf="pensamientoCompartido.esLista; else noLista" [dataLista]='dataLista'> 
                 <div *ngFor='let pensamiento of dataLista.lista; let i=index'>
                     <app-item-pensamiento (press)="eventoClickLargo(i, pensamiento)"  [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='configurarDatos(i,pensamiento)'></app-item-pensamiento>
@@ -17,7 +30,7 @@
             <ng-template #noLista>
                 <app-item-pensamiento [estilo]="pensamientoCompartido.configuracionItem.estilo" [configuracionItem]='dataPensamiento'></app-item-pensamiento>
             </ng-template>
-            <label class="error italic txt-rojo-base">{{error}}</label>
+            <label  *ngIf="error" class="error italic txt-rojo-base divError centrarVerticalmente">{{error}}</label>
         </div>
     </div>
 </div>

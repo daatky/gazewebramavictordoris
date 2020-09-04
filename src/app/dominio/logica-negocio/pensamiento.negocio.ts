@@ -54,7 +54,7 @@ export class PensamientoNegocio {
                 })
             )
     }*/
-    obtenerPensamientos(idPerfil: string, esPrivado: boolean) {
+    obtenerPensamientos(idPerfil: string, esPrivado: boolean):Observable<Array<PensamientoModel>> {
         return this.pensamientoRepository.obtenerPensamientos(idPerfil, esPrivado)
             .pipe(
                 map((data: Array<PensamientoModel>) => {
@@ -67,8 +67,8 @@ export class PensamientoNegocio {
             )
     }
     crearPensamiento(idPerfil: string, publico: boolean, pensamiento: string): Observable<PensamientoModel> {
-        let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
-        return this.pensamientoRepository.crearPensamiento({ perfil: { _id: idPerfil }, traducciones: traduccionTexto, publico: publico })
+        //let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
+        return this.pensamientoRepository.crearPensamiento({ perfil: {_id: idPerfil }, traducciones: [{ texto: pensamiento }], publico: publico })
             .pipe(
                 map((data: PensamientoModel) => {
                     return data

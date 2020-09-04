@@ -1,7 +1,7 @@
 {
     "traduccionAutomatica": "PARA LA TRADUCCIÓN AUTOMÁTICA, CAMBIAR DE IDIOMA SI ES NECESARIO",
     "creadoEn": "CREADO EN LA UNIÓN EUROPEA",
-    "avisoImportante": "AVISO IMPORTANTE :",    
+    "avisoImportante": "AVISO IMPORTANTE :",
     "avisoWeb1": "- LA PLATAFORMA WEB/MÓVIL FUNCIONA EN 6 IDIOMAS. DENTRO DE ESTE RANGO, CADA USUARIO RECIBE POR DEFECTO LA TRADUCCIÓN EN EL IDIOMA DE SU ELECCIÓN.",
     "avisoWeb2": "- PARA OTROS IDIOMAS MENOS COMUNES, TRADUZCA EN SU NAVEGADOR.",
     "visitarRed": "USTED PUEDE VISITAR LA RED SIN NINGÚN COMPROMISO. SI DECIDE SUSCRIBIRSE, FORMARÁ ENTONCES PARTE DE ESTA GRAN FAMILIA EN LA QUE LA CONFIANZA Y LA COMPRENSIÓN MUTUA DEBEN PREVALECER.",
@@ -88,7 +88,7 @@
     "escojaPerfil": "ESCOJA SU PERFIL",
     "unClick": "- ABRIR CON 1 CLIC",
     "dobleClick": "- ACTUALIZAR CON 2 CLICS",
-    "creado": "CREADO",    
+    "creado": "CREADO",
     "perfilHibernado": "ESTE PERFIL HA SIDO HIBERNADO",
     "salirPlataforma": "SALIR DE LA PLATAFORMA?",
     "si": "SI",
@@ -111,5 +111,14 @@
     "clickDescripcionImagen": "CLICK PARA DESCRIPCIÓN DE IMAGEN",
     "clickSalirDescripcion": "HAGA CLIC FUERA PARA SALIR DE LA DESCRIPCIÓN",
     "caracteres105": " 105 CARACTERES MÁXIMO",
-    "clickAmpliar": "CLICK PARA AMPLIAR"
+    "clickAmpliar": "CLICK PARA AMPLIAR",
+    "misReflexiones": "MIS REFLEXIONES",
+    "antesEscribir": "ANTES DE ESCRIBIR, PRIMERO SELECCIONE PÚBLICO O PRIVADO",
+    "230Caracteres": "230 CARACTERES COMO MÁXIMO POR MENSAJE",
+    "publico": "PÚBLICO",
+    "privado": "PRIVADO",
+    "reflexionesPublicas": "MIS REFLEXIONES PÚBLICAS",
+    "actualizarReflexion": "ACTUALIZAR: 2 CLICS SOBRE LA REFLEXIÓN",
+    "cambiarEstadoReflexion": "MOVER A PRIVADO: PULSACIÓN LARGA SOBRE LA REFLEXIÓN",
+    "reflexionesPrivadas": "MIS REFLEXIONES PRIVADAS"
 }

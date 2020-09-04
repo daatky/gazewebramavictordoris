@@ -6,7 +6,7 @@ export interface PensamientoCompartido {
     //pensamiento:Array<PensamientoEntity>, //PENAMIENTO
     tipoPensamiento:TipoPensamiento //PENSAMIENTO ALEATORIO, DE PEFIL, PARA MODIFICACION Y CREAICON
     tituloPensamiento?:string //Titulo que va tener el pensamiento
-    subtitulo?:string //Titulo que va dentro del pensamiento o nombre de la persaona 
+    subtitulo?:boolean //Titulo que va dentro del pensamiento o nombre de la persaona 
     esLista?:boolean //Si se va cargar lista o solo item
     configuracionItem?:ConfiguracionItem, //stylo del item
 }

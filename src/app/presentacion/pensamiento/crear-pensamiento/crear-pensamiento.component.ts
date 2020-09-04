@@ -14,9 +14,6 @@ import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/ta
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
-import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
-import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
-import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 
 @Component({
   selector: 'app-crear-pensamiento',
@@ -33,19 +30,18 @@ export class CrearPensamientoComponent implements OnInit {
   esPrivado:boolean=false;
   configuracionToast:ConfiguracionToast;
   cargando:boolean;
-  configuracionAppBar: ConfiguracionAppbarCompartida
+  
   constructor(
     private variablesGlobales:VariablesGlobales,
     private pensamientoNegocio:PensamientoNegocio,
     private formBuilder: FormBuilder,   
-  ) {
-    this.cargando=true  
-    this.prepararAppBar()
-    this.iniciarDatos()
+  ) {    
     //this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: 'Titulo', esLista: false, configuracionItem: EstiloItemPensamiento.ITEM_ALEATORIO }    
   }
 
   ngOnInit(): void {       
+    this.cargando=true    
+    this.iniciarDatos()       
   }
   iniciarDatos(){
     this.crearPensamientoForm = this.formBuilder.group({
@@ -53,34 +49,16 @@ export class CrearPensamientoComponent implements OnInit {
     });      
     this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}        
 
-    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo', configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
+    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION, configuracionItem:{estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO},subtitulo:true}
     this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarMasPensamientos()}             
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }            
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     this.obtenerPensamientos()
   }
-  async prepararAppBar() {
-    this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
-      searchBarAppBar: {
-        nombrePerfil: {
-          mostrar: false
-        },
-        mostrarTextoBack: true,
-        mostrarTextoHome: false,
-        subtitulo: {
-          mostrar: true,
-          llaveTexto: 'CLASICO'
-        },
-        mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
-      }
-    }
 
-  }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
-  unClick(objeto?:object){
+  unClick(objeto:object){
     console.log("unClick")
     //Primero se carga un dialogo
     this.actualizarPensamiento(objeto)
@@ -98,9 +76,18 @@ export class CrearPensamientoComponent implements OnInit {
   }
   
   obtenerPensamientos(){
-    console.log("00000")    
     //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
-    this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.cargando=false  
+    /*this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
     .subscribe((res:Array<PensamientoModel>)=>{
       this.cargando=false   
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
@@ -108,11 +95,10 @@ export class CrearPensamientoComponent implements OnInit {
     },error=>{
       this.cargando=false  
       this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
-    })
+    })*/
   }
   crearPensamiento = () =>{
     if(this.crearPensamientoForm.valid){
-      console.log('CORRECTO')
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
       this.pensamientoNegocio.crearPensamiento(this.idPerfil,true,this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{

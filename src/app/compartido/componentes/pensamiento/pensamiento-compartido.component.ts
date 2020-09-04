@@ -23,39 +23,45 @@ export class PensamientoCompartidoComponent implements OnInit {
   constructor(
     private pensamientoNegocio:PensamientoNegocio,
   ) { 
-    this.unClick=new EventEmitter<object>();
-    this.dobleClick=new EventEmitter<object>();
-    this.clickLargo=new EventEmitter<object>();
+        //this.configurarDatos(0,{id:'uhf'})
+        this.unClick=new EventEmitter<object>();
+        this.dobleClick=new EventEmitter<object>();
+        this.clickLargo=new EventEmitter<object>();           
   }
 
   ngOnInit(): void {  
-    //this.configurarDatos(0,{id:'uhf'})
     this.cargarPensamiento()
-  }    
+  }  
+
   cargarPensamiento(){
     this.error=""
-    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){            
-      
+    console.log("aspodkaokdoakdok")
+    console.log(this.pensamientoCompartido)
+    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){                  
       this.obtenerPensamientoAleatorio()          
-    }else{
-      this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
+    }else{       
+      this.divPensamiento='divPensamiento'
     }
   }
   obtenerPensamientoAleatorio(){
+    console.log('PENSAMIENTO ALEATORIO')      
+    this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
     .subscribe((res:PensamientoModel)=>{ 
-      console.log(res)
-      this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
+      console.log('PENSAMIENTO ALEATORIO')      
       this.dataPensamiento={data:res}
     },error=>{
       console.log(error)
       this.error=error
     })
+    //this.dataPensamiento={data:{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}}
+    //{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}
   }
   eventoClick(index:number,pensamientoModel:PensamientoModel){
     this.unClick.emit({index:index,pensamientoModel:pensamientoModel})
   }
   eventoDobleClick(index:number,pensamientoModel:PensamientoModel){
+    console.log("aqio")
     this.dobleClick.emit({index:index,pensamientoModel:pensamientoModel})
   }
   eventoClickLargo(index:number,pensamientoModel:PensamientoModel){
@@ -63,6 +69,8 @@ export class PensamientoCompartidoComponent implements OnInit {
     this.clickLargo.emit({index:index,pensamientoModel:pensamientoModel})
   }
   configurarDatos(index:number, pensamientoModel:PensamientoModel):Configuracion{
+    console.log("CONFIGURANDO DATOS")
+    console.log(index,pensamientoModel)
     return {
       data:pensamientoModel,
       onclick: () => this.eventoClick(index,pensamientoModel),        

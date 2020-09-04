@@ -1,0 +1,30 @@
+@import "../../../assets/estilos/dimensiones.scss";
+
+.contenidoGeneral{
+    width: $ancho-pagina;
+    height: $cuerpo-general;
+    overflow: hidden; 
+}
+.contenidoPensamientos{
+    width: $ancho-pagina;
+    padding: 0 $espacio-267 0 $espacio-267;
+    height: calc($cuerpo-general - $barra-mensajes);
+    background-color: white;
+    box-sizing: border-box;    
+}
+.div249{    
+    height: $interlineado-4;
+}
+.div230Caracteres{
+    padding: $interlineado-8 0 $interlineado-8 0;
+}
+.div1542{
+    width: $espacio-1542;
+    height: 12px;
+    float: left;
+}
+.barraMensajes{
+    background-color: red;
+    width: 100%;
+    height: $barra-mensajes
+}

@@ -1,7 +1,7 @@
 {
     "traduccionAutomatica": "PARA TRADUÇÃO AUTOMÁTICA, MUDAR O IDIOMA, SE NECESSÁRIO",
     "creadoEn": "CRIADO NA UNIÃO EUROPEIA",
-    "avisoImportante": "AVISO IMPORTANTE :",        
+    "avisoImportante": "AVISO IMPORTANTE :",
     "avisoWeb1": "- A PLATAFORMA WEB/MÓVEL  FUNCIONA EM 6 IDIOMAS. DENTRO DESTA FAIXA, CADA USUÁRIO RECEBE, POR PADRÃO, A TRADUÇÃO NO IDIOMA DE SUA ESCOLHA.",
     "avisoWeb2": "- PARA OUTROS IDIOMAS MENOS COMUNS, TRADUZA EM SEU NAVEGADOR.",
     "visitarRed": "VOCÊ PODE VISITAR A REDE SEM QUALQUER OBRIGAÇÃO. SOMENTE ATRAVÉS DO REGISTRO, VOCÊ PASSARÁ A FAZER PARTE DESTA GRANDE FAMÍLIA NA QUAL A CONFIANÇA E A COMPREENSÃO MÚTUA DEVEM PREVALECER.",
@@ -20,7 +20,7 @@
     "ayuda": "Ajuda",
     "nuestrosObjetivos": "Os nossos objectivos",
     "escogerIdioma": "ESCOLHA SEU IDIOMA ABAIXO OU EM SEU NAVEGADOR",
-    "primeraVez": "PRIMEIRA VEZ?",    
+    "primeraVez": "PRIMEIRA VEZ?",
     "visiteSitio": "VISITE NOSSO SITE E COMPARTILHE NOSSA PROPOSTA PARA ALCANÇAR UM MUNDO JUSTO E PARTICIPATIVO",
     "sitioWeb": "WEBSITE",
     "login": "LOGIN",
@@ -84,7 +84,7 @@
     "payPal": "PayPal",
     "criptomonedas": "Criptocorrências",
     "enEstudio": "EM ESTUDO...",
-    "explicacionCriptomonedas": "ESTAMOS PREOCUPADOS QUE AS CRIPTOCORRÊNCIAS FORAM PEGAS POR USURÁRIOS E ESPECULADORES DE AÇÕES, PREOCUPADOS COM SUA CONVERTIBILIDADE EM MOEDA FIDUCIÁRIA E FLUTUAÇÃO DE VALOR.",    
+    "explicacionCriptomonedas": "ESTAMOS PREOCUPADOS QUE AS CRIPTOCORRÊNCIAS FORAM PEGAS POR USURÁRIOS E ESPECULADORES DE AÇÕES, PREOCUPADOS COM SUA CONVERTIBILIDADE EM MOEDA FIDUCIÁRIA E FLUTUAÇÃO DE VALOR.",
     "escojaPerfil": "ESCOLHA O SEU PERFIL",
     "unClick": "- ABRIR COM 1 CLIQUE",
     "dobleClick": "- ATUALIZAÇÃO COM 2 CLIQUES",
@@ -111,5 +111,14 @@
     "clickDescripcionImagen": "CLIQUE PARA A DESCRIÇÃO DA IMAGEM",
     "clickSalirDescripcion": "CLIQUE FORA PARA SAIR DESCRIÇÃO",
     "caracteres105": " 105 CARACTERES NO MÁXIMO",
-    "clickAmpliar": "CLIQUE PARA AMPLIAR"
+    "clickAmpliar": "CLIQUE PARA AMPLIAR",
+    "misReflexiones": "- AS MINHAS REFLEXÕES",
+    "antesEscribir": "ANTES DE ESCREVER, PRIMEIRO ESCOLHA ENTRE PÚBLICO OU PRIVADO",
+    "230Caracteres": "230 CARACTERES MÁXIMO POR MENSAGEM",
+    "publico": "PÚBLICO",
+    "privado": "PRIVADO",
+    "reflexionesPublicas": "MINHAS REFLEXÕES PÚBLICAS",
+    "actualizarReflexion": "ATUALIZAÇÃO: 2 CLIQUES SOBRE A REFLEXÃO",
+    "cambiarEstadoReflexion": "PASSAR PARA O PRIVADO: IMPRENSA LONGA SOBRE A REFLEXÃO",
+    "reflexionesPrivadas": "MINHAS REFLEXÕES PRIVADAS"
 }

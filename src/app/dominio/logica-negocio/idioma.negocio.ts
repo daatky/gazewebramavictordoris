@@ -27,7 +27,7 @@ export class IdiomaNegocio {
     obtenerCatalogoIdiomas():Observable<Array<CatalogoIdiomaEntity>> {
         let idiomas:Array<CatalogoIdiomaEntity>=this.idiomaRepository.obtenerIdiomas()
         if(idiomas){
-            return of(idiomas)
+            return of(this.ordenarIdioma(idiomas))
         }else{
             console.log("SIN IDIOMAS")
             return this.idiomaRepository.obtenerCatalogoIdiomas()

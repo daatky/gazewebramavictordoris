@@ -133,3 +133,7 @@ p {
     height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
     overflow-y:auto;
 }
+.centrarVerticalmente{
+    display: flex;
+    align-items: center;
+}
