@@ -26,13 +26,18 @@ export class PagoNegocio {
 
     obtenerCatalogoMetodoPago(): Observable<CatalogoMetodoPagoModel[]> {
         const data: CatalogoMetodoPagoModel[] = this.metodoPagoRepository.obtenerLocalMetodosPago()
-        if (data) {
+        if (data) {            
             return of(data)
         } else {
             return this.metodoPagoRepository.obtenerCatalogoMetodoPago()
                 .pipe(
                     map((data: CatalogoMetodoPagoModel[]) => {
                         this.metodoPagoRepository.almacenarLocalmenteMetodosPago(data);
+                        /*
+                        if (data.length <= 0) {
+                            throw "Problemas al obtener los datos"
+                        }
+                        */
                         return data;
                     }),
                     catchError(err => {

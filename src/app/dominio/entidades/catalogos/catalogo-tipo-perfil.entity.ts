@@ -38,8 +38,8 @@ export class CatalogoTipoPerfilMapperService extends MapedorService<CatalogoTipo
     protected map(entity: CatalogoTipoPerfilEntity,): CatalogoTipoPerfilModel {
         return {
             codigo: entity.codigo,
-            nombre: entity.traducciones[0].nombre,
-            descripcion: entity.traducciones[0].descripcion,
+            nombre: (entity.traducciones) ? entity.traducciones[0].nombre : null,
+            descripcion: (entity.traducciones) ? entity.traducciones[0].descripcion : null,
             perfil: this.mapearPerfilEntityAResumen.transform(entity.perfil)
         };
     }
@@ -56,12 +56,12 @@ export class CatalogoTipoPerfilMapperService2 extends MapedorService<CatalogoTip
     }
 
     protected map(entity: CatalogoTipoPerfilEntity): CatalogoTipoPerfilModel {
-        return {
+        return (entity) ? {
             codigo: entity.codigo,
-            nombre: entity.traducciones[0].nombre,
-            descripcion: entity.traducciones[0].descripcion,            
-            perfil: this.perfilEntityMapperServicePerfil.transform(entity.perfil)            
-        };
+            nombre: (entity.traducciones) ? entity.traducciones[0].nombre : null,
+            descripcion: (entity.traducciones) ? entity.traducciones[0].descripcion : null,
+            perfil: this.perfilEntityMapperServicePerfil.transform(entity.perfil)
+        } : null;
     }
 }
 

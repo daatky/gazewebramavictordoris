@@ -4,12 +4,12 @@ $ancho-pagina: 100vw; //Calculo de la anchura para la aplicacion
 $altura-pagina: 100vh;
 
 // Variables sin unidad - valor neto
-$defecto-top-neto: 1.048;
-$defecto-bottom-neto: 0.7;
+$defecto-top-neto: 0.56;
+$defecto-bottom-neto: 0.55;
 
 // Constantes para valores que anade la fuente por defecto - con unidad
-$defecto-top: calcular(1.048);
-$defecto-bottom: calcular(0.7);
+$defecto-top: calcular(0.56);
+$defecto-bottom: calcular(0.55);
 $defecto-total: $defecto-top + $defecto-bottom;
 
 // Para calcular la medida en base al ancho de la pagina
@@ -19,7 +19,7 @@ $defecto-total: $defecto-top + $defecto-bottom;
 
 // Para calcular el interlineado en base a la fuente e interlineado deseado
 @function calcularInterlineado($letra, $interlineado) {
-    @return $letra + (($interlineado - $defecto-total) / 2);
+    @return $letra + (($interlineado - $defecto-total));
 }
 
 // Calcula el padding valido en caso de que se afectado por el interlineado (espacio superior que anade la fuente por defecto) del texto
@@ -90,7 +90,7 @@ $interlineado-14: calcular(0.49); // 0.49
 $interlineado-15: calcular(1.03); // 1.03
 // Pruebas churon
 $interlineado-16: calcular(4.56); // 4.56 77 px
-$interlineado-17: calcular(4.50); // 4.50 76 px
+$interlineado-17: calcular(4.5); // 4.50 76 px
 $interlineado-18: calcular(7.46); // 4.50 125.86 px
 
 /*Espaciadores*/
@@ -221,7 +221,9 @@ $bottom-bar-caja-icono-texto-alto: calcular(8.82);
 $cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316});
 $cuerpo-default-ancho: $ancho-pagina - ($espacio-267 * 2);
 // Para cuerpo con bottom bar
-$cuerpo-con-bottom-bar-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316 + $bottom-bar-alto});;
+$cuerpo-con-bottom-bar-alto: calc(
+    100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316 + $bottom-bar-alto}
+);
 $cuerpo-con-bottom-bar-ancho: $ancho-pagina - ($espacio-267 * 2);
 
 // Portada Gazelook

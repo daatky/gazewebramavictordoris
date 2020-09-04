@@ -16,7 +16,7 @@
     position: relative;
     width: $item-menu-ancho-6920;
     box-sizing: border-box;
-    padding-top: $espacio-0316;    
+    padding-top: $espacio-0316;
     padding-left: $espacio-267;
     padding-right: $espacio-267;
     display: flex;
@@ -61,10 +61,6 @@
 // .itemMenu.gazeAnuncios .cajaNormal {
 //     display: none !important;
 // }
-
-
-
-
 
 // Tamanos del item
 .item-menu-alto-1948 {
@@ -118,7 +114,13 @@
 }
 .instruccion-separacion-min {
     width: 100%;
-    height: $espacio-0178;
+    height: $defecto-total - $espacio-0178;
+    //height: 0.67vw;
+}
+
+.instruccion-separacion-media {
+    width: 100%;
+    height: $espacio-0316;
 }
 
 .contenedor-texto {
