@@ -366,13 +366,20 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     pos = 0
     this.mediaNegocio.obtenerListaArchivosDefault()
       .subscribe(data => {
+        // Validar si existen datos
         data.forEach((item) => {
           if (item.catalogoArchivoDefault === CodigosCatalogoArchivosPorDefecto.ALBUM_PERFIL) {
             this.itemsAlbumPorDefecto[pos].urlMedia = item.url
             pos += 1
           }
         })
-        // Se reinicia por defecto
+
+        if (pos === 0) {
+          // Ocultar loader cuando no existe datos
+          this.itemsAlbumPorDefecto.forEach(item => {
+            item.mostrarLoader = false
+          })
+        }
       }, error => {
         this.itemsAlbumPorDefecto.forEach(item => {
           item.mostrarBoton = true

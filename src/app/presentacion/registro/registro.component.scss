@@ -82,6 +82,7 @@ $perfil-grupo-explicacion-alto: calcular(115.65);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
 }
 
 // Inputs
@@ -207,3 +208,12 @@ $perfil-grupo-explicacion-alto: calcular(115.65);
   justify-content: center;
 }
 
+// espacios
+.espacio-0249 {
+  width: 100%;
+  height: calcular(2.49);
+}
+.espacio-0522 {
+  width: 100%;
+  height: calcular(5.22);
+}

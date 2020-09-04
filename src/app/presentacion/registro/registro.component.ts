@@ -127,8 +127,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // En caso la pagina sea recargada, se actualiza la informacion ingresada
     window.onbeforeunload = () => {
-      console.log('pagina recargando')
-      
       this.guardarInformacionPerfil(this.obtenerEstadoActualDelPerfil())
     }
   }
@@ -786,6 +784,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         this.ubicacionNegocio.guardarPaisesDelSelectorEnLocalStorage(res)
         this.selectorPaises.configuracion.elegibles = res
         this.selectorPaises.configuracion.cargando.mostrar = false
+
+        if (this.selectorPaises.configuracion.elegibles.length === 0) {
+          this.selectorPaises.mostrarError('Problemas al obtener los datos solicitados')
+        }
       }, error => {
         console.log(error)
         this.selectorPaises.mostrarError('Lo sentimos, ocurrio un error al obtener la informacion')
@@ -794,7 +796,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Click en input localidades
   abrirBuscadorLocalidades() {
-    console.log(this.buscadorLocalidades.pais)
     if (! this.buscadorLocalidades.pais || this.buscadorLocalidades.pais.codigo.length === 0) {
       this.buscadorLocalidades.mostrarError( 'Error, debes seleccionar el pais antes de buscar una localidad', true, true)
     }
@@ -952,4 +953,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       this.confToast.mostrarToast = true
     }
   }
+}
+
+export enum AccionFormulario {
+  CREAR = 0,
+  ACTUALIZAR = 1,
 }
