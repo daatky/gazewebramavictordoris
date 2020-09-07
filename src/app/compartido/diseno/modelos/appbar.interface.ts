@@ -22,11 +22,12 @@ export interface DemoAppBar {
 
 export interface SearchBarAppBar {
     nombrePerfil: TextoAppBar, // Nombre dle tipo de perfil activo (parte inferior izquierda)
-    mostrarTextoBack: boolean,
+    mostrarDivBack: boolean,
     mostrarTextoHome: boolean,
     subtitulo: TextoAppBar, // Usado para nombre de perfil o titulo debajo del home
     mostrarLineaVerde: boolean, // Indica si la linea verde se debe mostrar o no
     tamanoColorFondo: TamanoColorDeFondoAppBar, // Indica el ancho que debe ocupar el color de fondo
+    mostrarBotonXRoja?: boolean, // Indica si se debe mostrar o no el boton de la x roja
 }
 
 export interface GazeAppBar {
@@ -43,5 +44,5 @@ export interface ConfiguracionAppbarCompartida {
     demoAppbar?: DemoAppBar, // Enviar en caso el uso de appbar sea DemoAppBar
     searchBarAppBar?: SearchBarAppBar, // Enviar en caso el uso del appbar sea SearchBarAppBar
     gazeAppBar?: GazeAppBar, // Enviar en caso el uso del appbar sea GazeAppBar
-    accionAtras?: Function // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior    
+    accionAtras?: Function, // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior
 }

@@ -34,7 +34,7 @@ export class PensamientoComponent implements OnInit {
           mostrar: true,
           llaveTexto:'PENDIENTE'
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: true,
         subtitulo: {
           mostrar: true,

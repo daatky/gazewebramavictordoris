@@ -4,6 +4,10 @@ import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.ser
 import { EventoTapPersonalizado } from 'src/app/nucleo/servicios/generales/detector-gestos.service'
 import { LineaDeTexto } from '../../diseno/modelos/linea-de-texto.interface'
 import { EstiloDelTextoServicio } from 'src/app/nucleo/servicios/diseno/estilo-del-texto.service'
+import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio'
+import { async } from 'rxjs/internal/scheduler/async'
+import { ColorFondoItemMenu } from '../../diseno/enums/color-fondo-item-menu.enum'
+import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
 
 
 @Component({
@@ -12,6 +16,9 @@ import { EstiloDelTextoServicio } from 'src/app/nucleo/servicios/diseno/estilo-d
   styleUrls: ['./item-menu.component.scss']
 })
 export class ItemMenuComponent implements OnInit, AfterViewInit {
+  texto3: Promise<string>;
+  texto2: Promise<string>;
+  texto1: Promise<string>;
 
   /*
     Especificaiones generales,
@@ -31,11 +38,60 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   constructor(
     private gestorEventosTap: EventoTapPersonalizado,
     public estiloTexto: EstiloDelTextoServicio,
+    private internacionalizacionNegocio: InternacionalizacionNegocio,
   ) {
 
   }
 
   ngOnInit(): void {
+    this.obtenerTraducciones()
+    this.estiloTexto1();
+  }
+
+  estiloTexto1() {
+    switch (this.configuracionItem.colorFondo) {
+      case ColorFondoItemMenu.PREDETERMINADO:
+        return this.estiloTexto.obtenerEstilosTexto({
+          color: this.estiloTexto.colorDelTexto.TEXTOAMARILLOBASE,
+          estiloTexto: this.estiloTexto.estilosDelTexto.BOLDCONSOMBRA,
+          enMayusculas: true,
+          tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+        })
+      case ColorFondoItemMenu.PERFILCREADO:
+        return this.estiloTexto.obtenerEstilosTexto({
+          color: this.estiloTexto.colorDelTexto.TEXTOROJOBASE,
+          estiloTexto: this.estiloTexto.estilosDelTexto.BOLDCONSOMBRA,
+          enMayusculas: true,
+          tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+        })
+      case ColorFondoItemMenu.PERFILHIBERNADO:
+        return this.estiloTexto.obtenerEstilosTexto({
+          color: this.estiloTexto.colorDelTexto.AZUL_HIBERNATE,
+          estiloTexto: this.estiloTexto.estilosDelTexto.BOLDCONSOMBRA,
+          enMayusculas: true,
+          tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+        })
+      case ColorFondoItemMenu.TRANSPARENTE:
+        return this.estiloTexto.obtenerEstilosTexto({
+          color: this.estiloTexto.colorDelTexto.TEXTOAMARILLOBASE,
+          estiloTexto: this.estiloTexto.estilosDelTexto.BOLDCONSOMBRA,
+          enMayusculas: true,
+          tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+        })
+    }
+  }
+
+
+  obtenerTraducciones() {
+    if (this.configuracionItem.texto1) {
+      this.texto1 = this.internacionalizacionNegocio.obtenerTextoLlave(this.configuracionItem.texto1);
+    }
+    if (this.configuracionItem.texto2) {
+      this.texto2 = this.internacionalizacionNegocio.obtenerTextoLlave(this.configuracionItem.texto2);
+    }
+    if (this.configuracionItem.texto3) {
+      this.texto3 = this.internacionalizacionNegocio.obtenerTextoLlave(this.configuracionItem.texto3);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -62,7 +118,10 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     clases['itemMenu'] = true
     clases[this.configuracionItem.tamano.toString()] = true
     clases[this.configuracionItem.colorFondo.toString()] = true
-    clases['gazeAnuncios'] = (this.configuracionItem.gazeAnuncios) ? this.configuracionItem.gazeAnuncios : false
+    clases['gazeAnuncios'] = (this.configuracionItem.tipoMenu === TipoMenu.ANUNCIOS)
+    clases['paddig-button-linea1'] = EspesorLineaItem.ESPESOR041 == this.configuracionItem.linea.configuracion.espesor
+    clases['paddig-button-linea2'] = EspesorLineaItem.ESPESOR071 == this.configuracionItem.linea.configuracion.espesor
+    clases['paddig-button-linea3'] = EspesorLineaItem.ESPESOR089 == this.configuracionItem.linea.configuracion.espesor
     return clases
   }
 
@@ -70,8 +129,8 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   obtenerClasesItemCaja() {
     return {
       'caja': true,
-      'cajaNormal': (this.configuracionItem.gazeAnuncios) ? false : true,
-      'cajaGaze': (this.configuracionItem.gazeAnuncios) ? this.configuracionItem.gazeAnuncios : false
+      // 'cajaNormal': (this.configuracionItem.tipoMenu !== TipoMenu.ANUNCIOS) ? false : true,
+      // 'cajaGaze': (this.configuracionItem.tipoMenu === TipoMenu.ANUNCIOS) ? this.configuracionItem.gazeAnuncios : false
     }
   }
 
@@ -93,9 +152,10 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
 
 
 export enum TipoMenu {
-  CREATE_PROFILE_INFO, //registrar perfiles
-  GESTION_PROFILE,
+  CREATE_PROFILE_INFO, // Registrar perfiles
+  GESTION_PROFILE, // Gestionar perfiles
   ACCION, // Menu principal
   INSTRUCCIONES,
-  SUBMENU, //PARA EL SUBMENU DE LOS TRES PUNTOS
+  SUBMENU, // PARA EL SUBMENU DE LOS TRES PUNTOS
+  ANUNCIOS, // Para el item menu de gaze anouncement
 }

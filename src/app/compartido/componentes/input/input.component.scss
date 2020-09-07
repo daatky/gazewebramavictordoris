@@ -2,54 +2,67 @@
 @import "../../../../assets/estilos/colores.scss";
 @import "../../../../assets/estilos/estiloFuente.scss";
 
-.registro{
-    border: 0; 
+.registro {
+    border: 0;
     height: $alto-0782;
     padding-left: $interlineado-6;
     padding-right: $espacio-0139;
     box-sizing: border-box;
     width: 100%;
     font-size: $letra-3;
-    background-color: $input-fondo;  
-    border-radius: $interlineado-15;  
+    background-color: $input-fondo-registro;
+    border-radius: $interlineado-15;
 }
-.login{    
-    border: 0; 
+
+.defecto {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: $letra-3;
+}
+
+.login {
+    border: 0;
     height: $alto-0782;
     padding-left: $interlineado-6;
     padding-right: $espacio-0139;
     box-sizing: border-box;
-    width: $ancho-pagina*0.6386;
+    width: $ancho-pagina * 0.6386;
     font-size: $letra-3;
-    background-color: $input-fondo;  
-    border-radius: $interlineado-15;  
-    outline: none;    
+    background-color: $input-fondo;
+    border-radius: $interlineado-15;
+    outline: none;
 }
-input.login{
-    color:$blanco
+input.login {
+    color: $blanco;
 }
-.registro::placeholder  { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color:  #000;
+.registro::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #000;
     opacity: 1; /* Firefox */
 }
 
-.registro:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color:  #000;
+.registro:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #000;
 }
 
-.registro::-ms-input-placeholder { /* Microsoft Edge */
-    color:  #000;
+.registro::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #000;
 }
 
-.login::placeholder  { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color:  $blanco;
+.login::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $blanco;
     opacity: 1; /* Firefox */
 }
 
-.login:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color:  $blanco;
+.login:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $blanco;
 }
 
-.login::-ms-input-placeholder { /* Microsoft Edge */
-    color:  $blanco;
+.login::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $blanco;
 }

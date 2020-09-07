@@ -42,10 +42,10 @@ export class BienvenidaComponent implements OnInit {
   async cargarDatos() {
     this.configuracionLinea1 = { ancho: AnchoLineaItem.ANCHO6382, espesor: EspesorLineaItem.ESPESOR071, colorFondo: ColorFondoLinea.FONDOLINEAVERDE }
     this.configuracionLinea2 = { ancho: AnchoLineaItem.ANCHO6916, espesor: EspesorLineaItem.ESPESOR071, colorFondo: ColorFondoLinea.FONDOLINEAVERDE }
-    this.botonEnter = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('ingrese'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.crearPerfil() }
+    this.botonEnter = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('ingrese'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.navegarMenuPrincipal() }
   }
-  crearPerfil() {
-    this.router.navigateByUrl(RutasLocales.MENU_PRINCIPAL.toString());
+  navegarMenuPrincipal() {
+    this.router.navigateByUrl(RutasLocales.MENU_PRINCIPAL.replace(":codigoPerfil", ""));
   }
 
   ngAfterViewInit(): void {

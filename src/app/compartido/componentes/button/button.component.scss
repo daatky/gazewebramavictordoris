@@ -47,12 +47,11 @@
 .botonCorto {
     padding-left: $espacio-0247;
     padding-right: $espacio-0296;
-    padding-top: calcularPaddingAfectadoPorInterlineado(2.49, $arriba: true);
-    padding-bottom: calcularPaddingAfectadoPorInterlineado(3.16, $arriba: false);
-    font-size: $letra-7;
+    padding-top: $espacio-0249;
+    padding-bottom: $espacio-0316;    
     box-sizing: border-box;
-    line-height: $letra-7;
-    height: $espacio-1116;
+    //height: $espacio-1116;
+    //font-size: $letra-7;
 }
 
 .contenerBotonHorizontal {

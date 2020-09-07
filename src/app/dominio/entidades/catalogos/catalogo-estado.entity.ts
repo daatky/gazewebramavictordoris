@@ -18,7 +18,7 @@ export interface CatalogoEstadoEntity {
 export class EstadoMapperService extends MapedorService<CatalogoEstadoEntity, CatalogoEstadoModel> {
 
     protected map(entity: CatalogoEstadoEntity): CatalogoEstadoModel {
-        if(entity){
+        if (entity) {
             return {
                 codigo: entity.codigo,
                 nombre: entity.nombre,
@@ -26,7 +26,6 @@ export class EstadoMapperService extends MapedorService<CatalogoEstadoEntity, Ca
             };
         }
         return null;
-
     }
 
 }

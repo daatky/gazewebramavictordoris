@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { UbicacionServiceRemoto } from '../../nucleo/servicios/remotos/ubicacion.service'
-import { catchError, map } from 'rxjs/operators'
+import { catchError, map, delay, debounceTime } from 'rxjs/operators'
 import { HandleError } from '../../nucleo/servicios/locales/handleError.service'
 import { Observable, throwError } from 'rxjs'
 import { UbicacionServiceLocal } from './../../nucleo/servicios/locales/ubicacion.service'

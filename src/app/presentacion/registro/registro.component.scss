@@ -6,6 +6,20 @@ $ancho-portada: $portada-gaze-ancho-cortada;
 $ancho-album-general: calcular(43.06);
 $descripcion-perfil-alto-minimo: calcular(61.65) - ($espacio-316 * 2);
 
+$perfil-creado-ancho: $ancho-pagina;
+$perfil-creado-padding: calcular(6.58) - calcular(2.67);
+$perfil-creado-margin-top: calcular(2.06);
+$perfil-creado-margin-bottom: calcular(5.22);
+
+$perfil-normal-explicacion-alto: calcular(58.86);
+$perfil-grupo-explicacion-alto: calcular(115.65);
+
+.espacio-522 {
+  height: $espacio-522;
+  width: 100%;
+  background: red;
+}
+
 .cuerpo {
   background: $blanco;
 }
@@ -29,6 +43,9 @@ $descripcion-perfil-alto-minimo: calcular(61.65) - ($espacio-316 * 2);
   flex-flow: row;
   align-items: center;
   justify-content: center;
+}
+.nombreAlbums.perfilCreado {
+  margin-bottom: 0;
 }
 
 .nombreAlbums .a {
@@ -69,8 +86,13 @@ $descripcion-perfil-alto-minimo: calcular(61.65) - ($espacio-316 * 2);
 
 // Inputs
 .inputs_formularios {
+  display: none;
   width: 100%;
-  min-height: 20vw;
+  display: none;
+}
+
+.inputs_formularios.mostrar {
+  display: block;
 }
 
 .inputs_formularios .input {
@@ -83,3 +105,105 @@ $descripcion-perfil-alto-minimo: calcular(61.65) - ($espacio-316 * 2);
   align-items: center;
   justify-content: center;
 }
+
+// Info de pago
+.perfilCreado {
+  display: none;
+  width: 100%;
+  height: auto;
+  
+  padding: 0 $perfil-creado-padding;
+  margin: 0 0 $perfil-creado-margin-bottom 0;
+
+  box-sizing: border-box;
+}
+.perfilCreado.mostrar {
+  display: block;
+}
+
+.perfilCreado .contenido {
+  width: 100%;
+  height: auto;
+
+  box-sizing: border-box;
+}
+
+.perfilCreado .contenido.grupoProfile {
+  margin-top: $perfil-creado-margin-bottom;
+}
+
+.perfilCreado .contenido .explicacion {
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+
+.perfilCreado .contenido.normalProfile .explicacion {
+  min-height: $perfil-normal-explicacion-alto;
+}
+
+.perfilCreado .contenido.grupoProfile .explicacion {
+  min-height: $perfil-grupo-explicacion-alto;
+}
+
+.perfilCreado .contenido .explicacion p {
+  width: 100%;
+  text-align: center;
+  padding-top: calcularPaddingAfectadoPorInterlineadoTemp(5.22, $arriba: true);
+  padding-bottom: calcularPaddingAfectadoPorInterlineadoTemp(5.22, $arriba: false);
+}
+
+.perfilCreado .contenido .explicacion div {
+  width: 100%;
+  text-align: center;
+}
+
+.perfilCreado .contenido.normalProfile .explicacion div {
+  padding-bottom: calcularPaddingAfectadoPorInterlineadoTemp(5.22, $arriba: false);
+}
+
+.perfilCreado .contenido.normalProfile p:last-child {
+  width: 100%;
+  text-align: center;
+}
+
+.perfilCreado .contenido.grupoProfile .explicacion p {
+  padding-top: 0;
+}
+
+.perfilCreado .contenido.grupoProfile .explicacion div {
+  padding-bottom: calcularPaddingAfectadoPorInterlineadoTemp(15.22, $arriba: false);
+}
+
+.perfilCreado .contenido.grupoProfile .explicacion p:last-child {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: fit-content;
+}
+
+.perfilCreado .contenido .modale {
+  width: 100%;
+  min-height: 2vw;
+  margin-bottom: $espacio-522;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+// Boton de pago
+.botonPagoGrupo {
+  display: none;
+  width: 100%;
+  margin-bottom: $espacio-1512;
+}
+.botonPagoGrupo.mostrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

@@ -1,0 +1,9 @@
+<div class="fondo-modal-inferior" [ngClass]="{
+    'modal-abierto':data.abierto
+}" (tap)="eventoModal($event.target)">
+    <div class="contenido-modal-inferior">
+        <ng-content>
+
+        </ng-content>
+    </div>
+</div>

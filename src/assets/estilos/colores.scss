@@ -1,6 +1,7 @@
 $blanco: #ffffff;
 $negro: #000000;
 $amarillo-base: #f0b823; //Amarillo para toda la aplicación
+$celeste-base: #A0C6EF;
 //TAMBIEN ES EL Color círculo botón grabación AMARILLO
 $tranparencia-base: rgba(61, 71, 72, 0.75); //transparencia en para toda la aplicación
 //Color transparencia central que esconde el mundo
@@ -13,6 +14,7 @@ $azul-claro: #9fc5ee;
 $txt-btn-history: #bee4e5; //Letra del botón HISTORY
 $txt-btn-blanco: #ffffff;
 $txt-celeste: #a0c6ef; //Texto de la barra de búsqueda y todos los textos celestes == SUBSCRIBING
+$input-fondo-registro: rgba(144, 159, 160, 0.25); //Color de franjas de cuadros de acción y franjas de formularios
 $input-fondo: rgba(144, 159, 160, 0.75); //Color de franjas de cuadros de acción y franjas de formularios
 $txt-lacre: #770404; //Especifico de texto de la mesa (2-3), (2-4), (2-5),(2-6)
 $border-dark: rgba(144, 159, 160, 0.75); //Color de fondo de círculos de números en mesa 5-1, ??
@@ -46,9 +48,15 @@ $comentario-seis: #e7f9bd; //Colores del fondo para comentarios de proyectos (un
 //chat envio
 $comentario-siete: #fdffa4; //Colores del fondo para comentarios de proyectos (un color por usuario y por proyecto)
 
+// Opacidad albums
 $capa-opacidad-a: #ce363680; // Opacidad para las fotos por defecto del album
 $capa-opacidad-b: #73308e80; // Opacidad para las fotos por defecto del album
 $capa-opacidad-c: #307b8780; // Opacidad para las fotos por defecto del album
 
+// Dialogo descripcion
+$transparencia-dialogo-descripcion: rgba(138, 159, 161, 0.25);
+
+
 $azul-pago-pendiente: #122340;
 $plateado: #b3b3b3;
+$hibernate: #01597c;

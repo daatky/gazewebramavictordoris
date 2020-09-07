@@ -5,7 +5,12 @@
         <app-portada-gaze #portadaGaze></app-portada-gaze>
         <app-item-rectangulo #albumGeneral [configuracion]="confItemRec"></app-item-rectangulo>
     </div>
-    <div class="nombreAlbums">
+    <div 
+        [ngClass]="{
+            'nombreAlbums': true,
+            'perfilCreado': perfilCreado
+    }"
+    >
         <div class="caja a">
             <p  
                 [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
@@ -15,7 +20,7 @@
                     tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
                 })"
             >
-                profile
+                {{ 'perfil' | translate }}
             </p>
         </div>
         <div class="caja b"></div>
@@ -28,25 +33,34 @@
                     tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
                 })"
             >
-                album
+                {{ 'album' | translate }}
             </p>
         </div>
     </div>
-    <div class="descripcion_perfil">
+    <!-- Se muestra si, perfil creado es false -->
+    <div
+        *ngIf="!perfilCreado"
+        class="descripcion_perfil"
+    >
         <p
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
                 enMayusculas: false,
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
-                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512
+                paddingIzqDerDelTexto: (perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC) ? estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512 : estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
             })"
         >
-            In this profile, you will choose the photos of yourself you prefer, your contact name, name, and relevant data.
+            {{ perfil.tipoPerfil.descripcion }}
         </p>
     </div>
-    <div class="inputs_formularios">
-        <form [formGroup]="registroForm">
+    <div
+        [ngClass]="{
+            'inputs_formularios': true,
+            'mostrar': !perfilCreado
+        }"
+    >
+        <form [formGroup]="registroForm" autocomplete="off">
             <div
                 *ngFor="let item of inputsForm"
                 class="input"
@@ -60,4 +74,107 @@
             </div>
         </form>
     </div>
+    <!-- Se muestra si perfil creado es true -->
+    <div
+        [ngClass]="{
+            'perfilCreado': true,
+            'mostrar': perfilCreado
+        }"
+    >
+        <!-- Perfil clasico -->
+        <div
+            *ngIf="perfil.tipoPerfil.codigo !== codigosCatalogoTipoPerfil.GROUP"
+            class="contenido normalProfile"
+        >
+            <div class="explicacion">
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I8,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilClasico2' | translate }}
+                </p>
+                <div
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilClasico3' | translate }}
+                </div>
+            </div>
+            <div class="modale">
+                <app-dialogo-inline #dialogoInline [configuracion]="confDialogo"></app-dialogo-inline>
+            </div>
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2,
+                    paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                })"
+            >
+                {{ 'especificacionGrupo' | translate }}
+            </p>
+        </div>
+        <div
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            class="contenido grupoProfile"
+        >
+            <div class="explicacion">
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I8,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilGrupo3' | translate }}
+                </p>
+                <div
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I2,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilGrupo4' | translate }}
+                    <br />
+                    {{ 'explicacionPerfilGrupo5' | translate }}
+                </div>
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I8,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilGrupo6' | translate }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div
+        [ngClass]="{
+            'botonPagoGrupo': true,
+            'mostrar': (perfilCreado && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP)
+        }"
+    >
+        <app-button [botonCompartido]="confBotonPago"></app-button>
+    </div>
 </div>
+<app-toast [configuracion]="confToast"></app-toast>

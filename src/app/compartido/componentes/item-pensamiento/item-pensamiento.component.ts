@@ -21,10 +21,8 @@ export class ItemPensamientoComponent implements OnInit {
 
   ngAfterViewInit(): void {
       // Inicializar eventos de tap y doble tap      
-      console.log("AQUI")
       setTimeout(() => {
         if(this.configuracionItem &&(this.configuracionItem.dobleClick ||this.configuracionItem.onclick)){
-          console.log("=======")
           const elemento = document.getElementById("itemPensamiento" + this.configuracionItem.data.id) as HTMLElement
           if (elemento) {
             const gestor = this.gestorEventosTap.construirEventosTap(elemento)

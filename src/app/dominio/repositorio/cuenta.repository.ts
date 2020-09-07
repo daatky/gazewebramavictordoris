@@ -6,12 +6,13 @@ import { Observable, throwError } from 'rxjs'
 import { CuentaServiceRemoto } from '../../nucleo/servicios/remotos/cuenta.service';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
-import { UsuarioCrearCuentaEntity } from '../entidades/usuario.entity';
 import { PagoEntity } from '../entidades/pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";
 import { IniciarSesionModel } from "../modelo/iniciar-sesion.model";
 import { IniciarSesionMapperService } from '../entidades/iniciar-sesion.entity';
+import { SessionStorageServicie } from "../../nucleo/servicios/locales/session-storage.service";
+import { UsuarioEntity } from '../entidades/usuario.entity';
 @Injectable({
     providedIn: 'root'
 })
@@ -23,7 +24,10 @@ export class CuentaRepository {
         private cuentaServiceRemoto: CuentaServiceRemoto,
         private cuentaServiceLocal: CuentaServiceLocal,
         private iniciarSesionMapperService: IniciarSesionMapperService
-    ) { }
+    ) {
+
+    }
+
     iniciarSesion(datos: Object): Observable<IniciarSesionModel> {
         return this.cuentaServiceRemoto.iniciarSesion(datos)
             .pipe(
@@ -57,7 +61,7 @@ export class CuentaRepository {
         return this.localStorage.obtenerCatalogoPerfiles()
     }
 
-    crearCuenta(usuario: UsuarioCrearCuentaEntity): Observable<PagoEntity> {
+    crearCuenta(usuario: UsuarioEntity): Observable<PagoEntity> {
         return this.cuentaServiceRemoto.crearCuenta(usuario)
             .pipe(
                 map(data => {

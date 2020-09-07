@@ -4,11 +4,11 @@
 <app-lista-vertical [dataLista]='dataLista' class="centrar">
 
     <div *ngIf="listaTipoPerfil">
-        <app-item-menu *ngIf="itemInstrucciones" [configuracionItem]=" prepareItemInstrucciones(itemInstrucciones)">
+        <app-item-menu [configuracionItem]=" prepareItemInstrucciones()">
         </app-item-menu>
 
         <div *ngFor="let item of listaTipoPerfil">
-            <app-item-menu *ngIf="itemMenu" [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
+            <app-item-menu [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
         </div>
 
         <app-item-menu *ngIf="itemInformacion" [configuracionItem]="prepareItemInformacion(itemInformacion)">
@@ -17,4 +17,37 @@
 
 </app-lista-vertical>
 
-<app-dialogo id="{{idDialogo}}" [data]="dataDialogo"></app-dialogo>
+
+<app-dialogo-contenido id="{{idPerfilIncompatibleDialogo}}" [data]="dataPerfilIncompatibleDialogo">
+    <p>
+        El perfil seleccionado es incompatible, con el perfil anteriormente creado
+    </p>
+    <div class="espacioInput"> </div>
+    <app-button class="centrar" *ngIf="dataBoton" [botonCompartido]="dataBoton"></app-button>
+</app-dialogo-contenido>
+
+<app-modal-inferior [data]="dataModalTerminosCondiciones">
+    <p class="letradefecto">
+        Al continuar, aceptas nuestros CGU y la Política de privacidad. Gazelook SA recopila esta información con el fin
+        de crear tu cuenta, gestionar tus reservas, usar y mejorar nuestros servicios, así como garantizar la seguridad
+        de nuestra plataforma. Tienes derechos sobre tus datos personales y puedes ejercerlos contactando con BlaBlaCar
+        a través de nuestro formulario de contacto.
+    </p>
+    <br>
+    <p class="letradefecto">Si eres menor de edad, completa el formulario con los datos de tu tutor o reponsable legal
+    </p>
+    <br>
+    <div [formGroup]="menorEdadForm">
+        <!--
+        <app-input [inputCompartido]='inputFechaNacimiento'></app-input>
+        <br>
+        -->
+        <app-input [inputCompartido]='inputNombresResponsable'></app-input>
+        <br>
+        <app-input [inputCompartido]='inputCorreoResponsable'></app-input>
+        <br>
+        <div class="centrar">
+            <button class="botondefecto" (tap)="aceptarTerminosCondicionesMenorEdad()"> ACEPTAR</button>
+        </div>
+    </div>
+</app-modal-inferior>

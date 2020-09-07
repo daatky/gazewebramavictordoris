@@ -40,6 +40,7 @@ import { LandingPageComponent } from './presentacion/landing-page/landing-page.c
 import { AlbumGeneralComponent } from './presentacion/album-general/album-general.component';
 import { MenuPrincipalComponent } from './presentacion/menu-principal/menu-principal.component';
 import { MisContactosComponent } from './presentacion/mis-contactos/mis-contactos.component';
+import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
 
 //Traducciones
 export function createTranslateLoader(http: HttpClient) {
@@ -58,7 +59,8 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPageComponent,
     AlbumGeneralComponent,
     MenuPrincipalComponent,
-    MisContactosComponent
+    MisContactosComponent,
+    MenuSeleccionPerfilesComponent
   ],
   imports: [    
     BrowserModule,

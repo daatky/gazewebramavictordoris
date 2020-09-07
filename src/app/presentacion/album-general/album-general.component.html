@@ -1,6 +1,14 @@
 <app-appbar #appbar [configuracion]="confAppBar"></app-appbar>
-<div class="cuerpo">
-    <div class="portada">
+<div
+    [ngClass]="{
+        'cuerpo': true,
+        'albumPreview': (albumEnModoPreview && accionAlbum !== accionAlbumEnum.VISITA)
+    }"
+>
+    <div
+        *ngIf="!albumEnModoPreview"
+        class="portada"
+    >
         <app-item-rectangulo #portada [configuracion]="confPortada"></app-item-rectangulo>
         <p
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
@@ -13,7 +21,10 @@
             {{ 'indicacionSubirFoto' | translate }}
         </p>
     </div>
-    <div class="nombrePerfil">
+    <div
+        *ngIf="!albumEnModoPreview"
+        class="nombrePerfil"
+    >
         <p
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
@@ -22,14 +33,17 @@
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_IGUAL 
             })"
         >
-            {{ nombreUsuario }}
+            {{ titulo }}
         </p>
     </div>
-    <div class="divisorVerde">
+    <div
+        *ngIf="!albumEnModoPreview"
+        class="divisorVerde"
+    >
         <app-linea #linea [configuracionLinea]="confLinea"></app-linea>
     </div>
     <div 
-        *ngIf="accionAlbum === accionAlbumEnum.CREAR"
+        *ngIf="accionAlbum === accionAlbumEnum.CREAR && !albumEnModoPreview"
         class="indicaciones crear"
     >
         <p
@@ -40,11 +54,11 @@
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
             })"
         >
-            ERASE PHOTO: LONG PRESS
+            {{ 'borrarFoto' | translate }}
         </p>
     </div>
     <div 
-        *ngIf="accionAlbum === accionAlbumEnum.ACTUALIZAR"
+        *ngIf="accionAlbum === accionAlbumEnum.ACTUALIZAR && !albumEnModoPreview"
         class="indicaciones actualizar"
     >
         <p
@@ -55,7 +69,7 @@
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
             })"
         >
-            CLICK TO UPDATE
+            {{ 'clickCargar' | translate }}
         </p>
         <div class="espaciador-178"></div>
         <p
@@ -66,11 +80,46 @@
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
             })"
         >
-            ERASE PHOTO: LONG PRESS
+            {{ 'borrarFoto' | translate }}
         </p>
     </div>
-    <div class="grilla">
-        <app-item-rectangulo #botonUpload [configuracion]="confBotonUpload"></app-item-rectangulo>
+    <div 
+        *ngIf="albumEnModoPreview"
+        class="indicaciones albumpreview"
+    >
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            {{ 'clickDescripcionImagen' | translate }}
+        </p>
+        <div class="espaciador-154"></div>
+        <p
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            {{ 'borrarFoto' | translate }}
+        </p>
+    </div>
+    <div
+        [ngClass]="{
+            'grilla': true,
+            'modoPreview': albumEnModoPreview
+        }"
+    >
+        <app-item-rectangulo
+            *ngIf="!albumEnModoPreview"
+            #botonUpload
+            [configuracion]="confBotonUpload"
+        ></app-item-rectangulo>
         <div class="divisorVertical"></div>
         <!-- Item por defecto -->
         <div
@@ -110,12 +159,30 @@
         </div>
     </div>
 </div>
+<div 
+    *ngIf="albumEnModoPreview"
+    [ngClass]="{
+        'barrainferior': true,
+        'activa': (this.idItemActivo.length > 0)
+    }"
+>
+    <div
+        class="cajablanca"
+    >
+        <div class="icono">
+            <img class="iconotexto" src="../../../assets/recursos/botones/forma-icono-editar-texto.svg">
+        </div>
+        <input type="text" maxlength="135" placeholder="105 characters maximum" [(ngModel)]="itemDescripcionActivo">
+    </div>
+    <div
+        class="boton"
+        (tap)="actualizarDescripcion()"
+    >
+        <img src="../../../assets/recursos/botones/forma-flecha-circular-amarilla.svg">
+    </div>
+</div>
 <app-camara
     #camara
     [configuracion]="confCamara"
 ></app-camara>
-<app-cropper
-    #cropper
-    [configuracion]="confCropper"
-></app-cropper>
 <app-toast #toast [configuracion]="confToast"></app-toast>

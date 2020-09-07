@@ -22,11 +22,11 @@
 >
     <div class="caja">
         <input
+            #inputBuscador
             type="text"
             class="buscador"
             [placeholder]="configuracion.inputBuscador.placeholder"
             [(ngModel)]="configuracion.inputBuscador.valor"
-            (keyup.enter)="buscar()"
         />
         <div
             [ngClass]="{

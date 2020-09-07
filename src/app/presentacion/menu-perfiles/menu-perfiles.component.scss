@@ -4,3 +4,7 @@
     height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
     overflow-y: auto;
 }
+
+.espacioInput {
+    height: $espacio-0316;
+}

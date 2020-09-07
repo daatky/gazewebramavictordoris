@@ -7,7 +7,6 @@ import { CatalogoMetodoPagoModel, PagoStripeModel } from '../modelo/catalogo-met
 import { PaymentIntent } from "@stripe/stripe-js";
 import { PerfilRepository } from '../repositorio/perfil.repository';
 import { Cuenta } from 'src/app/nucleo/servicios/remotos/rutas/cuenta.enum';
-import { UsuarioEntity, UsuarioCrearCuentaEntity } from '../entidades/usuario.entity';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { IdiomaRepository } from '../repositorio/idioma.repository';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity';

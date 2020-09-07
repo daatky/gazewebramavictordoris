@@ -1,4 +1,18 @@
 {
+    "campoRequerido":"This field is required",
+    "minimoCaracteres":"This field must have a minimum of {{numero}} characters",
+    "maximoCaracteres":"This field must have a maximum of {{numero}} characters",
+    "camposIncompletos":"There are incomplete fields",
+    "campoInvalido":"This field is invalid",
+    "tamanoMaximoArchivo":"The maximum file size is",
+    "problemaObtenerDatos":"Problems getting the data",
+    "tipoEmail":"The field is email type",
+    "procesando":"Processing ......",
+
+    "sinAutorizacion":"You do not have authorization",
+    "noEncontrado":"Not found",
+    "errorInesperado":"Sorry, an error occurred while processing your request, try later",
+
     "traduccionAutomatica": "FOR AUTOMATIC TRANSLATION, CHANGE LANGUAGE IF NEEEDED",
     "creadoEn": "CREATED IN THE EUROPEAN UNION",
     "avisoImportante": "IMPORTANT NOTICE :",
@@ -54,7 +68,7 @@
     "gazelookPlataforma4": "- IN THE FOUR PROFILES, YOU CAN ALWAYS UPDATE PHOTOS, NAMES, NICKNAMES, AND INFORMATION.",
     "gazelookPlataforma5": "- YOU CAN COMMUNICATE WITH OTHER USERS WITH YOUR CONTACT NAME. YOU CAN RECEIVE, WRITE OR RECORD MESSAGES. YOU CAN SEND PHOTOS AND VIDEOS, MAKE CALLS AND VIDEO CONFERENCES.",
     "subirFotos": "Upload photos ",
-    "album": "PROFILE ALBUM",
+    "album": "ALBUM",
     "explicacionPerfilClasico1": "In this profile, you will choose the photos of yourself you prefer, your contact name, name, and relevant data.",
     "nombreContacto": "CONTACT NAME ",
     "nombre": "Name:",

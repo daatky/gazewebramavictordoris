@@ -94,6 +94,8 @@ $interlineado-17: calcular(4.50); // 4.50 76 px
 $interlineado-18: calcular(7.46); // 4.50 125.86 px
 
 /*Espaciadores*/
+$espacio-01245: calcular(1.245);
+$espacio-0154: calcular(1.54);
 $espacio-0178: calcular(1.78);
 $espacio-0249: calcular(2.49);
 $espacio-0247: calcular(2.47);
@@ -203,10 +205,26 @@ $boton-x-tamano-icono-ancho: calcular(8.44);
 $boton-x-padding-der: calcular(3.77);
 $boton-x-padding-bot: calcular(2.75);
 
+// Bottom bar medidas
+$bottom-bar-alto: calcular(17.55);
+$bottom-bar-ancho: $ancho-pagina;
+$bottom-bar-border-top: calcular(0.12);
+$bottom-bar-caja-borde-radio: calcular(1.567);
+$bottom-bar-caja-alto: calcular(12.21);
+$bottom-bar-caja-ancho: calcular(81.45);
+$bottom-bar-boton-diametro: calcular(13.1);
+// Iconos del bottom bar
+$bottom-bar-caja-icono-ancho: calcular(13.575);
+$bottom-bar-caja-icono-texto-ancho: calcular(11.61);
+$bottom-bar-caja-icono-texto-alto: calcular(8.82);
+
 // Cuerpo mesa 2, para otros casos realizar calculo en caso de que varien los valores
 // Para espesor de linea 0.89
 $cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316});
 $cuerpo-default-ancho: $ancho-pagina - ($espacio-267 * 2);
+// Para cuerpo con bottom bar
+$cuerpo-con-bottom-bar-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316 + $bottom-bar-alto});;
+$cuerpo-con-bottom-bar-ancho: $ancho-pagina - ($espacio-267 * 2);
 
 //
 $cuerpo-general:calc(100vh - #{$espesor-071 + $appbar-alto-default});

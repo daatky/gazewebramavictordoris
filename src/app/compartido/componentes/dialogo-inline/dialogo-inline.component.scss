@@ -1,0 +1,53 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+
+$dialogo-borde: calcular(0.49);
+$dialogo-borde-radio: calcular(2.55);
+$dialogo-padding-top-bottom: calcular(3.16);
+$dialogo-padding-left-right: calcular(1.78);
+$dialogo-descripcion-borde-radio: calcular(1.03);
+$dialogo-descripcion-margin-bottom: calcular(3.16);
+$dialogo-descripcion-padding-top-bottom: calcular(1.78);
+$dialogo-descripcion-padding-left-right: calcular(1.39);
+$dialogo-caja-boton-margin-bottom: calcular(3.16);
+
+.dialogo {
+    width: $espacio-6238;
+    border: $dialogo-borde solid $negro;
+    border-radius: $dialogo-borde-radio;
+    background: $blanco;
+    box-sizing: border-box;
+
+    padding: $dialogo-padding-top-bottom $dialogo-padding-left-right;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.dialogo div:nth-child(1) {
+    background: $transparencia-dialogo-descripcion;
+    padding: $dialogo-descripcion-padding-top-bottom $dialogo-descripcion-padding-left-right;
+    margin-bottom: $dialogo-descripcion-margin-bottom;
+
+    border-radius: $dialogo-descripcion-borde-radio;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.dialogo .cajaBoton {
+    width: 100%;
+    margin-bottom: $dialogo-caja-boton-margin-bottom;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialogo .cajaBoton:last-child {
+    margin-bottom: 0;
+}

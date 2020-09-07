@@ -11,6 +11,7 @@ import { BienvenidaComponent } from './presentacion/bienvenida/bienvenida.compon
 import { RutasLocales } from './rutas-locales.enum'
 import { MenuPrincipalComponent } from './presentacion/menu-principal/menu-principal.component';
 import { MisContactosComponent } from './presentacion/mis-contactos/mis-contactos.component';
+import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
 
 
 const routes: Routes = [
@@ -63,6 +64,10 @@ const routes: Routes = [
   {
     path: RutasLocales.MIS_CONTACTOS.toString(),
     component: MisContactosComponent
+  },
+  {
+    path: RutasLocales.MENU_SELECCION_PERFILES.toString(),
+    component: MenuSeleccionPerfilesComponent
   }
 
 ];

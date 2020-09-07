@@ -22,7 +22,14 @@
     >
         <app-cargando></app-cargando>
     </div>
-    <input type="file" id="{{ 'itemRectangularInputFile' + configuracion.idInterno }}" class="hide" accept="image/*" (change)="cambioEnInputTipoFile($event.target.files)"/>
+    <input
+        #inputFile
+        type="file"
+        id="{{ 'itemRectangularInputFile' + configuracion.idInterno }}"
+        class="hide"
+        accept="image/*"
+        (change)="cambioEnInputTipoFile($event.target.files)"
+    />
     <p [ngClass]="itemMetodos.obtenerClasesTextoBoton(configuracion.mostrarBoton)">{{ configuracion.textoBoton }}</p>
     <!-- Esquinas -->
     <div 
@@ -35,11 +42,17 @@
     >
         <div class="cancelar">
             <div class="mensaje">
-                <p>
+                <p
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD,
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I2
+                    })"
+                >
                     {{ configuracion.textoCerrarEditarDescripcion }}
                 </p>
             </div>
-            <img src="../../../../assets/recursos/botones/forma-x-blanca.svg">
         </div>
     </div>
     <!-- Capa Preview con boton de expandir - ALBUMPREVIEW -->
@@ -54,6 +67,58 @@
 <div
     [ngClass]="itemMetodos.obtenerClasesItemDescripcion(configuracion.usoDelItem)"
 >
-    <p>{{ configuracion.descripcion }}</p>
+    <p
+        [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+            color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+            estiloTexto: estiloDelTextoServicio.estilosDelTexto.ITALIC,
+            enMayusculas: false,
+            tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I4
+        })"
+    >
+        {{ configuracion.descripcion }}
+    </p>
     <div class="linea"></div>
+</div>
+<!-- Modal elegir opcion foto -->
+<div
+    [ngClass]="{
+        'modalOrigenFoto': true,
+        'mostrar': confModalOrigenFoto.mostrar
+    }"
+    (tap)="cerrarModalOrigenFoto($event)"
+>
+    <div class="caja">
+        <div
+            class="opcion"
+            (tap)="eventoEnModalOrigenFoto(0)"
+        >
+            <img src="../../../../assets/recursos/fondos/fondo-camara-origen-foto.svg">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR,
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                Tomar foto
+            </p>
+        </div>
+        <div
+            class="opcion"
+            (tap)="eventoEnModalOrigenFoto(1)"
+        >
+            <img src="../../../../assets/recursos/fondos/fondo-galeria-origen-foto.svg">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTONEGRO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR,
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                Subir foto
+            </p>
+        </div>
+    </div>
 </div>

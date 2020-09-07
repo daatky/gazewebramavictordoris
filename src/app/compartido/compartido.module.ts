@@ -19,15 +19,17 @@ import { ItemPensamientoComponent } from './componentes/item-pensamiento/item-pe
 import { SelectorComponent } from './componentes/selector/selector.component';
 import { BuscadorModalComponent } from './componentes/buscador-modal/buscador-modal.component'
 import { WebcamModule } from 'ngx-webcam'
-import { ListaVerticalDosComponent } from './componentes/lista-vertical-dos/lista-vertical-dos.component';
-import { CabeceraIdiomasComponent } from './componentes/cabecera-idiomas/cabecera-idiomas.component';
-import { CamaraComponent } from './componentes/camara/camara.component';
+import { CabeceraIdiomasComponent } from './componentes/cabecera-idiomas/cabecera-idiomas.component'
+import { CamaraComponent } from './componentes/camara/camara.component'
 import { CropperComponent } from './componentes/cropper/cropper.component'
-import { ImageCropperModule } from 'ngx-image-cropper';
-import { ToastComponent } from './componentes/toast/toast.component';
+import { ImageCropperModule } from 'ngx-image-cropper'
+import { ToastComponent } from './componentes/toast/toast.component'
 import { DialogoContenidoComponent } from './componentes/dialogo-contenido/dialogo-contenido.component'
 import { ItemFechaComponent } from './componentes/item-fecha/item-fecha.component'
 import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensamiento-compartido.component';
+import { ModalInferiorComponent } from './componentes/modal-inferior/modal-inferior.component';
+import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
+import { ListoComponent } from './componentes/listo/listo.component';
 
 @NgModule({
   imports: [
@@ -55,13 +57,15 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
     ItemPensamientoComponent,
     SelectorComponent,
     BuscadorModalComponent,
-    ListaVerticalDosComponent,
     CabeceraIdiomasComponent,
     CamaraComponent,
     CropperComponent,
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    ModalInferiorComponent,
+    DialogoInlineComponent,
+    ListoComponent,
   ],
   exports: [
     CrearComponenteDirective,
@@ -81,13 +85,14 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
     ItemPensamientoComponent,
     SelectorComponent,
     BuscadorModalComponent,
-    ListaVerticalDosComponent,
     CabeceraIdiomasComponent,
     CamaraComponent,
     CropperComponent,
     ToastComponent,
     ItemFechaComponent,
     DialogoContenidoComponent,
+    ModalInferiorComponent,
+    DialogoInlineComponent
   ]
 })
 

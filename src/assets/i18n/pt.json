@@ -1,4 +1,18 @@
 {
+    "campoRequerido":"Este campo é obrigatório",
+    "minimoCaracteres":"Este campo deve ter no mínimo {{numero}} caracteres",
+    "maximoCaracteres":"Este campo deve ter no máximo {{numero}} caracteres",
+    "camposIncompletos":"Existem campos incompletos",
+    "campoInvalido":"Este campo é inválido",
+    "tamanoMaximoArchivo":"O tamanho máximo do arquivo é",
+    "problemaObtenerDatos":"Problemas para obter os dados",
+    "tipoEmail":"O campo é do tipo e-mail",
+    "procesando":"Processing ......",
+
+    "sinAutorizacion":"Você não tem autorização",
+    "noEncontrado":"Nao encontrado",
+    "errorInesperado":"Ocorreu um erro ao processar sua solicitação, tente mais tarde",
+
     "traduccionAutomatica": "PARA TRADUÇÃO AUTOMÁTICA, MUDAR O IDIOMA, SE NECESSÁRIO",
     "creadoEn": "CRIADO NA UNIÃO EUROPEIA",
     "avisoImportante": "AVISO IMPORTANTE :",

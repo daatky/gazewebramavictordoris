@@ -32,4 +32,5 @@ export interface ItemRectangularCompartido extends ItemCompartido {
     textoCerrarEditarDescripcion?: string, // Texto que se muestra para indicar al usuario que debe hacer para dejar de editar la descripcion
     mostrarIconoExpandirFoto?: boolean, // Indica si se debe mostrar la capa con el icono de expandir a pantalla completa la foto
     mostrarCapaImagenSeleccionadaConBorde?: boolean, // Indica si se debe mostrar la capa con borde rojo de editar descripcion
+    esBotonUpload: boolean, // El evento de click cambia segun esta variable
 }

@@ -1,4 +1,18 @@
 {
+    "campoRequerido":"Dieses Feld wird benötigt",
+    "minimoCaracteres":"Dieses Feld muss mindestens {{numero}} Zeichen enthalten",
+    "maximoCaracteres":"Dieses Feld darf maximal {{numero}} Zeichen enthalten",
+    "camposIncompletos":"Es gibt unvollständige Felder",
+    "campoInvalido":"Dieses Feld ist ungültig",
+    "tamanoMaximoArchivo":"Die maximale Dateigröße beträgt",
+    "problemaObtenerDatos":"Probleme beim Abrufen der Daten",
+    "tipoEmail":"Das Feld ist vom E-Mail-Typ",
+    "procesando":"wird bearbeitet ......",
+
+    "sinAutorizacion":"Sie haben keine Berechtigung",
+    "noEncontrado":"Nicht gefunden",
+    "errorInesperado":"Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten. Versuchen Sie es später",
+
     "traduccionAutomatica": "FÜR AUTOMATISCHE ÜBERSETZUNG, WECHSELN SIE BEI BEDARF DIE SPRACHE",
     "creadoEn": "IN DER EUROPÄISCHEN UNION ENTSTANDEN",
     "avisoImportante": "WICHTIGER HINWEIS :",

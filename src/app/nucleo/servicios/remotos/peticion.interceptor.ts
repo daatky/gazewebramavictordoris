@@ -14,11 +14,12 @@ import { LocalStorage } from '../locales/local-storage.service';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { APIGAZE } from './rutas/api-gaze.enum';
 import { Cuenta } from './rutas/cuenta.enum';
+import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 @Injectable()
 export class PeticionInterceptor implements HttpInterceptor {
     constructor(
         private localStorage: LocalStorage,
-        private cuentaNegocio: CuentaNegocio
+        private cuentaNegocio: CuentaNegocio,        
     ) {
     }
 
@@ -67,7 +68,8 @@ export class PeticionInterceptor implements HttpInterceptor {
                             if (event.body.codigoEstado) {
                                 console.log(event.body)
                                 if (event.body.codigoEstado >= 400) {
-                                    throw event.body.respuesta.mensaje
+                                    throw event.body
+                                    //.respuesta.mensaje
                                 }
                             }
                         }
@@ -75,12 +77,13 @@ export class PeticionInterceptor implements HttpInterceptor {
                     return event;
                 }),
                 catchError((error: HttpErrorResponse) => {  
-                    console.log(error)                 
-                    if ((error.status)||(error['codigoEstado']>=400)) {
-                        if ((error.status === 401)||(error['codigoEstado']===401)) {
+                    console.log(error)
+                    if (error.status||error['codigoEstado']>399) {
+                        //await this.internacionalizacionNegocio.obtenerTextoLlave('enviar')
+                        if (error.status === 401||error['codigoEstado']===401) {
                             return throwError("No tienes autorizacion");
                         } else {
-                            if ((error.status === 404)||(error['codigoEstado']===404)) {
+                            if (error.status === 404||error['codigoEstado']===404) {
                                 return throwError("No encontrado");
                             } else {
                                 return throwError("Lo sentimos ocurrio un error al procesar tu solicitid, intenta mas tarde");

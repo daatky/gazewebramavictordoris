@@ -7,6 +7,7 @@ import { CodigosCatalogoIdioma } from '../../nucleo/servicios/remotos/codigos-ca
     providedIn: 'root'
 })
 export class InternacionalizacionNegocio {
+    error:string
     constructor(
         private internacionalizacionRepository:InternacionalizacionRepository,        
         private idiomaNegocio:IdiomaNegocio
@@ -30,7 +31,10 @@ export class InternacionalizacionNegocio {
         this.internacionalizacionRepository.usarIidoma(idioma)
     }
 
-    obtenerTextoLlave(llave:string){
+    obtenerTextoLlave(llave:string):Promise<string>{
         return this.internacionalizacionRepository.obtenerTextoLlave(llave)
+    }
+    obtenerTextoSincrono(llave:string,objeto?:Object):string{
+        return this.internacionalizacionRepository.obtenerTextoSincrono(llave,objeto)
     }
 }

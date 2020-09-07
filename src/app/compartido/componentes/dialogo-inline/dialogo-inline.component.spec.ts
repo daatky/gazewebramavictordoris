@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListaVerticalDosComponent } from './lista-vertical-dos.component';
+import { DialogoInlineComponent } from './dialogo-inline.component';
 
-describe('ListaVerticalDosComponent', () => {
-  let component: ListaVerticalDosComponent;
-  let fixture: ComponentFixture<ListaVerticalDosComponent>;
+describe('DialogoInlineComponent', () => {
+  let component: DialogoInlineComponent;
+  let fixture: ComponentFixture<DialogoInlineComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListaVerticalDosComponent ]
+      declarations: [ DialogoInlineComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListaVerticalDosComponent);
+    fixture = TestBed.createComponent(DialogoInlineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

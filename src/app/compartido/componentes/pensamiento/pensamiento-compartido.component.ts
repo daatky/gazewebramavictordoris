@@ -35,8 +35,8 @@ export class PensamientoCompartidoComponent implements OnInit {
 
   cargarPensamiento(){
     this.error=""
-    console.log("aspodkaokdoakdok")
-    console.log(this.pensamientoCompartido)
+    //console.log("aspodkaokdoakdok")
+    //console.log(this.pensamientoCompartido)
     if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){                  
       this.obtenerPensamientoAleatorio()          
     }else{       
@@ -44,14 +44,14 @@ export class PensamientoCompartidoComponent implements OnInit {
     }
   }
   obtenerPensamientoAleatorio(){
-    console.log('PENSAMIENTO ALEATORIO')      
+    //console.log('PENSAMIENTO ALEATORIO')      
     this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
     .subscribe((res:PensamientoModel)=>{ 
-      console.log('PENSAMIENTO ALEATORIO')      
+      //console.log('PENSAMIENTO ALEATORIO')      
       this.dataPensamiento={data:res}
     },error=>{
-      console.log(error)
+      //console.log(error)
       this.error=error
     })
     //this.dataPensamiento={data:{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}}
@@ -69,8 +69,8 @@ export class PensamientoCompartidoComponent implements OnInit {
     this.clickLargo.emit({index:index,pensamientoModel:pensamientoModel})
   }
   configurarDatos(index:number, pensamientoModel:PensamientoModel):Configuracion{
-    console.log("CONFIGURANDO DATOS")
-    console.log(index,pensamientoModel)
+    //console.log("CONFIGURANDO DATOS")
+    //console.log(index,pensamientoModel)
     return {
       data:pensamientoModel,
       onclick: () => this.eventoClick(index,pensamientoModel),        

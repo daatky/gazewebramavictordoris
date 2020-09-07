@@ -20,7 +20,7 @@ $alto-cargando: calc(100% - (#{ $selector-padding-tb } + #{ $alto-0782 } + #{ $e
     margin-bottom: $espacio-0249;
     box-sizing: border-box;
     font-size: $letra-3;
-    background-color: $input-fondo;  
+    background-color: $input-fondo-registro;  
     border-radius: $interlineado-15;
     outline: 0;
 
@@ -134,6 +134,7 @@ $alto-cargando: calc(100% - (#{ $selector-padding-tb } + #{ $alto-0782 } + #{ $e
     width: 100%;
     background: $blanco;
     height: $elegibles-alto;
+    overflow-y: auto;
 }
 .elegibles.mostrar {
     display: block;

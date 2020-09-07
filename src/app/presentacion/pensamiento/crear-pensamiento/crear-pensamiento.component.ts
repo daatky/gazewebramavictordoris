@@ -55,7 +55,6 @@ export class CrearPensamientoComponent implements OnInit {
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     this.obtenerPensamientos()
   }
-
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
   unClick(objeto:object){

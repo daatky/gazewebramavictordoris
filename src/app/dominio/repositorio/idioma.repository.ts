@@ -32,7 +32,8 @@ export class IdiomaRepository {
             .pipe(
                 map(data => {
                     console.log(data)
-                    return data.respuesta.datos;
+                    //return data.respuesta.datos;
+                    return []
                 }),
                 catchError(err => {
                     console.log(err)

@@ -25,15 +25,18 @@ import {
 } from "@stripe/stripe-js";
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum';
-import { MetodoPagoStripeEntity, PagoFacturacion } from 'src/app/dominio/entidades/catalogos/catalogo-metodo-pago.entity';
+import { MetodoPagoStripeEntity, PagoFacturacionEntity } from 'src/app/dominio/entidades/catalogos/catalogo-metodo-pago.entity';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { DialogoContenido } from 'src/app/compartido/componentes/dialogo-contenido/dialogo-contenido.component';
+import { ModalContenido } from 'src/app/compartido/componentes/dialogo-contenido/dialogo-contenido.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IdiomaNegocio } from 'src/app/dominio/logica-negocio/idioma.negocio';
 import { CatalogoIdiomaEntity } from 'src/app/dominio/entidades/catalogos/catalogo-idioma.entity';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { PagoModel } from 'src/app/dominio/modelo/pago.model';
 import { CodigosEstadoMetodoPago, CodigosCatalogoMetodoPago } from "../../nucleo/servicios/remotos/codigos-catalogos/catalogo-metodo-pago.enum";
+import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
+import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
+import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 
 @Component({
   selector: 'app-metodo-pago',
@@ -49,14 +52,17 @@ export class MetodoPagoComponent implements OnInit {
   codigoPago: string
   pagoForm: FormGroup;
   idiomaSeleccionado: CatalogoIdiomaEntity;
+  inputNombre: InputCompartido
+  inputTelefono: InputCompartido
+  inputDireccion: InputCompartido
+  inputEmail: InputCompartido
 
-  dataDialogo: DialogoContenido;
+  dataModalPaypal: ModalContenido;
+  dataModalStripe: ModalContenido;
+
   dataLista: DatosLista;
-  dialogoPaypalId = "paypaldialog";
-  dialogoTarjetaId = "tarjetadialog";
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
-  dataBoton: BotonCompartido;
   cardOptions: StripeCardElementOptions = {
     hidePostalCode: true,
     style: {
@@ -87,7 +93,6 @@ export class MetodoPagoComponent implements OnInit {
     private cuentaNegocio: CuentaNegocio,
     public estiloTexto: EstiloDelTextoServicio,
     private router: Router,
-    private modalService: DialogoServicie,
     private stripeService: StripeService,
     private fb: FormBuilder,
     private idiomaNegocio: IdiomaNegocio
@@ -95,22 +100,37 @@ export class MetodoPagoComponent implements OnInit {
     this.preperarLista()
     this.obtenerCatalogoMetodosPago()
     this.configurarAppBar()
-    this.configurarBotonPago()
     this.configurarDialogoContenido();
     this.obtenerIdioma();
 
   }
 
+
+  ngOnInit(): void {
+    this.initConfigPaypal()
+    this.pagoForm = this.fb.group({
+      nombre: ["", [Validators.required, Validators.minLength(5)]],
+      telefono: [""],
+      direccion: [""],
+      email: ["", [Validators.required, Validators.email]],
+    });
+
+    this.inputNombre = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'NOMBRE TARJETA', data: this.pagoForm.controls.nombre }
+    this.inputTelefono = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'TELEFONO', data: this.pagoForm.controls.telefono }
+    this.inputDireccion = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'DIRECCION DE FACTURACION', data: this.pagoForm.controls.direccion }
+    this.inputEmail = { tipo: 'text', error: false, estilo: { estiloError: EstiloErrorInput.ROJO, estiloInput: EstiloInput.DEFECTO }, placeholder: 'EMAIL', data: this.pagoForm.controls.email }
+
+  }
+
+
   navegarMetodoPago(metodoPago: CatalogoMetodoPagoModel) {
     this.codigoPago = metodoPago.codigo;
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
-        this.dataDialogo.titulo = "PAGO CON PAYPAL";
-        this.modalService.open(this.dialogoPaypalId);
+        this.dataModalPaypal.abierto = true;
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
-        this.dataDialogo.titulo = "PAGO CON TARJETA"
-        this.modalService.open(this.dialogoTarjetaId);
+        this.dataModalStripe.abierto = true;
         break;
     }
   }
@@ -129,26 +149,6 @@ export class MetodoPagoComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {
-    this.initConfigPaypal()
-    this.pagoForm = this.fb.group({
-      nombre: ["", [Validators.required]],
-      telefono: [""],
-      direccion: [""],
-      email: ["", [Validators.required]],
-    });
-
-  }
-
-  public getError(controlName: string): string {
-    let error = '';
-    const control = this.pagoForm.get(controlName);
-    if (control.touched && control.errors != null) {
-      error = "Campo requerido"
-    }
-    return error;
-  }
-
   configurarAppBar() {
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
@@ -156,7 +156,7 @@ export class MetodoPagoComponent implements OnInit {
         nombrePerfil: {
           mostrar: false
         },
-        mostrarTextoBack: true,
+        mostrarDivBack: true,
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,
@@ -228,7 +228,7 @@ export class MetodoPagoComponent implements OnInit {
       },
       onClick: (data, actions) => {
         console.log("onClick", data, actions);
-        this.modalService.close(this.dialogoPaypalId);
+        this.dataModalPaypal.abierto = false;
         // this.resetStatus();
       },
 
@@ -238,25 +238,16 @@ export class MetodoPagoComponent implements OnInit {
     return this.pagoNegocio.prepararPagoPaypal({}).toPromise();
   }
 
-  configurarBotonPago() {
-    this.dataBoton = {
-      colorTexto: ColorTextoBoton.AMARRILLO,
-      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
-      text: "PAGAR",
-      ejecutar: () => this.pagarStripe(),
-      enProgreso: false,
-      tipoBoton: TipoBoton.TEXTO
-    }
-  }
 
   pagarStripe(): void {
     if (this.pagoForm.valid) {
-      let datosPago: PagoFacturacion = {
+      let datosPago: PagoFacturacionEntity = {
         nombres: this.pagoForm.value.nombre,
         telefono: this.pagoForm.value.telefono,
         direccion: this.pagoForm.value.direccion,
-        email: this.pagoForm.value.nombre.email,
+        email: this.pagoForm.value.email,
       }
+      this.dataModalStripe.abierto = false;
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(
         (pagoModel: PagoModel) => {
           console.log(pagoModel, "paymentintent and custumer");
@@ -289,9 +280,17 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   configurarDialogoContenido() {
-    this.dataDialogo = {
-      id: "metodoPago",
+    this.dataModalStripe = {
       titulo: "PAGAR CON TARJETA",
+      abierto: false,
+      bloqueado: false,
+      id: "pagotarjeta"
+    }
+    this.dataModalPaypal = {
+      titulo: "PAGAR CON PAYPAL",
+      abierto: false,
+      bloqueado: false,
+      id: "pagopaypal"
     }
   }
 

@@ -25,9 +25,13 @@ export class CabeceraIdiomasComponent implements OnInit {
     private idiomaNegocio: IdiomaNegocio,  
     //private localStorageNegocio:LocalStorageNegocio,
     private internacionalizacionNegocio:InternacionalizacionNegocio,        
-  ) { }
+  ) {     
+  }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
+    this.caragarDatos()
+  }
+  caragarDatos(){
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     //VERIFICAR SI ESTA GUARDADO UN IDIOMA EN LOCALSTORAGE    
     this.idiomaSeleccionado=this.internacionalizacionNegocio.obtenerIdiomaInternacionalizacion()
@@ -38,19 +42,26 @@ export class CabeceraIdiomasComponent implements OnInit {
       tamanoConInterlineado: TamanoDeTextoConInterlineado.L3_IGUAL,
       color: ColorDelTexto.TEXTOBLANCO
     }    
-    this.obtenerCatalogoIdiomas()    
+    this.obtenerCatalogoIdiomas()  
   }
 
     //OBTENER EL CATALOGO DE IDIOMAS
-    obtenerCatalogoIdiomas(){   
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}   
+    async obtenerCatalogoIdiomas(){   
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:await this.internacionalizacionNegocio.obtenerTextoLlave('procesando')}   
       this.idiomaNegocio.obtenerCatalogoIdiomas()
-        .subscribe(res => {          
-          this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-          this.idiomas = res
+        .subscribe(res => {                    
+          if(res){
+            console.log("DATOS")
+            this.idiomas = res
+            this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}          
+          }else{
+            //this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos')
+            console.log("NO TRAJE NADA DE DATOS")
+            this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos')}            
+            this.idiomas=[]            
+          }
           //this.idiomaNegocio.ordenarIdioma()
         }, error => {
-          console.log(error)
           this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
         })
     }

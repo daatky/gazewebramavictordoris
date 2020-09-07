@@ -27,6 +27,8 @@ export class IdiomaNegocio {
     obtenerCatalogoIdiomas():Observable<Array<CatalogoIdiomaEntity>> {
         let idiomas:Array<CatalogoIdiomaEntity>=this.idiomaRepository.obtenerIdiomas()
         if(idiomas){
+            console.log("CON IDIOMAS LOCALES")
+            console.log(idiomas)
             return of(this.ordenarIdioma(idiomas))
         }else{
             console.log("SIN IDIOMAS")
@@ -34,11 +36,15 @@ export class IdiomaNegocio {
             .pipe(
                 map((data:Array<CatalogoIdiomaEntity>) => {  
                     console.log(data)  
-                    this.idiomaRepository.guardarIdiomas(data)                 
-                    return this.ordenarIdioma(data)
+                    console.log(data&&data.length>0)
+                    if(data&&data.length>0){
+                        console.log("1")
+                        this.idiomaRepository.guardarIdiomas(data)                 
+                        return this.ordenarIdioma(data)   
+                    }
+                    return null
                 }),
                 catchError(err=>{
-                    console.log(err)
                     return throwError(err)
                 })
             )

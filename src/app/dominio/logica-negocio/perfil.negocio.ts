@@ -1,3 +1,9 @@
+import { AlbumModel } from './../modelo/album.model';
+import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
+import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
+import { CuentaNegocio } from './cuenta.negocio';
+import { UsuarioModel } from './../modelo/usuario.model';
+import { PerfilModel } from './../modelo/perfil.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, } from 'rxjs/operators'
@@ -12,7 +18,10 @@ import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 })
 export class PerfilNegocio {
 
-    constructor(private perfilRepository: PerfilRepository) {
+    constructor(
+        private perfilRepository: PerfilRepository,
+        private cuentaNegocio: CuentaNegocio,
+    ) {
 
     }
 
@@ -32,6 +41,29 @@ export class PerfilNegocio {
                     })
                 )
         }
+        //Se debe llenar el perfil con los datos de cuenta. 
+    }
+
+    obtenerCatalogoTipoPerfilConPerfil(): Observable<CatalogoTipoPerfilModel[]> {
+        return this.obtenerCatalogoTipoPerfil().pipe(
+            map((data: CatalogoTipoPerfilModel[]) => {
+                let usuario = this.cuentaNegocio.obtenerUsuarioDelLocalStorage();
+                if (usuario) {
+                    for (let perfil of usuario.perfiles) {
+                        for (let tipo of data) {
+                            if (tipo.codigo == perfil.tipoPerfil.codigo) {
+                                tipo.perfil = perfil
+                                break;
+                            }
+                        }
+                    }
+                }
+                return data;
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
     }
 
     almacenarCatalogoPerfiles(tipoPerfiles: CatalogoTipoPerfilModel[]) {
@@ -58,7 +90,7 @@ export class PerfilNegocio {
         this.almacenarCatalogoPerfiles(tipoPerfiles);
     }
 
-    obtenerPerfilSegunCodigo(codigoPerfil: string) : CatalogoTipoPerfilModel {
+    obtenerTipoPerfilSegunCodigo(codigoPerfil: string): CatalogoTipoPerfilModel {
         let tipoPerfil: CatalogoTipoPerfilModel
         const tipoPerfiles = this.obtenerCatalogoTipoPerfilLocal()
         tipoPerfiles.forEach(perfil => {
@@ -67,6 +99,104 @@ export class PerfilNegocio {
             }
         })
         return tipoPerfil
+    }
+
+    // Album del perfil
+    guardarAlbumActivo(album: AlbumModel) {
+        this.perfilRepository.guardarAlbumActivo(album)
+    }
+
+    obtenerAlbumActivo(): AlbumModel {
+        return this.perfilRepository.obtenerAlbumActivo()
+    }
+
+    validarPerfilModel(codigoPerfil: string): PerfilModel {
+        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuario(codigoPerfil)
+        let perfil: PerfilModel
+        usuario.perfiles.forEach(item => {
+            if (item.tipoPerfil.codigo === codigoPerfil) {
+                perfil = item
+            }
+        })
+
+        // Si el perfil no existe, se crea y se actualiza el usuario
+        if (!perfil) {
+            perfil = {
+                _id: '',
+                nombre: '',
+                nombreContacto: '',
+                direcciones: [],
+                telefonos: [],
+                tipoPerfil: this.obtenerTipoPerfilSegunCodigo(codigoPerfil),
+                estado: {
+                    codigo: CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR
+                },
+                album: []
+            }
+            usuario.perfiles.push(perfil)
+            this.cuentaNegocio.guardarUsuarioEnLocalStorage(usuario)
+        }
+        return perfil
+    }
+
+    actualizarPerfilEnUsuario(perfil: PerfilModel) {
+        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuario(perfil.tipoPerfil.codigo)
+        let pos = -1
+        usuario.perfiles.forEach((item, i) => {
+            if (item.tipoPerfil.codigo === perfil.tipoPerfil.codigo) {
+                pos = i
+            }
+        })
+        if (pos >= 0) {
+            usuario.perfiles[pos] = perfil
+        }
+        this.cuentaNegocio.guardarUsuarioEnLocalStorage(usuario)
+    }
+
+    insertarAlbunEnPerfil(codigoPerfil: string, album: AlbumModel) {
+        const perfil: PerfilModel = this.validarPerfilModel(codigoPerfil)
+        let pos = -1
+        perfil.album.forEach((item, i) => {
+            if (item.tipo.codigo === album.tipo.codigo) {
+                pos = i
+            }
+        })
+        // Si el album existe, se actualizar, caso contrario se inserta
+        if (pos >= 0) {
+            console.log('album ya esta creado, actualizando')
+            perfil.album[pos] = album
+        } else {
+            console.log('album no creado, insertando')
+            perfil.album.push(album)
+        }
+        // actualizar usuario
+        this.actualizarPerfilEnUsuario(perfil)
+        this.perfilRepository.guardarAlbumActivo(null)
+    }
+
+    validarAlbumSegunTipo(tipo: CodigosCatalogoTipoAlbum, perfil: PerfilModel) {
+        let album: AlbumModel
+        perfil.album.forEach(item => {
+            if (item.tipo.codigo === tipo) {
+                album = item
+            }
+        })
+        // Si el album no existe, se crea y se actualiza el perfil en el usuario
+        if (!album) {
+            console.log('album no existe, creando')
+            album = {
+                id: '',
+                portada: {},
+                tipo: {
+                    codigo: tipo,
+                },
+                media: []
+            }
+            perfil.album.push(album)
+            this.actualizarPerfilEnUsuario(perfil)
+        }
+        // Definir album activo
+        this.guardarAlbumActivo(album)
     }
 
 }

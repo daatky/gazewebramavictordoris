@@ -11,7 +11,7 @@ export interface CatalogoPaisEntity{
     fechaCreacion?: Date
     fechaActualizacion?: Date
     codigo?:string
-    codigoTelefono?:string
+    codigoTelefono?:Array<any>
     codigoNombre?:string
     traducciones?:Array<TraduccionCatalogoPaisEntity>
 }
