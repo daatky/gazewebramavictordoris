@@ -1,3 +1,4 @@
+import { SessionStorageServicie } from './../../nucleo/servicios/locales/session-storage.service';
 import { UsuarioModel } from './../modelo/usuario.model';
 import { CuentaServiceLocal } from './../../nucleo/servicios/locales/cuenta.service';
 import { Injectable } from '@angular/core'
@@ -11,7 +12,6 @@ import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";
 import { IniciarSesionModel } from "../modelo/iniciar-sesion.model";
 import { IniciarSesionMapperService } from '../entidades/iniciar-sesion.entity';
-import { SessionStorageServicie } from "../../nucleo/servicios/locales/session-storage.service";
 import { UsuarioEntity } from '../entidades/usuario.entity';
 @Injectable({
     providedIn: 'root'
@@ -99,11 +99,21 @@ export class CuentaRepository {
 
     // Guardar usuario en el local storage
     guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
-        this.cuentaServiceLocal.guardarUsuario(usuario)
+        this.cuentaServiceLocal.guardarUsuarioEnLocalStorage(usuario)
     }
 
     // Obtener usuario del local storage
     obtenerUsuarioDelLocalStorage(): UsuarioModel {
-        return this.cuentaServiceLocal.obtenerUsuario()
+        return this.cuentaServiceLocal.obtenerUsuarioDelLocalStorage()
+    }
+
+    // Guardar usuario en el session storage
+    guardarUsuarioEnSessionStorage(usuario: UsuarioModel) {
+        this.cuentaServiceLocal.guardarUsuarioEnSessionStorage(usuario)
+    }
+
+    // Obtener usuario del session storage
+    obtenerUsuarioDelSessionStorage(): UsuarioModel {
+        return this.cuentaServiceLocal.obtenerUsuarioDelnSessionStorage()
     }
 }

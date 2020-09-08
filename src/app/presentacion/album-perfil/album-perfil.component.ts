@@ -1,7 +1,8 @@
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { Observable } from 'rxjs';
 import { UsuarioModel } from './../../dominio/modelo/usuario.model';
 import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio';
-import { CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+import { CodigosCatalogoEntidad, AccionAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { MediaEntity } from './../../dominio/entidades/media.entity';
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
 import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum';
@@ -58,11 +59,12 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   public observable: any
 
   // Parametros de url
-  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
   public codigo: string // Indica el codigo de la entidad
+  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
+  public accionEntidad: AccionEntidad // Indica la accion de la entidad desde la que se accedio al album
   public titulo: string // El titulo a mostrar en el album
-  public esVisitante: boolean // Visitante true 1, propietario false 0
   public accionAlbum: AccionAlbum // Accion para la que el album esta siendo utilizado
+  // public esVisitante: boolean // Visitante true 1, propietario false 0
 
   // Parametros internos
   public album: AlbumModel // Album en uso
@@ -93,10 +95,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     private perfilNegocio: PerfilNegocio,
     private cuentaNegocio: CuentaNegocio,
   ) {
-    this.cantidadMaximaFotos = 6
     this.titulo = ''
-    this.esVisitante = true
     this.accionAlbum = AccionAlbum.CREAR
+    this.cantidadMaximaFotos = 6
     this.listaMediaAlbum = []
     this.itemsAlbum = []
     this.itemsAlbumPorDefecto = []
@@ -147,20 +148,15 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   configurarParametrosDeUrl() {
-    if (this.rutaActual.snapshot.params.entidad) {
-      this.entidad = this.rutaActual.snapshot.params.entidad
-    }
-
-    if (this.rutaActual.snapshot.params.codigo) {
-      this.codigo = this.rutaActual.snapshot.params.codigo
-    }
-
-    if (this.rutaActual.snapshot.params.titulo) {
-      this.titulo = this.rutaActual.snapshot.params.titulo
-    }
-    
-    if (this.rutaActual.snapshot.params.accion) { 
-      this.accionAlbum =  this.rutaActual.snapshot.params.accion
+    const { codigo, entidad, accionEntidad, titulo, accionAlbum } = this.rutaActual.snapshot.params
+    if (codigo && entidad && accionEntidad && titulo && accionAlbum) {
+      this.codigo = codigo
+      this.entidad = entidad
+      this.accionEntidad = accionEntidad
+      this.titulo = titulo
+      this.accionAlbum = accionAlbum
+    } else {
+      // Caso contrario validar
     }
   }
 
@@ -262,7 +258,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
       },
       accionAtras: () => {
-        this.accionAppBarBack()
+        this.accionAtrasAppBarBack()
       }
     }
   }
@@ -566,11 +562,14 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     return ''
   }
 
-  accionAppBarBack() {
+  accionAtrasAppBarBack() {
     // Cuando el album es usado para Crear
     if (this.accionAlbum === AccionAlbum.CREAR) {
       if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
+        let ruta = RutasLocales.REGISTRO.toString()
+        ruta = ruta.replace(':accionEntidad', this.accionEntidad)
+        ruta = ruta.replace(':codigoPerfil', this.codigo)
+        this.router.navigateByUrl(ruta)
       }
       return
     }
@@ -580,10 +579,4 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-}
-
-
-export enum AccionAlbum {
-    CREAR = 'creando',
-    ACTUALIZAR = 'actualizando',
 }

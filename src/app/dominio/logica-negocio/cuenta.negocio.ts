@@ -13,6 +13,7 @@ import { PagoModel } from '../modelo/pago.model';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
 import { Codigos2CatalogoIdioma } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-idioma.enum';
+import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 //CuentaRepository
 //iniciarSesion
 @Injectable({
@@ -119,6 +120,7 @@ export class CuentaNegocio {
             return of(tokenActual)
         }
     }
+    
     // Guardar usuario en el local storage
     guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
         this.cuentaRepository.guardarUsuarioEnLocalStorage(usuario)
@@ -129,9 +131,19 @@ export class CuentaNegocio {
         return this.cuentaRepository.obtenerUsuarioDelLocalStorage()
     }
 
+    // Guardar usuario en el session storage
+    guardarUsuarioEnSessionStorage(usuario: UsuarioModel) {
+        this.cuentaRepository.guardarUsuarioEnSessionStorage(usuario)
+    }
+
+    // Obtener usuario del session storage
+    obtenerUsuarioDelSessionStorage(): UsuarioModel {
+        return this.cuentaRepository.obtenerUsuarioDelSessionStorage()
+    }
+
     // Valida si existe el usuario, caso contrario lo crea
     validarUsuario(codigoPerfil: string): UsuarioModel {
-        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
+        let usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage()
         if (!usuario) {
             usuario = {
                 id: '',
@@ -145,18 +157,18 @@ export class CuentaNegocio {
                 fechaNacimiento: new Date(),
                 nombreResponsable: '',
             }
-            this.guardarUsuarioEnLocalStorage(usuario)
+            this.guardarUsuarioEnSessionStorage(usuario)
         } else {
             usuario.perfilGrupo = (codigoPerfil === CodigosCatalogoTipoPerfil.GROUP)
-            this.guardarUsuarioEnLocalStorage(usuario)
-            usuario = this.obtenerUsuarioDelLocalStorage()
+            this.guardarUsuarioEnSessionStorage(usuario)
+            usuario = this.obtenerUsuarioDelSessionStorage()
         }
         return usuario
     }
 
     // Eliminar perfil de usuario
     eliminarPerfilDelUsuario(codigoPerfil: string) {
-        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage()
+        let usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage()
         let pos = -1
         usuario.perfiles.forEach((perfil, i) => {
             if (perfil.tipoPerfil.codigo === codigoPerfil) {
@@ -170,7 +182,23 @@ export class CuentaNegocio {
                 usuario.email = ''
                 usuario.contrasena = ''
             }
-            this.guardarUsuarioEnLocalStorage(usuario)
+            this.guardarUsuarioEnSessionStorage(usuario)
+        }
+    }
+
+    // Valida el estado del perfil cuando el usuario abandona el formulario de registro
+    validarEstadoPerfilParaDestruir(codigoPerfil: string, codigoEstado: CodigosCatalogosEstadoPerfiles ) {
+        if (codigoEstado === CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR) {
+          this.eliminarPerfilDelUsuario(codigoPerfil)
+        }
+    }
+
+    // Obtener Email y Contrasena del usuario
+    obtenerEmailConContrasenaDelUsuario() {
+        const usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage()
+        return {
+            email: usuario.email,
+            contrasena: usuario.contrasena
         }
     }
 
@@ -186,11 +214,11 @@ export class CuentaNegocio {
             fechaNacimiento: fechaNacimiento,
             nombreResponsable: nombreResponsable,
         }
-        this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta);
+        this.cuentaRepository.guardarUsuarioEnSessionStorage(cuenta);
     }
 
     eliminarAceptacionTerminosCondiciones() {
-        this.cuentaRepository.guardarUsuarioEnLocalStorage(null);
+        this.cuentaRepository.guardarUsuarioEnSessionStorage(null);
     }
 
     aceptoTerminosCondiciones() {
@@ -202,7 +230,7 @@ export class CuentaNegocio {
             aceptoTerminosCondiciones: true,
             menorEdad: false,
         }
-        this.cuentaRepository.guardarUsuarioEnLocalStorage(cuenta)
+        this.cuentaRepository.guardarUsuarioEnSessionStorage(cuenta)
     }
 
     sesionIniciada(): boolean {

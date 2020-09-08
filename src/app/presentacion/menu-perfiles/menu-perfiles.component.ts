@@ -32,6 +32,8 @@ import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/mod
 import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+
 
 
 /*
@@ -148,7 +150,11 @@ export class MenuPerfilesComponent implements OnInit {
   }
 
   navegarCrearPerfil(tipoPerfil: CatalogoTipoPerfilModel) {
-    this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", tipoPerfil.codigo));
+    let registro = RutasLocales.REGISTRO.toString()
+    // Anadi la accion a la ruta del registro por eso la modificacion, autor: Andre
+    registro = registro.replace(':accionEntidad', AccionEntidad.REGISTRO)
+    registro = registro.replace(':codigoPerfil', tipoPerfil.codigo)
+    this.router.navigateByUrl(registro)
   }
 
   mostrarDescripcion(item: any) {
@@ -186,7 +192,6 @@ export class MenuPerfilesComponent implements OnInit {
       idInterno: "",
       onclick: () => { },
       dobleClick: () => { }
-
     };
   }
 

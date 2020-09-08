@@ -17,44 +17,10 @@ import { InternacionalizacionNegocio } from "../app/dominio/logica-negocio/inter
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'gazelookweb';
-
-
-  /*
-  listaAcciones = [
-    ButtonComponent.crearBotonAfirmativo(this.prueba),
-    ButtonComponent.crearBotonNegativo(this.prueba)
-  ]
-  */
-
-  listaAcciones = [
-    {
-      colorTexto: ColorTextoBoton.ROJO,
-      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
-      text: "YES",
-      ejecutar: this.prueba,
-      enProgreso: false,
-      tipoBoton: TipoBoton.TEXTO_ICON
-    },
-    {
-      colorTexto: ColorTextoBoton.ROJO,
-      tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
-      text: "YES",
-      ejecutar: this.prueba,
-      enProgreso: false,
-      tipoBoton: TipoBoton.TEXTO_ICON
-    }
-  ]
-
-  dataDialogo: DialogoCompartido = {
-    tipo: TipoDialogo.MULTIPLE_ACCION_HORIZONTAL,
-    listaAcciones: this.listaAcciones,
-    completo: true
-  }
+  public title = 'gazelookweb'
 
   constructor(
     private globales: VariablesGlobales,
-    private dialogoServicie: DialogoServicie,
     private internacionalizacionNegocio: InternacionalizacionNegocio
   ) {
     //GUARDAR EN LA INTERNACIONALIZACION EL IDIOMA POR DEFECTO O EL IDOMA QUE ESTA GUARDADO EN EL LOCAL STORAGE
@@ -70,14 +36,6 @@ export class AppComponent {
       console.log('HAY INTERNET')
     });
 
-  }
-
-  prueba() {
-    alert("asd");
-  }
-
-  openModal(id: string) {
-    this.dialogoServicie.open(id);
   }
 
   obtenerMundoClases() {

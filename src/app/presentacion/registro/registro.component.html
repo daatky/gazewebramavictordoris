@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="modale">
-                <app-dialogo-inline #dialogoInline [configuracion]="confDialogo"></app-dialogo-inline>
+                <app-dialogo-inline #dialogoInline [configuracion]="confDialogoMasPerfiles"></app-dialogo-inline>
             </div>
             <p
                 [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
@@ -274,5 +274,15 @@
     >
         <app-button [botonCompartido]="confBotonPago"></app-button>
     </div>
+    <!-- Botones estado del perfil -->
+    <div
+        *ngIf="mostrarBotonesEstadoPerfil()"
+        class="botonesEstado"
+    >
+        <app-button [botonCompartido]="confBotonHibernar"></app-button>
+        <app-button [botonCompartido]="confBotonEliminar"></app-button>
+    </div>
 </div>
-<app-toast [configuracion]="confToast"></app-toast>
+<app-toast #toast [configuracion]="confToast"></app-toast>
+<app-dialogo [configuracion]="confDialogoHibernar"></app-dialogo>
+<app-dialogo [configuracion]="confDialogoEliminar"></app-dialogo>

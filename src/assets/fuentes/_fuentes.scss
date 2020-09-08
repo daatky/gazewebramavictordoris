@@ -38,3 +38,12 @@
     font-weight: normal;
     font-style: normal;
 }
+
+// Patrick Hand
+@font-face {
+    font-family: 'Patrick Hand';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./patrick-hand/Patrick-Hand.eot);
+    src: local('Patrick Hand'), local('PatrickHand-Regular'), url(./patrick-hand/Patrick-Hand.eot?#iefix) format('embedded-opentype'), url(./patrick-hand/Patrick-Hand.ttf) format('truetype'), url(./patrick-hand/Patrick-Hand.svg#PatrickHand) format('svg'), url(./patrick-hand/Patrick-Hand.woff2) format('woff2'), url(./patrick-hand/Patrick-Hand.woff) format('woff');
+}

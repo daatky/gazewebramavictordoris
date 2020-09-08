@@ -1,4 +1,3 @@
-import { AccionAlbum } from './../../../presentacion/album-perfil/album-perfil.component';
 import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service';
 import { OrigenFoto } from './../../diseno/enums/origen-foto.enum';
 import { ModalOrigenFoto } from './../../diseno/modelos/modal-opciones-foto.interface';

@@ -74,6 +74,7 @@ export class PerfilNegocio {
         return this.perfilRepository.obtenerCatalogoTipoPerfilLocal();
     }
 
+    // Cambiar codigos quemados
     conflictoCrearPerfil(tipoPerfilCrear: CatalogoTipoPerfilModel, tipoPerfiles: CatalogoTipoPerfilModel[]) {
         if (tipoPerfilCrear.codigo == "TIPERFIL_4") {
             //Es perfil de grupo
@@ -83,7 +84,6 @@ export class PerfilNegocio {
             return tipoPerfiles.filter((p) => p.perfil != null && p.codigo == "TIPERFIL_4").length > 0;
         }
     }
-
 
     limpiarPerfiles(tipoPerfiles: CatalogoTipoPerfilModel[]) {
         tipoPerfiles.forEach(tipoPerfil => tipoPerfil.perfil = null)
