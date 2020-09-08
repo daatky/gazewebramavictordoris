@@ -14,5 +14,6 @@ export enum ColorDelTexto {
     TEXTOTITULOFECHA = 'titulo-fecha',
     TEXTOERRORFORMULARIO = 'error-formulario',
     TEXTO_COLOR_PLATEADO = 'txt-color-plateado',
-    AZUL_HIBERNATE='txt-color-azul-hibernate'
+    AZUL_HIBERNATE='txt-color-azul-hibernate',
+    GRIS="txt-color-gris"
 }

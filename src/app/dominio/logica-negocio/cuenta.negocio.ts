@@ -28,15 +28,15 @@ export class CuentaNegocio {
         private usuarioModelMapper: UsuarioModelMapperService
     ) { }
 
-    iniciarSesion(email: string, contrasena: string): Observable<CatalogoTipoPerfilModel[]> {
+    iniciarSesion(email: string, contrasena: string): Observable<UsuarioModel> {
         let data = { email: email, contrasena: contrasena }
         return this.cuentaRepository.iniciarSesion(data)
             .pipe(
                 map(data => {
                     this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
                     this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
-                    this.cuentaRepository.almacenarCatalogoPerfiles(data.perfil)
-                    return data.perfil
+                    this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
+                    return data.usuario
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -52,11 +52,16 @@ export class CuentaNegocio {
         usuario.idioma = {
             codigo: (idioma) ? idioma.codigo : Codigos2CatalogoIdioma.INGLES
         };
-        usuario.datosFacturacion = {
-            direccion: pago.direccion,
-            nombres: pago.nombres,
-            telefono: pago.telefono
+        if (pago) {
+            usuario.datosFacturacion = {
+                direccion: pago.direccion,
+                nombres: pago.nombres,
+                telefono: pago.telefono,
+                email: pago.email
+
+            }
         }
+
         usuario.metodoPago = {
             codigo: metodoPago
         }
@@ -76,15 +81,15 @@ export class CuentaNegocio {
             )
     }
 
-    activarCuenta(idTransaccion: string): Observable<CatalogoTipoPerfilModel[]> {
+    activarCuenta(idTransaccion: string): Observable<UsuarioModel> {
         let data = { "idTransaccion": idTransaccion };
         return this.cuentaRepository.activarCuenta(data)
             .pipe(
                 map(data => {
                     this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
                     this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
-                    this.cuentaRepository.almacenarCatalogoPerfiles(data.perfil)
-                    return data.perfil
+                    this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
+                    return data.usuario;
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -236,4 +241,20 @@ export class CuentaNegocio {
     sesionIniciada(): boolean {
         return this.repository.obtenerTokenAutenticacion() != null
     }
+
+    limpiarTerminosCondiciones() {
+        const user = this.repository.obtenerUsuarioDelSessionStorage();
+        if (user.email == "") {
+            this.repository.guardarUsuarioEnSessionStorage(null);
+        }
+    }
+
+    verificarAceptacionTerminosCondiciones() {
+        let cuenta = this.obtenerUsuarioDelSessionStorage();
+        if (cuenta) {
+            return !cuenta.aceptoTerminosCondiciones;
+        }
+        return true;
+    }
+
 }

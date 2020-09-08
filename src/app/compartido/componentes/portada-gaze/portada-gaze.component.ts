@@ -9,7 +9,7 @@ import { TamanoPortadaGaze } from '../../diseno/enums/tamano-portada-gaze.enum'
 })
 export class PortadaGazeComponent implements OnInit {
 
-  @Input() configuracionPortada:PortadaGazeCompartido
+  @Input() configuracionPortada: PortadaGazeCompartido
 
   constructor() { }
 
@@ -19,18 +19,19 @@ export class PortadaGazeComponent implements OnInit {
         tamano: TamanoPortadaGaze.PORTADACOMPLETA
       }
     }
+
   }
 
   obtenerClasesPortada() {
     const clases = {}
     clases[this.configuracionPortada.tamano.toString()] = true
-    if(this.configuracionPortada.espacioDerecha){
-      clases['espacio-derecha']=this.configuracionPortada.espacioDerecha
+    if (this.configuracionPortada.espacioDerecha) {
+      clases['espacio-derecha'] = this.configuracionPortada.espacioDerecha
     }
     return clases
   }
 
-  reDibujar(a:PortadaGazeCompartido) {
+  reDibujar(a: PortadaGazeCompartido) {
     this.configuracionPortada = a
   }
 

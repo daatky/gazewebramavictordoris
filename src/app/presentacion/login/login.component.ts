@@ -17,6 +17,7 @@ import { PensamientoCompartidoComponent } from 'src/app/compartido/componentes/p
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-login',
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private router: Router,
     private cuentaNegocio: CuentaNegocio,
+    private _location: Location,
   ) {
 
   }
@@ -94,7 +96,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   navegarmenuSeleccionarPerfiles() {
-    this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES)
+    this._location.replaceState('/');
+    this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES, { replaceUrl: true })
   }
 
 

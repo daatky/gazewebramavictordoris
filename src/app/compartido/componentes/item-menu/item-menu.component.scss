@@ -16,7 +16,7 @@
     position: relative;
     width: $item-menu-ancho-6920;
     box-sizing: border-box;
-    padding-top: $espacio-0316;    
+    padding-top: $espacio-0316;
     padding-left: $espacio-267;
     padding-right: $espacio-267;
     display: flex;
@@ -62,10 +62,6 @@
 //     display: none !important;
 // }
 
-
-
-
-
 // Tamanos del item
 .item-menu-alto-1948 {
     height: $item-menu-alto-1948;
@@ -82,6 +78,10 @@
 }
 .item-menu-alto-4255 {
     height: $item-menu-alto-4255;
+}
+
+.item-menu-alto-contenido {
+    height: fit-content;
 }
 
 // Estilos para lienas de texto
@@ -114,11 +114,16 @@
 
 .instruccion-separacion {
     width: 100%;
-    height: $espacio-522;
+    height: abs($espacio-522 -$defecto-total);
 }
 .instruccion-separacion-min {
     width: 100%;
-    height: $espacio-0178;
+    height: abs($defecto-total - $espacio-0178);
+}
+
+.instruccion-separacion-media {
+    width: 100%;
+    height: abs($defecto-total - $espacio-0316);
 }
 
 .contenedor-texto {
@@ -145,7 +150,7 @@
 }
 
 .texto-submenu {
-    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.32, $arriba: true);
+    //padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.32, $arriba: true);
     position: relative;
     display: block;
     display: flex;
@@ -165,5 +170,5 @@
 }
 .espacioPalabra {
     width: 100%;
-    height: $espacio-0249;
+    height: abs($defecto-total - $espacio-0249);
 }

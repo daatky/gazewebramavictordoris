@@ -73,8 +73,9 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
         nombrePerfil: {
           mostrar: false
         },
-        mostrarDivBack: true,
+        mostrarDivBack: false,
         mostrarTextoHome: true,
+        mostrarBotonXRoja: true,
         subtitulo: {
           mostrar: true,
           llaveTexto: 'escojaPerfil'
@@ -114,7 +115,7 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
 
   navegarMenuPrincipal(tipoPerfil: CatalogoTipoPerfilModel) {
     if (tipoPerfil.perfil) {
-      this.router.navigateByUrl(RutasLocales.MENU_PRINCIPAL.replace(":codigoPerfil", tipoPerfil.codigo));
+      this.router.navigate([RutasLocales.MENU_PRINCIPAL], { queryParams: { codigoPerfil: tipoPerfil.codigo } });
     } else {
       this.navegarCrearEditarPerfil(tipoPerfil);
     }

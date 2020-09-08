@@ -45,7 +45,8 @@ export class BienvenidaComponent implements OnInit {
     this.botonEnter = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('ingrese'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.navegarMenuPrincipal() }
   }
   navegarMenuPrincipal() {
-    this.router.navigateByUrl(RutasLocales.MENU_PRINCIPAL.replace(":codigoPerfil", ""));
+    this.router.navigate([RutasLocales.MENU_PRINCIPAL]);    
+    //this.router.navigateByUrl(RutasLocales.MENU_PRINCIPAL.replace(":codigoPerfil", ""));
   }
 
   ngAfterViewInit(): void {

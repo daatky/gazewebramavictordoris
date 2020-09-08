@@ -9,6 +9,10 @@
         </div>
     </div>
 
-    <app-item-menu *ngIf="itemSubMenu" [configuracionItem]="prepararItemSubMenu(itemSubMenu)"></app-item-menu>
+    <app-item-menu *ngIf="itemSubMenu3Puntos" [configuracionItem]="prepararItemSubMenu(itemSubMenu3Puntos)">
+    </app-item-menu>
+
+    <app-item-menu *ngIf="itemMenuMultipleAccion"
+        [configuracionItem]="prepararItemsParaMenuMultipleAccion(itemMenuMultipleAccion)"></app-item-menu>
 
 </app-lista-vertical>

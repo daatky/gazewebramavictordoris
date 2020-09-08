@@ -37,6 +37,11 @@ import { CodigosEstadoMetodoPago, CodigosCatalogoMetodoPago } from "../../nucleo
 import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
+import { UsuarioModel } from 'src/app/dominio/modelo/usuario.model';
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
+import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { Location } from '@angular/common'
+import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 
 @Component({
   selector: 'app-metodo-pago',
@@ -44,7 +49,7 @@ import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
   styleUrls: ['./metodo-pago.component.scss']
 })
 export class MetodoPagoComponent implements OnInit {
-
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   public payPalConfig?: IPayPalConfig;
   configuracionAppBar: ConfiguracionAppbarCompartida;
   listaMetodoPago: CatalogoMetodoPagoModel[];
@@ -59,6 +64,8 @@ export class MetodoPagoComponent implements OnInit {
 
   dataModalPaypal: ModalContenido;
   dataModalStripe: ModalContenido;
+
+  configuracionToast: ConfiguracionToast
 
   dataLista: DatosLista;
 
@@ -95,13 +102,15 @@ export class MetodoPagoComponent implements OnInit {
     private router: Router,
     private stripeService: StripeService,
     private fb: FormBuilder,
-    private idiomaNegocio: IdiomaNegocio
+    private idiomaNegocio: IdiomaNegocio,
+    private _location: Location,
   ) {
     this.preperarLista()
     this.obtenerCatalogoMetodosPago()
     this.configurarAppBar()
     this.configurarDialogoContenido();
     this.obtenerIdioma();
+    this.configurarToast();
 
   }
 
@@ -128,12 +137,15 @@ export class MetodoPagoComponent implements OnInit {
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
         this.dataModalPaypal.abierto = true;
+        this.toast.abrirToast("abrir metodo pago");
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
         this.dataModalStripe.abierto = true;
         break;
     }
   }
+
+
 
   obtenerCatalogoMetodosPago() {
     this.dataLista.cargando = true
@@ -178,15 +190,22 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   private initConfigPaypal(): void {
+    let idTransaccion = "";
     this.payPalConfig = {
       clientId: "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
       createOrderOnServer: (data) =>
-        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString()).toPromise().then(
-          (res) => res.idPago),
-      //this.pagoNegocio.prepararPagoPaypal({}).toPromise(),
-      //.then((res) => res.json())
-      //.then((order) => order.orderID),
+        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
+          (res) => {
+            idTransaccion = res.idTransaccion;
+            console.log("se creao la cuenta y se retonor el id para confirmar")
+            return res.idPago
+          }
+        ).catch((error) => {
+          console.log(error);
+          this.toast.abrirToast(error)
+          return error.toString();
+        }),
       advanced: {
         commit: "true",
         extraQueryParams: [{ name: 'disable-funding', value: 'card' }]
@@ -198,6 +217,8 @@ export class MetodoPagoComponent implements OnInit {
       },
 
       onApprove: (data, actions) => {
+        this.toast.abrirToast("Transaccion aprobada, pero no autoriazada")
+
         console.log(
           "onApprove - Transaccion ha sido aprovada, pero no autorizada",
           data,
@@ -208,36 +229,23 @@ export class MetodoPagoComponent implements OnInit {
         });
       },
       onClientAuthorization: (data) => {
-        console.log("onClientAuthorization - transacción autorizada", data
-        );
-        // this.showSuccess = true;
-        /*
-        this.crearCuenta(this.pagoForm.value).subscribe((cuenta) =>
-          console.log(cuenta, "cuenta creada")
-        );
-        */
-        //this.activarCuenta();
+        this.toast.abrirToast("Transaccion autoriazada");
+        console.log("onClientAuthorization - transacción autorizada", data);
+        this.activarCuenta(idTransaccion);
       },
       onCancel: (data, actions) => {
-        console.log("OnCancel", data, actions);
-        // this.showCancel = true;
+        this.toast.abrirToast("Transaccion cancelada")
       },
       onError: (err) => {
-        console.log("OnError", err);
-        // this.showError = true;
+        this.toast.abrirToast("Error al procesar el pago")
       },
       onClick: (data, actions) => {
         console.log("onClick", data, actions);
         this.dataModalPaypal.abierto = false;
-        // this.resetStatus();
       },
 
     };
   }
-  preparePaypay(): Promise<string> {
-    return this.pagoNegocio.prepararPagoPaypal({}).toPromise();
-  }
-
 
   pagarStripe(): void {
     if (this.pagoForm.valid) {
@@ -245,7 +253,7 @@ export class MetodoPagoComponent implements OnInit {
         nombres: this.pagoForm.value.nombre,
         telefono: this.pagoForm.value.telefono,
         direccion: this.pagoForm.value.direccion,
-        email: this.pagoForm.value.nombre.email,
+        email: this.pagoForm.value.email,
       }
       this.dataModalStripe.abierto = false;
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(
@@ -302,8 +310,29 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   activarCuenta(idTransaccion: string) {
-    this.cuentaNegocio.activarCuenta(idTransaccion).subscribe((data) => {
-      console.log(data, "Cuenta creada"); // redirigir o prensertar mensaje
-    });
+    /*
+    this.toast.abrirToast("Procesando Pago para crear la cuenta", true)
+    this.cuentaNegocio.activarCuenta(idTransaccion)
+      .subscribe((res: UsuarioModel) => {
+        this.toast.cerrarToast();
+        this._location.replaceState('/'); // clears browser history so they can't navigate with back button                
+        this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES);
+      }, error => {
+        this.configuracionToast.texto = error.toString();
+        this.toast.abrirToast(error.toString())
+        console.log(error)
+      })
+      */
   }
+
+  configurarToast() {
+    this.configuracionToast = {
+      cerrarClickOutside: false,
+      bloquearPantalla: false,
+      mostrarLoader: false,
+      mostrarToast: false,
+      texto: ""
+    }
+  }
+
 }

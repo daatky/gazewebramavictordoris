@@ -67,7 +67,7 @@ export class PeticionInterceptor implements HttpInterceptor {
                             if (event.body.codigoEstado) {
                                 console.log(event.body)
                                 if (event.body.codigoEstado >= 400) {
-                                    console.log('sdsdfsf',);
+                                    
                                     throw event.body.respuesta.mensaje
                                 }
                             }

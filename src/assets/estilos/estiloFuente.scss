@@ -1,6 +1,6 @@
 @import "./dimensiones.scss";
 
-$sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
+
 
 .enCapitalize {
     text-transform: capitalize !important;
@@ -141,7 +141,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 // Estilos de tamano e interlineado combinados
 .letra-1-con-interlineado-igual {
     font-size: $letra-1;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-1-con-interlineado-1 {
     @include fuenteConInterlineado($letra-1, $interlineado-1);
@@ -191,7 +191,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-2-con-interlineado-igual {
     font-size: $letra-2;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-2-con-interlineado-1 {
     @include fuenteConInterlineado($letra-2, $interlineado-1);
@@ -241,7 +241,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-3-con-interlineado-igual {
     font-size: $letra-3;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-3-con-interlineado-1 {
     @include fuenteConInterlineado($letra-3, $interlineado-1);
@@ -291,7 +291,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-4-con-interlineado-igual {
     font-size: $letra-4;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-4-con-interlineado-1 {
     @include fuenteConInterlineado($letra-4, $interlineado-1);
@@ -341,7 +341,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-5-con-interlineado-igual {
     font-size: $letra-5;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-5-con-interlineado-1 {
     @include fuenteConInterlineado($letra-5, $interlineado-1);
@@ -391,7 +391,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-6-con-interlineado-igual {
     font-size: $letra-6;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-6-con-interlineado-1 {
     @include fuenteConInterlineado($letra-6, $interlineado-1);
@@ -441,7 +441,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-7-con-interlineado-igual {
     font-size: $letra-7;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-7-con-interlineado-1 {
     @include fuenteConInterlineado($letra-7, $interlineado-1);
@@ -491,7 +491,7 @@ $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 
 .letra-8-con-interlineado-igual {
     font-size: $letra-8;
-    line-height: 80%;
+    line-height: $line-height;
 }
 .letra-8-con-interlineado-1 {
     @include fuenteConInterlineado($letra-8, $interlineado-1);

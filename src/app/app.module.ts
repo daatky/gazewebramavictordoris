@@ -15,7 +15,7 @@ import { CompartidoModule } from './compartido/compartido.module'
 import { DetectorGestos } from './nucleo/servicios/generales/detector-gestos.service'
 
 //=====Modulos traducciones
-import { TranslateModule, TranslateLoader} from '@ngx-translate/core'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 //SERVICIOS
@@ -41,6 +41,8 @@ import { AlbumGeneralComponent } from './presentacion/album-general/album-genera
 import { MenuPrincipalComponent } from './presentacion/menu-principal/menu-principal.component';
 import { MisContactosComponent } from './presentacion/mis-contactos/mis-contactos.component';
 import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
+import { RestriccionRutas } from './nucleo/servicios/generales/canActivate/resticcionRutas.service';
+import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service'
 
 //Traducciones
 export function createTranslateLoader(http: HttpClient) {
@@ -52,7 +54,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     LoginComponent,
     RegistroComponent,
-    MetodoPagoComponent,    
+    MetodoPagoComponent,
     MenuPerfilesComponent,
     AlbumPerfilComponent,
     BienvenidaComponent,
@@ -62,18 +64,18 @@ export function createTranslateLoader(http: HttpClient) {
     MisContactosComponent,
     MenuSeleccionPerfilesComponent
   ],
-  imports: [    
+  imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    CompartidoModule,    
+    CompartidoModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),        
+        useFactory: (createTranslateLoader),
         deps: [HttpClient]
       },
       isolate: true
@@ -91,9 +93,11 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: DetectorGestos },
     { provide: HTTP_INTERCEPTORS, useClass: PeticionInterceptor, multi: true },
-   // ApiService,
+    // ApiService,
     HandleError,
-    IdiomaService
+    IdiomaService,
+    RestriccionRutas,
+    RutasInicioSession
   ],
   bootstrap: [AppComponent]
 })

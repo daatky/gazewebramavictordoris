@@ -52,6 +52,7 @@ import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums
 import { TipoDialogo } from 'src/app/compartido/diseno/enums/tipo-dialogo.enum'
 import { LocationStrategy } from '@angular/common'
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-registro',
@@ -108,7 +109,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private perfilNegocio: PerfilNegocio,
     private cuentaNegocio: CuentaNegocio,
-    private registroService: RegistroService
+    private registroService: RegistroService,
+    private _location: Location,
   ) {
     this.perfilCreado = false
     this.noCrearMasPerfiles = false
@@ -565,110 +567,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         // No hay mas perfiles
         break
     }
-
-    // // Determinar perfiles sobrantes
-    // if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.CLASSIC) {
-
-
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'sustituto',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.AZUL,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.SUBSTITUTE)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.SUBSTITUTE))
-    //     },
-    //   })
-    //   // Ludico
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'ludico',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.ROJO,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.PLAYFUL)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.PLAYFUL))
-    //     },
-    //   })
-
-    //   const botonPosCero = await this.translateService.get('sustituto').toPromise()
-    //   const botonPosUno = await this.translateService.get('ludico').toPromise()
-    //   this.confDialogo.listaBotones[0].text = botonPosCero
-    //   this.confDialogo.listaBotones[1].text = botonPosUno
-    //   // Determinar boton no o boton payment
-    //   this.determinarBotonNoBotonPaymente(-1)
-    // }
-
-    // if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.PLAYFUL) {
-    //   // Clasico y substituto
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'clasico',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.AZUL,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.CLASSIC)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.CLASSIC))
-    //     },
-    //   })
-    //   // Substituto
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'sustituto',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.ROJO,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.SUBSTITUTE)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.SUBSTITUTE))
-    //     },
-    //   })
-
-    //   const botonPosCero = await this.translateService.get('clasico').toPromise()
-    //   const botonPosUno = await this.translateService.get('sustituto').toPromise()
-    //   this.confDialogo.listaBotones[0].text = botonPosCero
-    //   this.confDialogo.listaBotones[1].text = botonPosUno
-    //   // Determinar boton no o boton payment
-    //   this.determinarBotonNoBotonPaymente(-1)
-    // }
-
-    // if (this.perfil.tipoPerfil.codigo === CodigosCatalogoTipoPerfil.SUBSTITUTE) {
-    //   // Clasico y ludico
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'clasico',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.AZUL,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.CLASSIC)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.CLASSIC))
-    //     },
-    //   })
-    //   // Ludico
-    //   this.confDialogo.listaBotones.push({
-    //     text: 'ludico',
-    //     tipoBoton: TipoBoton.TEXTO,
-    //     tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
-    //     colorTexto: ColorTextoBoton.ROJO,
-    //     enProgreso: false,
-    //     ejecutar: () => {
-    //       this.reiniciarInformacionParaCambioDePerfil(CodigosCatalogoTipoPerfil.PLAYFUL)
-    //       this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", CodigosCatalogoTipoPerfil.PLAYFUL))
-    //     },
-    //   })
-
-    //   const botonPosCero = await this.translateService.get('clasico').toPromise()
-    //   const botonPosUno = await this.translateService.get('ludico').toPromise()
-    //   this.confDialogo.listaBotones[0].text = botonPosCero
-    //   this.confDialogo.listaBotones[1].text = botonPosUno
-    //   // Determinar boton no o boton payment
-    //   this.determinarBotonNoBotonPaymente(-1)
-    // }
   }
 
   async determinarBotonNoBotonPaymente(pos: number) {

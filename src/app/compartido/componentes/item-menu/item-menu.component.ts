@@ -8,6 +8,7 @@ import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/inte
 import { async } from 'rxjs/internal/scheduler/async'
 import { ColorFondoItemMenu } from '../../diseno/enums/color-fondo-item-menu.enum'
 import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
+import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.model'
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   texto3: Promise<string>;
   texto2: Promise<string>;
   texto1: Promise<string>;
+  textos: Promise<string>[]=[];
 
   /*
     Especificaiones generales,
@@ -45,6 +47,7 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.obtenerTraducciones()
+    this.obtenerTraduccionesListaPalabras()
     this.estiloTexto1();
   }
 
@@ -92,6 +95,23 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     if (this.configuracionItem.texto3) {
       this.texto3 = this.internacionalizacionNegocio.obtenerTextoLlave(this.configuracionItem.texto3);
     }
+  }
+
+  obtenerTraduccionesListaPalabras() {
+    if (this.configuracionItem.descripcion) {
+      this.textos = []
+      for (let palabra of this.configuracionItem.descripcion) {
+        //this.textos.push(this.internacionalizacionNegocio.obtenerTextoLlave(palabra))
+      }
+    }
+
+    if (this.configuracionItem.acciones) {
+      this.textos = []
+      for (let accion of this.configuracionItem.acciones) {
+        this.textos.push(this.internacionalizacionNegocio.obtenerTextoLlave(accion.nombre))
+      }
+    }
+
   }
 
   ngAfterViewInit(): void {
@@ -148,6 +168,36 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     this.configuracionItem.clickSostenido()
   }
 
+  obtenerSeparacionItemInstrucciones() {
+    const clases = {}
+    clases["instruccion-separacion-min"] = (this.configuracionItem.texto1) ? true : false
+    clases["instruccion-separacion-media"] = (this.configuracionItem.texto1) ? false : true
+    return clases
+  }
+
+  clickItemSubMenu(item: ItemAccion) {
+    item.accion();
+  }
+
+  //temporal, considere la eliminacion en caso de no usuarlo
+  estiloTextoMenus(item: ItemAccion) {
+    if (item.codigo == "g") {
+      return this.estiloTexto.obtenerEstilosTexto({
+        color: this.estiloTexto.colorDelTexto.GRIS,
+        estiloTexto: this.estiloTexto.estilosDelTexto.BOLD,
+        enMayusculas: true,
+        tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L2_I8
+      })
+    } else {
+      return this.estiloTexto.obtenerEstilosTexto({
+        color: this.estiloTexto.colorDelTexto.GRIS,
+        estiloTexto: this.estiloTexto.estilosDelTexto.BOLD,
+        enMayusculas: true,
+        tamanoConInterlineado: this.estiloTexto.tamanoDeTextoConInterlineado.L1_I8
+      })
+    }
+  }
+
 }
 
 
@@ -157,5 +207,6 @@ export enum TipoMenu {
   ACCION, // Menu principal
   INSTRUCCIONES,
   SUBMENU, // PARA EL SUBMENU DE LOS TRES PUNTOS
-  ANUNCIOS, // Para el item menu de gaze anouncement
+  ANUNCIOS, // Para el item menu de gaze anouncement,
+  LEGAL
 }

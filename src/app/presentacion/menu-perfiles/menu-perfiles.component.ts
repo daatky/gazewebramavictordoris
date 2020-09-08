@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 import { ColorDelTexto } from 'src/app/compartido/diseno/enums/color-del-texto.enum';
@@ -33,7 +33,7 @@ import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
 import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
-
+import { Location } from '@angular/common';
 
 
 /*
@@ -65,7 +65,8 @@ export class MenuPerfilesComponent implements OnInit {
     private router: Router,
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private formBuilder: FormBuilder,
-    private cuentaNegocio: CuentaNegocio
+    private cuentaNegocio: CuentaNegocio,
+    private _location: Location,
   ) {
     this.configurarBotonAceptar();
     this.prepararAppBar()
@@ -83,10 +84,8 @@ export class MenuPerfilesComponent implements OnInit {
   }
 
   verificarAceptacionTerminosCondiciones() {
-    let cuenta = this.cuentaNegocio.obtenerUsuarioDelLocalStorage();
-    if (cuenta) {
-      this.dataModalTerminosCondiciones.abierto = false;
-    }
+    this.dataModalTerminosCondiciones.abierto = this.cuentaNegocio.verificarAceptacionTerminosCondiciones();
+
   }
 
   obtenerCatalogoTipoPerfil() {
@@ -267,6 +266,7 @@ export class MenuPerfilesComponent implements OnInit {
   async prepararAppBar() {
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
+      accionAtras: () => this.volverAtras(),
       searchBarAppBar: {
         nombrePerfil: {
           mostrar: false
@@ -282,6 +282,11 @@ export class MenuPerfilesComponent implements OnInit {
       }
     }
 
+  }
+
+  volverAtras() {
+    this.cuentaNegocio.limpiarTerminosCondiciones();
+    this._location.back();
   }
 
   async prepararInfoTipoPerfiles() {
@@ -394,5 +399,12 @@ export class MenuPerfilesComponent implements OnInit {
       tamanoLista: TamanoLista.TIPO_PERFILES
     }
   }
+
+  // Escucha para el boton de back del navegador
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    this.cuentaNegocio.limpiarTerminosCondiciones()
+  }
+
 
 }
