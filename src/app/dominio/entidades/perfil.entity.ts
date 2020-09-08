@@ -10,7 +10,7 @@ import { PensamientoEntity } from "./pensamiento.entity";
 import { AsociacionEntity } from "./asociacion.entity";
 import { NoticiaEntity } from "./noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
-import { CatalogoTipoPerfilEntity } from "./catalogos/catalogo-tipo-perfil.entity";
+import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService } from "./catalogos/catalogo-tipo-perfil.entity";
 import { PerfilModel } from '../modelo/perfil.model';
 
 export interface PerfilEntity {
@@ -55,6 +55,13 @@ export class PerfilEntityMapperServicePerfilresumenModelo extends MapedorService
 @Injectable({ providedIn: 'root' })
 export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity, PerfilModel> {
 
+    constructor
+        (
+            private tipoPerfilMapper: CatalogoTipoPerfilMapperService
+        ) {
+        super();
+    }
+
     protected map(entity: PerfilEntity): PerfilModel {
         if (entity) {
             return {
@@ -62,6 +69,7 @@ export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity
                 nombreContacto: entity.nombreContacto,
                 nombre: entity.nombre,
                 estado: entity.estado,
+                tipoPerfil: this.tipoPerfilMapper.transform(entity.tipoPerfil)
             };
         }
         return null;

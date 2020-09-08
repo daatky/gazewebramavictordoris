@@ -19,12 +19,12 @@ export interface ArchivoModel {
 @Injectable({ providedIn: 'root' })
 export class ArchivoModeloMapperService extends MapedorService<ArchivoModel, ArchivoEntity> {
 
-    protected map(entity: ArchivoModel): ArchivoEntity {
-        return {
-            _id: entity._id,
-            url: entity.url,
+    protected map(model: ArchivoModel): ArchivoEntity {
+        return (model) ? {
+            _id: model._id,
+            url: model.url,
             //catalogoArchivoDefault: entity.catalogoArchivoDefault
-        };
+        } : null;
     }
 
 }

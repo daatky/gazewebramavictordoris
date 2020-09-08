@@ -1,4 +1,6 @@
 @import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/colores.scss";
+@import "../../../assets/estilos/imagenes.scss";
 
 .contenidoGeneral{
     width: $ancho-pagina;
@@ -6,25 +8,23 @@
     overflow: hidden; 
 }
 .contenidoPensamientos{
-    width: $ancho-pagina;
-    padding: 0 $espacio-267 0 $espacio-267;
-    height: calc($cuerpo-general - $barra-mensajes);
+    width: $ancho-pagina;    
+    height: calc(#{$cuerpo-general} - #{$bottom-bar-alto});    
     background-color: white;
     box-sizing: border-box;    
+    overflow: scroll; 
+}
+.padding267{
+    padding: 0 $espacio-267 0 $espacio-267;
 }
 .div249{    
     height: $interlineado-4;
 }
 .div230Caracteres{
-    padding: $interlineado-8 0 $interlineado-8 0;
+    padding: $interlineado-8 $espacio-267 $interlineado-8 $espacio-267;
 }
 .div1542{
     width: $espacio-1542;
     height: 12px;
     float: left;
-}
-.barraMensajes{
-    background-color: red;
-    width: 100%;
-    height: $barra-mensajes
 }

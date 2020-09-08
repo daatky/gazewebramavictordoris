@@ -6,11 +6,6 @@
     width: 100%;
     height: $interlineado-4;
 }
-.divOtroPensamiento{
-    padding-bottom: $interlineado-10;    
-    box-sizing: border-box;
-    width: $ancho-pagina*0.6382;
-}
 .divPensamientoAleatorio{
     padding-bottom: $interlineado-10;    
     box-sizing: border-box;
@@ -26,8 +21,12 @@
     background-image: $forma-amarilla-pensamientos;    
     background-repeat: no-repeat;
 }
-.divPensamientoRojo{
+.divFormasPensamientoRojo{
     background-image: $forma-roja-pensamientos;
+    background-repeat: no-repeat;
+}
+.divFormasPensamiento{
+    background-image: $forma-ambos-pensamientos;    
     background-repeat: no-repeat;
 }
 .tamanoPensamientoAleatorio{
@@ -47,20 +46,29 @@
 }
 .tamanoPensamiento{    
     height: calcular(131.8643);    
-    padding: calcular(6.84) ($espacio-267 + $espacio-0658) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78));
+    padding: calcular(6.84) ($espacio-267 + $espacio-0658 + calcular(0.78)) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78));   
+    box-sizing: border-box;
+}
+.tamanoPensamientoPrivado{
+    height: calcular(131.8643);    
+    padding: calcular(6.84) ($espacio-267 + calcular(0.78)) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78)+ $espacio-0658);
     //padding-bottom: calcular(9.212);    
     box-sizing: border-box;
 }
-.divPensamiento{
-    //width: $ancho-pagina - ($espacio-0658 * 2);   
-    width: $ancho-pagina - $espacio-0658;   
-    height: calcular(131.8643);    
-    box-sizing: border-box;     
+.divPensamientoFormaAmarilla{
+    width: $ancho-pagina - $espacio-0658;       
+    height: 100%;    
+    padding: 0 0 0 $espacio-0658;
 }
+.divPensamientoFormaRoja{
+    width: $ancho-pagina - $espacio-0658;       
+    height: 100%;    
+    padding: 0 $espacio-0658 0 0;
+}
+/*.divPensamientoForma{
+    width: $ancho-pagina;       
+    height: 100%;    
+}*/
 .divError{
     height: calcular(41.43)-($espacio-677*2)
 }
-/*.divIndicacionesPensamientos{
-    width: 100%;
-    box-sizing: border-box;
-}*/

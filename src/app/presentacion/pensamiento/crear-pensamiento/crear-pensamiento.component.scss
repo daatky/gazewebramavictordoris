@@ -3,15 +3,10 @@
 .letra{
     font-size: x-small;
 }
-.cargandoCompleto{
-    //height:$altura-pagina;    
-    background-color: $tranparencia-base;  
-}
 .cuerpoPensamiento{      
-    width: calc(100vh - #{$espacio-267});
+    width: $ancho-pagina;
     height: calcular(131.8643);    
-    padding: $interlineado-8 0 0 ($espacio-0658 - $espacio-267);
-    //margin: 0 0 -$interlineado-10 0 ;
+    padding: $interlineado-8 0 0 0;
     box-sizing: border-box;   
 }
 .divIndicacionesPensamientos{

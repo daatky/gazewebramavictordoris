@@ -2,11 +2,12 @@
 <div class="contenidoGeneral">
     <div class="contenidoPensamientos">
         <div class="centrarText div230Caracteres">
-            <p class="txt-azul-base bold letra-3-con-interlineado-2" >{{ 'antesEscribir' | translate | uppercase}}</p>    
+            <p class="txt-azul-base bold letra-3-con-interlineado-2">{{ 'antesEscribir' | translate | uppercase}}</p>
             <div class="div249"></div>
-            <p class="txt-rojo-base regular letra-2-con-interlineado-2 ">{{ '230Caracteres' | translate | uppercase}}</p>    
-        </div> 
-        <div class="centrar">
+            <p class="txt-rojo-base regular letra-2-con-interlineado-2 ">{{ '230Caracteres' | translate | uppercase}}
+            </p>
+        </div>
+        <div class="padding267 centrar">
             <div *ngIf="botonPublico" class="divBoton">
                 <app-button class="centrar" [botonCompartido]='botonPublico'></app-button>
             </div>
@@ -14,9 +15,16 @@
             <div *ngIf="botonPrivado" class="divBoton">
                 <app-button class="centrar" [botonCompartido]='botonPrivado'></app-button>
             </div>
-        </div>   
-        <router-outlet></router-outlet>        
+        </div>
+        <!--*ngIf="presentarPensamiento"-->
+        <!--<router-outlet></router-outlet>     -->
+        <app-crear-pensamiento [estadosPensamiento]='estadosPensamiento'>
+            <!--<form [formGroup]="crearPensamientoForm">
+        <app-input [inputCompartido]='inputPensamiento'></app-input>
+        <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
+    </form>-->
+        </app-crear-pensamiento>
+        <!--{{this.crearPensamientoForm.get('pensamiento').value.length}}{{this.crearPensamientoForm.get('pensamiento').value}}-->
     </div>
-    <div class="barraMensajes">coksodckoskdcok</div>
+    <app-barra-inferior [barraInferior]='barraInferior' (escucharEvento)='crearPensamiento($event)'></app-barra-inferior>
 </div>
-<!---->

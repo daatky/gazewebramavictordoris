@@ -32,7 +32,9 @@ export class PensamientoCompartidoComponent implements OnInit {
   ngOnInit(): void {  
     this.cargarPensamiento()
   }  
-
+  ngOnChanges(){
+    this.cargarPensamiento()
+  }
   cargarPensamiento(){
     this.error=""
     //console.log("aspodkaokdoakdok")
@@ -40,7 +42,17 @@ export class PensamientoCompartidoComponent implements OnInit {
     if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){                  
       this.obtenerPensamientoAleatorio()          
     }else{       
-      this.divPensamiento='divPensamiento'
+      if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_PRIVADO_CREACION)){
+        this.divPensamiento='divPensamientoFormaRoja'
+      }else{
+        if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION)){
+          this.divPensamiento='divPensamientoFormaAmarilla'
+        }/*else{
+          if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_SIN_SELECCIONAR)){
+            this.divPensamiento='divPensamientoForma'
+          }
+        } */
+      }         
     }
   }
   obtenerPensamientoAleatorio(){
@@ -76,6 +88,7 @@ export class PensamientoCompartidoComponent implements OnInit {
       onclick: () => this.eventoClick(index,pensamientoModel),        
       estilo:EstiloItemPensamiento.ITEM_ALEATORIO,
       dobleClick: () => this.eventoDobleClick(index,pensamientoModel),  
+      presentarX:this.pensamientoCompartido.configuracionItem.presentarX
     }
   }
 }

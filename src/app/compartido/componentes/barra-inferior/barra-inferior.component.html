@@ -1,0 +1,44 @@
+<!--,
+        'activa': (this.crearPensamientoForm.get('pensamiento').value.length > 0)-->
+<div *ngIf="barraInferior" [ngClass]="{
+        'barrainferior': true,
+        'activa':barraInferior.activarBarra
+    }">
+    <div class="cajablanca">
+        <!--<div *ngIf="!dataForm.touched && (dataForm.controls.texto.value.length<1)" class="icono">-->
+        <div *ngIf="!barraInferior.variosIconos; else mostrarIconos" class="cajablanca">
+            <div class="icono">
+                <img class="iconotexto" src="../../../../assets/recursos/botones/forma-icono-editar-texto.svg">
+            </div>
+            <!--{{barraInferior.input.tipo.toString()}}-->
+            <form [formGroup]="dataForm">
+                <input class="inputTexto" type={{barraInferior.input.tipo.toString()}}
+                    attr.maxlength="{{barraInferior.input.maximo}}" placeholder="{{barraInferior.input.placeholder}}"
+                    formControlName='texto'>
+            </form>
+        </div>
+        <ng-template #mostrarIconos>
+            <div class="icono">
+                <img class="iconotexto" src="../../../../assets/recursos/botones/forma-icono-editar-texto.svg">
+            </div>
+            <div class="icono">
+                <img class="iconotexto" src="../../../../assets/recursos/botones/forma-icono-editar-texto.svg">
+            </div>
+            <!--{{barraInferior.input.tipo.toString()}}-->
+            <form [formGroup]="dataForm">
+                <input type={{barraInferior.input.tipo.toString()}} attr.maxlength="{{barraInferior.input.maximo}}"
+                    placeholder="{{barraInferior.input.placeholder}}" formControlName='texto'>
+            </form>
+        </ng-template>
+    </div>
+    <!--(tap)="agregarTexto()"-->
+    <!--<div
+        class="boton"
+        (click)="agregarTexto()"
+    >
+        <img src="../../../../assets/recursos/botones/forma-flecha-circular-amarilla.svg">
+    </div>-->
+    <div class="boton">
+        <app-button [botonCompartido]="botonCompartido"></app-button>
+    </div>
+</div>

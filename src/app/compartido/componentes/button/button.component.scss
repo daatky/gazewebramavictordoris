@@ -1,4 +1,5 @@
 @import "../../../../styles.scss";
+@import "../../../../assets/estilos/dimensiones.scss";
 
 .buttonBase {
     background-image: $forma-boton;
@@ -14,6 +15,13 @@
     height: $espacio-1310;
     width: $espacio-1310;
     margin-left: $interlineado-2;
+}
+.iconoBoton{
+    //forma-flecha-circular-amarilla
+    background-image: $forma-flecha-circular-amarilla;
+    height: $bottom-bar-boton-diametro;
+    width: $bottom-bar-boton-diametro;
+    background-size: 100% 100%;
 }
 
 .letraDescripcion {

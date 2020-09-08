@@ -6,8 +6,8 @@
     height: fit-content;
     border-radius: $interlineado-15;
     //padding: $interlineado-6;
-    padding: ($interlineado-6 - calcularPaddingAfectadoPorInterlineadoTemp(1.39,true)) $interlineado-6 $interlineado-6 $interlineado-6;
-    //padding: ($interlineado-6 - calcularPaddingAfectadoPorInterlineado(1.39,true)) $interlineado-6 $interlineado-6 $interlineado-6;    
+    //padding: $interlineado-6 $interlineado-6 $interlineado-6 $interlineado-6;
+    padding: ($interlineado-6 - calcularPaddingAfectadoPorInterlineadoTemp(1.39,true)) $interlineado-6 ($interlineado-6 - calcularPaddingAfectadoPorInterlineadoTemp(1.39,true)) $interlineado-6;    
     box-sizing: border-box;
     background-color: $titulo-fecha;
     color: $blanco;

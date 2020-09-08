@@ -182,7 +182,7 @@ export class MetodoPagoComponent implements OnInit {
       clientId: "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
       createOrderOnServer: (data) =>
-        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString()).toPromise().then(
+        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
           (res) => res.idPago),
       //this.pagoNegocio.prepararPagoPaypal({}).toPromise(),
       //.then((res) => res.json())

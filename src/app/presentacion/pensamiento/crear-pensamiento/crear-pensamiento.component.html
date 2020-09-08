@@ -1,4 +1,4 @@
-<div *ngIf="cargando;else presentar" class="cargandoCompleto cuerpo centrar">
+<div *ngIf="cargando;else presentar" class="tranparencia-base cuerpo centrar">
     <app-cargando></app-cargando>
 </div>
 <ng-template #presentar>    
@@ -14,10 +14,8 @@
                     <div class="div316"></div>
                 </div> 
             </app-pensamiento-compartido>                  
-            <!--<form [formGroup]="crearPensamientoForm">
-                <app-input [inputCompartido]='inputPensamiento'></app-input>
-                <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
-            </form>-->
         </div>
+        <ng-content>
+        </ng-content>
     <app-toast [configuracion]='configuracionToast'></app-toast>
 </ng-template>

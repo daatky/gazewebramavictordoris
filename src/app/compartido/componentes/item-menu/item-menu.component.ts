@@ -148,6 +148,13 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     this.configuracionItem.clickSostenido()
   }
 
+  obtenerSeparacionItemInstrucciones() {
+    const clases = {}
+    clases["instruccion-separacion-min"] = (this.configuracionItem.texto1) ? true : false
+    clases["instruccion-separacion-media"] = (this.configuracionItem.texto1) ? false : true
+    return clases
+  }
+
 }
 
 

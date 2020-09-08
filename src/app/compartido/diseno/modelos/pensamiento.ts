@@ -12,12 +12,14 @@ export interface PensamientoCompartido {
 }
 export interface ConfiguracionItem{
     estilo?:EstiloItemPensamiento, //Estilo del item
+    presentarX?:boolean
 }
 //SE LO USA PARA ENVIAR LOS EVENTOS DE TAP Y 2 TAP AL ITEM
 export interface Configuracion{
     estilo?:EstiloItemPensamiento
     data?: PensamientoModel,
     onclick?: Function,
-    dobleClick?: Function
+    dobleClick?: Function,
     clickSostenido?: Function,
+    presentarX?:boolean
 }
