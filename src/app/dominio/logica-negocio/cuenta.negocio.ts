@@ -213,4 +213,20 @@ export class CuentaNegocio {
     sesionIniciada(): boolean {
         return this.repository.obtenerTokenAutenticacion() != null
     }
+
+    limpiarTerminosCondiciones() {
+        const user = this.repository.obtenerUsuarioDelLocalStorage();
+        if (user.email == "") {
+            this.repository.guardarUsuarioEnLocalStorage(null);
+        }
+    }
+
+    verificarAceptacionTerminosCondiciones() {
+        let cuenta = this.obtenerUsuarioDelLocalStorage();
+        if (cuenta) {
+            return !cuenta.aceptoTerminosCondiciones;
+        }
+        return true;
+    }
+
 }

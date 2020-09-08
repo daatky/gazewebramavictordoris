@@ -51,7 +51,7 @@ import { AccionesBuscadorModal } from 'src/app/compartido/diseno/enums/acciones-
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
 import { AccionAlbum } from '../album-perfil/album-perfil.component'
 import { TipoDialogo } from 'src/app/compartido/diseno/enums/tipo-dialogo.enum';
-import { LocationStrategy } from '@angular/common';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-registro',
@@ -69,7 +69,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // CodigosTipoPerfil
   public codigosCatalogoTipoPerfil = CodigosCatalogoTipoPerfil
-  
+
   // Parametros url
   public codigoPerfil: string // Codigo del perfil activo
 
@@ -84,7 +84,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public idDialogo: string // id del dialogo de pago
   public confDialogo: ConfiguracionDialogoInline // Dialogo compartido
   public noCrearMasPerfiles: boolean // False aparece boton no, true aparece boton payment
-  public registroForm:FormGroup // Formulario de registro
+  public registroForm: FormGroup // Formulario de registro
   public inputsForm: Array<InputCompartido> // Configuracion de los inputs
   public botonSubmit: BotonCompartido // Configuracion del boton compartido
   public tipoPerfil: CatalogoTipoPerfilModel // Perfil activo
@@ -103,6 +103,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private perfilNegocio: PerfilNegocio,
     private cuentaNegocio: CuentaNegocio,
+    private _location: Location,
   ) {
     this.perfilCreado = false
     this.noCrearMasPerfiles = false
@@ -128,7 +129,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     // En caso la pagina sea recargada, se actualiza la informacion ingresada
     window.onbeforeunload = () => {
       console.log('pagina recargando')
-      
+
       this.guardarInformacionPerfil(this.obtenerEstadoActualDelPerfil())
     }
   }
@@ -146,7 +147,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // Suscribirse a eventos de click en el selector de pais
-      this.selectorPaises.evento.subscribe((info:InfoAccionSelector) => {
+      this.selectorPaises.evento.subscribe((info: InfoAccionSelector) => {
         if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
           this.abrirSelectorPaises()
           return
@@ -161,7 +162,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       })
 
       // Suscribirse a eventos de click en el buscador de localidades
-      this.buscadorLocalidades.evento.subscribe((info:InfoAccionBuscadorLocalidades) => {
+      this.buscadorLocalidades.evento.subscribe((info: InfoAccionBuscadorLocalidades) => {
         if (info.accion === AccionesBuscadorModal.ABRIR_BUSCADOR) {
           this.abrirBuscadorLocalidades()
           return
@@ -176,7 +177,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() { }
 
-  obtenerEstadoActualDelPerfil() : CodigosCatalogosEstadoPerfiles {
+  obtenerEstadoActualDelPerfil(): CodigosCatalogosEstadoPerfiles {
     const codigo = this.perfil.estado.codigo
     if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR) {
       return CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR
@@ -193,7 +194,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO) {
       return CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO
     }
-    
+
     if (codigo === CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO) {
       return CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO
     }
@@ -233,7 +234,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Escucha para el boton de back del navegador
   @HostListener('window:popstate', ['$event'])
-  onPopState(event:any) {
+  onPopState(event: any) {
     this.validarEstadoPerfilParaDestruir()
   }
 
@@ -348,61 +349,62 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   accionAtrasAppbar() {
     // Validar estado del perfil
     this.validarEstadoPerfilParaDestruir()
-    this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    //this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    this._location.back();
   }
 
-  // Configurar inputs
+  // Configurar inputss
   configurarInputs() {
     // InputComponent
     this.inputsForm.push({
-        tipo: 'text',
-        error: false,
-        estilo: {
-          estiloError:EstiloErrorInput.ROJO,
-          estiloInput:EstiloInput.REGISTRO
-        },
-        placeholder: 'Contact Name',
-        data: this.registroForm.controls.nombreContacto
+      tipo: 'text',
+      error: false,
+      estilo: {
+        estiloError: EstiloErrorInput.ROJO,
+        estiloInput: EstiloInput.REGISTRO
+      },
+      placeholder: 'Contact Name',
+      data: this.registroForm.controls.nombreContacto
     })
     this.inputsForm.push({
-        tipo: 'text',
-        error: false,
-        estilo: {
-          estiloError:EstiloErrorInput.ROJO,
-          estiloInput:EstiloInput.REGISTRO
-        },
-        placeholder: 'Name:',
-        data: this.registroForm.controls.nombre
+      tipo: 'text',
+      error: false,
+      estilo: {
+        estiloError: EstiloErrorInput.ROJO,
+        estiloInput: EstiloInput.REGISTRO
+      },
+      placeholder: 'Name:',
+      data: this.registroForm.controls.nombre
     })
     this.inputsForm.push({
-        tipo: 'email',
-        error: false,
-        estilo: {
-          estiloError:EstiloErrorInput.ROJO,
-          estiloInput:EstiloInput.REGISTRO
-        },
-        placeholder: 'E-mail:',
-        data: this.registroForm.controls.email
+      tipo: 'email',
+      error: false,
+      estilo: {
+        estiloError: EstiloErrorInput.ROJO,
+        estiloInput: EstiloInput.REGISTRO
+      },
+      placeholder: 'E-mail:',
+      data: this.registroForm.controls.email
     })
     this.inputsForm.push({
-        tipo: 'password',
-        error: false,
-        estilo: {
-          estiloError:EstiloErrorInput.ROJO,
-          estiloInput:EstiloInput.REGISTRO
-        },
-        placeholder: 'Password:',
-        data: this.registroForm.controls.contrasena
+      tipo: 'password',
+      error: false,
+      estilo: {
+        estiloError: EstiloErrorInput.ROJO,
+        estiloInput: EstiloInput.REGISTRO
+      },
+      placeholder: 'Password:',
+      data: this.registroForm.controls.contrasena
     })
     this.inputsForm.push({
-        tipo: 'text',
-        error: false,
-        estilo: {
-          estiloError:EstiloErrorInput.ROJO,
-          estiloInput:EstiloInput.REGISTRO
-        },
-        placeholder: 'Address:',
-        data: this.registroForm.controls.direccion
+      tipo: 'text',
+      error: false,
+      estilo: {
+        estiloError: EstiloErrorInput.ROJO,
+        estiloInput: EstiloInput.REGISTRO
+      },
+      placeholder: 'Address:',
+      data: this.registroForm.controls.direccion
     })
   }
 
@@ -449,7 +451,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       mostrarBoton = false
       mostrarLoader = true
     }
-    
+
     this.confItemCir = {
       id: '',
       idInterno: '',
@@ -748,7 +750,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL,
       colorTexto: ColorTextoBoton.AMARRILLO,
       enProgreso: false,
-      ejecutar: () => {},
+      ejecutar: () => { },
     }
     // Se inserta el boton
     if (pos < 0) {
@@ -795,18 +797,18 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Click en input localidades
   abrirBuscadorLocalidades() {
     console.log(this.buscadorLocalidades.pais)
-    if (! this.buscadorLocalidades.pais || this.buscadorLocalidades.pais.codigo.length === 0) {
-      this.buscadorLocalidades.mostrarError( 'Error, debes seleccionar el pais antes de buscar una localidad', true, true)
+    if (!this.buscadorLocalidades.pais || this.buscadorLocalidades.pais.codigo.length === 0) {
+      this.buscadorLocalidades.mostrarError('Error, debes seleccionar el pais antes de buscar una localidad', true, true)
     }
     this.buscadorLocalidades.configuracion.mostrarModal = true
   }
 
   // Buscador localidades
-  buscarLocalidades(pais:string, query:string) {
+  buscarLocalidades(pais: string, query: string) {
     this.buscadorLocalidades.configuracion.resultado.mostrarCargando = true
     this.ubicacionNegocio.obtenerCatalogoLocalidadesPorNombrePorPaisParaSelector(pais, query)
       .subscribe(data => {
-        this.buscadorLocalidades.mostrarElegibles( (Array.isArray(data)) ? data : [data] )
+        this.buscadorLocalidades.mostrarElegibles((Array.isArray(data)) ? data : [data])
         this.buscadorLocalidades.configuracion.resultado.mostrarCargando = false
       }, error => {
         this.buscadorLocalidades.mostrarError('Ocurrio un error al procesar tu solicitud, intenta mas tarde', true)
@@ -832,7 +834,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     rutaAux = rutaAux.replace(':accion', accion)
     // Guardar info antes de cambiar de componente
     this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR)
-    this.router.navigateByUrl(rutaAux)
+    this.router.navigateByUrl(rutaAux, { skipLocationChange: true })
   }
 
   // Eventos de click en items
@@ -905,12 +907,12 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
           codigo: (itemPais) ? itemPais.codigo : '',
           nombre: (itemPais) ? itemPais.nombre : ''
         },
-        codigoPostal: codigoPostal, 
+        codigoPostal: codigoPostal,
       }
     }
     // Se cambia el estado a creado
     this.perfil.estado.codigo = estadoPerfil
-    
+
     let pos = -1
     usuario.perfiles.forEach((perfil, i) => {
       if (perfil.tipoPerfil.codigo === this.perfil.tipoPerfil.codigo) {
@@ -941,7 +943,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
           this.perfilCreado = true
           this.botonSubmit.enProgreso = false
           error = false
-        } 
+        }
       }
     }
 

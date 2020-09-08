@@ -70,7 +70,7 @@
             <br>
             <div class="centrar">
                 <button class="botondefecto" (tap)="pagarStripe()"> ACEPTAR</button>
-            </div>            
+            </div>
         </div>
     </app-dialogo-contenido>
 
@@ -81,3 +81,7 @@
     </app-dialogo-contenido>
 
 </div>
+
+<app-toast #toast [configuracion]="configuracionToast">
+
+</app-toast>

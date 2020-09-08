@@ -70,6 +70,7 @@ export class AppComponent {
       console.log('HAY INTERNET')
     });
 
+    this.obtenerMundoClases();
   }
 
   prueba() {

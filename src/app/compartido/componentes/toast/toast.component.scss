@@ -1,4 +1,4 @@
-@import '../../../../assets/estilos/dimensiones.scss';
+@import "../../../../assets/estilos/dimensiones.scss";
 
 $toast-altura: calcular(13);
 $toast-padding-left-right: calcular(2);
@@ -8,83 +8,100 @@ $loader-margin-left: calcular(3);
 
 // Modales
 .sombraCaja {
-    -webkit-box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
-    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12),
+    0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12),
+    0 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
 
 .wrapper-toast {
-    display: none;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900;
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 900;
-
-    width: $ancho-pagina;
-    height: $altura-pagina;
-    background: transparent;
+  width: $ancho-pagina;
+  height: $altura-pagina;
+  background: transparent;
 }
+
+.wrapper-toast-contenido {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 900;
+  width: $ancho-pagina;
+  height: fit-content;
+  background: transparent;
+}
+
 .wrapper-toast.mostrar {
-    display: flex;
-    align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.wrapper-toast-contenido.mostrar {
+  display: flex;
+  align-items: flex-end;
 }
 
 .toast {
-    width: 100%;
-    height: fit-content;
-    min-height: $toast-altura;
-    padding: $toast-padding-left-right;
-    background: #323232;
-    box-sizing: border-box;
+  width: 100%;
+  height: fit-content;
+  min-height: $toast-altura;
+  padding: $toast-padding-left-right;
+  background: #323232;
+  box-sizing: border-box;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
 }
 .toast .texto {
-    width: calc(100% - #{ $loader-diametro } - #{ $loader-margin-left * 2 });
-    padding: 0 $toast-padding-left-right;
-    max-height: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
+  width: calc(100% - #{$loader-diametro} - #{$loader-margin-left * 2});
+  padding: 0 $toast-padding-left-right;
+  max-height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .toast .loader {
-    width: $loader-diametro;
-    height: 100%;
-    margin: 0 $loader-margin-left;
+  width: $loader-diametro;
+  height: 100%;
+  margin: 0 $loader-margin-left;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 
 // Spinner custom
 @keyframes spinner {
-    0% {
-      transform: translate3d(-50%, -50%, 0) rotate(0deg);
-    }
-  
-    100% {
-      transform: translate3d(-50%, -50%, 0) rotate(360deg);
-    }
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
   }
-  
-  .spinnner {
-    position: relative;
+
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
   }
-  
-  .spinner::before {
-    animation: 1.5s linear infinite spinner;
-    animation-play-state: inherit;
-    border: solid 5px #cfd0d1;
-    border-bottom-color: #1c87c9;
-    border-radius: 50%;
-    content: "";
-    height: $loader-diametro;
-    width: $loader-diametro;
-    position: absolute;
-    transform: translate3d(-50%, -50%, 0);
-    will-change: transform;
-  }
+}
+
+.spinnner {
+  position: relative;
+}
+
+.spinner::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #1c87c9;
+  border-radius: 50%;
+  content: "";
+  height: $loader-diametro;
+  width: $loader-diametro;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}

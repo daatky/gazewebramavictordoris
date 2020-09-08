@@ -14,7 +14,7 @@ import { CatalogoMetodoPagoModelMapperService, PagoFacturacionModelMapperService
 import { IdiomaMapperService } from '../modelo/catalogos/catalogo-idioma.model';
 
 export interface UsuarioEntity {
-  id?: string,
+  _id?: string,
   email?: string,
   fechaNacimiento?: Date,
   contrasena?: string,
@@ -50,6 +50,7 @@ export class UsuarioEntityMapperService extends MapedorService<UsuarioEntity, Us
   protected map(entity: UsuarioEntity): UsuarioModel {
     if (entity) {
       return {
+        id: entity._id,
         email: entity.email,
         perfilGrupo: entity.perfilGrupo,
         perfiles: this.perfilMapper.transform(entity.perfiles),

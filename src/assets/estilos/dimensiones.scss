@@ -7,15 +7,15 @@ $altura-pagina: 100vh;
 $defecto-top-neto: 0.56;
 $defecto-bottom-neto: 0.55;
 
-// Constantes para valores que anade la fuente por defecto - con unidad
-$defecto-top: calcular(0.56);
-$defecto-bottom: calcular(0.55);
-$defecto-total: $defecto-top + $defecto-bottom;
-
 // Para calcular la medida en base al ancho de la pagina
 @function calcular($porcentaje) {
     @return ($ancho-pagina * ($porcentaje)) / 100;
 }
+
+// Constantes para valores que anade la fuente por defecto - con unidad
+$defecto-top: calcular(0.56);
+$defecto-bottom: calcular(0.55);
+$defecto-total: $defecto-top + $defecto-bottom;
 
 // Para calcular el interlineado en base a la fuente e interlineado deseado
 @function calcularInterlineado($letra, $interlineado) {

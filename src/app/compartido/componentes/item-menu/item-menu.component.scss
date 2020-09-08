@@ -80,6 +80,10 @@
     height: $item-menu-alto-4255;
 }
 
+.item-menu-alto-contenido {
+    height: fit-content;
+}
+
 // Estilos para lienas de texto
 .itemMenu .caja p {
     width: 100%;
@@ -110,17 +114,16 @@
 
 .instruccion-separacion {
     width: 100%;
-    height: $espacio-522;
+    height: abs($espacio-522 -$defecto-total);
 }
 .instruccion-separacion-min {
     width: 100%;
-    height: $defecto-total - $espacio-0178;
-    //height: 0.67vw;
+    height: abs($defecto-total - $espacio-0178);
 }
 
 .instruccion-separacion-media {
     width: 100%;
-    height: $espacio-0316;
+    height: abs($defecto-total - $espacio-0316);
 }
 
 .contenedor-texto {
@@ -147,7 +150,7 @@
 }
 
 .texto-submenu {
-    padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.32, $arriba: true);
+    //padding-top: calcularPaddingAfectadoPorInterlineadoTemp(3.32, $arriba: true);
     position: relative;
     display: block;
     display: flex;
@@ -167,5 +170,5 @@
 }
 .espacioPalabra {
     width: 100%;
-    height: $espacio-0249;
+    height: abs($defecto-total - $espacio-0249);
 }
