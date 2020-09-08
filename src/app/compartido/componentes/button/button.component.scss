@@ -1,4 +1,7 @@
-@import "../../../../styles.scss";
+//@import "../../../../styles.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+@import "../../../../assets/estilos/dimensiones.scss";
 
 .buttonBase {
     background-image: $forma-boton;
@@ -48,7 +51,7 @@
     padding-left: $espacio-0247;
     padding-right: $espacio-0296;
     padding-top: $espacio-0249;
-    padding-bottom: $espacio-0316;    
+    padding-bottom: $espacio-0316;
     box-sizing: border-box;
     //height: $espacio-1116;
     //font-size: $letra-7;
