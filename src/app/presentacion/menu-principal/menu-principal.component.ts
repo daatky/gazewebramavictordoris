@@ -84,18 +84,19 @@ export class MenuPrincipalComponent implements OnInit {
     this.tipoPerfilSeleccionado = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.tipoPerfilSeleccionado.codigo);
     console.log(this.tipoPerfilSeleccionado);
     this.configuracionAppBar.gazeAppBar.subtituloNormal = this.obtenerTituloPrincipal(true)
+    this.configuracionAppBar.gazeAppBar.mostrarBotonXRoja = true;
   }
 
 
   async prepararAppBar() {
     this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_GAZE_BAR,        
+      usoAppBar: UsoAppBar.USO_GAZE_BAR,
       gazeAppBar: {
         tituloPrincipal: {
           mostrar: true,
           llaveTexto: "My PROFILE"
         },
-        mostrarBotonXRoja: true,
+        mostrarBotonXRoja: false,
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
       }
     }

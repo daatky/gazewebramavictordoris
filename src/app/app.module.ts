@@ -42,13 +42,14 @@ import { MenuPrincipalComponent } from './presentacion/menu-principal/menu-princ
 import { MisContactosComponent } from './presentacion/mis-contactos/mis-contactos.component';
 import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
 import { RestriccionRutas } from './nucleo/servicios/generales/canActivate/resticcionRutas.service';
-import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service'
+import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 
 //Traducciones
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +86,7 @@ export function createTranslateLoader(http: HttpClient) {
     ImageCropperModule,
     NgxPayPalModule,
     NgxStripeModule.forRoot('pk_test_51H7p9XHBVcdcrZQAhAQK81lD4du7n0CxEIxoCIILNNL9s1Fy44O9hZkD6qTPVHixtGNqWhI5D2EyYGsN4xtUy9bp00syWkrOeR'),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     CompartidoModule,
