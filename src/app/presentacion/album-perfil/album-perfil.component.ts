@@ -162,60 +162,72 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Configurar album
   validarAlbum() {
-    this.album = this.perfilNegocio.obtenerAlbumActivo()
+    this.album = this.perfilNegocio.obtenerAlbumActivoDelSessionStorage()
+    console.log(this.album)
     if (!this.album) {
       // Validar la entidad
-      // Entidad perfil
-      if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
-        // Si el usuario existe
-        if (usuario) {
-          usuario.perfiles.forEach(perfil => {
-            if (perfil.tipoPerfil.codigo === this.codigo) {
-              // Sacar el album de tipo general
-              perfil.album.forEach(album => {
-                if (album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
-                  this.album = album
-                }
-              })
+      switch (this.entidad) {
+        case CodigosCatalogoEntidad.PERFIL:
+          const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelSessionStorage()
+          console.log(usuario)
+          // Si el usuario existe
+          if (usuario) {
+            usuario.perfiles.forEach(perfil => {
+              if (perfil && perfil.tipoPerfil.codigo === this.codigo) {
+                // Sacar el album de tipo perfil
+                perfil.album.forEach(album => {
+                  if (album && album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
+                    this.album = album
+                  }
+                })
+              }
+            })
+            if (!this.album) {
+              console.log('sigue sin existir')
+              this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
             }
-          })
-        } else {
-          this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
-        }
-        return
+          } else {
+            console.log('usuario no existe en album')
+            this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+          }
+          break
+        case CodigosCatalogoEntidad.PROYECTO: break;
+        case CodigosCatalogoEntidad.NOTICIA: break;
+        default: break;
       }
     }
   }
 
   configurarItemsAlbum() {
     // Items para el album
-    this.album.media.forEach(media => {
-      this.itemsAlbum.push({
-        id: media._id,
-        idInterno: '',
-        usoDelItem: UsoItemCircular.CIRALBUM,
-        esVisitante: false,
-        urlMedia: media.principal.url,
-        activarClick: false,
-        activarDobleClick: true,
-        activarLongPress: true,
-        mostrarBoton: false,
-        mostrarLoader: true,
-        textoBoton: 'Click to upload',
-        capaOpacidad: {
-          mostrar: false
-        },
-        eventoEnItem: this.eventoEnitemFuncion
+    if (this.album) {
+      this.album.media.forEach(media => {
+        this.itemsAlbum.push({
+          id: media._id,
+          idInterno: this.generadorId.generarIdConSemilla(),
+          usoDelItem: UsoItemCircular.CIRALBUM,
+          esVisitante: false,
+          urlMedia: media.principal.url,
+          activarClick: false,
+          activarDobleClick: true,
+          activarLongPress: true,
+          mostrarBoton: false,
+          mostrarLoader: true,
+          textoBoton: 'Click to upload',
+          capaOpacidad: {
+            mostrar: false
+          },
+          eventoEnItem: this.eventoEnitemFuncion
+        })
       })
-    })
-    // Definir la portada
-    if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
-      const portada: MediaModel = this.album.portada
-      this.confPortada.mostrarLoader = true
-      this.confPortada.id = portada._id
-      this.confPortada.urlMedia = portada.principal.url
-      this.confPortada.mostrarBoton = false
+      // Definir la portada
+      if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
+        const portada: MediaModel = this.album.portada
+        this.confPortada.mostrarLoader = true
+        this.confPortada.id = portada._id
+        this.confPortada.urlMedia = portada.principal.url
+        this.confPortada.mostrarBoton = false
+      }
     }
   }
 
@@ -244,6 +256,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: true,
           llaveTexto: this.obtenerLlaveSegunEntidadCodigo()
@@ -266,7 +279,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   configurarPortada() {
     this.confPortada = {
       id: '',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRPERFIL,
       esVisitante: true,
       urlMedia: '',
@@ -295,7 +308,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   confgurarBotonUploadPhotos() {
     this.confBotonUpload = {
       id: 'botonUpload',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRALBUM,
       esVisitante: false,
       urlMedia: '',
@@ -340,7 +353,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       this.itemsAlbumPorDefecto.push(
         {
           id: 'itemFotoDefecto_' + pos,
-          idInterno: '',
+          idInterno: this.generadorId.generarIdConSemilla(),
           usoDelItem: UsoItemCircular.CIRALBUM,
           esVisitante: true,
           urlMedia: '',
@@ -389,7 +402,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
       id: idItem,
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRALBUM,
       esVisitante: false,
       urlMedia: '',
@@ -517,7 +530,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
   guardarAlbum() {
     if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-      this.perfilNegocio.insertarAlbunEnPerfil(this.codigo, this.album)
+      this.perfilNegocio.insertarAlbunEnPerfilDelSessionStorage(this.codigo, this.album)
     }
   }
 

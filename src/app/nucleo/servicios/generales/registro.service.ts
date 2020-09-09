@@ -83,8 +83,9 @@ export class RegistroService {
         const loginInfo = this.cuentaNegocio.obtenerEmailConContrasenaDelUsuario()
 
         let direccion = ''
-        if (perfil.direcciones && perfil.direcciones.length > 0) {
-        direccion = perfil.direcciones[0].descripcion
+        console.log(perfil)
+        if (perfil && perfil.direcciones && perfil.direcciones.length > 0) {
+            direccion = perfil.direcciones[0].descripcion
         }
 
         const registroForm:FormGroup = this.formBuilder.group({
@@ -197,7 +198,7 @@ export class RegistroService {
     ) : AlbumModel {
         let portadaPerfil: AlbumModel
         perfil.album.forEach(item => {
-            if (item.tipo.codigo === tipoAlbum) {
+            if (item && item.tipo.codigo === tipoAlbum) {
               portadaPerfil = item
             }
         })
@@ -263,12 +264,14 @@ export class RegistroService {
         codigoPerfil: string,
         accionEntidad: AccionEntidad
     ) : {
+        mostrarSearchBar: boolean,
         mostrarTextoHome: boolean,
         llaveSubtitulo: string,
         mostrarNombrePerfil: boolean,
         llaveTextoNombrePerfil: string
      } {
-        let textos = {
+        let appbar = {
+            mostrarSearchBar: false,
             mostrarTextoHome: false,
             llaveSubtitulo: '',
             mostrarNombrePerfil: false,
@@ -277,26 +280,28 @@ export class RegistroService {
 
         switch (accionEntidad) {
             case AccionEntidad.REGISTRO:
-                textos.mostrarTextoHome = false
-                textos.llaveSubtitulo = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
-                textos.mostrarNombrePerfil = false
+                appbar.mostrarTextoHome = false
+                appbar.llaveSubtitulo = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.mostrarNombrePerfil = false
                 break
             case AccionEntidad.CREAR:
-                textos.mostrarTextoHome = true
-                textos.llaveSubtitulo = 'actualizar'
-                textos.mostrarNombrePerfil = true
-                textos.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.mostrarSearchBar = true
+                appbar.mostrarTextoHome = true
+                appbar.llaveSubtitulo = 'actualizar'
+                appbar.mostrarNombrePerfil = true
+                appbar.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
                 break
             case AccionEntidad.ACTUALIZAR:
-                textos.mostrarTextoHome = true
-                textos.llaveSubtitulo = 'actualizar'
-                textos.mostrarNombrePerfil = true
-                textos.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.mostrarSearchBar = true
+                appbar.mostrarTextoHome = true
+                appbar.llaveSubtitulo = 'actualizar'
+                appbar.mostrarNombrePerfil = true
+                appbar.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
                 break
             default: break
         }
 
-        return textos
+        return appbar
     }
 
     // Obtener pais seleccionado en caso de existir o no

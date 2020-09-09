@@ -1,3 +1,4 @@
+import { GeneradorId } from './../../nucleo/servicios/generales/generador-id.service';
 import { DialogoCompartido } from 'src/app/compartido/diseno/modelos/dialogo.interface';
 import { RegistroService } from './../../nucleo/servicios/generales/registro.service'
 import { DialogoInlineComponent } from './../../compartido/componentes/dialogo-inline/dialogo-inline.component'
@@ -38,7 +39,6 @@ import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum'
 import { TamanoPortadaGaze } from 'src/app/compartido/diseno/enums/tamano-portada-gaze.enum'
 import { EstiloDelTextoServicio } from 'src/app/nucleo/servicios/diseno/estilo-del-texto.service'
-import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum'
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface'
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component'
 import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface'
@@ -50,7 +50,6 @@ import { ConfiguracionBuscadorModal } from '../../compartido/diseno/modelos/busc
 import { AccionesBuscadorModal } from 'src/app/compartido/diseno/enums/acciones-buscador-localidades.enum'
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
 import { TipoDialogo } from 'src/app/compartido/diseno/enums/tipo-dialogo.enum'
-import { LocationStrategy } from '@angular/common'
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 import { Location } from '@angular/common'
 
@@ -111,6 +110,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     private cuentaNegocio: CuentaNegocio,
     private registroService: RegistroService,
     private _location: Location,
+    private generadorId: GeneradorId
   ) {
     this.perfilCreado = false
     this.noCrearMasPerfiles = false
@@ -214,8 +214,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Escucha para el boton de back del navegador
   @HostListener('window:popstate', ['$event'])
   onPopState(event: any) {
-    this.accionAtrasAppbar()
+    this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
   }
+
 
   // Obtiene los parametros recibidos en la url
   obtenerParametrosUrl() {
@@ -231,34 +232,37 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Validar si existe el usuario
   inicializarDataUsuario() {
     this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-    this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
-    // Hasta definir si varia en algo dependiendo del caso
-    // switch (this.accionEntidad) {
-    //   case AccionEntidad.REGISTRO:
-    //     // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-    //     // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
-    //     break
-    //   case AccionEntidad.CREAR:
-    //     // Crear el perfil
-    //     // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-    //     // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
-    //     break
-    //   case AccionEntidad.ACTUALIZAR:
-    //     // Obtener el perfil del api, segun id en codigoPerfil
-    //     break
-    //   default: break
-    // }
+    switch (this.accionEntidad) {
+      case AccionEntidad.REGISTRO:
+        this.perfil = this.perfilNegocio.validarPerfilModelDelSessionStorage(this.codigoPerfil)
+        break
+      case AccionEntidad.CREAR:
+        // Crear el perfil
+        // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
+        // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
+        break
+      case AccionEntidad.ACTUALIZAR:
+        // Obtener el perfil del api, segun id en codigoPerfil
+        break
+      default: break
+    }
+
+    if (!this.tipoPerfil || !this.perfil) {
+      this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    }
   }
 
   // Inicializar controles para el formulario
   inicializarControles() {
-    this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil)
+    if (this.perfil) {
+      this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil)
+    }
   }
 
   // Accion atras appbar
   accionAtrasAppbar() {
     this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
-    this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    this._location.back()
   }
 
   // Configurar AppBar
@@ -268,6 +272,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: infoAppBar.mostrarSearchBar,
         nombrePerfil: {
           mostrar: infoAppBar.mostrarNombrePerfil,
           llaveTexto: infoAppBar.llaveTextoNombrePerfil
@@ -320,11 +325,12 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album perfil
   async configurarAlbumPerfil() {
     const album: AlbumModel = this.registroService.obtenerPortadaAlbumSegunTipoDelAlbum(this.perfil, CodigosCatalogoTipoAlbum.PERFIL)
+    console.log(album)
     const infoPortada = this.registroService.definirDataItemSegunPortadaAlbum(album)
 
     this.confItemCir = {
       id: '',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRPERFIL,
       esVisitante: false,
       urlMedia: infoPortada.urlMedia,
@@ -353,7 +359,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.confItemRec = {
       id: '',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECPERFIL,
       esVisitante: false,
       urlMedia: infoPortada.urlMedia,
@@ -383,7 +389,11 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar selectores
   configurarSelectorPais() {
     // Definir direccion
-    const item: ItemSelector = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
+    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+
+    if (this.perfil) {
+      item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
+    }
 
     this.confSelector = {
       tituloSelector: 'Choose the country',
@@ -410,7 +420,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarBuscadorLocalidades() {
     // Definir direccion
-    const item: ItemSelector = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones, false)
+    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    if (this.perfil) {
+      item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones, false)
+    }
 
     this.confBuscador = {
       seleccionado: item,
@@ -773,7 +786,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     rutaAux = rutaAux.replace(':accionAlbum', accionAlbum)
     // Guardar info antes de cambiar de componente
     this.guardarInformacionPerfil(this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
-    this.router.navigateByUrl(rutaAux)
+    this.router.navigateByUrl(rutaAux, { skipLocationChange: true })
   }
 
   // Eventos de click en items
@@ -810,7 +823,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Actualizar perfil antes de pasar a albunes
   guardarInformacionPerfil(estadoPerfil: CodigosCatalogosEstadoPerfiles) {
-    const usuario: UsuarioModel = this.cuentaNegocio.validarUsuario(this.codigoPerfil)
+    const usuario: UsuarioModel = this.cuentaNegocio.validarUsuarioDelSesionStorage(this.codigoPerfil)
     const { contrasena, direccion, email, nombre, nombreContacto } = this.registroForm.value
     const itemPais = this.confSelector.seleccionado
     const itemLocalidad = this.confBuscador.seleccionado

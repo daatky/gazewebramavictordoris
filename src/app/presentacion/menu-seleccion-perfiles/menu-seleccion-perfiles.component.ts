@@ -70,6 +70,7 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: false
         },

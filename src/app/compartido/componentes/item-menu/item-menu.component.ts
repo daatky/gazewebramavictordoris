@@ -9,6 +9,9 @@ import { async } from 'rxjs/internal/scheduler/async'
 import { ColorFondoItemMenu } from '../../diseno/enums/color-fondo-item-menu.enum'
 import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
 import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.model'
+import { timeout, map, debounceTime } from 'rxjs/operators'
+import { Observable, fromEvent } from 'rxjs'
+
 
 
 @Component({
@@ -17,38 +20,54 @@ import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.mode
   styleUrls: ['./item-menu.component.scss']
 })
 export class ItemMenuComponent implements OnInit, AfterViewInit {
-  texto3: Promise<string>;
-  texto2: Promise<string>;
-  texto1: Promise<string>;
-  textos: Promise<string>[]=[];
-
-  /*
-    Especificaiones generales,
-
-    - Se debe configurar el item antes de dibujar, segun el modelo ItemMenuCompartido. (Ejemplo: revisar metodo inicializarConfiguracionPordefecto
-    - Cada linea de texto que vaya a ser mostrarda en el item sera dibujada en base al orden en el que fueron enviadas ItemMenuCompartido.lineasTexto
-      - Para cada linea del array, debe haber un configuracion segun el modelo LineasTextoItemMenu.
-        - Para el Tamano y alto de liena, se debe especificar segun el enum TamanoDeTextoConInterlineado. 
-        - En caso de no haber el valor deseado en el enum, agregar la clase a estiloFuente y el valor respectivo en el enum
-    - Los eventos,
-      - Cuando se produce un evento en el item, se notifica al padre (Se envia el Id del item donde se genero el evento) usando datosItem (click, doble click o long click)
-  */
-
+  @ViewChild('itemMenu', { static: false }) itemMenu: ElementRef
   @Input() configuracionItem: ItemMenuCompartido
   public tipoMenu = TipoMenu
 
+  texto3: Promise<string>;
+  texto2: Promise<string>;
+  texto1: Promise<string>;
+  textos: Promise<string>[] = [];
+
   constructor(
-    private gestorEventosTap: EventoTapPersonalizado,
     public estiloTexto: EstiloDelTextoServicio,
     private internacionalizacionNegocio: InternacionalizacionNegocio,
   ) {
-
   }
 
   ngOnInit(): void {
     this.obtenerTraducciones()
     this.obtenerTraduccionesListaPalabras()
     this.estiloTexto1();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+    })
+  }
+
+  tap() {
+    try {
+      this.configuracionItem.onclick()
+    } catch (error) {
+      console.error('Evento de click no definido')
+    }
+  }
+
+  dobletap() {
+    try {
+      this.configuracionItem.dobleClick() 
+    } catch (error) {
+      console.error('Evento de doble click no definido')
+    }
+  }
+
+  press() {
+    try {
+      this.configuracionItem.clickSostenido()
+    } catch (error) {
+      console.error('Evento de click sostenido no definido')
+    }
   }
 
   estiloTexto1() {
@@ -114,24 +133,6 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      // Inicializar eventos de tap y doble tap
-      const elemento = document.getElementById("itemMenu" + this.configuracionItem.idInterno) as HTMLElement
-      if (elemento) {
-        const gestor = this.gestorEventosTap.construirEventosTap(elemento)
-        gestor.on('tap', () => {
-          console.log('un tap')
-          this.configuracionItem.onclick();
-        })
-        gestor.on('dobletap', () => {
-          console.log('dos tap')
-          this.configuracionItem.dobleClick();
-        })
-      }
-    })
-  }
-
   // Obtener las clases del item segun su configuracion
   obtenerItemClases() {
     const clases = {}
@@ -162,10 +163,6 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
     clases[linea.tamanoConInterlineado.toString()] = true
     clases['enMayusculas'] = linea.enMayusculas
     return clases
-  }
-
-  eventoClickLargo() {
-    this.configuracionItem.clickSostenido()
   }
 
   obtenerSeparacionItemInstrucciones() {

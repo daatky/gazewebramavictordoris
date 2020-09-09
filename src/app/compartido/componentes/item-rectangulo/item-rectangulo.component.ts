@@ -41,7 +41,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.configuracion.idInterno = this.generadorId.generarIdConSemilla() // Generar id interno
+    // this.configuracion.idInterno = this.generadorId.generarIdConSemilla() // Generar id interno
     this.configurarOrigenFoto()
   }
 
@@ -49,13 +49,15 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       // Inicializar Eventos Tap y Doble Tap
       const canvas = document.getElementById("itemRectangularCanvas" + this.configuracion.idInterno) as HTMLElement
-      const gestor = this.itemMetodos.inicializarEventosDeTapPersonalizados(canvas)
-      gestor.on('tap', () => {
-        this.eventoClick()
-      })
-      gestor.on('dobletap', () => {
-        this.eventoDobleClick()
-      })
+      if (canvas) {
+        const gestor = this.itemMetodos.inicializarEventosDeTapPersonalizados(canvas)
+        gestor.on('tap', () => {
+          this.eventoClick()
+        })
+        gestor.on('dobletap', () => {
+          this.eventoDobleClick()
+        })
+      }
     })
   }
 

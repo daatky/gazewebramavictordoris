@@ -147,7 +147,7 @@ export class CuentaNegocio {
     }
 
     // Valida si existe el usuario, caso contrario lo crea
-    validarUsuario(codigoPerfil: string): UsuarioModel {
+    validarUsuarioDelSesionStorage(codigoPerfil: string): UsuarioModel {
         let usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage()
         if (!usuario) {
             usuario = {
@@ -244,7 +244,7 @@ export class CuentaNegocio {
 
     limpiarTerminosCondiciones() {
         const user = this.repository.obtenerUsuarioDelSessionStorage();
-        if (user.email == "") {
+        if (user && user.email == "") {
             this.repository.guardarUsuarioEnSessionStorage(null);
         }
     }

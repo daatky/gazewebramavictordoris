@@ -268,6 +268,7 @@ export class MenuPerfilesComponent implements OnInit {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       accionAtras: () => this.volverAtras(),
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: false
         },
@@ -313,8 +314,6 @@ export class MenuPerfilesComponent implements OnInit {
       tipoBoton: TipoBoton.TEXTO
     }
   }
-
-
 
   aceptarTerminosCondicionesMenorEdad() {
     if (this.menorEdadForm.value.nombreResposanble.length >= 1 || this.menorEdadForm.value.nombreResposanble.length >= 1) {
