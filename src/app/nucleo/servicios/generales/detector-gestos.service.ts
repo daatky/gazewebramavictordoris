@@ -18,14 +18,17 @@ export class DetectorGestos extends HammerGestureConfig {
 @Injectable({ providedIn: 'root' })
 export class EventoTapPersonalizado {
   construirEventosTap(elemento:HTMLElement) {
-    const gestor = new Hammer.Manager(elemento)
+    const gestor = new Hammer.Manager(elemento, {
+      touchAction: 'none'
+    })
     const tap = new Hammer.Tap({ event: 'tap' })
-    const dobleTap = new Hammer.Tap({ event: 'dobletap', taps: 2 })
+    const dobletap = new Hammer.Tap({ event: 'dobletap', taps: 2 })
+    const press = new Hammer.Press({ enable: true, time: 1000 })
     
-    gestor.add([dobleTap, tap])
+    gestor.add([press, dobletap, tap])
 
-    dobleTap.recognizeWith(tap)
-    tap.requireFailure(dobleTap)
+    gestor.get('dobletap').recognizeWith(tap)
+    gestor.get('tap').requireFailure(dobletap)
 
     return gestor
   }

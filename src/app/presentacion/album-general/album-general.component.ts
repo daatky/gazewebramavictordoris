@@ -4,7 +4,7 @@ import { MediaModel } from './../../dominio/modelo/media.model';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { TranslateService } from '@ngx-translate/core';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+import { CodigosCatalogoEntidad, AccionAlbum, AccionEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { AlbumModel } from './../../dominio/modelo/album.model'
 import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum'
 import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum'
@@ -55,10 +55,11 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   public textoCerrarDescripcion: string // Texto que se muestra cuando se empiece a editar la descripcion de la foto
 
   // Parametros de url
-  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
+  // Parametros de url
   public codigo: string // Indica el codigo de la entidad
+  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
+  public accionEntidad: AccionEntidad // Indica la accion de la entidad desde la que se accedio al album
   public titulo: string // El titulo a mostrar en el album
-  public esVisitante: boolean // Visitante true 1, propietario false 0
   public accionAlbum: AccionAlbum // Accion para la que el album esta siendo utilizado
 
   // Parametros internos
@@ -92,7 +93,6 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     this.idItemActivo = ''
     this.itemDescripcionActivo = ''
     this.titulo = ''
-    this.esVisitante = true
     this.accionAlbum = AccionAlbum.CREAR
     this.itemsAlbum = []
     this.itemsAlbumPorDefecto = []
@@ -136,90 +136,96 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   configurarParametrosDeUrl() {
-    if (this.rutaActual.snapshot.params.entidad) {
-      this.entidad = this.rutaActual.snapshot.params.entidad
-    }
-
-    if (this.rutaActual.snapshot.params.codigo) {
-      this.codigo = this.rutaActual.snapshot.params.codigo
-    }
-
-    if (this.rutaActual.snapshot.params.titulo) {
-      this.titulo = this.rutaActual.snapshot.params.titulo
-    }
-    
-    if (this.rutaActual.snapshot.params.accion) { 
-      this.accionAlbum =  this.rutaActual.snapshot.params.accion
+    const { codigo, entidad, accionEntidad, titulo, accionAlbum } = this.rutaActual.snapshot.params
+    if (codigo && entidad && accionEntidad && titulo && accionAlbum) {
+      this.codigo = codigo
+      this.entidad = entidad
+      this.accionEntidad = accionEntidad
+      this.titulo = titulo
+      this.accionAlbum = accionAlbum
+    } else {
+      // Caso contrario validar
     }
   }
 
   validarAlbum() {
-    this.album = this.perfilNegocio.obtenerAlbumActivo()
-    // Si album activo no esta definido
+    this.album = this.perfilNegocio.obtenerAlbumActivoDelSessionStorage()
+    console.log(this.album)
     if (!this.album) {
       // Validar la entidad
-      // Entidad perfil
-      if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
-        // Si el usuario existe
-        if (usuario) {
-          usuario.perfiles.forEach(perfil => {
-            if (perfil.tipoPerfil.codigo === this.codigo) {
-              // Sacar el album de tipo general
-              perfil.album.forEach(album => {
-                if (album.tipo.codigo === CodigosCatalogoTipoAlbum.GENERAL) {
-                  this.album = album
-                }
-              })
+      switch (this.entidad) {
+        case CodigosCatalogoEntidad.PERFIL:
+          const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelSessionStorage()
+          console.log(usuario)
+          // Si el usuario existe
+          if (usuario) {
+            usuario.perfiles.forEach(perfil => {
+              if (perfil && perfil.tipoPerfil.codigo === this.codigo) {
+                // Sacar el album de tipo perfil
+                perfil.album.forEach(album => {
+                  if (album && album.tipo.codigo === CodigosCatalogoTipoAlbum.GENERAL) {
+                    this.album = album
+                  }
+                })
+              }
+            })
+            if (!this.album) {
+              console.log('sigue sin existir')
+              this.router.navigateByUrl(RutasLocales.MENU_PERFILES, { replaceUrl: true })
             }
-          })
-        } else {
-          this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
-        }
-        return
+          } else {
+            console.log('usuario no existe en album')
+            this.router.navigateByUrl(RutasLocales.MENU_PERFILES, { replaceUrl: true })
+          }
+          break
+        case CodigosCatalogoEntidad.PROYECTO: break;
+        case CodigosCatalogoEntidad.NOTICIA: break;
+        default: break;
       }
     }
   }
 
   async configurarItemsAlbum() {
     // Items para el album
-    this.album.media.forEach(media => {
-      this.itemsAlbum.push({
-        id: media._id,
-        idInterno: '',
-        usoDelItem: UsoItemRectangular.RECALBUMMINI,
-        esVisitante: false,
-        urlMedia: media.principal.url,
-        activarClick: true,
-        activarDobleClick: true,
-        activarLongPress: true,
-        mostrarBoton: false,
-        mostrarLoader: true,
-        textoBoton: 'Click to upload',
-        capaOpacidad: {
-          mostrar: false
-        },
-        eventoEnItem: this.eventoEnitemFuncion,
-        descripcion: media.descripcion,
-        textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
-        mostrarIconoExpandirFoto: false,
-        mostrarCapaImagenSeleccionadaConBorde: false,
-        esBotonUpload: false
+    if (this.album) {
+      this.album.media.forEach(media => {
+        this.itemsAlbum.push({
+          id: media._id,
+          idInterno: this.generadorId.generarIdConSemilla(),
+          usoDelItem: UsoItemRectangular.RECALBUMMINI,
+          esVisitante: false,
+          urlMedia: media.principal.url,
+          activarClick: true,
+          activarDobleClick: true,
+          activarLongPress: true,
+          mostrarBoton: false,
+          mostrarLoader: true,
+          textoBoton: 'Click to upload',
+          capaOpacidad: {
+            mostrar: false
+          },
+          eventoEnItem: this.eventoEnitemFuncion,
+          descripcion: media.descripcion,
+          textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
+          mostrarIconoExpandirFoto: false,
+          mostrarCapaImagenSeleccionadaConBorde: false,
+          esBotonUpload: false
+        })
       })
-    })
-    // Definir la portada
-    if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
-      const portada: MediaModel = this.album.portada
-      this.confPortada.mostrarLoader = true
-      this.confPortada.id = portada._id
-      this.confPortada.urlMedia = portada.principal.url
-      this.confPortada.mostrarBoton = false
-    }
+      // Definir la portada
+      if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
+        const portada: MediaModel = this.album.portada
+        this.confPortada.mostrarLoader = true
+        this.confPortada.id = portada._id
+        this.confPortada.urlMedia = portada.principal.url
+        this.confPortada.mostrarBoton = false
+      }
 
-    this.textoCerrarDescripcion = await this.translateService.get('clickSalirDescripcion').toPromise()
-    this.itemsAlbum.forEach(item => {
-      item.textoCerrarEditarDescripcion = this.textoCerrarDescripcion
-    })
+      this.textoCerrarDescripcion = await this.translateService.get('clickSalirDescripcion').toPromise()
+      this.itemsAlbum.forEach(item => {
+        item.textoCerrarEditarDescripcion = this.textoCerrarDescripcion
+      })
+    }
   }
 
   configurarCamara() {
@@ -241,6 +247,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: true,
           llaveTexto: 'clasico'
@@ -255,7 +262,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
       },
       accionAtras: () => {
-        this.accionAppBarBack()
+        this.accionAtrasAppBarBack()
       }
     }
   }
@@ -263,7 +270,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   configurarPortada() {
     this.confPortada = {
       id: '',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECPERFIL,
       esVisitante: true,
       urlMedia: '',
@@ -293,7 +300,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   confgurarBotonUploadPhotos() {
     this.confBotonUpload = {
       id: 'botonUpload',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECALBUMMINI,
       esVisitante: false,
       urlMedia: '',
@@ -339,7 +346,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       this.itemsAlbumPorDefecto.push(
         {
           id: 'itemFotoDefecto_' + pos,
-          idInterno: '',
+          idInterno: this.generadorId.generarIdConSemilla(),
           usoDelItem: UsoItemRectangular.RECALBUMMINI,
           esVisitante: true,
           urlMedia: '',
@@ -364,8 +371,10 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(data => {
         data.forEach((item) => {
           if (item.catalogoArchivoDefault === CodigosCatalogoArchivosPorDefecto.ALBUM_GENERAL) {
-            this.itemsAlbumPorDefecto[pos].urlMedia = item.url
-            pos += 1
+            if (pos < this.cantidadItemsPorDefecto) {
+              this.itemsAlbumPorDefecto[pos].urlMedia = item.url
+              pos += 1
+            }
           }
         })
         // Se reinicia por defecto
@@ -382,7 +391,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
       id: idItem,
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECALBUMMINI,
       esVisitante: false,
       urlMedia: '',
@@ -427,7 +436,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
       id: idItem,
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECALBUMMINI,
       esVisitante: false,
       urlMedia: '',
@@ -663,7 +672,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  accionAppBarBack() {
+  accionAtrasAppBarBack() {
     if (this.accionAlbum === AccionAlbum.CREAR) {
       // Si el album esta en modo preview
       if (this.albumEnModoPreview) {
@@ -680,7 +689,10 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Back
       if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
+        let ruta = RutasLocales.REGISTRO.toString()
+        ruta = ruta.replace(':accionEntidad', this.accionEntidad)
+        ruta = ruta.replace(':codigoPerfil', this.codigo)
+        this.router.navigateByUrl(ruta)
         return
       }
     }
@@ -694,14 +706,8 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
   guardarAlbum() {
     if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-      this.perfilNegocio.insertarAlbunEnPerfil(this.codigo, this.album)
+      this.perfilNegocio.insertarAlbunEnPerfilDelSessionStorage(this.codigo, this.album)
     }
   }
 
-}
-
-export enum AccionAlbum {
-    VISITA = 'visita',
-    CREAR = 'creando',
-    ACTUALIZAR = 'actualizando',
 }

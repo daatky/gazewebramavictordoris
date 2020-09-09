@@ -1,5 +1,5 @@
-@import "../../../../assets/estilos/colores.scss";
 @import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../styles.scss";
 
 .contenedorPrincipal {
     border: $interlineado-14 solid #000000;
@@ -11,26 +11,26 @@
     background-color: white;
 }
 
-.modal {
-    //background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 900;
-}
-
 .fondoModal {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.modalAbierto {
-    overflow: hidden;
+// Modal
+.modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    z-index: 900;
+    width: $ancho-pagina;
+    height: $altura-pagina;
 }
+.modal.mostrar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .contenedorDescripcion {
     padding-top: $interlineado-2;

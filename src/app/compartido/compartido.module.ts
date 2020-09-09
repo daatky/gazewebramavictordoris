@@ -1,3 +1,4 @@
+import { GestorEventosDirective } from './directivas/gestor-eventos.directive';
 import { TranslateService } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core'
@@ -66,6 +67,7 @@ import { ListoComponent } from './componentes/listo/listo.component';
     ModalInferiorComponent,
     DialogoInlineComponent,
     ListoComponent,
+    GestorEventosDirective
   ],
   exports: [
     CrearComponenteDirective,
@@ -92,7 +94,8 @@ import { ListoComponent } from './componentes/listo/listo.component';
     ItemFechaComponent,
     DialogoContenidoComponent,
     ModalInferiorComponent,
-    DialogoInlineComponent
+    DialogoInlineComponent,
+    GestorEventosDirective
   ]
 })
 

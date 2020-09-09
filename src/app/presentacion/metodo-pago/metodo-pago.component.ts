@@ -165,6 +165,7 @@ export class MetodoPagoComponent implements OnInit {
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: false,
         nombrePerfil: {
           mostrar: false
         },

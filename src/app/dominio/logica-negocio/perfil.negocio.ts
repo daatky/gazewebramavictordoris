@@ -74,6 +74,7 @@ export class PerfilNegocio {
         return this.perfilRepository.obtenerCatalogoTipoPerfilLocal();
     }
 
+    // Cambiar codigos quemados
     conflictoCrearPerfil(tipoPerfilCrear: CatalogoTipoPerfilModel, tipoPerfiles: CatalogoTipoPerfilModel[]) {
         if (tipoPerfilCrear.codigo == "TIPERFIL_4") {
             //Es perfil de grupo
@@ -83,7 +84,6 @@ export class PerfilNegocio {
             return tipoPerfiles.filter((p) => p.perfil != null && p.codigo == "TIPERFIL_4").length > 0;
         }
     }
-
 
     limpiarPerfiles(tipoPerfiles: CatalogoTipoPerfilModel[]) {
         tipoPerfiles.forEach(tipoPerfil => tipoPerfil.perfil = null)
@@ -102,16 +102,16 @@ export class PerfilNegocio {
     }
 
     // Album del perfil
-    guardarAlbumActivo(album: AlbumModel) {
-        this.perfilRepository.guardarAlbumActivo(album)
+    guardarAlbumActivoEnSessionStorage(album: AlbumModel) {
+        this.perfilRepository.guardarAlbumActivoEnSessionStorage(album)
     }
 
-    obtenerAlbumActivo(): AlbumModel {
-        return this.perfilRepository.obtenerAlbumActivo()
+    obtenerAlbumActivoDelSessionStorage(): AlbumModel {
+        return this.perfilRepository.obtenerAlbumActivoDelSessionStorage()
     }
 
-    validarPerfilModel(codigoPerfil: string): PerfilModel {
-        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuario(codigoPerfil)
+    validarPerfilModelDelSessionStorage(codigoPerfil: string): PerfilModel {
+        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuarioDelSesionStorage(codigoPerfil)
         let perfil: PerfilModel
         usuario.perfiles.forEach(item => {
             if (item.tipoPerfil.codigo === codigoPerfil) {
@@ -134,13 +134,13 @@ export class PerfilNegocio {
                 album: []
             }
             usuario.perfiles.push(perfil)
-            this.cuentaNegocio.guardarUsuarioEnLocalStorage(usuario)
+            this.cuentaNegocio.guardarUsuarioEnSessionStorage(usuario)
         }
         return perfil
     }
 
-    actualizarPerfilEnUsuario(perfil: PerfilModel) {
-        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuario(perfil.tipoPerfil.codigo)
+    actualizarPerfilEnUsuarioDelSessionStorage(perfil: PerfilModel) {
+        const usuario: UsuarioModel = this.cuentaNegocio.validarUsuarioDelSesionStorage(perfil.tipoPerfil.codigo)
         let pos = -1
         usuario.perfiles.forEach((item, i) => {
             if (item.tipoPerfil.codigo === perfil.tipoPerfil.codigo) {
@@ -150,34 +150,37 @@ export class PerfilNegocio {
         if (pos >= 0) {
             usuario.perfiles[pos] = perfil
         }
-        this.cuentaNegocio.guardarUsuarioEnLocalStorage(usuario)
+        this.cuentaNegocio.guardarUsuarioEnSessionStorage(usuario)
     }
 
-    insertarAlbunEnPerfil(codigoPerfil: string, album: AlbumModel) {
-        const perfil: PerfilModel = this.validarPerfilModel(codigoPerfil)
-        let pos = -1
-        perfil.album.forEach((item, i) => {
-            if (item.tipo.codigo === album.tipo.codigo) {
-                pos = i
+    insertarAlbunEnPerfilDelSessionStorage(codigoPerfil: string, album: AlbumModel) {
+        const perfil: PerfilModel = this.validarPerfilModelDelSessionStorage(codigoPerfil)
+        console.log(perfil)
+        if (perfil) {
+            let pos = -1
+            perfil.album.forEach((item, i) => {
+                if (item && item.tipo.codigo === album.tipo.codigo) {
+                    pos = i
+                }
+            })
+            // Si el album existe, se actualizar, caso contrario se inserta
+            if (pos >= 0) {
+                console.log('album ya esta creado, actualizando')
+                perfil.album[pos] = album
+            } else {
+                console.log('album no creado, insertando')
+                perfil.album.push(album)
             }
-        })
-        // Si el album existe, se actualizar, caso contrario se inserta
-        if (pos >= 0) {
-            console.log('album ya esta creado, actualizando')
-            perfil.album[pos] = album
-        } else {
-            console.log('album no creado, insertando')
-            perfil.album.push(album)
+            // actualizar usuario
+            this.actualizarPerfilEnUsuarioDelSessionStorage(perfil)
+            this.perfilRepository.guardarAlbumActivoEnSessionStorage(null)
         }
-        // actualizar usuario
-        this.actualizarPerfilEnUsuario(perfil)
-        this.perfilRepository.guardarAlbumActivo(null)
     }
 
     validarAlbumSegunTipo(tipo: CodigosCatalogoTipoAlbum, perfil: PerfilModel) {
         let album: AlbumModel
         perfil.album.forEach(item => {
-            if (item.tipo.codigo === tipo) {
+            if (item && item.tipo.codigo === tipo) {
                 album = item
             }
         })
@@ -193,10 +196,10 @@ export class PerfilNegocio {
                 media: []
             }
             perfil.album.push(album)
-            this.actualizarPerfilEnUsuario(perfil)
+            this.actualizarPerfilEnUsuarioDelSessionStorage(perfil)
         }
         // Definir album activo
-        this.guardarAlbumActivo(album)
+        this.guardarAlbumActivoEnSessionStorage(album)
     }
 
 }

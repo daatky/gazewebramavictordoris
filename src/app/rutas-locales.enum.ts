@@ -1,7 +1,7 @@
 export enum RutasLocales {
   BASE = '/',
   METODO_PAGO = 'metodopago',
-  REGISTRO = 'registro/:codigoPerfil',
+  REGISTRO = 'registro/:accionEntidad/:codigoPerfil',
   PAGO_PAYPAL = 'pagopaypal/:codigo',
   PAGO_TARJETA = 'pagotarjeta/:codigo',
   MENU_PERFILES = 'menuperfiles',
@@ -10,7 +10,7 @@ export enum RutasLocales {
   CREAR_PENSAMIENTO = 'crear-pensamiento',
   MENU_PRINCIPAL = "menuprincipal",
   MIS_CONTACTOS = "miscontactos",
-  ALBUM_PERFIL = 'albumperfil/:entidad/:codigo/:titulo/:accion',
-  ALBUM_GENERAL = 'albumgeneral/:entidad/:codigo/:titulo/:accion',
+  ALBUM_PERFIL = 'albumperfil/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
+  ALBUM_GENERAL = 'albumgeneral/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
   MENU_SELECCION_PERFILES = "menuseleccionperfiles"
 }

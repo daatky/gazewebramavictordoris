@@ -32,6 +32,7 @@ import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/mod
 import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { Location } from '@angular/common';
 
 
@@ -148,7 +149,11 @@ export class MenuPerfilesComponent implements OnInit {
   }
 
   navegarCrearPerfil(tipoPerfil: CatalogoTipoPerfilModel) {
-    this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", tipoPerfil.codigo));
+    let registro = RutasLocales.REGISTRO.toString()
+    // Anadi la accion a la ruta del registro por eso la modificacion, autor: Andre
+    registro = registro.replace(':accionEntidad', AccionEntidad.REGISTRO)
+    registro = registro.replace(':codigoPerfil', tipoPerfil.codigo)
+    this.router.navigateByUrl(registro)
   }
 
   mostrarDescripcion(item: any) {
@@ -186,7 +191,6 @@ export class MenuPerfilesComponent implements OnInit {
       idInterno: "",
       onclick: () => { },
       dobleClick: () => { }
-
     };
   }
 
@@ -264,6 +268,7 @@ export class MenuPerfilesComponent implements OnInit {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       accionAtras: () => this.volverAtras(),
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: false
         },
@@ -309,8 +314,6 @@ export class MenuPerfilesComponent implements OnInit {
       tipoBoton: TipoBoton.TEXTO
     }
   }
-
-
 
   aceptarTerminosCondicionesMenorEdad() {
     if (this.menorEdadForm.value.nombreResposanble.length >= 1 || this.menorEdadForm.value.nombreResposanble.length >= 1) {

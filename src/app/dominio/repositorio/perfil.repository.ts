@@ -46,12 +46,20 @@ export class PerfilRepository {
     }
 
     // Album del perfil
-    guardarAlbumActivo(album: AlbumModel) {
-        this.perfilServicieLocal.guardarAlbum(album)
+    guardarAlbumActivoEnLocalStorage(album: AlbumModel) {
+        this.perfilServicieLocal.guardarAlbumEnLocalStorage(album)
     }
 
-    obtenerAlbumActivo(): AlbumModel {
-        return this.perfilServicieLocal.obtenerAlbum()
+    obtenerAlbumActivoDelLocalStorage(): AlbumModel {
+        return this.perfilServicieLocal.obtenerAlbumEnLocalStorage()
+    }
+
+    guardarAlbumActivoEnSessionStorage(album: AlbumModel) {
+        this.perfilServicieLocal.guardarAlbumEnSessionStorage(album)
+    }
+
+    obtenerAlbumActivoDelSessionStorage(): AlbumModel {
+        return this.perfilServicieLocal.obtenerAlbumEnSessionStorage()
     }
 
 }

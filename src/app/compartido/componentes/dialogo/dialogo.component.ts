@@ -4,7 +4,7 @@ import { DialogoCompartido } from '../../diseno/modelos/dialogo.interface';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
 
 /*
-@autor: Victor Jumbo
+@autor: Modifcado por el churon
 @Fecha: 28 julio 2020
 @Detalle: Componente generico de dialogos o modales.
 @Implementacion: La implementacion es mediante la importacion del componente en el html
@@ -20,49 +20,29 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2, Input } from '@ang
   styleUrls: ['./dialogo.component.scss']
 })
 export class DialogoComponent implements OnInit {
-  @ViewChild('descripcion', { static: false })
-  private containerDescripcion: ElementRef
+  @ViewChild('descripcion', { static: false }) containerDescripcion: ElementRef
+  @ViewChild('principal', { static: false }) containerPrincipal: ElementRef
+  @ViewChild('fondo', { static: false }) fondo: ElementRef
 
-  @ViewChild('principal', { static: false })
-  private containerPrincipal: ElementRef
+  @Input() configuracion: DialogoCompartido
+  
+  public tipoDialogo = TipoDialogo
 
-  @ViewChild('fondo', { static: false })
-  private fondo: ElementRef
-
-
-  dialogo = TipoDialogo;
-  @Input() data: DialogoCompartido
-
-  @Input() id: string;
-  private element: any;
-
-
-  constructor
-  (
+  constructor (
     private render: Renderer2,
-    private dialogoServicie: DialogoServicie,
-    private el: ElementRef    
-    ) {
-    this.element = el.nativeElement;
+  ) {
+    
   }
 
-  ngOnInit(): void {
-    if (!this.id) {
-      console.error('modal must have an id');
-      return;
-    }
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
-    document.body.appendChild(this.element);
-
-    if (this.data.completo) {
-      // close modal on background click      
-      this.element.addEventListener('click', el => {
-        if (el.target.className === 'modal' || el.target.className === "modal fondoModal") {
-          this.cerrar();
-        }
-      });
-    }
-    this.dialogoServicie.add(this);
+  ngOnInit(): void {    
+    // if (this.configuracion.completo) {
+    //   this.element.addEventListener('click', el => {
+    //     if (el.target.className === 'modal' || el.target.className === "modal fondoModal") {
+    //       this.cerrar();
+    //     }
+    //   });
+    // }
+    // this.dialogoServicie.add(this);
   }
 
   ngAfterViewInit() {
@@ -70,17 +50,28 @@ export class DialogoComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.dialogoServicie.remove(this.id);
-    this.element.remove();
+    // this.dialogoServicie.remove(this.id);
+    // this.element.remove();
+  }
+
+  eventoModal(target:any) {
+    if (this.configuracion.completo) {
+      target.classList.forEach((clase:any) => {
+        if (clase === 'modal') {
+          this.configuracion.mostrarDialogo = false
+          return
+        }
+      })
+    }
   }
 
   definirEstilo() {
-    this.cerrar(); //el modal inicia cerrado
+    // this.cerrar(); //el modal inicia cerrado
 
-    if (this.data.completo) {
+    if (this.configuracion.completo) {
       this.render.addClass(this.fondo.nativeElement, "fondoModal");
     }
-    switch (this.data.tipo) {
+    switch (this.configuracion.tipo) {
       case TipoDialogo.CONFIRMACION:
         this.render.addClass(this.containerPrincipal.nativeElement, "dimensionesConfirmacion");
         this.render.addClass(this.containerDescripcion.nativeElement, "dimensionDescripcionConfirmacion");
@@ -95,22 +86,10 @@ export class DialogoComponent implements OnInit {
     }
   }
 
-  definirTamanoLetra(elemento, tamano: TamanoTextoDialogo) {
+  definirTamanoLetra(elemento: any, tamano: TamanoTextoDialogo) {
     this.render.addClass(elemento, tamano.toString());
   }
 
-
-  // open modal
-  abrir(): void {
-    this.element.style.display = 'block';
-    document.body.classList.add('modalAbierto');
-  }
-
-  // close modal
-  cerrar(): void {
-    this.element.style.display = 'none';
-    document.body.classList.remove('modalAbierto');
-  }
 }
 
 export enum TamanoTextoDialogo {

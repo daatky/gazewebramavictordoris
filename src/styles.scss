@@ -13,6 +13,7 @@
 
 :root {
     font-family: "Source Sans Pro", sans-serif;
+    user-select: none;
 }
 
 //Firefox
@@ -135,6 +136,7 @@ p {
 }
 .botondefecto {
     font-size: $letra-3;
+    touch-action: none;
 }
 .letradefecto {
     font-size: $letra-2;

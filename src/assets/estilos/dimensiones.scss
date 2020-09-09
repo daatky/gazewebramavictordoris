@@ -6,6 +6,11 @@ $altura-pagina: 100vh;
 // Variables sin unidad - valor neto
 $defecto-top-neto: 0.56;
 $defecto-bottom-neto: 0.55;
+
+// Constantes para valores que anade la fuente por defecto - con unidad
+$defecto-top: calcular(0.56);
+$defecto-bottom: calcular(0.55);
+$defecto-total: $defecto-top + $defecto-bottom;
 $sombraTexto: 3.5px 2.5px 4px rgba(0, 0, 0, 0.75);
 $line-height: 1;
 

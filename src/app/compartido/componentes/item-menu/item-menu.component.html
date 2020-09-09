@@ -1,4 +1,12 @@
-<div id="{{ 'itemMenu' + configuracionItem.idInterno }}" [ngClass]="obtenerItemClases()" (press)="eventoClickLargo()">
+<div
+    #itemMenu
+    id="{{ 'itemMenu' + configuracionItem.idInterno }}"
+    [ngClass]="obtenerItemClases()"
+    gestorEventos
+    (eventoTap)="tap()"
+    (dobleTap)="dobletap()"
+    (press)="press()"
+>
     <div [ngClass]="obtenerClasesItemCaja()">
         <div class="contenedor-texto">
             <!-- ITEM PARA PERFIL CREATE, TIPO, PROFILE-->
