@@ -9,6 +9,7 @@
     "tipoEmail":"Le champ est le type d'e-mail",
     "procesando":"Processing ......",
     "procesoEjecutado": "Processus exécuté avec succès",
+    "noEncontreElemento": "Aucun élément trouvé",
 
     "sinAutorizacion":"Vous n'avez pas d'autorisation",
     "noEncontrado":"Pas trouvé",

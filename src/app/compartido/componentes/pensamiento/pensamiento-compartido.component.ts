@@ -4,6 +4,7 @@ import { PensamientoCompartido, Configuracion, ItemPensamiento } from "../../dis
 import { TipoPensamiento, EstiloItemPensamiento } from '../../diseno/enums/tipo-pensamiento.enum';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
 import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 
 @Component({
   selector: 'app-pensamiento-compartido',
@@ -22,6 +23,7 @@ export class PensamientoCompartidoComponent implements OnInit {
   
   constructor(
     private pensamientoNegocio:PensamientoNegocio,
+    private internacionalizacionNegocio: InternacionalizacionNegocio,
   ) { 
         //this.configurarDatos(0,{id:'uhf'})
         this.unClick=new EventEmitter<ItemPensamiento>();
@@ -56,15 +58,17 @@ export class PensamientoCompartidoComponent implements OnInit {
     }
   }
   obtenerPensamientoAleatorio(){
-    console.log('PENSAMIENTO ALEATORIO')      
+    console.log('PENSAMIENTO ALEATORIO')     
+    this.dataPensamiento={data:{texto:""},presentarX:false} 
+    this.error=""
     this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
     .subscribe((res:PensamientoModel)=>{ 
-      //console.log('PENSAMIENTO ALEATORIO')      
+      console.log('PENSAMIENTO ALEATORIO')      
       console.log(res)
       this.dataPensamiento={data:res,presentarX:false}
     },error=>{
-      //console.log(error)
+      console.log("ERROR AL OBTENER PENSAMIENTO")
       this.error=error
     })
     //this.dataPensamiento={data:{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}}

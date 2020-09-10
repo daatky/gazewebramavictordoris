@@ -10,7 +10,8 @@
 .listaScrollPensamientoGestionar {
     height: calcular(87.85) - (calcular(6.84)*2) - $interlineado-2 - $espacio-0316 - $espacio-0316 - $letra-3 - $letra-1 - $letra-1;
     overflow-y: auto;
-    width: $ancho-pagina - (($espacio-0658 + $espacio-267)*2);
+    //width: $ancho-pagina - (($espacio-0658 + $espacio-267)*2);
+    //width: calcular(131.8643)-($espacio-267 + calcular(0.78))- ($espacio-267 + calcular(0.78)+ $espacio-0658);    
 }
 
 .listaScrollMenuPrincipal {

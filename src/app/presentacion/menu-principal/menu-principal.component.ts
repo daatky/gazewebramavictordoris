@@ -112,6 +112,7 @@ export class MenuPrincipalComponent implements OnInit {
       {
         id: MenuPrincipal.MIS_PENSAMIENTOS,
         titulo: ["publicar", "mis", "pensamientos"],
+        ruta:RutasLocales.MODULO_PENSAMIENTO,
         tipo: TipoMenu.ACCION,
       },
       {

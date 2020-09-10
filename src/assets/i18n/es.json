@@ -9,6 +9,7 @@
     "tipoEmail":"El campo es tipo email",
     "procesando":"Procesando ......",
     "procesoEjecutado": "Proceso ejecutado correctamente",
+    "noEncontreElemento": "No se encontro elementos",
 
     "sinAutorizacion":"No tienes autorizacion",
     "noEncontrado":"No encontrado",

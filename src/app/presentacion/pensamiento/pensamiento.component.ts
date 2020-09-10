@@ -17,6 +17,8 @@ import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
 import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/diseno/enums/tipo-pensamiento.enum';
 import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
+import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 @Component({
   selector: 'app-pensamiento',
@@ -24,36 +26,29 @@ import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.compo
   styleUrls: ['./pensamiento.component.scss']
 })
 export class PensamientoComponent implements OnInit {
-  //presentarPensamiento:boolean //Para 
   @ViewChild('toast', { static: false }) toast: ToastComponent
   configuracionAppBar: ConfiguracionAppbarCompartida //Para enviar la configuracion de para presentar el appBar
   botonPublico: BotonCompartido //Para enviar la configuracion del boton publico
   botonPrivado: BotonCompartido //Para enviar la configuracion del boton privado
-  //crearPensamientoForm: FormGroup;
-  //inputPensamiento: InputCompartido; 
-  //configuracionToast:ConfiguracionToast;
   barraInferior:BarraInferior //Barra inferior
-
   cargando:boolean; //PRESENTAR EL CARGANDO
   pensamientoCompartido:PensamientoCompartido
   dataListaPublico:DatosLista //lISTA DE  
   dataListaPrivado:DatosLista //lISTA DE  
   botonCrearPensamiento: BotonCompartido;
-  idPerfil="5f3e907015ae58647c0d3e1d" //id MOMENTANEO
   esPublico:boolean; //Para enviar a la base de datos true o false de acuerdo a lo seleccionado por el usuario
   ejecutarMetodo:true //PARA SABER CUAL DE LOS METODOS SE VAN A EJECUTAR
   configuracionToast:ConfiguracionToast; //Presentar el toats
+  perfilSeleccionado:PerfilModel
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private variablesGlobales:VariablesGlobales,
-    private pensamientoNegocio:PensamientoNegocio,      
-    //private formBuilder: FormBuilder, 
+    private pensamientoNegocio:PensamientoNegocio, 
+    private perfilNegocio:PerfilNegocio
   ) { 
-    //this.presentarPensamiento=false   
-    //this.estadosPensamiento=0
+    this.perfilSeleccionado=this.perfilNegocio.obtenerPerfilSeleccionado()
     this.esPublico=true
     this.prepararAppBar() 
-    //console.log(this.internacionalizacionNegocio.obtenerIdiomaInternacionalizacion())  
    }
 
   ngOnInit(): void {  
@@ -62,16 +57,12 @@ export class PensamientoComponent implements OnInit {
   }
   async prepararAppBar() {
     this.cargando=false   
-    /*this.crearPensamientoForm = this.formBuilder.group({
-      pensamiento: ['', [Validators.required, Validators.maxLength(230)]],
-    });   */
-    //this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}            
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
         nombrePerfil: {
           mostrar: true,
-          llaveTexto:'PENDIENTE'
+          llaveTexto:this.perfilSeleccionado.tipoPerfil.nombre
         },
         mostrarSearchBar:true,
         mostrarDivBack: true,
@@ -134,12 +125,9 @@ export class PensamientoComponent implements OnInit {
   }
 
   dobleClick(itemPensamiento:ItemPensamiento){
-    console.log("dobleClick")
     this.enviarPensamientoActualizar(itemPensamiento)     
-    //return objeto
   }
   clickLargo(itemPensamiento?:ItemPensamiento){
-    console.log("clickLargo")
     this.actualizarEstadoPensamiento(itemPensamiento)        
   }
   //Metodo que para inicializar la barra inferior y ademas sirve para enviar el meto de crear cuenta
@@ -147,31 +135,24 @@ export class PensamientoComponent implements OnInit {
     this.barraInferior= { input:{maximo:230,placeholder:"Ingrese un pensamiento",data:{texto:""},tipo:TipoInput.TEXTO},activarBarra:activar,variosIconos:false,enviar: () => this.crearPensamiento()}
   }
   crearPensamiento(){
-      console.log(this.esPublico)     
       this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
-      this.pensamientoNegocio.crearPensamiento(this.idPerfil,this.esPublico,this.barraInferior.input.data.texto)
+      this.pensamientoNegocio.crearPensamiento(this.perfilSeleccionado._id,this.esPublico,this.barraInferior.input.data.texto)
       .subscribe(res=>{                
-        console.log(res)
         this.toast.cerrarToast()                
         if(!this.esPublico){
-          console.log("ES PRIVADO")
           this.dataListaPrivado.lista.unshift(res)
           return
         }  
-        console.log("ES PUBLICO")
         this.dataListaPublico.lista.unshift(res)      
       },error=>{    
         this.toast.cerrarToast()
         this.toast.abrirToast(error)
       }) 
   }
-  obtenerPensamientos(){
-    console.log(this.esPublico)
-    //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)    
-    this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPublico)
+  obtenerPensamientos(){    
+    this.pensamientoNegocio.obtenerPensamientos(this.perfilSeleccionado._id,this.esPublico)
     .subscribe((res:Array<PensamientoModel>)=>{      
       this.cargando=false      
-      //this.toast.cerrarToast()
       if(this.esPublico){
           this.dataListaPublico.lista=res
         return
@@ -179,7 +160,6 @@ export class PensamientoComponent implements OnInit {
       this.dataListaPrivado.lista=res
     },error=>{
       this.cargando=false  
-      //this.toast.cerrarToast()
       //this.toast.abrirToast(error)
     })
   }
@@ -189,36 +169,29 @@ export class PensamientoComponent implements OnInit {
     this.barraInferior= { input:{maximo:230,placeholder:"Ingrese un pensamiento",data:{id:itemPensamiento.pensamiento.id,indice:itemPensamiento.indice,texto:itemPensamiento.pensamiento.texto},tipo:TipoInput.TEXTO},activarBarra:true,variosIconos:false,enviar: () => this.actualizarPensamiento()}
   }
   actualizarPensamiento(){
-    console.log(this.dataListaPublico)
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
       this.pensamientoNegocio.actualizarPensamiento(this.barraInferior.input.data.id,this.barraInferior.input.data.texto)
       .subscribe(res=>{
-        console.log(res)
         this.toast.cerrarToast()     
         if(!this.esPublico){
-          console.log("Es privado")
           this.dataListaPrivado.lista[this.barraInferior.input.data.indice].texto=this.barraInferior.input.data.texto
           this.dataListaPrivado.lista[this.barraInferior.input.data.indice].fechaActualizacion=new Date()   
           return     
         }
-        console.log("Es publico")
         this.dataListaPublico.lista[this.barraInferior.input.data.indice].texto=this.barraInferior.input.data.texto
         this.dataListaPublico.lista[this.barraInferior.input.data.indice].fechaActualizacion=new Date()     
         this.enviarPensamienroCrear(true)         
       },error=>{
-        console.log(error)
         this.toast.cerrarToast()
         this.toast.abrirToast(error)
       })
-  }
+  }  
   actualizarEstadoPensamiento = (itemPensamiento:ItemPensamiento) =>{
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
     this.pensamientoNegocio.actualizarEstadoPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
-      console.log('se actualizo estado del pensamiento')
       this.toast.cerrarToast()   
       this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesoEjecutado')) 
-      console.log(res)
       if(!this.esPublico){
         this.dataListaPrivado.lista.splice(itemPensamiento.indice,1)
         return
@@ -226,20 +199,16 @@ export class PensamientoComponent implements OnInit {
       this.dataListaPublico.lista.splice(itemPensamiento.indice,1)
       //Agregar en la otra lista
     },error=>{
-      console.log(error)
       this.toast.cerrarToast()
       this.toast.abrirToast(error)
     })
   }
   eliminarPensamiento = (itemPensamiento:ItemPensamiento)=>{
-    console.log(itemPensamiento)
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
     this.pensamientoNegocio.eliminarPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
       this.toast.cerrarToast()    
-      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesoEjecutado')) 
-      console.log(itemPensamiento)
-      console.log(res)      
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesoEjecutado'))    
       if(!this.esPublico){
         this.dataListaPrivado.lista.splice(itemPensamiento.indice,1)
         return
@@ -247,7 +216,6 @@ export class PensamientoComponent implements OnInit {
       this.dataListaPublico.lista.splice(itemPensamiento.indice,1)
       //Agregar en la otra lista
     },error=>{
-      console.log(error)
       this.toast.cerrarToast()
       this.toast.abrirToast(error)
     })
@@ -256,14 +224,11 @@ export class PensamientoComponent implements OnInit {
     if(this.variablesGlobales.paginacionPublico.actual!=-1){
       this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
 //      this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,this.esPrivado)
-      this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,true)
+      this.pensamientoNegocio.cargarMasPensamientos(this.perfilSeleccionado._id,10,this.variablesGlobales.paginacionPublico.actual,true)
       .subscribe(res=>{
-        this.toast.cerrarToast()    
-        console.log("PENSAMIENTOS PRIVADOS") 
-        console.log(res)    
+        this.toast.cerrarToast()     
         //agregar a la lista de pensamientos
       },error=>{
-        console.log(error)
         this.toast.cerrarToast()
         this.toast.abrirToast(error)
       })

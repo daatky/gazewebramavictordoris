@@ -50,22 +50,22 @@ export class CabeceraIdiomasComponent implements OnInit {
     //OBTENER EL CATALOGO DE IDIOMAS
     obtenerCatalogoIdiomas(){
       
-      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)         
+      //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)         
       this.idiomaNegocio.obtenerCatalogoIdiomas()
         .subscribe(res => { 
-          this.toast.cerrarToast()                   
+          //this.toast.cerrarToast()                   
           if(res){
             console.log("DATOS")
             this.idiomas = res
           }else{
             console.log("NO TRAJE NADA DE DATOS")
             this.idiomas=[] 
-            this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos'))           
+            //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos'))           
           }
           //this.idiomaNegocio.ordenarIdioma()
         }, error => {
-          this.toast.cerrarToast()
-          this.toast.abrirToast(error)
+          //this.toast.cerrarToast()
+          //this.toast.abrirToast(error)
         })
     }
   // Obtener clases lineas texto 
