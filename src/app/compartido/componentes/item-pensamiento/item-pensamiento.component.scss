@@ -1,5 +1,6 @@
 @import '../../../../assets/estilos/dimensiones.scss';
 @import '../../../../assets/estilos/colores.scss';
+@import '../../../../assets/estilos/imagenes.scss';
 
 .div249{                                
     width: 100%;
@@ -12,7 +13,32 @@
     min-height: calcular(41.43)-($espacio-677*2) - $letra-3 - $interlineado-6 -$interlineado-6;
     //($ancho-pagina*0.4143)-($espacio-677*2)- $letra-3 - $interlineado-6 -$interlineado-6;
     height: fit-content;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
+}
+.textPensamientoLista{
+    width: 100%;
+    padding-top: $espacio-0249;
+    padding-bottom: $espacio-0316;
+    box-sizing: border-box;
+}
+.divFechaX{
+    width: 100%;
+    height: fit-content;    
+    display: flex;
+    //align-items: center;
+    //flex-flow: row;
+}
+.divFecha{
+    width: fit-content;
+    height: fit-content;
+    float: left;
+}
+.divX{
+    background-image: $cruz-negra-borrar;
+    width: calcular(4.84);
+    height: calcular(4.84);    
+    margin-left: $interlineado-10 +$interlineado-10;
     box-sizing: border-box;
 }

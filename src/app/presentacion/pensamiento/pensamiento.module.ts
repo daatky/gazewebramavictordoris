@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { PensamientoRoutingModule } from "./pensamiento-routing.module";
 import { CrearPensamientoComponent } from "./crear-pensamiento/crear-pensamiento.component";
 import { PensamientoComponent } from './pensamiento.component';
@@ -11,13 +12,17 @@ import { ReactiveFormsModule } from '@angular/forms';
     PensamientoComponent,
     CrearPensamientoComponent,
   ],
-  imports: [
-    //FormsModule,
+  imports: [    
+    TranslateModule,
     ReactiveFormsModule,
     CommonModule,
     CompartidoModule,
-
-    PensamientoRoutingModule,
+    PensamientoRoutingModule,    
+  ],
+  exports:[ 
+    TranslateModule   
+  ],
+  providers:[    
   ]
 })
 export class PensamientoModule { }

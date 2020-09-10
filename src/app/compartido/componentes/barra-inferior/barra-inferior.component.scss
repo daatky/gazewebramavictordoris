@@ -1,0 +1,166 @@
+@import '../../../../assets/estilos/dimensiones.scss';
+@import '../../../../assets/estilos/estiloColor.scss';
+//@import '../../../../assets/estilos/colores.scss';
+//@import '../../../../assets/estilos/imagenes.scss';
+
+// Barra inferior
+
+/*.barrainferior {
+    width: $bottom-bar-ancho;
+    height: $bottom-bar-alto;
+    background: $tranparencia-base;    
+    border-top: $bottom-bar-border-top solid $celeste-base;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0 calcular(1.39) 0 calcular(2.67);
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.barrainferior.activa > * {
+    pointer-events: auto;
+}
+.barrainferior .cajablanca {
+    width: $bottom-bar-caja-ancho;
+    height: $bottom-bar-caja-alto;
+    border-radius: $bottom-bar-caja-borde-radio;
+    background: $blanco;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+
+    margin-right: calcular(1.39);
+}
+.barrainferior .cajablanca .icono {
+    width: $bottom-bar-caja-icono-ancho;
+    border-top-left-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-left-radius: $bottom-bar-caja-borde-radio;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.barrainferior .cajablanca .icono .iconotexto {
+    width: $bottom-bar-caja-icono-texto-ancho;
+    height: $bottom-bar-caja-icono-texto-alto;
+}
+.barrainferior .cajablanca input {
+    width: calc(100% - #{ $bottom-bar-caja-icono-ancho });
+    height: 100%;
+
+    border: none;
+    box-sizing: border-box;
+    border-top-right-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-right-radius: $bottom-bar-caja-borde-radio;
+    padding: 0 $espacio-0178;
+    outline: 0;
+
+    font-size: $letra-2;
+    line-height: 80%;
+    font-style: italic;
+
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        outline: 0;
+    }
+}
+.barrainferior .boton {
+    width: $bottom-bar-boton-diametro;
+    height: $bottom-bar-boton-diametro;
+    cursor: pointer;
+}*/
+/*.barrainferior .boton img {
+    width: 100%;
+    height: 100%;
+}*/
+/*textarea{
+    width: $bottom-bar-ancho - (calcular(1.39)*2) !important;
+    //height: calcular(12.21) !important;
+    background: red;
+}*/
+
+// Barra inferior
+.barrainferior {
+    width: $bottom-bar-ancho;
+    height: $bottom-bar-alto;
+    background: $tranparencia-base;
+
+    border-top: $bottom-bar-border-top solid $celeste-base;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0 calcular(1.39) 0 calcular(2.67);
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.barrainferior.activa > * {
+    pointer-events: auto;
+}
+.barrainferior .cajablanca {
+    width: $bottom-bar-caja-ancho;
+    height: $bottom-bar-caja-alto;
+    border-radius: $bottom-bar-caja-borde-radio;
+    background: $blanco;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin-right: calcular(1.39);
+}
+.barrainferior .cajablanca .icono {
+    width: $bottom-bar-caja-icono-ancho;
+    border-top-left-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-left-radius: $bottom-bar-caja-borde-radio;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.barrainferior .cajablanca .icono .iconotexto {
+    width: $bottom-bar-caja-icono-texto-ancho;
+    height: $bottom-bar-caja-icono-texto-alto;
+}
+.barrainferior .cajablanca input {
+    width: calc(100% - #{ $bottom-bar-caja-icono-ancho });
+    height: 100%;
+
+    border: none;
+    box-sizing: border-box;
+    border-top-right-radius: $bottom-bar-caja-borde-radio;
+    border-bottom-right-radius: $bottom-bar-caja-borde-radio;
+    padding: 0 $espacio-0178;
+    outline: 0;
+
+    font-size: $letra-2;
+    line-height: 80%;
+    font-style: italic;
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        outline: 0;
+    }
+}
+.barrainferior .boton {
+    width: $bottom-bar-boton-diametro;
+    height: $bottom-bar-boton-diametro;
+    cursor: pointer;
+}
+.barrainferior .boton img {
+    width: 100%;
+    height: 100%;
+}
+.inputTexto{
+    width: $bottom-bar-ancho - calcular(13.575) - (calcular(1.39)*2) - (calcular(15.88)) !important;
+    height: calcular(12.21) !important;
+}
+.inputImagen{
+    width: $bottom-bar-ancho - (calcular(1.39)*2) - (calcular(15.88)) !important;
+    height: calcular(12.21) !important;
+    background: yellow;
+}

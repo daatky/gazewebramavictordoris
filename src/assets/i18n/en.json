@@ -1,4 +1,18 @@
 {
+    "campoRequerido":"This field is required",
+    "minimoCaracteres":"This field must have a minimum of {{numero}} characters",
+    "maximoCaracteres":"This field must have a maximum of {{numero}} characters",
+    "camposIncompletos":"There are incomplete fields",
+    "campoInvalido":"This field is invalid",
+    "tamanoMaximoArchivo":"The maximum file size is",
+    "problemaObtenerDatos":"Problems getting the data",
+    "tipoEmail":"The field is email type",
+    "procesando":"Processing ......",
+
+    "sinAutorizacion":"You do not have authorization",
+    "noEncontrado":"Not found",
+    "errorInesperado":"Sorry, an error occurred while processing your request, try later",
+
     "traduccionAutomatica": "FOR AUTOMATIC TRANSLATION, CHANGE LANGUAGE IF NEEEDED",
     "creadoEn": "CREATED IN THE EUROPEAN UNION",
     "avisoImportante": "IMPORTANT NOTICE :",
@@ -113,5 +127,14 @@
     "clickDescripcionImagen": "CLICK FOR IMAGE DESCRIPTION",
     "clickSalirDescripcion": "CLICK OUTSIDE TO EXIT DESCRIPTION",
     "caracteres105": " 105 CHARACTERS MAXIMUM",
-    "clickAmpliar": "CLICK TO ENLARGE"
+    "clickAmpliar": "CLICK TO ENLARGE",
+    "misReflexiones": "MY THOUGHTS",
+    "antesEscribir": "BEFORE WRITING, FIRST SELECT PUBLIC OR PRIVATE",
+    "230Caracteres": "230 CHARACTERS MAXIMUM PER MESSAGE",
+    "publico": "PUBLIC",
+    "privado": "PRIVATE",
+    "reflexionesPublicas": "MY PUBLIC THOUGHTS",
+    "actualizarReflexion": "UPDATE: 2 CLICKS ON THE THOUGHT",
+    "cambiarEstadoReflexion": "MOVE TO PRIVATE: LONG PRESS ON THE THOUGHT",
+    "reflexionesPrivadas": "MY PRIVATE THOUGHTS"
 }

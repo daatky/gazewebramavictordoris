@@ -31,6 +31,7 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
 import { ModalInferiorComponent } from './componentes/modal-inferior/modal-inferior.component';
 import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
 import { ListoComponent } from './componentes/listo/listo.component';
+import { BarraInferiorComponent } from './componentes/barra-inferior/barra-inferior.component';
 import { BuscadorComponent } from './componentes/buscador/buscador.component';
 
 @NgModule({
@@ -68,6 +69,7 @@ import { BuscadorComponent } from './componentes/buscador/buscador.component';
     ModalInferiorComponent,
     DialogoInlineComponent,
     ListoComponent,
+    BarraInferiorComponent,
     GestorEventosDirective,
     BuscadorComponent
   ],
@@ -97,6 +99,7 @@ import { BuscadorComponent } from './componentes/buscador/buscador.component';
     DialogoContenidoComponent,
     ModalInferiorComponent,
     DialogoInlineComponent,
+    BarraInferiorComponent,
     GestorEventosDirective
   ]
 })

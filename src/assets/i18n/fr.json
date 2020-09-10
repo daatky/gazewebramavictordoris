@@ -1,7 +1,21 @@
 {
+    "campoRequerido":"Ce champ est requis",
+    "minimoCaracteres":"Ce champ doit comporter au moins {{numero}} caractères",
+    "maximoCaracteres":"Ce champ doit comporter au maximum {{numero}} caractères",
+    "camposIncompletos":"Il y a des champs incomplets",
+    "campoInvalido":"Ce champ n'est pas valide",
+    "tamanoMaximoArchivo":"La taille maximale du fichier est",
+    "problemaObtenerDatos":"Problèmes pour obtenir les données",
+    "tipoEmail":"Le champ est le type d'e-mail",
+    "procesando":"Processing ......",
+
+    "sinAutorizacion":"Vous n'avez pas d'autorisation",
+    "noEncontrado":"Pas trouvé",
+    "errorInesperado":"Désolé, une erreur s'est produite lors du traitement de votre demande, réessayez plus tard",
+
     "traduccionAutomatica": "POUR LA TRADUCTION AUTOMATIQUE, CHANGER DE LANGUE SI NÉCESSAIRE",
     "creadoEn": "CRÉÉ DANS L´UNION EUROPÉENNE",
-    "avisoImportante": "AVIS IMPORTANT :",        
+    "avisoImportante": "AVIS IMPORTANT :",
     "avisoWeb1": "- LA PLATEFORME WEB/MOBILE FONCTIONNE EN 6 LANGUES. DANS CETTE FOURCHETTE, CHAQUE UTILISATEUR REÇOIT PAR DÉFAUT LA TRADUCTION DANS LA LANGUE DE SON CHOIX.",
     "avisoWeb2": "- POUR LES AUTRES LANGUES MOINS COURANTES, TRADUISEZ DANS VOTRE NAVIGATEUR.",
     "visitarRed": "VOUS POUVEZ VISITER LE RESEAU SANS AUCUNE OBLIGATION. SI VOUS DECIDEZ D´Y SOUSCRIRE, VOUS FEREZ ALORS PARTIE DE CETTE GRANDE FAMILLE DANS LAQUELLE LA CONFIANCE ET LA COMPREHENSION MUTUELLE DOIVENT PREVALOIR.",
@@ -111,5 +125,14 @@
     "clickDescripcionImagen": "CLIC POUR LA DESCRIPTION DE L'IMAGE",
     "clickSalirDescripcion": "CLIQUEZ À L'EXTÉRIEUR POUR SORTIR DE LA DESCRIPTION",
     "caracteres105": " 105 CARACTÈRES MAXIMUM",
-    "clickAmpliar": "CLIC POUR AGRANDIR"
+    "clickAmpliar": "CLIC POUR AGRANDIR",
+    "misReflexiones": "MES RÉFLEXIONS",
+    "antesEscribir": "AVANT D´ÉCRIRE, SÉLECTIONNEZ D'ABORD PUBLIC OU PRIVÉ",
+    "230Caracteres": "230 CARACTÈRES MAXIMUM PAR MESSAGE",
+    "publico": "PUBLIC",
+    "privado": "PRIVÉ",
+    "reflexionesPublicas": "MES RÉFLEXIONS PUBLIQUES",
+    "actualizarReflexion": "MISE À JOUR: 2 CLICS SUR LA RÉFLEXION",
+    "cambiarEstadoReflexion": "ENVOYER À \"PRIVÉ\": LONGUE PRESSION SUR LA RÉFLEXION",
+    "reflexionesPrivadas": "MES RÉFLEXIONS PRIVÉES"
 }

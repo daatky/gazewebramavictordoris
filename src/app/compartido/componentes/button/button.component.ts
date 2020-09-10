@@ -112,5 +112,6 @@ export enum ColorTextoBoton {
 
 export enum TipoBoton {
   TEXTO,
-  TEXTO_ICON
+  TEXTO_ICON,
+  ICON
 }

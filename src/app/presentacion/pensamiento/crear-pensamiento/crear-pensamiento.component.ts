@@ -1,22 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PensamientoCompartido } from 'src/app/compartido/diseno/modelos/pensamiento';
 import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/diseno/enums/tipo-pensamiento.enum';
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
-import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
-import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface';
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum';
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
-import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
-import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
-import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 
 @Component({
   selector: 'app-crear-pensamiento',
@@ -25,63 +17,62 @@ import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano
 })
 export class CrearPensamientoComponent implements OnInit {
   pensamientoCompartido:PensamientoCompartido
-  dataLista:DatosLista
-  crearPensamientoForm: FormGroup;
-  inputPensamiento: InputCompartido;  
+  dataLista:DatosLista //lISTA DE  
   botonCrearPensamiento: BotonCompartido;  
   idPerfil="5f3e907015ae58647c0d3e1d"
-  esPrivado:boolean=false;
-  configuracionToast:ConfiguracionToast;
-  cargando:boolean;
-  configuracionAppBar: ConfiguracionAppbarCompartida
+  esPrivado:boolean; //Para enviar a la base de datos true o false de acuerdo a lo seleccionado por el usuario
+  configuracionToast:ConfiguracionToast; //Presentar el toats
+  cargando:boolean; //PRESENTAR EL CARGANDO
+  @Input() estadosPensamiento:number //Para saber que boton presiono el usuario PUBLICO / PRIVADO
+  
   constructor(
     private variablesGlobales:VariablesGlobales,
-    private pensamientoNegocio:PensamientoNegocio,
-    private formBuilder: FormBuilder,   
-  ) {
-    this.cargando=true  
-    this.prepararAppBar()
-    this.iniciarDatos()
+    private pensamientoNegocio:PensamientoNegocio,  
+  ) {    
     //this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_ALEATORIO, tituloPensamiento: 'Titulo', esLista: false, configuracionItem: EstiloItemPensamiento.ITEM_ALEATORIO }    
   }
 
   ngOnInit(): void {       
+    this.cargando=true               
+    this.iniciarDatos()
+  }
+  ngOnChanges(){
+    this.cargando=true 
+    this.seleccionarPensamientoMostrar()
+    if(this.estadosPensamiento>0){
+      this.obtenerPensamientos()
+    }
   }
   iniciarDatos(){
-    this.crearPensamientoForm = this.formBuilder.group({
-      pensamiento: ['', [Validators.required, Validators.maxLength(230)]],
-    });      
-    this.inputPensamiento = { tipo: 'text', error: false, estilo: {estiloError:EstiloErrorInput.ROJO,estiloInput:EstiloInput.LOGIN}, placeholder: 'Ingrese un pensamiento', data: this.crearPensamientoForm.controls.pensamiento}        
 
-    this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION,subtitulo:'Subtitulo', configuracionItem:{estilo: EstiloItemPensamiento.ITEM_ALEATORIO}}
+    this.seleccionarPensamientoMostrar()        
     this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarMasPensamientos()}             
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }            
-    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-    this.obtenerPensamientos()
+    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}    
   }
-  async prepararAppBar() {
-    this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
-      searchBarAppBar: {
-        mostrarSearchBar: true,
-        nombrePerfil: {
-          mostrar: false
-        },
-        mostrarDivBack: true,
-        mostrarTextoHome: false,
-        subtitulo: {
-          mostrar: true,
-          llaveTexto: 'CLASICO'
-        },
-        mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
-      }
-    }
-
+  seleccionarPensamientoMostrar(){      
+    switch (this.estadosPensamiento) {      
+      case 0:
+        this.cargando=false
+        this.pensamientoCompartido={tipoPensamiento:TipoPensamiento.PENSAMIENTO_SIN_SELECCIONAR, configuracionItem:{estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO},subtitulo:false}
+        break;
+      case 1:
+        this.esPrivado=false
+        this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION, configuracionItem:{estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO,presentarX:true},subtitulo:true}        
+        break;
+      case 2:
+        this.esPrivado=true
+        this.pensamientoCompartido={esLista:true,tipoPensamiento:TipoPensamiento.PENSAMIENTO_PRIVADO_CREACION, configuracionItem:{estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO, presentarX:true},subtitulo:true}
+        break;        
+      default:
+        this.cargando=false
+        this.pensamientoCompartido={tipoPensamiento:TipoPensamiento.PENSAMIENTO_SIN_SELECCIONAR, configuracionItem:{estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO},subtitulo:false}
+        break;
+    }  
   }
     //Escuchando el emit() que vienen de pensamiento compartido
   //Obtener pensamientos 
-  unClick(objeto?:object){
+  unClick(objeto:object){
     console.log("unClick")
     //Primero se carga un dialogo
     this.actualizarPensamiento(objeto)
@@ -97,23 +88,8 @@ export class CrearPensamientoComponent implements OnInit {
     this.eliminarPensamiento(objeto)
     return objeto
   }
-  
-  obtenerPensamientos(){
-    console.log("00000")    
-    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
-    this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
-    .subscribe((res:Array<PensamientoModel>)=>{
-      this.cargando=false   
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-      this.dataLista.lista=res
-    },error=>{
-      this.cargando=false  
-      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
-    })
-  }
-  crearPensamiento = () =>{
-    if(this.crearPensamientoForm.valid){
-      console.log('CORRECTO')
+  crearPensamiento(){
+    /*if(this.crearPensamientoForm.valid){
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
       this.pensamientoNegocio.crearPensamiento(this.idPerfil,true,this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{
@@ -125,10 +101,35 @@ export class CrearPensamientoComponent implements OnInit {
     }else{
       this.inputPensamiento.error = true
     }
+  */
+  }
+  obtenerPensamientos(){
+    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.dataLista.lista.push({id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()})
+    this.cargando=false  
+    /*this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPrivado)
+    .subscribe((res:Array<PensamientoModel>)=>{
+      this.cargando=false   
+      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+      this.dataLista.lista=res
+    },error=>{
+      this.cargando=false  
+      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+    })*/
   }
 
-  actualizarPensamiento = (objeto:object) =>{ 
-    if(this.crearPensamientoForm.valid){
+
+  actualizarPensamiento = (objeto:object) =>{
+    console.log("vVOY ACTUALIZAR")
+    /*if(this.crearPensamientoForm.valid){
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
       this.pensamientoNegocio.actualizarPensamiento(objeto['pensamientoModel']['id'],this.crearPensamientoForm.value.pensamiento)
       .subscribe(res=>{
@@ -142,7 +143,7 @@ export class CrearPensamientoComponent implements OnInit {
       })
     }else{
       this.inputPensamiento.error = true
-    }
+    }*/
   }
 
   actualizarEstadoPensamiento = (objeto:object) =>{

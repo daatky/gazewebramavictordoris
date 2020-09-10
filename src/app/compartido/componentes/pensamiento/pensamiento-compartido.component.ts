@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DatosLista } from '../../diseno/modelos/datos-lista.interface';
-import { PensamientoCompartido, Configuracion } from "../../diseno/modelos/pensamiento";
+import { PensamientoCompartido, Configuracion, ItemPensamiento } from "../../diseno/modelos/pensamiento";
 import { TipoPensamiento, EstiloItemPensamiento } from '../../diseno/enums/tipo-pensamiento.enum';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
 import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
@@ -14,60 +14,82 @@ export class PensamientoCompartidoComponent implements OnInit {
   @Input() pensamientoCompartido:PensamientoCompartido
   divPensamiento:string
   @Input() dataLista:DatosLista
-  @Output() unClick:EventEmitter<object>
-  @Output() dobleClick:EventEmitter<object>
-  @Output() clickLargo:EventEmitter<object>
+  @Output() unClick:EventEmitter<ItemPensamiento>
+  @Output() dobleClick:EventEmitter<ItemPensamiento>
+  @Output() clickLargo:EventEmitter<ItemPensamiento>
   dataPensamiento:Configuracion
   error:string
   
   constructor(
     private pensamientoNegocio:PensamientoNegocio,
   ) { 
-    this.unClick=new EventEmitter<object>();
-    this.dobleClick=new EventEmitter<object>();
-    this.clickLargo=new EventEmitter<object>();
+        //this.configurarDatos(0,{id:'uhf'})
+        this.unClick=new EventEmitter<ItemPensamiento>();
+        this.dobleClick=new EventEmitter<ItemPensamiento>();
+        this.clickLargo=new EventEmitter<ItemPensamiento>();           
   }
 
   ngOnInit(): void {  
-    //this.configurarDatos(0,{id:'uhf'})
     this.cargarPensamiento()
-  }    
+  }  
+  /*ngOnChanges(){
+    this.cargarPensamiento()
+  }*/
   cargarPensamiento(){
     this.error=""
-    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){            
-      
+    //console.log("aspodkaokdoakdok")
+    //console.log(this.pensamientoCompartido)
+    if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_ALEATORIO)){                  
       this.obtenerPensamientoAleatorio()          
-    }else{
-      this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
+    }else{       
+      if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_PRIVADO_CREACION)){
+        this.divPensamiento='divPensamientoFormaRoja'
+      }else{
+        if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION)){
+          this.divPensamiento='divPensamientoFormaAmarilla'
+        }/*else{
+          if(this.pensamientoCompartido&&(this.pensamientoCompartido.tipoPensamiento===TipoPensamiento.PENSAMIENTO_SIN_SELECCIONAR)){
+            this.divPensamiento='divPensamientoForma'
+          }
+        } */
+      }         
     }
   }
   obtenerPensamientoAleatorio(){
+    console.log('PENSAMIENTO ALEATORIO')      
+    this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
     .subscribe((res:PensamientoModel)=>{ 
+      //console.log('PENSAMIENTO ALEATORIO')      
       console.log(res)
-      this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
       this.dataPensamiento={data:res}
     },error=>{
-      console.log(error)
+      //console.log(error)
       this.error=error
     })
+    //this.dataPensamiento={data:{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}}
+    //{id:'12323',texto:"HOLA ES ES MI CONTACTO",fechaActualizacion:new Date()}
   }
   eventoClick(index:number,pensamientoModel:PensamientoModel){
-    this.unClick.emit({index:index,pensamientoModel:pensamientoModel})
+    this.unClick.emit({indice:index,pensamiento:pensamientoModel})
   }
   eventoDobleClick(index:number,pensamientoModel:PensamientoModel){
-    this.dobleClick.emit({index:index,pensamientoModel:pensamientoModel})
+    console.log("aqio")
+    this.dobleClick.emit({indice:index,pensamiento:pensamientoModel})
   }
   eventoClickLargo(index:number,pensamientoModel:PensamientoModel){
     console.log(index, pensamientoModel)
-    this.clickLargo.emit({index:index,pensamientoModel:pensamientoModel})
+    this.clickLargo.emit({indice:index,pensamiento:pensamientoModel})
   }
   configurarDatos(index:number, pensamientoModel:PensamientoModel):Configuracion{
+    //console.log("CONFIGURANDO DATOS")
+    //console.log(index,pensamientoModel)
     return {
       data:pensamientoModel,
       onclick: () => this.eventoClick(index,pensamientoModel),        
       estilo:EstiloItemPensamiento.ITEM_ALEATORIO,
       dobleClick: () => this.eventoDobleClick(index,pensamientoModel),  
+      presentarX:this.pensamientoCompartido.configuracionItem.presentarX
     }
   }
 }

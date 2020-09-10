@@ -13,6 +13,9 @@
                 <div class="icono" (click)="execute()"></div>
             </div>
         </div>
+        <div *ngSwitchCase="tipoBoton.ICON">
+            <div class="iconoBoton" (click)="execute()"></div>
+        </div>
     </div>
 </div>
 

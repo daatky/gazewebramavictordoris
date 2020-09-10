@@ -20,6 +20,7 @@ export class IniciarSesionMapperService extends MapedorService<IniciarSesionEnti
     }
 
     protected map(entity: IniciarSesionEntity): IniciarSesionModel {
+        console.log("AQUI ESTOY")
         return {
             tokenAccess: entity.tokenAccess,
             tokenRefresh: entity.tokenRefresh,

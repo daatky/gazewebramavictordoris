@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, AfterContentInit, DoCheck, AfterContentChecked, AfterViewInit } from '@angular/core';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { Component, OnInit, Input} from '@angular/core';
 import { EventoTapPersonalizado } from 'src/app/nucleo/servicios/generales/detector-gestos.service';
 import { Configuracion } from '../../diseno/modelos/pensamiento';
 
@@ -21,20 +20,22 @@ export class ItemPensamientoComponent implements OnInit {
 
   ngAfterViewInit(): void {
       // Inicializar eventos de tap y doble tap      
-      if(this.configuracionItem &&(this.configuracionItem.dobleClick ||this.configuracionItem.onclick)){
-        const elemento = document.getElementById("itemPensamiento" + this.configuracionItem.data.id) as HTMLElement
-        if (elemento) {
-          const gestor = this.gestorEventosTap.construirEventosTap(elemento)
-          gestor.on('tap', () => {
-            //console.log('un tap')
-            this.configuracionItem.onclick();
-          })
-          gestor.on('dobletap', () => {
-            //console.log('dos tap')
-            this.configuracionItem.dobleClick();
-          })
+      setTimeout(() => {
+        if(this.configuracionItem &&(this.configuracionItem.dobleClick ||this.configuracionItem.onclick)){
+          const elemento = document.getElementById("itemPensamiento" + this.configuracionItem.data.id) as HTMLElement
+          if (elemento) {
+            const gestor = this.gestorEventosTap.construirEventosTap(elemento)
+            gestor.on('tap', () => {
+              console.log('un tap')
+              this.configuracionItem.onclick();
+            })
+            gestor.on('dobletap', () => {
+              console.log('dos tap')
+              this.configuracionItem.dobleClick();
+            })
+          }
         }
-      }
+      })      
   }
 
 }

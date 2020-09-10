@@ -34,6 +34,7 @@ export class CuentaNegocio {
         return this.cuentaRepository.iniciarSesion(data)
             .pipe(
                 map(data => {
+                    console.log(data)
                     this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
                     this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
                     this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
@@ -99,6 +100,7 @@ export class CuentaNegocio {
     }
 
     obtenerTokenAutenticacion(): Observable<string> {
+        console.log("AQUI")
         const tokenActual = this.repository.obtenerTokenAutenticacion()
 
         if (tokenActual) {
@@ -111,6 +113,7 @@ export class CuentaNegocio {
                 return this.repository.refrescarToken(tokenRefrescar)
                     .pipe(
                         map((data: TokenModel) => {
+                            console.log(data)
                             this.repository.guardarTokenAutenticacion(data.tokenAccess);
                             this.repository.guardarTokenRefresh(data.tokenRefresh);
                             return data.tokenAccess

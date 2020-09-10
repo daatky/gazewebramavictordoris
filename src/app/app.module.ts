@@ -75,11 +75,12 @@ export function createTranslateLoader(http: HttpClient) {
     CompartidoModule,
     TranslateModule.forRoot({
       loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
+        provide:TranslateLoader,
+        useFactory: (createTranslateLoader),        
+        deps: [HttpClient]        
       },
-      isolate: true
+      isolate: true,
+      //extend:true
     }),
     HammerModule,
     WebcamModule,
@@ -101,6 +102,8 @@ export function createTranslateLoader(http: HttpClient) {
     RestriccionRutas,
     RutasInicioSession
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,
+    //[{provide: PLATFORM_PIPES, useValue: TranslatePipe, multi: true} ]    
+  ]
 })
 export class AppModule { }

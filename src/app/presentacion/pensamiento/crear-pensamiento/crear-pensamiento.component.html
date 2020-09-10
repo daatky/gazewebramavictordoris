@@ -1,14 +1,19 @@
-<app-appbar [configuracion]="configuracionAppBar"></app-appbar>
-<div *ngIf="cargando;else presentar" class="cargandoCompleto cuerpo centrar">
+<div *ngIf="cargando;else presentar" class="tranparencia-base cuerpo centrar">
     <app-cargando></app-cargando>
 </div>
 <ng-template #presentar>    
-    <div class="cuerpoPensamiento cuerpo">
-        <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataLista'></app-pensamiento-compartido>  
-        <form [formGroup]="crearPensamientoForm">
-            <app-input [inputCompartido]='inputPensamiento'></app-input>
-            <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
-        </form>
-    </div>
+        <div class="cuerpoPensamiento centrar2">         
+            <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataLista'>
+                <div class="divIndicacionesPensamientos">
+                    <p class="boldSombra letra-3-con-interlineado-igual txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
+                    <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->
+                    <div class="div316"></div>
+                    <p class="bold letra-1-con-interlineado-1 centrarText">{{ 'actualizarReflexion' | translate | uppercase}}</p>
+                    <div class="div178"></div>
+                    <p class="bold letra-1-con-interlineado-1 txt-rojo-base  centrarText">{{ 'cambiarEstadoReflexion' | translate | uppercase}}</p>                
+                    <div class="div316"></div>
+                </div> 
+            </app-pensamiento-compartido>                  
+        </div>        
     <app-toast [configuracion]='configuracionToast'></app-toast>
 </ng-template>

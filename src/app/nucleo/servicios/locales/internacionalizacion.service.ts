@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({ providedIn: 'root' })
 export class InternacionalizacionService {
-
+    error:any
     constructor(
         private translateService: TranslateService,
     ) { }
@@ -18,7 +18,14 @@ export class InternacionalizacionService {
         // Idioma actual o a cambia // el idioma a utilizar, si el idioma no está disponible, utilizará el cargador actual para obtenerlos
         this.translateService.use(idioma)
     }
-    async obtenerTextoLlave(llave: string): Promise<string> {
-        return await this.translateService.get(llave).toPromise<string>()
+    async obtenerTextoLlave(llave:string):Promise<string>{
+        return await this.translateService.get(llave).toPromise()
+    }   
+    //Para los input me devuelve la traduccion estatica  
+    obtenerTextoSincrono(llave:string,objeto?:Object):string{
+        if(objeto) {
+            return this.translateService.instant(llave,objeto)
+        }
+        return this.translateService.instant(llave)
     }
 }
