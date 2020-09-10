@@ -105,8 +105,8 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: tipoPerfil.codigo,
-      onclick: () => this.gestionarPerfil(tipoPerfil),
-      dobleClick: () => this.gestionarPerfil(tipoPerfil, false)
+      onclick: () => this.gestionarPerfil(tipoPerfil,true),
+      dobleClick: () => this.gestionarPerfil(tipoPerfil)
     };
   }
 

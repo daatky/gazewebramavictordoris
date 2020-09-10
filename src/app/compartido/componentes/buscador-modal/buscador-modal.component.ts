@@ -45,7 +45,7 @@ export class BuscadorModalComponent implements OnInit, AfterViewInit {
     this.barraBusqueda$ = fromEvent<any>(this.inputBuscador.nativeElement, 'keyup')
       .pipe(
         map(event => event.target.value),
-        debounceTime(1000),
+        debounceTime(500),
       )
     
     this.barraBusqueda$.subscribe(query => {

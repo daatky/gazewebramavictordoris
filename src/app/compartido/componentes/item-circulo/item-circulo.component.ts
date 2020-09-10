@@ -41,27 +41,16 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-      // this.configuracion.idInterno = this.generadorId.generarIdConSemilla() // Generar id interno
-      this.configurarOrigenFoto()
+    this.configurarOrigenFoto()
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      // Inicializar Eventos Tap y Doble Tap
-      const canvas = document.getElementById("itemCirculoCanvas" + this.configuracion.idInterno) as HTMLElement
-      if (canvas) {
-        const gestor = this.itemMetodos.inicializarEventosDeTapPersonalizados(canvas)
-        gestor.on('tap', () => {
-          this.eventoClick()
-        })
-        gestor.on('dobletap', () => {
-          this.eventoDobleClick()
-        })
-      }
+      
     })
   }
 
-  onImageLoad(evt:any) {
+  siImagenEstaCargada(evt:any) {
     if (evt && evt.target) {
       const x = evt.srcElement.x
       const y = evt.srcElement.y
@@ -102,7 +91,7 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
   
 
   // Se ejecuta cuando se produce un click en el item
-  eventoClick() {
+  tap() {
     try {
       // Si el item no tiene eventos de click
       if (!this.configuracion.activarClick || this.configuracion.mostrarLoader) {
@@ -146,12 +135,12 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
         return
       }
     } catch (error) {
-      console.log(error)
+      console.error('Error en evento de tap')
     }
   }
 
   // Se ejecuta cuando se produce un doble click en el item
-  eventoDobleClick() {
+  dobletap() {
     try {
       // Si el item no tiene eventos
       if (!this.configuracion.activarDobleClick || this.configuracion.mostrarLoader) {
@@ -188,14 +177,13 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
         this.configuracion.eventoEnItem(this.infoAccion)
         return
       }
-
     } catch (error) {
       console.log(error)
     }
   }
 
   // Se ejecuta cuando se produce un long click en el item
-  eventoClickLargo() {
+  press() {
     try {
       // Si el item no tiene eventos
       if (!this.configuracion.activarLongPress || this.configuracion.mostrarLoader) {
@@ -246,6 +234,7 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
   }
 
   cerrarModalOrigenFoto(event: any) {
+    console.warn('Click en origien foto:', event.target.className)
     if (event.target.className.indexOf('modalOrigenFoto') >= 0) {
       this.confModalOrigenFoto.mostrar = false
       this.confModalOrigenFoto.origenFoto = OrigenFoto.SIN_DEFINIR

@@ -34,6 +34,7 @@ export class GestorEventosDirective implements OnInit, OnDestroy {
         this.subscripcion = this.taps
             .pipe(debounceTime(this.tiempoDeEspera))
             .subscribe(e => {
+                console.warn(this.contadorTaps)
                 if (this.contadorTaps >= 2) {
                     this.dobleTap.emit(e)
                 } else if (this.contadorTaps === 1) {
