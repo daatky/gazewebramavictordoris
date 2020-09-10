@@ -1,7 +1,8 @@
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { Observable } from 'rxjs';
 import { UsuarioModel } from './../../dominio/modelo/usuario.model';
 import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio';
-import { CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+import { CodigosCatalogoEntidad, AccionAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { MediaEntity } from './../../dominio/entidades/media.entity';
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
 import { CodigosCatalogoTipoArchivo } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-archivo.enum';
@@ -58,11 +59,12 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   public observable: any
 
   // Parametros de url
-  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
   public codigo: string // Indica el codigo de la entidad
+  public entidad: CodigosCatalogoEntidad // Indica la entidad donde se esta usando el album
+  public accionEntidad: AccionEntidad // Indica la accion de la entidad desde la que se accedio al album
   public titulo: string // El titulo a mostrar en el album
-  public esVisitante: boolean // Visitante true 1, propietario false 0
   public accionAlbum: AccionAlbum // Accion para la que el album esta siendo utilizado
+  // public esVisitante: boolean // Visitante true 1, propietario false 0
 
   // Parametros internos
   public album: AlbumModel // Album en uso
@@ -93,10 +95,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     private perfilNegocio: PerfilNegocio,
     private cuentaNegocio: CuentaNegocio,
   ) {
-    this.cantidadMaximaFotos = 6
     this.titulo = ''
-    this.esVisitante = true
     this.accionAlbum = AccionAlbum.CREAR
+    this.cantidadMaximaFotos = 6
     this.listaMediaAlbum = []
     this.itemsAlbum = []
     this.itemsAlbumPorDefecto = []
@@ -147,79 +148,86 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   configurarParametrosDeUrl() {
-    if (this.rutaActual.snapshot.params.entidad) {
-      this.entidad = this.rutaActual.snapshot.params.entidad
-    }
-
-    if (this.rutaActual.snapshot.params.codigo) {
-      this.codigo = this.rutaActual.snapshot.params.codigo
-    }
-
-    if (this.rutaActual.snapshot.params.titulo) {
-      this.titulo = this.rutaActual.snapshot.params.titulo
-    }
-    
-    if (this.rutaActual.snapshot.params.accion) { 
-      this.accionAlbum =  this.rutaActual.snapshot.params.accion
+    const { codigo, entidad, accionEntidad, titulo, accionAlbum } = this.rutaActual.snapshot.params
+    if (codigo && entidad && accionEntidad && titulo && accionAlbum) {
+      this.codigo = codigo
+      this.entidad = entidad
+      this.accionEntidad = accionEntidad
+      this.titulo = titulo
+      this.accionAlbum = accionAlbum
+    } else {
+      // Caso contrario validar
     }
   }
 
   // Configurar album
   validarAlbum() {
-    this.album = this.perfilNegocio.obtenerAlbumActivo()
+    this.album = this.perfilNegocio.obtenerAlbumActivoDelSessionStorage()
+    console.log(this.album)
     if (!this.album) {
       // Validar la entidad
-      // Entidad perfil
-      if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
-        // Si el usuario existe
-        if (usuario) {
-          usuario.perfiles.forEach(perfil => {
-            if (perfil.tipoPerfil.codigo === this.codigo) {
-              // Sacar el album de tipo general
-              perfil.album.forEach(album => {
-                if (album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
-                  this.album = album
-                }
-              })
+      switch (this.entidad) {
+        case CodigosCatalogoEntidad.PERFIL:
+          const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelSessionStorage()
+          console.log(usuario)
+          // Si el usuario existe
+          if (usuario) {
+            usuario.perfiles.forEach(perfil => {
+              if (perfil && perfil.tipoPerfil.codigo === this.codigo) {
+                // Sacar el album de tipo perfil
+                perfil.album.forEach(album => {
+                  if (album && album.tipo.codigo === CodigosCatalogoTipoAlbum.PERFIL) {
+                    this.album = album
+                  }
+                })
+              }
+            })
+            if (!this.album) {
+              console.log('sigue sin existir')
+              this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
             }
-          })
-        } else {
-          this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
-        }
-        return
+          } else {
+            console.log('usuario no existe en album')
+            this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+          }
+          break
+        case CodigosCatalogoEntidad.PROYECTO: break;
+        case CodigosCatalogoEntidad.NOTICIA: break;
+        default: break;
       }
     }
   }
 
   configurarItemsAlbum() {
     // Items para el album
-    this.album.media.forEach(media => {
-      this.itemsAlbum.push({
-        id: media._id,
-        idInterno: '',
-        usoDelItem: UsoItemCircular.CIRALBUM,
-        esVisitante: false,
-        urlMedia: media.principal.url,
-        activarClick: false,
-        activarDobleClick: true,
-        activarLongPress: true,
-        mostrarBoton: false,
-        mostrarLoader: true,
-        textoBoton: 'Click to upload',
-        capaOpacidad: {
-          mostrar: false
-        },
-        eventoEnItem: this.eventoEnitemFuncion
+    if (this.album) {
+      this.album.media.forEach(media => {
+        this.itemsAlbum.push({
+          id: media._id,
+          idInterno: this.generadorId.generarIdConSemilla(),
+          usoDelItem: UsoItemCircular.CIRALBUM,
+          esVisitante: false,
+          urlMedia: media.principal.url,
+          activarClick: false,
+          activarDobleClick: true,
+          activarLongPress: true,
+          mostrarBoton: false,
+          mostrarLoader: true,
+          textoBoton: 'Click to upload',
+          capaOpacidad: {
+            mostrar: false
+          },
+          eventoEnItem: this.eventoEnitemFuncion
+        })
       })
-    })
-    // Definir la portada
-    if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
-      const portada: MediaModel = this.album.portada
-      this.confPortada.mostrarLoader = true
-      this.confPortada.id = portada._id
-      this.confPortada.urlMedia = portada.principal.url
-      this.confPortada.mostrarBoton = false
+      // Definir la portada
+      if (this.album.portada && this.album.portada.principal && this.album.portada.principal.url.length > 0) {
+        const portada: MediaModel = this.album.portada
+        this.confPortada.mostrarLoader = true
+        this.confPortada.id = portada._id
+        this.confPortada.urlMedia = portada.principal.url
+        this.confPortada.mostrarBoton = false
+      }
     }
   }
 
@@ -248,6 +256,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
+        mostrarSearchBar: true,
         nombrePerfil: {
           mostrar: true,
           llaveTexto: this.obtenerLlaveSegunEntidadCodigo()
@@ -262,7 +271,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
       },
       accionAtras: () => {
-        this.accionAppBarBack()
+        this.accionAtrasAppBarBack()
       }
     }
   }
@@ -270,7 +279,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   configurarPortada() {
     this.confPortada = {
       id: '',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRPERFIL,
       esVisitante: true,
       urlMedia: '',
@@ -299,7 +308,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   confgurarBotonUploadPhotos() {
     this.confBotonUpload = {
       id: 'botonUpload',
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRALBUM,
       esVisitante: false,
       urlMedia: '',
@@ -344,7 +353,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       this.itemsAlbumPorDefecto.push(
         {
           id: 'itemFotoDefecto_' + pos,
-          idInterno: '',
+          idInterno: this.generadorId.generarIdConSemilla(),
           usoDelItem: UsoItemCircular.CIRALBUM,
           esVisitante: true,
           urlMedia: '',
@@ -366,13 +375,20 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     pos = 0
     this.mediaNegocio.obtenerListaArchivosDefault()
       .subscribe(data => {
+        // Validar si existen datos
         data.forEach((item) => {
           if (item.catalogoArchivoDefault === CodigosCatalogoArchivosPorDefecto.ALBUM_PERFIL) {
             this.itemsAlbumPorDefecto[pos].urlMedia = item.url
             pos += 1
           }
         })
-        // Se reinicia por defecto
+
+        if (pos === 0) {
+          // Ocultar loader cuando no existe datos
+          this.itemsAlbumPorDefecto.forEach(item => {
+            item.mostrarLoader = false
+          })
+        }
       }, error => {
         this.itemsAlbumPorDefecto.forEach(item => {
           item.mostrarBoton = true
@@ -386,7 +402,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     const idItem: string = this.generadorId.generarIdConSemilla()
     this.itemsAlbum.push({
       id: idItem,
-      idInterno: '',
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemCircular.CIRALBUM,
       esVisitante: false,
       urlMedia: '',
@@ -514,7 +530,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   // Cuando el usuario da al boton de back, se debe almacenar el album en el storage
   guardarAlbum() {
     if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-      this.perfilNegocio.insertarAlbunEnPerfil(this.codigo, this.album)
+      this.perfilNegocio.insertarAlbunEnPerfilDelSessionStorage(this.codigo, this.album)
     }
   }
 
@@ -559,11 +575,14 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     return ''
   }
 
-  accionAppBarBack() {
+  accionAtrasAppBarBack() {
     // Cuando el album es usado para Crear
     if (this.accionAlbum === AccionAlbum.CREAR) {
       if (this.entidad === CodigosCatalogoEntidad.PERFIL) {
-        this.router.navigateByUrl(RutasLocales.REGISTRO.toString().replace(':codigoPerfil', this.codigo))
+        let ruta = RutasLocales.REGISTRO.toString()
+        ruta = ruta.replace(':accionEntidad', this.accionEntidad)
+        ruta = ruta.replace(':codigoPerfil', this.codigo)
+        this.router.navigateByUrl(ruta)
       }
       return
     }
@@ -573,10 +592,4 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-}
-
-
-export enum AccionAlbum {
-    CREAR = 'creando',
-    ACTUALIZAR = 'actualizando',
 }

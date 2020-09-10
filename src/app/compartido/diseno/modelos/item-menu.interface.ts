@@ -3,7 +3,7 @@ import { TamanoItemMenu } from '../enums/tamano-item-menu.enum'
 import { ColorFondoItemMenu } from '../enums/color-fondo-item-menu.enum'
 import { LineaCompartida } from './linea.interface'
 import { TipoMenu } from '../../../compartido/componentes/item-menu/item-menu.component';
-import { ItemMenuModel } from 'src/app/dominio/modelo/item-menu.model';
+import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.model';
 
 // Configuracion del item menu
 export interface ItemMenuCompartido {
@@ -23,10 +23,11 @@ export interface ItemMenuCompartido {
     dobleClick?: Function
     clickSostenido?: Function,
     tipoMenu: TipoMenu
-    texto1: string,
+    texto1?: string,
     texto2?: string,
     texto3?: string,
     descripcion?: Array<LineaDeTexto> // Cuando se agrega la descripcion, se visualizara el icono de flecha y se omitira el click
     submenus?: ItemMenuModel[]
+    acciones?: ItemAccion[]
 }
 

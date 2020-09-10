@@ -70,6 +70,7 @@ export class PensamientoComponent implements OnInit {
           mostrar: true,
           llaveTexto:'PENDIENTE'
         },
+        mostrarSearchBar:true,
         mostrarDivBack: true,
         mostrarTextoHome: true,
         subtitulo: {

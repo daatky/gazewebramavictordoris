@@ -3,12 +3,7 @@ import { PensamientoCompartido } from 'src/app/compartido/diseno/modelos/pensami
 import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/diseno/enums/tipo-pensamiento.enum';
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
-import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
-import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface';
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum';
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';

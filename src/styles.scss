@@ -1,6 +1,5 @@
 @import "assets/fuentes/_fuentes.scss";
 @import "assets/estilos/colores.scss";
-@import "assets/estilos/dimensiones.scss";
 @import "assets/estilos/estiloFuente.scss";
 @import "assets/estilos/estiloForma.scss";
 @import "assets/estilos/estiloColor.scss";
@@ -14,6 +13,7 @@
 
 :root {
     font-family: "Source Sans Pro", sans-serif;
+    user-select: none;
 }
 
 //Firefox
@@ -140,7 +140,8 @@ p {
 }
 .botondefecto {
     font-size: $letra-3;
+    touch-action: none;
 }
-.letradefecto{
+.letradefecto {
     font-size: $letra-2;
 }

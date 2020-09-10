@@ -41,17 +41,90 @@
     <div
         *ngIf="!perfilCreado"
         class="descripcion_perfil"
-    >
+    >   
+        <!-- Clasico -->
         <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
                 enMayusculas: false,
                 tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
-                paddingIzqDerDelTexto: (perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC) ? estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512 : estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_1512
             })"
         >
-            {{ perfil.tipoPerfil.descripcion }}
+            {{ 'explicacionPerfilClasico1' | translate }}
+        </p>
+        <!-- Ludico -->
+        <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.PLAYFUL"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+            })"
+        >
+            {{ 'explicacionPerfilLudico' | translate }}
+        </p>
+        <!-- Sustituto -->
+        <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+            })"
+        >
+            {{ 'explicacionPerfilSustituto1' | translate }}
+        </p>
+        <div
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            class="espacio-0249"
+        ></div>
+        <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+            })"
+        >
+            {{ 'explicacionPerfilSustituto2' | translate }}
+        </p>
+        <!-- Grupo -->
+        <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+            })"
+        >
+            {{ 'explicacionPerfilGrupo1' | translate }}
+        </p>
+        <div
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            class="espacio-0522"
+        ></div>
+        <p
+            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                enMayusculas: false,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I4,
+                paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0658
+            })"
+        >
+            {{ 'explicacionPerfilGrupo2' | translate }}
         </p>
     </div>
     <div
@@ -88,6 +161,7 @@
         >
             <div class="explicacion">
                 <p
+                    *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC"
                     [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                         color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                         estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
@@ -97,6 +171,30 @@
                     })"
                 >
                     {{ 'explicacionPerfilClasico2' | translate }}
+                </p>
+                <p
+                    *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.PLAYFUL"
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I8,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilLudico2' | translate }}
+                </p>
+                <p
+                    *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+                    [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                        color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
+                        estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                        enMayusculas: true,
+                        tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I8,
+                        paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
+                    })"
+                >
+                    {{ 'explicacionPerfilSustituto3' | translate }}
                 </p>
                 <div
                     [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
@@ -111,7 +209,7 @@
                 </div>
             </div>
             <div class="modale">
-                <app-dialogo-inline #dialogoInline [configuracion]="confDialogo"></app-dialogo-inline>
+                <app-dialogo-inline #dialogoInline [configuracion]="confDialogoMasPerfiles"></app-dialogo-inline>
             </div>
             <p
                 [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
@@ -176,5 +274,15 @@
     >
         <app-button [botonCompartido]="confBotonPago"></app-button>
     </div>
+    <!-- Botones estado del perfil -->
+    <div
+        *ngIf="mostrarBotonesEstadoPerfil()"
+        class="botonesEstado"
+    >
+        <app-button [botonCompartido]="confBotonHibernar"></app-button>
+        <app-button [botonCompartido]="confBotonEliminar"></app-button>
+    </div>
 </div>
-<app-toast [configuracion]="confToast"></app-toast>
+<app-toast #toast [configuracion]="confToast"></app-toast>
+<app-dialogo [configuracion]="confDialogoHibernar"></app-dialogo>
+<app-dialogo [configuracion]="confDialogoEliminar"></app-dialogo>

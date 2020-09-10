@@ -18,6 +18,7 @@ import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-i
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-login',
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private router: Router,
     private cuentaNegocio: CuentaNegocio,
+    private _location: Location,
   ) {
 
   }
@@ -88,7 +90,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.loginForm.reset()
       },error=>{
         this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
-        this.botonSubmit.enProgreso=false        
+        this.botonSubmit.enProgreso=false                
         console.log(error)
       })
     } else {
@@ -100,7 +102,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   navegarmenuSeleccionarPerfiles() {
-    this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES)
+    this._location.replaceState('/');
+    this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES, { replaceUrl: true })
   }
 
 

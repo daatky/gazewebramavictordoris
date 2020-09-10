@@ -1,28 +1,35 @@
-<div #fondo class="modal">
+<div
+    #fondo
+    [ngClass]="{
+        'modal': true,
+        'mostrar': configuracion.mostrarDialogo
+    }"
+    (tap)="eventoModal($event.target)"
+>
     <div #principal class="contenedorPrincipal">
-        <div [ngSwitch]="data.tipo">
-            <div *ngSwitchCase="dialogo.CONFIRMACION">
+        <div [ngSwitch]="configuracion.tipo">
+            <div *ngSwitchCase="tipoDialogo.CONFIRMACION">
                 <div #descripcion class="contenedorDescripcion">
-                    <p class="letraDescripcion">{{data.descripcion}}</p>
+                    <p class="letraDescripcion">{{ configuracion.descripcion }}</p>
                 </div>
                 <div class="contenedorBotonesConfirmacion">
-                    <div *ngFor="let item of data.listaAcciones">
+                    <div *ngFor="let item of configuracion.listaAcciones">
                         <app-button [botonCompartido]="item"></app-button>
                     </div>
                 </div>
             </div>
 
-            <div *ngSwitchCase="dialogo.MULTIPLE_ACCION">
+            <div *ngSwitchCase="tipoDialogo.MULTIPLE_ACCION">
                 <div #descripcion class="contenedorDescripcion">
-                    <p class="letraDescripcion">{{data.descripcion}}</p>
+                    <p class="letraDescripcion">{{ configuracion.descripcion }}</p>
                 </div>
-                <div class="contenedorBotonesMultipleAccion" *ngFor="let item of data.listaAcciones">
+                <div class="contenedorBotonesMultipleAccion" *ngFor="let item of configuracion.listaAcciones">
                     <app-button [botonCompartido]="item"></app-button>
                 </div>
             </div>
 
-            <div *ngSwitchCase="dialogo.MULTIPLE_ACCION_HORIZONTAL">
-                <div class="contenedorBotonesMultipleAccionHorizontal" *ngFor="let item of data.listaAcciones">
+            <div *ngSwitchCase="tipoDialogo.MULTIPLE_ACCION_HORIZONTAL">
+                <div class="contenedorBotonesMultipleAccionHorizontal" *ngFor="let item of configuracion.listaAcciones">
                     <app-button [botonCompartido]="item"></app-button>
                 </div>
             </div>

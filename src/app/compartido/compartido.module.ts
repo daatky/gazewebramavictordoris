@@ -1,3 +1,4 @@
+import { GestorEventosDirective } from './directivas/gestor-eventos.directive';
 import { TranslateService } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core'
@@ -68,6 +69,7 @@ import { BarraInferiorComponent } from './componentes/barra-inferior/barra-infer
     DialogoInlineComponent,
     ListoComponent,
     BarraInferiorComponent,
+    GestorEventosDirective
   ],
   exports: [
     CrearComponenteDirective,
@@ -95,7 +97,8 @@ import { BarraInferiorComponent } from './componentes/barra-inferior/barra-infer
     DialogoContenidoComponent,
     ModalInferiorComponent,
     DialogoInlineComponent,
-    BarraInferiorComponent
+    BarraInferiorComponent,
+    GestorEventosDirective
   ]
 })
 

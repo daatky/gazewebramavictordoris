@@ -1,4 +1,12 @@
-<div id="{{ 'itemMenu' + configuracionItem.idInterno }}" [ngClass]="obtenerItemClases()" (press)="eventoClickLargo()">
+<div
+    #itemMenu
+    id="{{ 'itemMenu' + configuracionItem.idInterno }}"
+    [ngClass]="obtenerItemClases()"
+    gestorEventos
+    (eventoTap)="tap()"
+    (dobleTap)="dobletap()"
+    (press)="press()"
+>
     <div [ngClass]="obtenerClasesItemCaja()">
         <div class="contenedor-texto">
             <!-- ITEM PARA PERFIL CREATE, TIPO, PROFILE-->
@@ -31,19 +39,36 @@
                             color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
                             estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
                             enMayusculas: true,
-                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_IGUAL
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L4_I4
                         })">
-                        {{configuracionItem.texto1}}
-                    </p>
-                </div>
-                <div class="second" *ngSwitchCase="tipoMenu.ANUNCIOS">
+                        {{ texto1 | async }}
+
                     <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                             color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
                             estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
                             enMayusculas: true,
-                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L4_I4
                         })">
-                        {{configuracionItem.texto1}}
+                        {{ texto2 | async }}
+
+                    <p *ngIf="configuracionItem.texto3" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L4_I4
+                        })">
+                        {{ texto3 | async }}
+                    </p>
+
+                </div>
+                <div class="second" *ngSwitchCase="tipoMenu.ANUNCIOS">
+                    <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.GRIS, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I8
+                        })">
+                        {{ texto1 | async }}
                     </p>
                 </div>
                 <div class="second" *ngSwitchCase="tipoMenu.INSTRUCCIONES">
@@ -77,6 +102,12 @@
                 <div class="second" *ngSwitchCase="tipoMenu.SUBMENU">
                     <div class="boton-puntos"></div>
                 </div>
+                <div class="second" *ngSwitchCase="tipoMenu.LEGAL">
+                    <p (click)="clickItemSubMenu(item)" *ngFor="let item of configuracionItem.acciones;let i = index"
+                        [ngClass]="estiloTextoMenus(item)">
+                        {{ textos[i]|async}}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -87,11 +118,11 @@
                     class="separacion-texto">
                     {{ item.texto }}
                 </p>
-                <p *ngFor="let item of configuracionItem.submenus" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                <p (click)="clickItemSubMenu(item)" *ngFor="let item of configuracionItem.submenus" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                         color: estiloTexto.colorDelTexto.TEXTO_COLOR_PLATEADO, 
-                        estiloTexto: estiloTexto.estilosDelTexto.REGULAR, 
+                        estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
                         enMayusculas: false,
-                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_IGUAL 
+                        tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I5 
                     })" class="texto-submenu test">
                     {{ item.titulo }}
                 </p>

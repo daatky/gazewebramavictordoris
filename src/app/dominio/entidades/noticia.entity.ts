@@ -1,3 +1,4 @@
+import { MediaEntity } from './media.entity';
 import { VotoNoticiaEntity } from "./voto-noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoLocalidadEntity } from "./catalogos/catalogo-localidad.entity";
@@ -12,6 +13,7 @@ export interface NoticiaEntity {
     fechaActualizacion: Date
     localidad: CatalogoLocalidadEntity
     autor: string
+    articulo: MediaEntity,
     adjuntos: Array<AlbumEntity>
     perfil: PerfilEntity
     votos: Array<VotoNoticiaEntity>

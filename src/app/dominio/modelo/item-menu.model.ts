@@ -3,8 +3,7 @@ import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.com
 
 export interface ItemMenuModel {
     id: any,
-    titulo: string,
-    subtitulo?: string
+    titulo: string[] | ItemAccion[],
     action?: Function,
     ruta?: RutasLocales,
     tipo?: TipoMenu
@@ -13,9 +12,14 @@ export interface ItemMenuModel {
 export interface ItemSubMenu {
     id: any,
     titulo: string,
-    subtitulo?: string,
-    menus?: ItemMenuModel[],
+    menusInternos?: ItemMenuModel[],
     mostrarDescripcion: boolean,
-    ruta?: RutasLocales
+}
+
+
+export interface ItemAccion {
+    nombre: string,
+    accion: Function,
+    codigo: "g" | "m" | "p"
 }
 

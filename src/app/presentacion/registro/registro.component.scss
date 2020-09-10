@@ -14,10 +14,16 @@ $perfil-creado-margin-bottom: calcular(5.22);
 $perfil-normal-explicacion-alto: calcular(58.86);
 $perfil-grupo-explicacion-alto: calcular(115.65);
 
-.espacio-522 {
-  height: $espacio-522;
+$botones-estado-padding: calcular(3.91);
+
+// espacios
+.espacio-0249 {
   width: 100%;
-  background: red;
+  height: $espacio-0249;
+}
+.espacio-0522 {
+  width: 100%;
+  height: $espacio-522;
 }
 
 .cuerpo {
@@ -82,6 +88,7 @@ $perfil-grupo-explicacion-alto: calcular(115.65);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
 }
 
 // Inputs
@@ -207,3 +214,14 @@ $perfil-grupo-explicacion-alto: calcular(115.65);
   justify-content: center;
 }
 
+// Botones de estado
+.botonesEstado {
+  width: 100%;
+  margin-top: $espacio-522;
+  padding: 0 $botones-estado-padding;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -2,7 +2,7 @@
     <div [ngSwitch]="botonCompartido.tipoBoton">
         <div *ngSwitchCase="tipoBoton.TEXTO">
             <div #button (click)="execute()">
-                <p>{{texto|async}}</p>
+                <p>{{botonCompartido.text}}</p>
             </div>
         </div>
         <div *ngSwitchCase="tipoBoton.TEXTO_ICON">

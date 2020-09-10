@@ -1,8 +1,145 @@
-<div class="botones">
+<!-- PÁGINA DE INICIO  -   ¿POR QUÉ GAZELOOK?   -   NUESTROS OBJETIVOS -->
+<div class="landing">
+    <div class='nav'>
+        <div
+            *ngFor="let item of itemsMenu"
+            [ngClass]="item.clases"
+            (tap)="cambiarMenuActivo(item.tipoItem)"
+        >
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOCELESTE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                {{ item.texto | translate }}
+            </p>
+        </div>
+        <app-cabecera-idiomas></app-cabecera-idiomas>
+    </div>
+    <app-portada-gaze></app-portada-gaze>
+    <div class="contenido">
+        <div class="intro">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBOTONBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_I1
+                })"
+            >
+                {{ '(“Gaze” significa mirar fijamente, especialmente con admiración y sorpresa... como lo hacen los niños)' | translate }}
+            </p>
+        </div>
+        <div class="parrafo">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I1
+                })"
+            >
+                {{ 'CON EL FIN DE ENALTECER LA CONDICIÓN HUMANA Y EL PLANETA, RECUPERANDO AL HUMANO VIRTUOSO, HEMOS CREADO UNA RED SOCIAL Y PLATAFORMA, PARA PROPONER, DISCUTIR Y EJECUTAR PROYECTOS PROPUESTOS POR SUS USUARIOS' | translate }}
+            </p>
+        </div>
+        <div class="parrafo">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBOTONBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I1
+                })"
+            >
+                {{ 'GAZELOOK ES UNA COMPAÑÍA ALTRUISTA CON UNA ENORME CAPACIDAD ECONÓMICA. SUS USUARIOS OBTIENEN EL 84% DE DERECHOS DE VOTO Y DE DECISIÓN Y LA RED DESTINA EL MISMO PORCENTAJE Y MÁS DE SUS INGRESOS PARA REALIZAR LOS PROYECTOS' | translate }}
+            </p>
+        </div>
+        <div class="titulo">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBOTONBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I1
+                })"
+            >
+                {{ 'ÚNASE A NOSOTROS' | translate }}
+            </p>
+        </div>
+        <div class="parrafo">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_I1
+                })"
+            >
+                {{ '(GAZELOOK ES SOLO EL COMIENZO…) UNA AUDAZ PROPUESTA POLÍTICA, SOCIAL, ECONÓMICA, FILOSÓFICA Y POETICA POR UN MUNDO JUSTO Y PARTICIPATIVO' | translate }}
+            </p>
+        </div>
+        <div class="parrafo expecial">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L3_I1
+                })"
+            >
+                {{ '- UN LEGADO PARA LAS FUTURAS GENERACIONES -' | translate }}
+            </p>
+        </div>
+        <div class="parrafo nomarginbottom">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_I1
+                })"
+            >
+                {{ 'PARA REUNIR TODAS LAS EDADES, UNA APLICACIÓN WEB/MÓVIL CON UN "DISEÑO FÁCIL" Y NO ALIENANTE.' | translate }}
+            </p>
+        </div>
+        <div class="parrafo ">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_I1
+                })"
+            >
+                {{ '- UNA RED SIN PUBLICIDAD NO DESEADA, SIN INVASIÓN A LA PRIVACIDAD, SIN BASURA -' | translate }}
+            </p>
+        </div>
+        <div class="boton ultimo">
+            <p
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOCELESTE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
+                    enMayusculas: false,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+                })"
+            >
+                {{ 'Profundizar en el tema' | translate }}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="botones">
     <p>PAGINA DE INICIO</p>
     <p>¿PORQUE GAZELOOK?</p>
     <p>NUESTROS OBJETIVOS</p>
 </div>
 <div class="caja">
     <img class="portada" src="../../../assets/recursos/fondos/portada-gaze-completa.svg">
-</div>
+</div> -->
+

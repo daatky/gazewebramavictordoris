@@ -12,13 +12,15 @@ import { RutasLocales } from './rutas-locales.enum'
 import { MenuPrincipalComponent } from './presentacion/menu-principal/menu-principal.component';
 import { MisContactosComponent } from './presentacion/mis-contactos/mis-contactos.component';
 import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
+import { RestriccionRutas } from "../app/nucleo/servicios/generales/canActivate/resticcionRutas.service";
+import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
-
+    component: LoginComponent,
+    canActivate: [RutasInicioSession]
   },
   {
     path: 'landing',
@@ -26,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: RutasLocales.METODO_PAGO.toString(),
-    component: MetodoPagoComponent
+    component: MetodoPagoComponent,
   },
   {
     path: RutasLocales.REGISTRO.toString(),
@@ -38,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: RutasLocales.BIENVENIDO.toString(),
-    component: BienvenidaComponent
+    component: BienvenidaComponent,
+    canActivate: [RutasInicioSession]
   },
   {
     path: RutasLocales.ALBUM_PERFIL.toString(),
@@ -60,6 +63,7 @@ const routes: Routes = [
     path: RutasLocales.MODULO_PENSAMIENTO.toString(),
     loadChildren: () =>
       import('./presentacion/pensamiento/pensamiento.module').then(p => p.PensamientoModule),
+    canActivate: [RestriccionRutas]
   },
   {
     path: RutasLocales.MIS_CONTACTOS.toString(),
@@ -67,13 +71,15 @@ const routes: Routes = [
   },
   {
     path: RutasLocales.MENU_SELECCION_PERFILES.toString(),
-    component: MenuSeleccionPerfilesComponent
+    component: MenuSeleccionPerfilesComponent,
+    canActivate: [RestriccionRutas]
   }
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  //imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

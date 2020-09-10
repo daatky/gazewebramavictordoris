@@ -1,27 +1,138 @@
 @import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/colores.scss";
 
-.botones {
+// Nav
+$nav-height: calcular(26.51);
+$nav-width: calcular(69.16);
+$nav-padding-top-bottom: calcular(3.16);
+$nav-padding-left-right: calcular(2.49);
+
+// Boton
+$boton-margin-top-bottom: calcular(1.78);
+$boton-before-diametro: calcular(1.78);
+$boton-before-margin-left-right: calcular(3.25);
+
+* {
+    box-sizing: border-box;
+}
+
+.landing {
+    width: $ancho-pagina;
+    height: $altura-pagina;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+// Nav
+.nav {
+    width: $nav-width;
+    height: $nav-height;
+    padding: $nav-padding-top-bottom $nav-padding-left-right 0 $nav-padding-left-right;
+    background: $tranparencia-base;
+    box-sizing: border-box;
+}
+
+.boton {
+    position: relative;
     width: 100%;
+    margin: $boton-margin-top-bottom 0;
+
     display: flex;
     align-items: center;
-    justify-content: space-around;
 
-    flex-flow: row;
+    &:nth-child(1) {
+        justify-content: flex-start;
+    }
+
+    &:nth-child(2) {
+        justify-content: center;
+    }
+
+    &:nth-child(3) {
+        justify-content: flex-end;
+    }
+
+    & p {
+        font-family: "Patrick Hand", cursive;
+        position: relative;
+        padding-left: $boton-before-margin-left-right !important;
+        display: flex;
+        align-items: center;
+    }
+
+    & p::before {
+        position: absolute;
+        content: "";
+        background-color: $txt-celeste;
+        border-radius: 50%;
+        width: $boton-before-diametro;
+        height: $boton-before-diametro;
+        left: 0;
+    }
+
+    &.activo p {
+        color: $amarillo-base !important;
+    }
+
+    &.activo p::before {
+        background: $amarillo-base !important;
+    }
+
+    &.ultimo {
+        justify-content: center;
+    }
 }
 
-.botones p {
-    color: white;
-    font-weight: bold;
-    font-size: calcular(5.16);
-    line-height: 80%;
+// contenido
+.contenido {
+    background: $tranparencia-base;
+    width: calcular(69.16);
+    height: calc(100vh - ( #{ $nav-height } + #{ $portada-gaze-alto-completo } ));
+    overflow-y: auto;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-
-.caja {
-    position: relative;
-    z-index: 1;
-}
-
-.caja img {
+// Intro
+.intro {
     width: 100%;
+    margin-bottom: calcular(1.78);
+
+    & p {
+        text-align: center;
+    }
 }
+
+// .parrafo
+.parrafo {
+    width: 100%;
+    margin-bottom: calcular(3.02);
+
+    & p {
+        text-align: center;
+    }
+}
+
+.parrafo.especial {
+    position: relative;
+    // left: calc(100vw - (#{  }));
+}
+.parrafo.nomarginbottom {
+    margin-bottom: 0;
+}
+
+.titulo {
+    width: 100%;
+    margin-bottom: calcular(1);
+
+    & p {
+        text-align: center;
+    }
+}
+
