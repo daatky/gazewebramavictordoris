@@ -20,7 +20,7 @@ export interface Configuracion{
     onclick?: Function,
     dobleClick?: Function,
     clickSostenido?: Function,
-    presentarX?:boolean
+    presentarX:boolean,    
 }
 
 export interface ItemPensamiento{

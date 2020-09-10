@@ -8,6 +8,8 @@
     "problemaObtenerDatos":"Problems getting the data",
     "tipoEmail":"The field is email type",
     "procesando":"Processing ......",
+    "procesoEjecutado": "Process successfully executed",
+    "noEncontreElemento": "No items found",
 
     "sinAutorizacion":"You do not have authorization",
     "noEncontrado":"Not found",

@@ -3,8 +3,7 @@
     autocomplete="disabled" [maxLength]="determinarCadenaMaxima()" (focus)="empezarEscribir()"
     (keyup)="escribiendoEnInput()" (blur)="dejarDeEscribir()">
 <!--error-->
-<div [translate]="'campoRequerido'"
-    *ngIf="inputCompartido && (!inputCompartido.errorPersonalizado || inputCompartido.errorPersonalizado.length === 0)"
+<div *ngIf="inputCompartido && (!inputCompartido.errorPersonalizado || inputCompartido.errorPersonalizado.length === 0)"
     class="{{ inputCompartido.estilo.estiloError }} italic">
     {{ obtenerError(inputCompartido.data) }}
 </div>

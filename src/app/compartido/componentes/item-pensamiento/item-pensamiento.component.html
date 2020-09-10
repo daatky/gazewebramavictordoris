@@ -1,8 +1,10 @@
-  <div *ngIf="configuracionItem &&(configuracionItem.data!=undefined)" id="{{'itemPensamiento'+ configuracionItem.data.id}}">
+  <div gestorEventos
+  (dobleTap)="dobletap()"
+  *ngIf="configuracionItem &&(configuracionItem.data!=undefined)" id="{{'itemPensamiento'+ configuracionItem.data.id}}">
     <!--<div class="divFecha bold letra-3-con-interlineado-igual centrar">17/08/2020</div>-->
-    <!--<div class="divFecha bold letra-3-con-interlineado-igual centrar">{{datosItem.dataComponente.fecha | date:"dd/MM/yyyy"}}</div>-->
-    <div class="divFechaX">
-      <div class="divFecha"><app-item-fecha [fecha]="configuracionItem.data.fechaActualizacion"></app-item-fecha></div><div class="centrar"><div class="divX"></div></div>
+    <!--<div class="divFecha bold letra-3-con-interlineado-igual centrar">{{datosItem.dataComponente.fecha | date:"dd/MM/yyyy"}}</div>-->    
+    <div class="divFechaX" *ngIf="configuracionItem.data.fechaActualizacion">            
+      <div class="divFecha"><app-item-fecha [fecha]="configuracionItem.data.fechaActualizacion"></app-item-fecha></div><div class="centrar" *ngIf="configuracionItem.presentarX"><div class="divX" (click)="eliminarPensamiento()"></div></div>
     </div>    
     <div *ngIf='configuracionItem.data.texto' class="{{estilo}}">  
       {{configuracionItem.data.texto}}

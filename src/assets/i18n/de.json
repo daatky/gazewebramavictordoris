@@ -8,6 +8,8 @@
     "problemaObtenerDatos":"Probleme beim Abrufen der Daten",
     "tipoEmail":"Das Feld ist vom E-Mail-Typ",
     "procesando":"wird bearbeitet ......",
+    "procesoEjecutado": "Prozess erfolgreich ausgeführt",
+    "noEncontreElemento": "Keine Elemente gefunden",
 
     "sinAutorizacion":"Sie haben keine Berechtigung",
     "noEncontrado":"Nicht gefunden",

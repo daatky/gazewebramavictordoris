@@ -39,7 +39,13 @@ export class ButtonComponent implements OnInit {
   }
 
   obtenerTexto() {
-    return this.internacionalizacionNegocio.obtenerTextoSincrono(this.botonCompartido.text);
+    if (this.botonCompartido) {
+      if (this.botonCompartido.text) {
+        return this.internacionalizacionNegocio.obtenerTextoSincrono(this.botonCompartido.text);
+      }
+    }
+    return "";
+
   }
 
 

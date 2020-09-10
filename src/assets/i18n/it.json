@@ -8,6 +8,8 @@
     "problemaObtenerDatos":"Problemi durante il recupero dei dati",
     "tipoEmail":"Il campo è di tipo email",
     "procesando":"Processing ......",
+    "procesoEjecutado": "Processo eseguito con successo",
+    "noEncontreElemento": "Nessun articolo trovato",
 
     "sinAutorizacion":"Non hai l'autorizzazione",
     "noEncontrado":"Non trovato",
