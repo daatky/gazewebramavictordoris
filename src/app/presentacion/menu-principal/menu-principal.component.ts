@@ -21,6 +21,7 @@ import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-pe
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ignoreElements } from 'rxjs/operators';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 
 
@@ -41,7 +42,7 @@ export class MenuPrincipalComponent implements OnInit {
     reintentar: () => { },
     tamanoLista: TamanoLista.TIPO_MENU_PRINCIPAL
   }
-  tipoPerfilSeleccionado: CatalogoTipoPerfilModel
+  perfilSeleccionado: PerfilModel
 
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
@@ -60,33 +61,21 @@ export class MenuPrincipalComponent implements OnInit {
     this.sesionIniciada = this.cuentaNegocio.sesionIniciada();
     this.prepararAppBar();
     if (this.sesionIniciada) {
-      this.obtenerParametrosUrl();
+      this.verificarPerfilSeleccionado();
     } else {
       this.configuracionAppBar.gazeAppBar.subtituloDemo = this.obtenerTituloPrincipal(false)
     }
   }
 
-  obtenerParametrosUrl() {
-    this.route.queryParams.subscribe(params => {
-      console.log(params);
-      if (params['codigoPerfil']) {
-        this.tipoPerfilSeleccionado = {
-          codigo: params['codigoPerfil']
-        }
-        this.obtenerInfoPerfilSeleccionado();
-      } else {
-        this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES);
-      }
-    });
+  verificarPerfilSeleccionado() {
+    this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado();
+    if (this.perfilSeleccionado) {
+      this.configuracionAppBar.gazeAppBar.subtituloNormal = this.obtenerTituloPrincipal(true)
+      this.configuracionAppBar.gazeAppBar.mostrarBotonXRoja = true;
+    } else {
+      this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES);
+    }
   }
-
-  obtenerInfoPerfilSeleccionado() {
-    this.tipoPerfilSeleccionado = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.tipoPerfilSeleccionado.codigo);
-    console.log(this.tipoPerfilSeleccionado);
-    this.configuracionAppBar.gazeAppBar.subtituloNormal = this.obtenerTituloPrincipal(true)
-    this.configuracionAppBar.gazeAppBar.mostrarBotonXRoja = true;
-  }
-
 
   async prepararAppBar() {
     this.configuracionAppBar = {
@@ -106,7 +95,7 @@ export class MenuPrincipalComponent implements OnInit {
     if (profileCreated) {
       return {
         mostrar: true,
-        llaveTexto: this.tipoPerfilSeleccionado.nombre
+        llaveTexto: this.perfilSeleccionado.tipoPerfil.nombre
       }
     } else {
       return {

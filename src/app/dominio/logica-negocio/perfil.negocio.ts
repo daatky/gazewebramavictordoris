@@ -202,4 +202,15 @@ export class PerfilNegocio {
         this.guardarAlbumActivoEnSessionStorage(album)
     }
 
+    almacenarPerfilSeleccionado(tipoPerfil: CatalogoTipoPerfilModel) {
+        if (tipoPerfil.perfil) {
+            (tipoPerfil.perfil as PerfilModel).tipoPerfil.nombre = tipoPerfil.nombre
+        }
+        this.perfilRepository.almacenarPerfilSeleccionado(tipoPerfil.perfil);
+    }
+
+    obtenerPerfilSeleccionado() :PerfilModel{
+        return this.perfilRepository.obtenerPerfilSeleccionado();
+    }
+
 }

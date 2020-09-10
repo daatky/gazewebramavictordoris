@@ -4,7 +4,6 @@
 @import "../../../../assets/estilos/dimensiones.scss";
 
 .buttonBase {
-    background-image: $forma-boton;
     background-size: cover;
     text-shadow: $sombraTexto;
     font-weight: bold;
@@ -18,7 +17,7 @@
     width: $espacio-1310;
     margin-left: $interlineado-2;
 }
-.iconoBoton{
+.iconoBoton {
     //forma-flecha-circular-amarilla
     background-image: $forma-flecha-circular-amarilla;
     height: $bottom-bar-boton-diametro;
@@ -47,6 +46,7 @@
 }
 
 .botonLargo {
+    background-image: $forma-boton-letra-5-51;
     padding-left: $espacio-0247;
     padding-right: $espacio-0296;
     padding-top: $espacio-0178;
@@ -55,6 +55,8 @@
 }
 
 .botonCorto {
+    //forma-boton-letra-5-51
+    background-image: $forma-boton-yes-no;
     padding-left: $espacio-0247;
     padding-right: $espacio-0296;
     padding-top: $espacio-0249;
