@@ -170,10 +170,10 @@ export class PensamientoComponent implements OnInit {
   }
   obtenerPensamientos(){
     console.log(this.esPublico)
-    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
+    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)    
     this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPublico)
     .subscribe((res:Array<PensamientoModel>)=>{      
-      this.cargando=false   
+      this.cargando=false      
       this.toast.cerrarToast()
       if(this.esPublico){
           this.dataListaPublico.lista=res
