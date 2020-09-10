@@ -9,6 +9,7 @@ import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipo
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
+import { PerfilModel } from '../modelo/perfil.model';
 
 @Injectable({
     providedIn: 'root'
@@ -60,6 +61,13 @@ export class PerfilRepository {
 
     obtenerAlbumActivoDelSessionStorage(): AlbumModel {
         return this.perfilServicieLocal.obtenerAlbumEnSessionStorage()
+    }
+
+    almacenarPerfilSeleccionado(perfil: PerfilModel) {
+        this.localStorage.almacenarPerfilSeleccionado(perfil)
+    }
+    obtenerPerfilSeleccionado(): PerfilModel {
+        return this.localStorage.obtenerPerfilSeleccionado();
     }
 
 }

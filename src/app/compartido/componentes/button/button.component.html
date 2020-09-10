@@ -2,13 +2,13 @@
     <div [ngSwitch]="botonCompartido.tipoBoton">
         <div *ngSwitchCase="tipoBoton.TEXTO">
             <div #button (click)="execute()">
-                <p>{{botonCompartido.text}}</p>
+                <p>{{texto| async}}</p>
             </div>
         </div>
         <div *ngSwitchCase="tipoBoton.TEXTO_ICON">
             <div class="contenerBotonHorizontal">
                 <div #descripcion class="contenedorDescripcion">
-                    <p class="letraDescripcion">{{botonCompartido.text}}</p>
+                    <p class="letraDescripcion">{{texto| async}}</p>
                 </div>
                 <div class="icono" (click)="execute()"></div>
             </div>

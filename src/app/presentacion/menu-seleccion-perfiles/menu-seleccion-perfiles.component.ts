@@ -111,8 +111,9 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
   }
 
   navegarMenuPrincipal(tipoPerfil: CatalogoTipoPerfilModel) {
+    this.perfilNegocio.almacenarPerfilSeleccionado(tipoPerfil);
     if (tipoPerfil.perfil) {
-      this.router.navigate([RutasLocales.MENU_PRINCIPAL], { queryParams: { codigoPerfil: tipoPerfil.codigo } });
+      this.router.navigate([RutasLocales.MENU_PRINCIPAL]);
     } else {
       this.navegarCrearEditarPerfil(tipoPerfil);
     }
