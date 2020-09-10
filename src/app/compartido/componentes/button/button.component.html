@@ -1,14 +1,15 @@
 <div *ngIf="!botonCompartido.enProgreso; else elseBlock">
     <div [ngSwitch]="botonCompartido.tipoBoton">
+
         <div *ngSwitchCase="tipoBoton.TEXTO">
-            <div #button (click)="execute()">
-                <p>{{texto| async}}</p>
+            <div [ngClass]=obtenerEstilosBoton() (click)="execute()">
+                <p>{{obtenerTexto()}}</p>
             </div>
         </div>
         <div *ngSwitchCase="tipoBoton.TEXTO_ICON">
             <div class="contenerBotonHorizontal">
                 <div #descripcion class="contenedorDescripcion">
-                    <p class="letraDescripcion">{{texto| async}}</p>
+                    <p class="letraDescripcion">{{botonCompartido.text}}</p>
                 </div>
                 <div class="icono" (click)="execute()"></div>
             </div>

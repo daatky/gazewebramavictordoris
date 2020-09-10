@@ -117,7 +117,7 @@
 // Titulo Secundario
 .tituloSecundario {
     position: absolute;
-    bottom: $espacio-089;
+    bottom: $espacio-089 - $defecto-bottom;
     z-index: 1;
 }
 
