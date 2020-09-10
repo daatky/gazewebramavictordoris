@@ -99,8 +99,7 @@ export class CuentaNegocio {
             )
     }
 
-    obtenerTokenAutenticacion(): Observable<string> {
-        console.log("AQUI")
+    obtenerTokenAutenticacion(): Observable<string> {        
         const tokenActual = this.repository.obtenerTokenAutenticacion()
 
         if (tokenActual) {

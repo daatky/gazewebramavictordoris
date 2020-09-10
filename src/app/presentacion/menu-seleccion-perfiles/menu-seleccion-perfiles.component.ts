@@ -23,6 +23,7 @@ import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { CodigosCatalogoTipoPerfil } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 
 @Component({
   selector: 'app-menu-seleccion-perfiles',
@@ -118,7 +119,15 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
   }
 
   navegarCrearEditarPerfil(tipoPerfil: CatalogoTipoPerfilModel) {
-    this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", tipoPerfil.codigo));
+    let registro = RutasLocales.REGISTRO.toString()
+
+    if (tipoPerfil.perfil) {
+      registro = registro.replace(':accionEntidad', AccionEntidad.ACTUALIZAR)
+    } else {
+      registro = registro.replace(':accionEntidad', AccionEntidad.REGISTRO)
+    }
+    registro = registro.replace(':codigoPerfil', tipoPerfil.codigo)
+    this.router.navigateByUrl(registro)
   }
 
   obtenerEstadoPerfil(perfil: PerfilModel) {
