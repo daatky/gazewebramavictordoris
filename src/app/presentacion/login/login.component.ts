@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }  
         console.log(res)
         this.loginForm.reset()
+        this.navegarmenuSeleccionarPerfiles();        
       },error=>{
         this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
         this.botonSubmit.enProgreso=false                
