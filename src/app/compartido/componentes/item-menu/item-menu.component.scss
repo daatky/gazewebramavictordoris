@@ -22,8 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    touch-action: none;
+    touch-action: auto;
 }
 .itemMenu.gazeAnuncios {
     background: transparent !important;

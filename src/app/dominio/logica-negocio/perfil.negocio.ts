@@ -202,4 +202,8 @@ export class PerfilNegocio {
         this.guardarAlbumActivoEnSessionStorage(album)
     }
 
+    validarNombreDeContactoUnico(nombreContacto: string) : Observable<string> {
+        return this.perfilRepository.validarNombreDeContactoUnico(nombreContacto)
+    }
+
 }

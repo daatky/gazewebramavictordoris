@@ -47,6 +47,7 @@ $expandir-icono-margen: calcular(2.67);
     user-select: none;
     box-sizing: border-box;
     background: #ffffff;
+    touch-action: auto;
 }
 
 .itemRectangulo .esquina {
@@ -254,13 +255,14 @@ $expandir-icono-margen: calcular(2.67);
 
 $modal-origen-foto-ancho: $ancho-pagina;
 $modal-origen-foto-alto: calcular(24);
-$modal-origen-foto-opcion-alto: calcular(12);
+$modal-origen-foto-opcion-padding: calcular(2);
+$modal-origen-foto-opcion-alto: calcular(8);
 $modal-origen-foto-opcion-caja-padding: calcular(4);
 $modal-origen-foto-opcion-imagen-margin-der: calcular(3);
 
 // Modal origen foto
 .modalOrigenFoto {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.5);
     display: none;
     position: fixed;
     width: $modal-origen-foto-ancho;
@@ -271,12 +273,14 @@ $modal-origen-foto-opcion-imagen-margin-der: calcular(3);
 }
 .modalOrigenFoto.mostrar {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
 }
 .modalOrigenFoto .caja {
     background: #ffffff;
-    width: $modal-origen-foto-ancho;
-    height: $modal-origen-foto-alto;
+    border-radius: calcular(1.16);
+    width: calcular(70);
+    height: fit-content;
 
     display: flex;
     align-items: center;
@@ -288,10 +292,10 @@ $modal-origen-foto-opcion-imagen-margin-der: calcular(3);
     flex-flow: row;
     box-sizing: border-box;
 
-    padding: 0 $espacio-267;
+    padding: $modal-origen-foto-opcion-padding $espacio-267;
 
     width: 100%;
-    height: $modal-origen-foto-opcion-alto;
+    height: fit-content;
 
     display: flex;
     align-items: center;
@@ -305,7 +309,7 @@ $modal-origen-foto-opcion-imagen-margin-der: calcular(3);
 
 }
 .modalOrigenFoto .caja .opcion img {
-    height: 55%;
+    height: $modal-origen-foto-opcion-alto;
     margin: 0 $modal-origen-foto-opcion-imagen-margin-der 0 0;
 }
 .modalOrigenFoto .caja .opcion p {

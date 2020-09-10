@@ -116,4 +116,16 @@ export class CuentaRepository {
     obtenerUsuarioDelSessionStorage(): UsuarioModel {
         return this.cuentaServiceLocal.obtenerUsuarioDelnSessionStorage()
     }
+
+    validarEmailUnico(email: string): Observable<string> {
+        return this.cuentaServiceRemoto.validarEmailUnico(email)
+            .pipe(
+                map(data => {
+                    return data.respuesta.datos
+                }),
+                catchError(err => {
+                    return throwError(err)
+                })
+            )
+    }
 }

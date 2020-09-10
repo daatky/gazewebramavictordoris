@@ -36,12 +36,14 @@
             <div
             *ngIf="!mensajeError.mostrarError"
                 class="botonDone"
-                (tap)="getCropImage()"
+                gestorEventos
+                (eventoTap)="getCropImage()"
             ></div>
             <div
                 *ngIf="mensajeError.mostrarError"
                 class="cerrarCropper"
-                (tap)="cerrarCropper()"
+                gestorEventos
+                (eventoTap)="cerrarCropper()"
             ></div>
         </div>
     </div>

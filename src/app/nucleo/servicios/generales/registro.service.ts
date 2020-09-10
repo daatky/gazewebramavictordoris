@@ -1,3 +1,4 @@
+import { GeneradorId } from './generador-id.service';
 import { DireccionModel } from './../../../dominio/modelo/direccion.model';
 import { ItemSelector } from './../../../compartido/diseno/modelos/elegible.interface';
 import { CodigosCatalogoTipoAlbum } from './../remotos/codigos-catalogos/catalogo-tipo-album.enum';
@@ -27,6 +28,7 @@ export class RegistroService {
     constructor(
         private cuentaNegocio: CuentaNegocio,
         private formBuilder: FormBuilder,
+        private generadorId: GeneradorId
     ) {
 
     }
@@ -94,7 +96,7 @@ export class RegistroService {
                 [
                 Validators.required,
                 Validators.pattern('^[A-Za-z0-9 ]+$'),
-                Validators.minLength(5)
+                Validators.minLength(3)
                 ]
             ],
             nombre: [
@@ -141,51 +143,71 @@ export class RegistroService {
                 tipo: 'text',
                 error: false,
                 estilo: {
-                estiloError:EstiloErrorInput.ROJO,
-                estiloInput:EstiloInput.REGISTRO
+                    estiloError: EstiloErrorInput.ROJO,
+                    estiloInput: EstiloInput.REGISTRO
                 },
                 placeholder: 'Contact Name',
-                data: registroForm.controls.nombreContacto
+                data: registroForm.controls.nombreContacto,
+                contadorCaracteres: {
+                    mostrar: false,
+                    numeroMaximo: 40,
+                    contador: 0
+                },
+                id: this.generadorId.generarIdConSemilla(),
+                errorPersonalizado: ''
             })
             inputsForm.push({
                 tipo: 'text',
                 error: false,
                 estilo: {
-                estiloError:EstiloErrorInput.ROJO,
-                estiloInput:EstiloInput.REGISTRO
+                    estiloError: EstiloErrorInput.ROJO,
+                    estiloInput: EstiloInput.REGISTRO
                 },
                 placeholder: 'Name:',
-                data: registroForm.controls.nombre
+                data: registroForm.controls.nombre,
+                contadorCaracteres: {
+                    mostrar: false,
+                    numeroMaximo: 40,
+                    contador: 0
+                },
+                id: this.generadorId.generarIdConSemilla(),
+                errorPersonalizado: ''
             })
             inputsForm.push({
                 tipo: 'email',
                 error: false,
                 estilo: {
-                estiloError:EstiloErrorInput.ROJO,
-                estiloInput:EstiloInput.REGISTRO
+                    estiloError: EstiloErrorInput.ROJO,
+                    estiloInput: EstiloInput.REGISTRO
                 },
                 placeholder: 'E-mail:',
-                data: registroForm.controls.email
+                data: registroForm.controls.email,
+                id: this.generadorId.generarIdConSemilla(),
+                errorPersonalizado: ''
             })
             inputsForm.push({
                 tipo: 'password',
                 error: false,
                 estilo: {
-                estiloError:EstiloErrorInput.ROJO,
-                estiloInput:EstiloInput.REGISTRO
+                    estiloError: EstiloErrorInput.ROJO,
+                    estiloInput: EstiloInput.REGISTRO
                 },
                 placeholder: 'Password:',
-                data: registroForm.controls.contrasena
+                data: registroForm.controls.contrasena,
+                id: this.generadorId.generarIdConSemilla(),
+                errorPersonalizado: ''
             })
             inputsForm.push({
                 tipo: 'text',
                 error: false,
                 estilo: {
-                estiloError:EstiloErrorInput.ROJO,
-                estiloInput:EstiloInput.REGISTRO
+                    estiloError: EstiloErrorInput.ROJO,
+                    estiloInput: EstiloInput.REGISTRO
                 },
                 placeholder: 'Address:',
-                data: registroForm.controls.direccion
+                data: registroForm.controls.direccion,
+                id: this.generadorId.generarIdConSemilla(),
+                errorPersonalizado: ''
             })
         }
         return inputsForm

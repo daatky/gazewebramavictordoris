@@ -257,4 +257,8 @@ export class CuentaNegocio {
         return true;
     }
 
+    validarEmailUnico(email: string): Observable<string> {
+        return this.cuentaRepository.validarEmailUnico(email)
+    }
+
 }

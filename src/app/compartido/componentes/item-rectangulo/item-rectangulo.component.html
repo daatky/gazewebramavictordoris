@@ -1,7 +1,10 @@
 <div
     id="{{ 'itemRectangularCanvas' + configuracion.idInterno }}"
     [ngClass]="itemMetodos.obtenerClasesParaItemRectangular(configuracion)"
-    (press)="eventoClickLargo()"
+    gestorEventos
+    (eventoTap)="tap()"
+    (dobleTap)="dobletap()"
+    (press)="press()"
 >
     <img
         [ngClass]="{
@@ -10,7 +13,7 @@
             'mostrar': !configuracion.mostrarLoader && configuracion.urlMedia.length > 0 
         }"
         [src]="configuracion.urlMedia"
-        (load)="onImageLoad($event)"
+        (load)="siImagenEstaCargada($event)"
     >
     <!-- Loader -->
     <div
@@ -85,12 +88,14 @@
         'modalOrigenFoto': true,
         'mostrar': confModalOrigenFoto.mostrar
     }"
-    (tap)="cerrarModalOrigenFoto($event)"
+    gestorEventos
+    (eventoTap)="cerrarModalOrigenFoto($event)"
 >
     <div class="caja">
         <div
             class="opcion"
-            (tap)="eventoEnModalOrigenFoto(0)"
+            gestorEventos
+            (eventoTap)="eventoEnModalOrigenFoto(0)"
         >
             <img src="../../../../assets/recursos/fondos/fondo-camara-origen-foto.svg">
             <p
@@ -106,7 +111,8 @@
         </div>
         <div
             class="opcion"
-            (tap)="eventoEnModalOrigenFoto(1)"
+            gestorEventos
+            (eventoTap)="eventoEnModalOrigenFoto(1)"
         >
             <img src="../../../../assets/recursos/fondos/fondo-galeria-origen-foto.svg">
             <p

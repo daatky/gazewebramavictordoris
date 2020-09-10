@@ -62,4 +62,16 @@ export class PerfilRepository {
         return this.perfilServicieLocal.obtenerAlbumEnSessionStorage()
     }
 
+    validarNombreDeContactoUnico(nombreContacto: string) : Observable<string> {
+        return this.perfilServicieRemoto.validarNombreDeContactoUnico(nombreContacto)
+            .pipe(
+                map(data => {
+                    return data.respuesta.datos
+                }),
+                catchError(err => {
+                    return throwError(err)
+                })
+            )
+    }
+
 }

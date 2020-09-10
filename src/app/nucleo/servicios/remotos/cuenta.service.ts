@@ -37,5 +37,9 @@ export class CuentaServiceRemoto {
         })
     }
 
+    validarEmailUnico(email: string) : Observable<RespuestaRemota<string>> {
+        return this.http.get<RespuestaRemota<string>>(APIGAZE.BASE + Cuenta.EMAIL_UNICO + '/' + email)
+    }
+
 
 }

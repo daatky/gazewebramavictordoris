@@ -65,3 +65,12 @@ input.login {
     /* Microsoft Edge */
     color: $blanco;
 }
+
+.contador {
+    width: 100%;
+    height: fit-content;
+    margin-top: calcular(0.5);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
