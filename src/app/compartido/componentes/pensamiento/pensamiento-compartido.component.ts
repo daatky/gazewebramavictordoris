@@ -62,7 +62,7 @@ export class PensamientoCompartidoComponent implements OnInit {
     .subscribe((res:PensamientoModel)=>{ 
       //console.log('PENSAMIENTO ALEATORIO')      
       console.log(res)
-      this.dataPensamiento={data:res}
+      this.dataPensamiento={data:res,presentarX:false}
     },error=>{
       //console.log(error)
       this.error=error

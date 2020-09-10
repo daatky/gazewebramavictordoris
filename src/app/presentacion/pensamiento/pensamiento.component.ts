@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
@@ -16,6 +16,7 @@ import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.inte
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
 import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/diseno/enums/tipo-pensamiento.enum';
 import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 
 @Component({
   selector: 'app-pensamiento',
@@ -24,6 +25,7 @@ import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
 })
 export class PensamientoComponent implements OnInit {
   //presentarPensamiento:boolean //Para 
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   configuracionAppBar: ConfiguracionAppbarCompartida //Para enviar la configuracion de para presentar el appBar
   botonPublico: BotonCompartido //Para enviar la configuracion del boton publico
   botonPrivado: BotonCompartido //Para enviar la configuracion del boton privado
@@ -31,6 +33,7 @@ export class PensamientoComponent implements OnInit {
   //inputPensamiento: InputCompartido; 
   //configuracionToast:ConfiguracionToast;
   barraInferior:BarraInferior //Barra inferior
+
   cargando:boolean; //PRESENTAR EL CARGANDO
   pensamientoCompartido:PensamientoCompartido
   dataListaPublico:DatosLista //lISTA DE  
@@ -43,7 +46,7 @@ export class PensamientoComponent implements OnInit {
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private variablesGlobales:VariablesGlobales,
-    private pensamientoNegocio:PensamientoNegocio,  
+    private pensamientoNegocio:PensamientoNegocio,      
     //private formBuilder: FormBuilder, 
   ) { 
     //this.presentarPensamiento=false   
@@ -148,11 +151,11 @@ export class PensamientoComponent implements OnInit {
   }
   crearPensamiento(){
       console.log(this.esPublico)     
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
       this.pensamientoNegocio.crearPensamiento(this.idPerfil,this.esPublico,this.barraInferior.input.data.texto)
       .subscribe(res=>{                
         console.log(res)
-        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+        this.toast.cerrarToast()                
         if(!this.esPublico){
           console.log("ES PRIVADO")
           this.dataListaPrivado.lista.unshift(res)
@@ -160,17 +163,18 @@ export class PensamientoComponent implements OnInit {
         }  
         console.log("ES PUBLICO")
         this.dataListaPublico.lista.unshift(res)      
-      },error=>{        
-        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+      },error=>{    
+        this.toast.cerrarToast()
+        this.toast.abrirToast(error)
       }) 
   }
   obtenerPensamientos(){
     console.log(this.esPublico)
-    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
     this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPublico)
     .subscribe((res:Array<PensamientoModel>)=>{      
       this.cargando=false   
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+      this.toast.cerrarToast()
       if(this.esPublico){
           this.dataListaPublico.lista=res
         return
@@ -178,7 +182,8 @@ export class PensamientoComponent implements OnInit {
       this.dataListaPrivado.lista=res
     },error=>{
       this.cargando=false  
-      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+      this.toast.cerrarToast()
+      this.toast.abrirToast(error)
     })
   }
 
@@ -188,11 +193,11 @@ export class PensamientoComponent implements OnInit {
   }
   actualizarPensamiento(){
     console.log(this.dataListaPublico)
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
       this.pensamientoNegocio.actualizarPensamiento(this.barraInferior.input.data.id,this.barraInferior.input.data.texto)
       .subscribe(res=>{
         console.log(res)
-        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}        
+        this.toast.cerrarToast()     
         if(!this.esPublico){
           console.log("Es privado")
           this.dataListaPrivado.lista[this.barraInferior.input.data.indice].texto=this.barraInferior.input.data.texto
@@ -205,15 +210,16 @@ export class PensamientoComponent implements OnInit {
         this.enviarPensamienroCrear(true)         
       },error=>{
         console.log(error)
-        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+        this.toast.cerrarToast()
+        this.toast.abrirToast(error)
       })
   }
   actualizarEstadoPensamiento = (itemPensamiento:ItemPensamiento) =>{
-    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
     this.pensamientoNegocio.actualizarEstadoPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
       console.log('se actualizo estado del pensamiento')
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+      this.toast.cerrarToast()    
       console.log(res)
       if(!this.esPublico){
         this.dataListaPrivado.lista.splice(itemPensamiento.indice,1)
@@ -223,15 +229,16 @@ export class PensamientoComponent implements OnInit {
       //Agregar en la otra lista
     },error=>{
       console.log(error)
-      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+      this.toast.cerrarToast()
+      this.toast.abrirToast(error)
     })
   }
   eliminarPensamiento = (itemPensamiento:ItemPensamiento)=>{
     console.log(itemPensamiento)
-    this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
     this.pensamientoNegocio.eliminarPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+      this.toast.cerrarToast()    
       console.log(itemPensamiento)
       console.log(res)      
       if(!this.esPublico){
@@ -242,22 +249,24 @@ export class PensamientoComponent implements OnInit {
       //Agregar en la otra lista
     },error=>{
       console.log(error)
-      this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+      this.toast.cerrarToast()
+      this.toast.abrirToast(error)
     })
   }
   cargarMasPensamientos(){
     if(this.variablesGlobales.paginacionPublico.actual!=-1){
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)
 //      this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,this.esPrivado)
       this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,true)
       .subscribe(res=>{
-        this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
+        this.toast.cerrarToast()    
         console.log("PENSAMIENTOS PRIVADOS") 
         console.log(res)    
         //agregar a la lista de pensamientos
       },error=>{
         console.log(error)
-        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+        this.toast.cerrarToast()
+        this.toast.abrirToast(error)
       })
     }
   }

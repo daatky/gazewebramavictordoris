@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 import { Location } from '@angular/common'
+import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   loginForm: FormGroup;
   pensamientoCompartido: PensamientoCompartido
   inputEmail: InputCompartido
@@ -33,7 +35,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   botonCompartido: BotonCompartido
   botonSubmit: BotonCompartido
   configuracionToast:ConfiguracionToast;
-  //configuracion: ConfiguracionToast
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild(PensamientoCompartidoComponent) pensamiento: PensamientoCompartidoComponent
   @ViewChild('portadaGazeComponent') portadaGazeComponent: PortadaGazeComponent
@@ -79,7 +80,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   //= () =>
   iniciarSesion() {
-    this.botonSubmit.enProgreso=true
+    this.botonSubmit.enProgreso=true    
     //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
     if (this.loginForm.valid) {  
       this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
@@ -89,9 +90,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         console.log(res)
         this.loginForm.reset()
         this.navegarmenuSeleccionarPerfiles();        
-      },error=>{
-        this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+      },error=>{        
         this.botonSubmit.enProgreso=false                
+        this.toast.cerrarToast()
+        this.toast.abrirToast(error)
         console.log(error)
       })
     } else {

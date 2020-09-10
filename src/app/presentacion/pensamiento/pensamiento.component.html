@@ -51,7 +51,7 @@
                     </app-pensamiento-compartido>     
                 </ng-template>         
             </div>  
-            <app-toast [configuracion]='configuracionToast'></app-toast>
+            <app-toast #toast [configuracion]='configuracionToast'></app-toast>
         </div>
         <app-barra-inferior [barraInferior]='barraInferior' (escucharEvento)='crearPensamiento($event)'></app-barra-inferior>
     </div>

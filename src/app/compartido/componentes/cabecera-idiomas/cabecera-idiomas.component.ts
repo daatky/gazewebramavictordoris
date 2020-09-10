@@ -9,6 +9,7 @@ import { IdiomaNegocio } from 'src/app/dominio/logica-negocio/idioma.negocio';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { TamanoPortadaGaze } from '../../diseno/enums/tamano-portada-gaze.enum';
 import { ConfiguracionToast } from '../../diseno/modelos/toast.interface';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-cabecera-idiomas',
@@ -16,6 +17,7 @@ import { ConfiguracionToast } from '../../diseno/modelos/toast.interface';
   styleUrls: ['./cabecera-idiomas.component.scss']
 })
 export class CabeceraIdiomasComponent implements OnInit {
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   idiomas: Array<CatalogoIdiomaEntity>
   idiomaEstilo: LineaDeTexto
   idiomaSeleccionado:string
@@ -46,23 +48,24 @@ export class CabeceraIdiomasComponent implements OnInit {
   }
 
     //OBTENER EL CATALOGO DE IDIOMAS
-    async obtenerCatalogoIdiomas(){   
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:await this.internacionalizacionNegocio.obtenerTextoLlave('procesando')}   
+    obtenerCatalogoIdiomas(){
+      
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)         
       this.idiomaNegocio.obtenerCatalogoIdiomas()
-        .subscribe(res => {                    
+        .subscribe(res => { 
+          this.toast.cerrarToast()                   
           if(res){
             console.log("DATOS")
             this.idiomas = res
-            this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}          
           }else{
-            //this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos')
             console.log("NO TRAJE NADA DE DATOS")
-            this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos')}            
-            this.idiomas=[]            
+            this.idiomas=[] 
+            this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos'))           
           }
           //this.idiomaNegocio.ordenarIdioma()
         }, error => {
-          this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+          this.toast.cerrarToast()
+          this.toast.abrirToast(error)
         })
     }
   // Obtener clases lineas texto 
