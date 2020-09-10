@@ -136,8 +136,7 @@ export class MetodoPagoComponent implements OnInit {
     this.codigoPago = metodoPago.codigo;
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
-        this.dataModalPaypal.abierto = true;
-        this.toast.abrirToast("abrir metodo pago");
+        this.dataModalPaypal.abierto = true;        
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
         this.dataModalStripe.abierto = true;
@@ -204,7 +203,7 @@ export class MetodoPagoComponent implements OnInit {
           }
         ).catch((error) => {
           console.log(error);
-          this.toast.abrirToast(error)
+          this.toast.abrirToast(error.toString())
           return error.toString();
         }),
       advanced: {

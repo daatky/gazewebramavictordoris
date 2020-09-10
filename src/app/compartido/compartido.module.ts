@@ -31,6 +31,7 @@ import { PensamientoCompartidoComponent } from './componentes/pensamiento/pensam
 import { ModalInferiorComponent } from './componentes/modal-inferior/modal-inferior.component';
 import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
 import { ListoComponent } from './componentes/listo/listo.component';
+import { BuscadorComponent } from './componentes/buscador/buscador.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { ListoComponent } from './componentes/listo/listo.component';
     ModalInferiorComponent,
     DialogoInlineComponent,
     ListoComponent,
-    GestorEventosDirective
+    GestorEventosDirective,
+    BuscadorComponent
   ],
   exports: [
     CrearComponenteDirective,

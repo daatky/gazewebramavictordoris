@@ -8,7 +8,7 @@ import { TamanoColorDeFondoAppBar } from '../../diseno/enums/tamano-color-fondo-
 import { LineaDeTexto } from '../../diseno/modelos/linea-de-texto.interface'
 import { UsoAppBar } from '../../diseno/enums/uso-appbar.enum'
 import { TranslateService } from '@ngx-translate/core'
-import { ColorTextoBoton, TipoBoton } from '../button/button.component'
+import { ColorTextoBoton, TipoBoton, ButtonComponent } from '../button/button.component'
 import { TamanoDeTextoConInterlineado } from '../../diseno/enums/tamano-letra-con-interlineado.enum'
 import { AnchoLineaItem } from '../../diseno/enums/ancho-linea-item.enum'
 import { ColorFondoLinea } from '../../diseno/enums/color-fondo-linea.enum'
@@ -16,6 +16,10 @@ import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
 import { Location } from '@angular/common'
 import { Router } from '@angular/router'
 import { RutasLocales } from 'src/app/rutas-locales.enum'
+import { DialogoCompartido } from '../../diseno/modelos/dialogo.interface'
+import { TipoDialogo } from '../../diseno/enums/tipo-dialogo.enum'
+import { DialogoComponent } from '../dialogo/dialogo.component'
+import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio'
 
 @Component({
   selector: 'app-appbar',
@@ -38,9 +42,12 @@ export class AppbarComponent implements OnInit {
   public confBoton: BotonCompartido
   public confLinea: LineaCompartida
 
+  datosDialogoCerrarSession: DialogoCompartido
+
   constructor(
     private servicioIdiomas: InternacionalizacionNegocio,
     public estiloDelTextoServicio: EstiloDelTextoServicio,
+    private cuentaNegocio: CuentaNegocio,
     private _location: Location,
     private router: Router,
   ) {
@@ -60,6 +67,8 @@ export class AppbarComponent implements OnInit {
       }
       this.configurarLinea()
     }
+
+    this.prepararDialogoCerrarSession()
   }
 
   // Inicializar textos
@@ -83,6 +92,10 @@ export class AppbarComponent implements OnInit {
       this.textoSubtitulo = await this.servicioIdiomas.obtenerTextoLlave(conf.subtituloNormal?.llaveTexto ? conf.subtituloNormal.llaveTexto : 'undefined')
       this.textoSubtituloDemo = await this.servicioIdiomas.obtenerTextoLlave(conf.subtituloDemo?.llaveTexto ? conf.subtituloDemo.llaveTexto : 'undefined')
       this.textoTituloPrincipal = await this.servicioIdiomas.obtenerTextoLlave(conf.tituloPrincipal.llaveTexto ? conf.tituloPrincipal.llaveTexto : 'undefined')
+    }
+
+    if (this.configuracion.tituloAppbar) {
+      this.textoTituloPrincipal = await this.servicioIdiomas.obtenerTextoLlave(this.configuracion.tituloAppbar.tituloPrincipal.llaveTexto)
     }
   }
 
@@ -140,9 +153,29 @@ export class AppbarComponent implements OnInit {
     }
   }
   clickBotonXRoja() {
-    
+    this.datosDialogoCerrarSession.mostrarDialogo = true;
   }
   clickBotonPrincipal() {
-    
+
+  }
+
+  prepararDialogoCerrarSession() {
+    this.datosDialogoCerrarSession = {
+      completo: true,
+      mostrarDialogo: false,
+      tipo: TipoDialogo.CONFIRMACION,
+      descripcion: "DESEA CERRAR SESSION?",
+      listaAcciones: [
+        ButtonComponent.crearBotonAfirmativo(() => this.cerrarSession()),
+        ButtonComponent.crearBotonNegativo(() => { this.datosDialogoCerrarSession.mostrarDialogo = false })
+      ]
+    }
+  }
+
+  cerrarSession() {
+    this.cuentaNegocio.cerrarSession();
+    this.datosDialogoCerrarSession.mostrarDialogo = false
+    this._location.replaceState('/');
+    this.router.navigateByUrl(RutasLocales.BASE, { replaceUrl: true })
   }
 }

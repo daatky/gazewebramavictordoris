@@ -73,4 +73,15 @@ export class LocalStorage {
     obtenerMetodosPago(): CatalogoMetodoPagoModel[] {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.METODOS_PAGO);
     }
+
+    eliminarUsuario() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.USUARIO);
+    }
+
+    eliminarRefreshToken() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.REFRESH_TOKEN);
+    }
+    eliminarAutenticacionToken() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.AUTH_TOKEN);
+    }
 }
