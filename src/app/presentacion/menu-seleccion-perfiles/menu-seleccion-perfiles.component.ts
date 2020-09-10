@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TRANSLATIONS } from '@angular/core';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { Router } from '@angular/router';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
@@ -68,21 +68,16 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
   }
   async prepararAppBar() {
     this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
-      searchBarAppBar: {
-        mostrarSearchBar: true,
-        nombrePerfil: {
-          mostrar: false
-        },
-        mostrarDivBack: false,
-        mostrarTextoHome: true,
+      usoAppBar: UsoAppBar.SOLO_TITULO,
+      tituloAppbar: {
         mostrarBotonXRoja: true,
-        subtitulo: {
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        tituloPrincipal: {
           mostrar: true,
           llaveTexto: 'escojaPerfil'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        mostrarDivBack: false
       }
     }
 

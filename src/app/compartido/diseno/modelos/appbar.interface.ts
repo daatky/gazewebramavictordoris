@@ -39,11 +39,20 @@ export interface GazeAppBar {
     tamanoColorFondo: TamanoColorDeFondoAppBar, // Indica el ancho que debe ocupar el color de fondo
 }
 
+export interface SoloTituloAppBar {
+    tituloPrincipal: TextoAppBar, // Para mostrar el titulo princpial, por ejemplo My Profile   
+    mostrarBotonXRoja: boolean, // Indica si se debe mostrar o no el boton de la x roja
+    tamanoColorFondo: TamanoColorDeFondoAppBar, // Indica el ancho que debe ocupar el color de fondo
+    mostrarLineaVerde: boolean,
+    mostrarDivBack: boolean,
+}
+
 // Modelo de configuracion del appbar
 export interface ConfiguracionAppbarCompartida {
     usoAppBar: UsoAppBar, // Define el uso del appbar
     demoAppbar?: DemoAppBar, // Enviar en caso el uso de appbar sea DemoAppBar
     searchBarAppBar?: SearchBarAppBar, // Enviar en caso el uso del appbar sea SearchBarAppBar
     gazeAppBar?: GazeAppBar, // Enviar en caso el uso del appbar sea GazeAppBar
-    accionAtras?: Function, // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior
+    accionAtras?: Function,
+    tituloAppbar?: SoloTituloAppBar // si desea personalziar la funcion debe enviar la funcion a realizarce, caso contrario por defecto se retrocedera hacia la interfaz anterior
 }

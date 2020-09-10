@@ -31,18 +31,9 @@
     </div>
     <!-- USO_SEARCHBAR_APPBAR -->
     <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_SEARCHBAR_APPBAR" class="box">
-        <div
-            [ngClass]="obtenerClasesCapaColorFondo(configuracion.searchBarAppBar.tamanoColorFondo)"
-        ></div>
-        <div
-            *ngIf="configuracion.searchBarAppBar.mostrarSearchBar"  
-            class="barraBuscar"
-        ></div>
-        <div
-            *ngIf="configuracion.searchBarAppBar.mostrarDivBack"
-            class="botonAtras"
-            (tap)="clickBotonAtras()"
-        >
+        <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.searchBarAppBar.tamanoColorFondo)"></div>
+        <div *ngIf="configuracion.searchBarAppBar.mostrarSearchBar" class="barraBuscar"></div>
+        <div *ngIf="configuracion.searchBarAppBar.mostrarDivBack" class="botonAtras" (tap)="clickBotonAtras()">
             <div class="icono"></div>
             <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                     color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
@@ -126,12 +117,37 @@
             <div class="icono"></div>
         </div>
     </div>
+
+    <div *ngIf="configuracion.usoAppBar === usoAppBar.SOLO_TITULO" class="box">
+        <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.tituloAppbar.tamanoColorFondo)"></div>
+        <div *ngIf="configuracion.tituloAppbar.mostrarDivBack" class="botonAtras" (tap)="clickBotonAtras()">
+            <div class="botonAtras" (tap)="clickBotonAtras()">
+                <div class="icono"></div>
+            </div>
+        </div>
+        <div class="tituloPrincipalSolo">
+            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                    color: estiloDelTextoServicio.colorDelTexto.TEXTOCELESTE, 
+                    estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                    enMayusculas: true,
+                    tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L5_I2
+                })">
+                {{ textoTituloPrincipal }}
+            </p>
+        </div>
+        <div *ngIf="configuracion.tituloAppbar.mostrarBotonXRoja" class="botonX" (tap)="clickBotonXRoja()">
+            <div class="icono"></div>
+        </div>
+    </div>
 </div>
-<app-linea *ngIf="configuracion?.demoAppbar?.mostrarLineaVerde || configuracion?.searchBarAppBar?.mostrarLineaVerde"
+<app-linea
+    *ngIf="configuracion?.demoAppbar?.mostrarLineaVerde || configuracion?.searchBarAppBar?.mostrarLineaVerde || configuracion?.tituloAppbar?.mostrarLineaVerde"
     [configuracionLinea]="confLinea"></app-linea>
 
 
+<app-dialogo [configuracion]="datosDialogoCerrarSession">
 
+</app-dialogo>
 
 
 

@@ -19,6 +19,7 @@ import { UsuarioEntity } from '../entidades/usuario.entity';
 export class CuentaRepository {
 
 
+
     constructor(
         private localStorage: LocalStorage,
         private cuentaServiceRemoto: CuentaServiceRemoto,

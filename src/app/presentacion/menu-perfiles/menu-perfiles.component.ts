@@ -265,24 +265,19 @@ export class MenuPerfilesComponent implements OnInit {
 
   async prepararAppBar() {
     this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
+      usoAppBar: UsoAppBar.SOLO_TITULO,
       accionAtras: () => this.volverAtras(),
-      searchBarAppBar: {
-        mostrarSearchBar: true,
-        nombrePerfil: {
-          mostrar: false
-        },
-        mostrarDivBack: true,
-        mostrarTextoHome: false,
-        subtitulo: {
+      tituloAppbar: {
+        mostrarBotonXRoja: false,
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        tituloPrincipal: {
           mostrar: true,
-          llaveTexto: 'bienvenidos'
+          llaveTexto: 'welcome'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        mostrarDivBack: true
       }
     }
-
   }
 
   volverAtras() {

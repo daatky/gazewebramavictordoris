@@ -9,20 +9,16 @@
     height: $appbar-alto-default;
 }
 
-
 // Uso del appbar - demo-appbar
 .demo-appbar {
-    
 }
 
 // Uso del appbar - searchbar-appbar
 .searchbar-appbar {
-
 }
 
 // Uso del appbar - gaze-appbar
 .gaze-appbar {
-
 }
 
 .box {
@@ -34,7 +30,6 @@
     align-items: center;
     justify-content: center;
 }
-
 
 // Color de fondo
 .colorFondo {
@@ -66,6 +61,15 @@
     // top: $espacio-267;
     // left: $espacio-267;
     z-index: 1;
+}
+
+.tituloPrincipalSolo {
+    position: absolute;
+    width: $ancho-6920;
+    padding-right: $espacio-522;
+    padding-left: $espacio-522;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 // Boton atras
@@ -145,8 +149,6 @@
     z-index: 1;
 }
 
-
-
 // Para pruebas - churon
 .barraBuscar {
     position: absolute;
@@ -156,7 +158,7 @@
     background: $blanco;
     width: $ancho-barra-busqueda;
     height: $alto-barra-busqueda;
-    
+
     border: $espesor-borde-barra-buscar solid $negro;
     border-radius: $radio-borde-barra-buscar;
     box-sizing: border-box;

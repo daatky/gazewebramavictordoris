@@ -32,6 +32,7 @@ import { ModalInferiorComponent } from './componentes/modal-inferior/modal-infer
 import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inline.component';
 import { ListoComponent } from './componentes/listo/listo.component';
 import { BarraInferiorComponent } from './componentes/barra-inferior/barra-inferior.component';
+import { BuscadorComponent } from './componentes/buscador/buscador.component';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { BarraInferiorComponent } from './componentes/barra-inferior/barra-infer
     DialogoInlineComponent,
     ListoComponent,
     BarraInferiorComponent,
-    GestorEventosDirective
+    GestorEventosDirective,
+    BuscadorComponent
   ],
   exports: [
     CrearComponenteDirective,

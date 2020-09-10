@@ -226,7 +226,11 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   navigationSubMenu(ruta: RutasLocales) {
-    this.router.navigateByUrl(ruta.toString());
+    if (ruta) {
+      this.router.navigateByUrl(ruta.toString());
+    } else {
+      alert("Ruta no implementada")
+    }
   }
 
   prepararItemSubMenu(item: ItemSubMenu): ItemMenuCompartido {

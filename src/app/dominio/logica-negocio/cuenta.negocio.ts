@@ -21,6 +21,7 @@ import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos
 })
 export class CuentaNegocio {
 
+
     constructor(private cuentaRepository: CuentaRepository,
         private perfilRepository: PerfilRepository,
         private idiomaRepository: IdiomaRepository,
@@ -48,7 +49,7 @@ export class CuentaNegocio {
 
     crearCuenta(metodoPago: string, pago?: PagoFacturacionEntity): Observable<PagoModel> {
         const idioma: CatalogoIdiomaEntity = this.idiomaRepository.obtenerIdiomaLocal();
-        let usuario: UsuarioModel = this.obtenerUsuarioDelLocalStorage();
+        let usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage();
 
         usuario.idioma = {
             codigo: (idioma) ? idioma.codigo : Codigos2CatalogoIdioma.INGLES
@@ -128,7 +129,7 @@ export class CuentaNegocio {
             return of(tokenActual)
         }
     }
-    
+
     // Guardar usuario en el local storage
     guardarUsuarioEnLocalStorage(usuario: UsuarioModel) {
         this.cuentaRepository.guardarUsuarioEnLocalStorage(usuario)
@@ -195,9 +196,9 @@ export class CuentaNegocio {
     }
 
     // Valida el estado del perfil cuando el usuario abandona el formulario de registro
-    validarEstadoPerfilParaDestruir(codigoPerfil: string, codigoEstado: CodigosCatalogosEstadoPerfiles ) {
+    validarEstadoPerfilParaDestruir(codigoPerfil: string, codigoEstado: CodigosCatalogosEstadoPerfiles) {
         if (codigoEstado === CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR) {
-          this.eliminarPerfilDelUsuario(codigoPerfil)
+            this.eliminarPerfilDelUsuario(codigoPerfil)
         }
     }
 
@@ -258,6 +259,12 @@ export class CuentaNegocio {
             return !cuenta.aceptoTerminosCondiciones;
         }
         return true;
+    }
+
+    cerrarSession() {
+        this.repository.guardarTokenAutenticacion(null)
+        this.repository.guardarTokenRefresh(null)
+        this.repository.guardarUsuarioEnLocalStorage(null)
     }
 
 }
