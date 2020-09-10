@@ -129,13 +129,10 @@ export class PensamientoComponent implements OnInit {
         break;
     }  
   }
-    //Escuchando el emit() que vienen de pensamiento compartido
-  //Obtener pensamientos 
-  /*unClick(itemPensamiento:ItemPensamiento){
-    console.log("unClick")
-    console.log(itemPensamiento)
+  unClick(itemPensamiento:ItemPensamiento){
     this.eliminarPensamiento(itemPensamiento) 
-  }*/
+  }
+
   dobleClick(itemPensamiento:ItemPensamiento){
     console.log("dobleClick")
     this.enviarPensamientoActualizar(itemPensamiento)     
@@ -170,11 +167,11 @@ export class PensamientoComponent implements OnInit {
   }
   obtenerPensamientos(){
     console.log(this.esPublico)
-    this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)    
+    //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)    
     this.pensamientoNegocio.obtenerPensamientos(this.idPerfil,this.esPublico)
     .subscribe((res:Array<PensamientoModel>)=>{      
       this.cargando=false      
-      this.toast.cerrarToast()
+      //this.toast.cerrarToast()
       if(this.esPublico){
           this.dataListaPublico.lista=res
         return
@@ -182,8 +179,8 @@ export class PensamientoComponent implements OnInit {
       this.dataListaPrivado.lista=res
     },error=>{
       this.cargando=false  
-      this.toast.cerrarToast()
-      this.toast.abrirToast(error)
+      //this.toast.cerrarToast()
+      //this.toast.abrirToast(error)
     })
   }
 
@@ -219,7 +216,8 @@ export class PensamientoComponent implements OnInit {
     this.pensamientoNegocio.actualizarEstadoPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
       console.log('se actualizo estado del pensamiento')
-      this.toast.cerrarToast()    
+      this.toast.cerrarToast()   
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesoEjecutado')) 
       console.log(res)
       if(!this.esPublico){
         this.dataListaPrivado.lista.splice(itemPensamiento.indice,1)
@@ -239,6 +237,7 @@ export class PensamientoComponent implements OnInit {
     this.pensamientoNegocio.eliminarPensamiento(itemPensamiento.pensamiento.id)
     .subscribe(res=>{
       this.toast.cerrarToast()    
+      this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesoEjecutado')) 
       console.log(itemPensamiento)
       console.log(res)      
       if(!this.esPublico){

@@ -8,6 +8,7 @@
     "problemaObtenerDatos":"Problemas al obtener los datos",
     "tipoEmail":"El campo es tipo email",
     "procesando":"Procesando ......",
+    "procesoEjecutado": "Proceso ejecutado correctamente",
 
     "sinAutorizacion":"No tienes autorizacion",
     "noEncontrado":"No encontrado",

@@ -19,5 +19,7 @@ export class ItemPensamientoComponent implements OnInit {
   dobletap(){
     this.configuracionItem.dobleClick();
   }  
-
+  eliminarPensamiento(){
+    this.configuracionItem.onclick();
+  }
 }

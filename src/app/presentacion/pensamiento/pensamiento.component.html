@@ -24,7 +24,7 @@
             </app-crear-pensamiento>-->
             <div class="cuerpoPensamiento centrar2">  
                 <div *ngIf="esPublico; else privado">
-                    <app-pensamiento-compartido (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPublico'>
+                    <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPublico'>
                         <div class="divIndicacionesPensamientos">
                             <p class="boldSombra letra-3-con-interlineado-igual txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
                             <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->
@@ -35,10 +35,9 @@
                             <div class="div316"></div>
                         </div> 
                     </app-pensamiento-compartido>   
-                </div>  
-                <!--(unClick)='unClick($event)'-->          
+                </div>       
                 <ng-template #privado>
-                    <app-pensamiento-compartido (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPrivado'>
+                    <app-pensamiento-compartido (unClick)='unClick($event)' (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPrivado'>
                         <div class="divIndicacionesPensamientos">
                             <p class="boldSombra letra-3-con-interlineado-igual txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
                             <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->

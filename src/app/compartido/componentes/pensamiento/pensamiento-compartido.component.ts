@@ -85,11 +85,11 @@ export class PensamientoCompartidoComponent implements OnInit {
     //console.log("CONFIGURANDO DATOS")
     //console.log(index,pensamientoModel)
     return {
-      data:pensamientoModel,
-      onclick: () => this.eventoClick(index,pensamientoModel),        
+      data:pensamientoModel,     
       estilo:EstiloItemPensamiento.ITEM_ALEATORIO,
       dobleClick: () => this.eventoDobleClick(index,pensamientoModel),  
-      presentarX:this.pensamientoCompartido.configuracionItem.presentarX
+      presentarX:this.pensamientoCompartido.configuracionItem.presentarX,
+      onclick:()=>this.eventoClick(index,pensamientoModel)
     }
   }
 }
