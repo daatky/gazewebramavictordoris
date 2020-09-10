@@ -11,10 +11,16 @@ export interface BarraInferior {
 export interface ConfiguracionInput{
     maximo?:number,
     placeholder?:string,
-    texto?:string,
-    tipo:TipoInput
+    data?:DataBarraInferior,    
+    tipo?:TipoInput
 }
 //Cuando se agrege varios icono CONFIGURAR 
 export interface ConfiguracionIcono{
 
+}
+
+export interface DataBarraInferior{
+    indice?:number,
+    texto:string,
+    id?:string
 }

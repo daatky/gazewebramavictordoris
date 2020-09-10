@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { BotonCompartido } from '../../diseno/modelos/boton.interface';
 import { TipoBoton } from '../button/button.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BarraInferior } from "../../diseno/modelos/barra-inferior.interfce";
+import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { ItemPensamiento } from '../../diseno/modelos/pensamiento';
 
 @Component({
   selector: 'app-barra-inferior',
@@ -10,31 +12,36 @@ import { BarraInferior } from "../../diseno/modelos/barra-inferior.interfce";
   styleUrls: ['./barra-inferior.component.scss']
 })
 export class BarraInferiorComponent implements OnInit {
-  //maximo:number
-  //placeholder:string
   botonCompartido: BotonCompartido
   dataForm: FormGroup
-  //activar:boolean
   @Input() barraInferior:BarraInferior
-  //@Output() escucharEvento:EventEmitter<string>
   constructor(
     private formBuilder: FormBuilder, 
+    private cd: ChangeDetectorRef
   ) {
-    //this.escucharEvento=new EventEmitter<string>()
-  }
-
-  ngOnInit(): void {    
     this.iniciarDatos()
   }
-  iniciarDatos(){
+
+  ngOnInit(): void {        
+  }
+  //Escucho el cambio del texto a actualizar de varible texto para presentar en el input
+  ngOnChanges() {
+    if(this.barraInferior){
+      this.dataForm.get('texto').patchValue(this.barraInferior.input.data.texto)
+    }       
+  }
+  iniciarDatos(){   
     this.dataForm = this.formBuilder.group({
       texto: ['', [Validators.required, Validators.maxLength(230)]],
-    }); 
+    });     
    this.botonCompartido={tipoBoton: TipoBoton.ICON, enProgreso: false,ejecutar: () =>this.agregarTexto()}
   }
+  //Detecta el click del boton de la barra inferior
   agregarTexto(){       
-    this.botonCompartido.text=this.dataForm.controls.texto.value
-    //this.escucharEvento.emit(this.dataForm.controls.texto.value)
-    this.barraInferior.enviar(this.botonCompartido.text)
+    if(this.dataForm.valid){
+      this.barraInferior.input.data.texto=this.dataForm.controls.texto.value
+      this.barraInferior.enviar()
+      this.dataForm.reset()
+    }
   }
 }

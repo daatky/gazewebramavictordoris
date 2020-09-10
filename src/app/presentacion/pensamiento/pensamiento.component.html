@@ -1,30 +1,58 @@
 <app-appbar *ngIf="configuracionAppBar" [configuracion]="configuracionAppBar"></app-appbar>
-<div class="contenidoGeneral">
-    <div class="contenidoPensamientos">
-        <div class="centrarText div230Caracteres">
-            <p class="txt-azul-base bold letra-3-con-interlineado-2">{{ 'antesEscribir' | translate | uppercase}}</p>
-            <div class="div249"></div>
-            <p class="txt-rojo-base regular letra-2-con-interlineado-2 ">{{ '230Caracteres' | translate | uppercase}}
-            </p>
-        </div>
-        <div class="padding267 centrar">
-            <div *ngIf="botonPublico" class="divBoton">
-                <app-button class="centrar" [botonCompartido]='botonPublico'></app-button>
-            </div>
-            <div class="div1542"></div>
-            <div *ngIf="botonPrivado" class="divBoton">
-                <app-button class="centrar" [botonCompartido]='botonPrivado'></app-button>
-            </div>
-        </div>
-        <!--*ngIf="presentarPensamiento"-->
-        <!--<router-outlet></router-outlet>     -->
-        <app-crear-pensamiento [estadosPensamiento]='estadosPensamiento'>
-            <!--<form [formGroup]="crearPensamientoForm">
-        <app-input [inputCompartido]='inputPensamiento'></app-input>
-        <app-button [botonCompartido]='botonCrearPensamiento' type="submit"></app-button>
-    </form>-->
-        </app-crear-pensamiento>
-        <!--{{this.crearPensamientoForm.get('pensamiento').value.length}}{{this.crearPensamientoForm.get('pensamiento').value}}-->
-    </div>
-    <app-barra-inferior [barraInferior]='barraInferior' (escucharEvento)='crearPensamiento($event)'></app-barra-inferior>
+<div *ngIf="cargando;else presentar" class="tranparencia-base cuerpo centrar">
+    <app-cargando></app-cargando>
 </div>
+<ng-template #presentar>
+    <div class="contenidoGeneral">
+        <div class="contenidoPensamientos">
+            <div class="centrarText div230Caracteres">
+                <p class="txt-azul-base bold letra-3-con-interlineado-2">{{ 'antesEscribir' | translate | uppercase}}</p>
+                <div class="div249"></div>
+                <p class="txt-rojo-base regular letra-2-con-interlineado-2 ">{{ '230Caracteres' | translate | uppercase}}
+                </p>
+            </div>
+            <div class="padding267 centrar">
+                <div *ngIf="botonPublico" class="divBoton">
+                    <app-button class="centrar" [botonCompartido]='botonPublico'></app-button>
+                </div>
+                <div class="div1542"></div>
+                <div *ngIf="botonPrivado" class="divBoton">
+                    <app-button class="centrar" [botonCompartido]='botonPrivado'></app-button>
+                </div>
+            </div>
+            <!--<app-crear-pensamiento [estadosPensamiento]='estadosPensamiento'>
+            </app-crear-pensamiento>-->
+            <div class="cuerpoPensamiento centrar2">  
+                <div *ngIf="esPublico; else privado">
+                    <app-pensamiento-compartido (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPublico'>
+                        <div class="divIndicacionesPensamientos">
+                            <p class="boldSombra letra-3-con-interlineado-igual txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
+                            <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->
+                            <div class="div316"></div>
+                            <p class="bold letra-1-con-interlineado-1 centrarText">{{ 'actualizarReflexion' | translate | uppercase}}</p>
+                            <div class="div178"></div>
+                            <p class="bold letra-1-con-interlineado-1 txt-rojo-base  centrarText">{{ 'cambiarEstadoReflexion' | translate | uppercase}}</p>                
+                            <div class="div316"></div>
+                        </div> 
+                    </app-pensamiento-compartido>   
+                </div>  
+                <!--(unClick)='unClick($event)'-->          
+                <ng-template #privado>
+                    <app-pensamiento-compartido (dobleClick)='dobleClick($event)' (clickLargo)='clickLargo($event)' [pensamientoCompartido]='pensamientoCompartido' [dataLista]='dataListaPrivado'>
+                        <div class="divIndicacionesPensamientos">
+                            <p class="boldSombra letra-3-con-interlineado-igual txt-amarillo-base centrarText">{{ 'reflexionesPublicas' | translate | uppercase}}</p>
+                            <!--<p>{{ 'reflexionesPrivadas' | translate | uppercase}}</p>-->
+                            <div class="div316"></div>
+                            <p class="bold letra-1-con-interlineado-1 centrarText">{{ 'actualizarReflexion' | translate | uppercase}}</p>
+                            <div class="div178"></div>
+                            <p class="bold letra-1-con-interlineado-1 txt-rojo-base  centrarText">{{ 'cambiarEstadoReflexion' | translate | uppercase}}</p>                
+                            <div class="div316"></div>
+                        </div> 
+                    </app-pensamiento-compartido>     
+                </ng-template>         
+            </div>  
+            <app-toast [configuracion]='configuracionToast'></app-toast>
+        </div>
+        <app-barra-inferior [barraInferior]='barraInferior' (escucharEvento)='crearPensamiento($event)'></app-barra-inferior>
+    </div>
+</ng-template>

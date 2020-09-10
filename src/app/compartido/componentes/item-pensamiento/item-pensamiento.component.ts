@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, AfterContentInit, DoCheck, AfterContentChecked, AfterViewInit } from '@angular/core';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { Component, OnInit, Input} from '@angular/core';
 import { EventoTapPersonalizado } from 'src/app/nucleo/servicios/generales/detector-gestos.service';
 import { Configuracion } from '../../diseno/modelos/pensamiento';
 

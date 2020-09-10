@@ -1,4 +1,3 @@
-import { PensamientoEntity } from "../../../dominio/entidades/pensamiento.entity";
 import { TipoPensamiento, EstiloItemPensamiento } from "../enums/tipo-pensamiento.enum";
 import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
 
@@ -22,4 +21,9 @@ export interface Configuracion{
     dobleClick?: Function,
     clickSostenido?: Function,
     presentarX?:boolean
+}
+
+export interface ItemPensamiento{
+    pensamiento:PensamientoModel,
+    indice:number
 }

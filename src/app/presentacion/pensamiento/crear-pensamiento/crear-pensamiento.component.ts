@@ -132,7 +132,7 @@ export class CrearPensamientoComponent implements OnInit {
   }
 
 
-  actualizarPensamiento = (objeto:object) =>{ 
+  actualizarPensamiento = (objeto:object) =>{
     console.log("vVOY ACTUALIZAR")
     /*if(this.crearPensamientoForm.valid){
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}

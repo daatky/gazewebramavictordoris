@@ -32,6 +32,7 @@ export class CuentaNegocio {
         return this.cuentaRepository.iniciarSesion(data)
             .pipe(
                 map(data => {
+                    console.log(data)
                     this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
                     this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
                     this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
