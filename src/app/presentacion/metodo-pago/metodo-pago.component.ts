@@ -136,7 +136,7 @@ export class MetodoPagoComponent implements OnInit {
     this.codigoPago = metodoPago.codigo;
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
-        this.dataModalPaypal.abierto = true;        
+        this.dataModalPaypal.abierto = true;
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
         this.dataModalStripe.abierto = true;
@@ -217,19 +217,21 @@ export class MetodoPagoComponent implements OnInit {
       },
 
       onApprove: (data, actions) => {
-        this.toast.abrirToast("Transaccion aprobada, pero no autoriazada")
-
-        console.log(
-          "onApprove - Transaccion ha sido aprovada, pero no autorizada",
-          data,
-          actions
-        );
-        actions.order.get().then((details) => {
-          console.log("onApprove - you can get full order details inside onApprove: ", details);
-        });
+        this.toast.abrirToast("Transaccion aprobada")
+        /*
+                console.log(
+                  "onApprove - Transaccion ha sido aprovada, pero no autorizada",
+                  data,
+                  actions
+                );
+                
+                actions.order.get().then((details) => {
+                  console.log("onApprove - you can get full order details inside onApprove: ", details);
+                });
+                */
       },
       onClientAuthorization: (data) => {
-        this.toast.abrirToast("Transaccion autoriazada");
+        this.toast.abrirToast("Transaccion autorizada");
         console.log("onClientAuthorization - transacción autorizada", data);
         this.activarCuenta(idTransaccion);
       },
@@ -310,7 +312,6 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   activarCuenta(idTransaccion: string) {
-    /*
     this.toast.abrirToast("Procesando Pago para crear la cuenta", true)
     this.cuentaNegocio.activarCuenta(idTransaccion)
       .subscribe((res: UsuarioModel) => {
@@ -322,7 +323,6 @@ export class MetodoPagoComponent implements OnInit {
         this.toast.abrirToast(error.toString())
         console.log(error)
       })
-      */
   }
 
   configurarToast() {
