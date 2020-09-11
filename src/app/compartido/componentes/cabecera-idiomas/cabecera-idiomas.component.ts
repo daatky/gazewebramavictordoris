@@ -85,6 +85,7 @@ export class CabeceraIdiomasComponent implements OnInit {
     this.idiomaSeleccionado=idioma.codNombre    
     this.internacionalizacionNegocio.usarIidoma(idioma.codNombre)    
     this.idiomaNegocio.guardarIdiomaSeleccionado(idioma)
+    this.idiomaNegocio.eliminarVarablesStorage()
     this.cambiarIdioma.emit('')
   }
 }

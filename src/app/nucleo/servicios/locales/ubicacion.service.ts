@@ -19,6 +19,8 @@ export class UbicacionServiceLocal {
     guardarPaisesDelItemSelector(paises: ItemSelector[]) {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.PAISES, paises)
     }
-
+    eliminarVariableStorage(llave:string){
+        this.metodosLocalStorageService.remover(llave)
+    }
 
 }

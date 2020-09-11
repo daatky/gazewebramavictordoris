@@ -55,6 +55,10 @@ export class PagoRepository {
         return this.local.obtenerMetodosPago();
     }
 
+    eliminarVariableStorage(llave:string){
+        this.local.eliminarVariableStorage(llave)
+    }
+
     prepararPagoStripe(data: PagoStripeModel): Observable<MetodoPagoStripeEntity> {
         return this.pagoServicie.prepararPagoStripe(data).pipe(
             map(data => {
