@@ -1,7 +1,7 @@
 @import '../../../assets/estilos/dimensiones.scss';
 
 .divCabecera{
-    height: $item-menu-alto-2621;
+    height: $item-menu-alto-2621;    
     width: 100%;
 }
 .escogerLeng{
@@ -48,7 +48,7 @@
     align-items: center;*/
 }
 .divCompromiso{
-    min-height: calcular(55.07);
+    min-height: calcular(55.07);    
     width: 100%;
     display: table
 } 

@@ -69,5 +69,8 @@ export class PerfilRepository {
     obtenerPerfilSeleccionado(): PerfilModel {
         return this.localStorage.obtenerPerfilSeleccionado();
     }
+    eliminarVariableStorage(llave:string){
+        this.localStorage.eliminarVariableStorage(llave)
+    }
 
 }

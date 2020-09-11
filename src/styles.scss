@@ -145,3 +145,8 @@ p {
 .letradefecto {
     font-size: $letra-2;
 }
+
+.letraSinDeforme{
+    word-break: break-all;
+    //hyphens: auto;   Con guion
+}

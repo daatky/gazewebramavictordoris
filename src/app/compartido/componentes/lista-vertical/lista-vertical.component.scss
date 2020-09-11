@@ -8,11 +8,9 @@
     width: $ancho-6920;
 }
 .listaScrollPensamientoGestionar {
-    //height: calcular(87.85) - (calcular(6.84)*2) - $interlineado-2 - $espacio-0316 - $espacio-0316 - $letra-3 - $letra-1 - $letra-1;
     height: calcular(131.8643) - calcular(6.84) - (calcular(131.8643) - calcular(87.85) + calcular(6.84)) - $letra-3 - ($espacio-0316*2) - ($letra-1*2) - ($interlineado-1*2) - $interlineado-2 - calcular(0.78);
     overflow-y: auto;
-    //width: $ancho-pagina - (($espacio-0658 + $espacio-267)*2);
-    //width: calcular(131.8643)-($espacio-267 + calcular(0.78))- ($espacio-267 + calcular(0.78)+ $espacio-0658);    
+//    word-break: break-all;
 }
 
 .listaScrollMenuPrincipal {
