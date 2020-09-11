@@ -19,4 +19,7 @@ export class InternacionalizacionRepository {
     obtenerTextoLlave(llave:string):Promise<string>{
         return this.internacionalizacionService.obtenerTextoLlave(llave)
     }
+    obtenerTextoSincrono(llave:string,objeto?:Object):string{
+        return this.internacionalizacionService.obtenerTextoSincrono(llave,objeto)
+    }
 }

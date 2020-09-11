@@ -1,6 +1,7 @@
 import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { InputCompartido } from '../../diseno/modelos/input.interface'
+import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 
 @Component({
   selector: 'app-input',
@@ -11,7 +12,8 @@ export class InputComponent implements OnInit {
   @Input() inputCompartido: InputCompartido
 
   constructor(
-    public estiloDelTextoServicio: EstiloDelTextoServicio
+    public estiloDelTextoServicio: EstiloDelTextoServicio,
+    private internacionalizacionNegocio: InternacionalizacionNegocio,
   ) {
   }
   /*   
@@ -23,26 +25,31 @@ export class InputComponent implements OnInit {
    
    */
   ngOnInit(): void {
-    
+
   }
 
   obtenerError(controlName: any): string {
     let error = '';
     if (controlName.touched && controlName.errors != null) {
       if (controlName.errors.required) {
-        error = 'Este campo es requerido'
+        //error="campo requerido"   
+        error = this.internacionalizacionNegocio.obtenerTextoSincrono('campoRequerido')
       } else {
         if (controlName.errors.email) {
-          error = 'Correp electronico'
+          //error='Correp electronico'          
+          error = this.internacionalizacionNegocio.obtenerTextoSincrono('tipoEmail')
         } else {
           if (controlName.errors.minlength) {
-            error = "Este campo debe tener un minimo de " + controlName.errors.minlength.requiredLength + " caracteres"
+            //error="Este campo debe tener un minimo de "+controlName.errors.minlength.requiredLength+" caracteres"
+            error = this.internacionalizacionNegocio.obtenerTextoSincrono('minimoCaracteres', { numero: controlName.errors.minlength.requiredLength })
           } else {
             if (controlName.errors.maxlength) {
-              error = "Este campo debe tener un maximo de " + controlName.errors.maxlength.requiredLength + " caracteres"
+              //error="Este campo debe tener un maximo de "+controlName.errors.maxlength.requiredLength + " caracteres"
+              error = this.internacionalizacionNegocio.obtenerTextoSincrono('maximoCaracteres', { numero: controlName.errors.maxlength.requiredLength })
             } else {
               if (controlName.errors.pattern) {
-                error = "Este campo es invalido"
+                //error="Este campo es invalido"
+                error = this.internacionalizacionNegocio.obtenerTextoSincrono('campoInvalido')
               }
             }
           }
@@ -50,10 +57,12 @@ export class InputComponent implements OnInit {
       }
     } else {
       if (controlName.untouched) {
-        if (this.inputCompartido.error) error = 'Existen campos incompletos'
+        if (this.inputCompartido.error) error = error = this.internacionalizacionNegocio.obtenerTextoSincrono('camposIncompletos')
+        //error='Existen campos incompletos'
       }
     }
-    return error;
+    return error
+    //this.obtenerLlave(error).toString();
   }
 
   // Churon

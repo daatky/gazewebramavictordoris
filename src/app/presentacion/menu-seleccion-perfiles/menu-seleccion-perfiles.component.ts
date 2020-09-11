@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TRANSLATIONS } from '@angular/core';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { Router } from '@angular/router';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
@@ -23,6 +23,7 @@ import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { CodigosCatalogoTipoPerfil } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 
 @Component({
   selector: 'app-menu-seleccion-perfiles',
@@ -68,21 +69,16 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
   }
   async prepararAppBar() {
     this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
-      searchBarAppBar: {
-        mostrarSearchBar: true,
-        nombrePerfil: {
-          mostrar: false
-        },
-        mostrarDivBack: false,
-        mostrarTextoHome: true,
+      usoAppBar: UsoAppBar.SOLO_TITULO,
+      tituloAppbar: {
         mostrarBotonXRoja: true,
-        subtitulo: {
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        tituloPrincipal: {
           mostrar: true,
           llaveTexto: 'escojaPerfil'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+        mostrarDivBack: false
       }
     }
 
@@ -109,21 +105,43 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: tipoPerfil.codigo,
-      onclick: () => this.navegarMenuPrincipal(tipoPerfil),
-      dobleClick: () => this.navegarCrearEditarPerfil(tipoPerfil)
+      onclick: () => this.gestionarPerfil(tipoPerfil,true),
+      dobleClick: () => this.gestionarPerfil(tipoPerfil)
     };
   }
 
   navegarMenuPrincipal(tipoPerfil: CatalogoTipoPerfilModel) {
+    this.perfilNegocio.almacenarPerfilSeleccionado(tipoPerfil);
     if (tipoPerfil.perfil) {
-      this.router.navigate([RutasLocales.MENU_PRINCIPAL], { queryParams: { codigoPerfil: tipoPerfil.codigo } });
+      this.router.navigate([RutasLocales.MENU_PRINCIPAL]);
     } else {
       this.navegarCrearEditarPerfil(tipoPerfil);
     }
   }
 
+  gestionarPerfil(tipoPerfil: CatalogoTipoPerfilModel, irMenuPrincipal: boolean = false) {
+    if (this.perfilNegocio.conflictoCrearPerfil(tipoPerfil, this.listaTipoPerfil)) {
+      alert("perfil incompatible");
+    } else {
+      if (irMenuPrincipal) {
+        this.navegarMenuPrincipal(tipoPerfil)
+      } else {
+        this.navegarCrearEditarPerfil(tipoPerfil)
+      }
+
+    }
+  }
+
   navegarCrearEditarPerfil(tipoPerfil: CatalogoTipoPerfilModel) {
-    this.router.navigateByUrl(RutasLocales.REGISTRO.replace(":codigoPerfil", tipoPerfil.codigo));
+    let registro = RutasLocales.REGISTRO.toString()
+
+    if (tipoPerfil.perfil) {
+      registro = registro.replace(':accionEntidad', AccionEntidad.ACTUALIZAR)
+    } else {
+      registro = registro.replace(':accionEntidad', AccionEntidad.REGISTRO)
+    }
+    registro = registro.replace(':codigoPerfil', tipoPerfil.codigo)
+    this.router.navigateByUrl(registro)
   }
 
   obtenerEstadoPerfil(perfil: PerfilModel) {

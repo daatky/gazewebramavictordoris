@@ -6,6 +6,7 @@ import { CatalogoIdiomaEntity } from 'src/app/dominio/entidades/catalogos/catalo
 import { Subject, Observable } from 'rxjs';
 import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
 import { CatalogoMetodoPagoModel } from 'src/app/dominio/modelo/catalogo-metodo-pago.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorage {
@@ -72,5 +73,24 @@ export class LocalStorage {
 
     obtenerMetodosPago(): CatalogoMetodoPagoModel[] {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.METODOS_PAGO);
+    }
+
+    eliminarUsuario() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.USUARIO);
+    }
+
+    eliminarRefreshToken() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.REFRESH_TOKEN);
+    }
+    eliminarAutenticacionToken() {
+        return this.metodosLocalStorageService.remover(LlavesLocalStorage.AUTH_TOKEN);
+    }
+
+    almacenarPerfilSeleccionado(perfil: PerfilModel) {
+        return this.metodosLocalStorageService.guardar(LlavesLocalStorage.PERFIL_SELECCIONADO, perfil);
+    }
+
+    obtenerPerfilSeleccionado() {
+        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.PERFIL_SELECCIONADO);
     }
 }

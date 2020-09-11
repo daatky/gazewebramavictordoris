@@ -1,43 +1,28 @@
-<input
-    *ngIf="inputCompartido"
-    type="{{ inputCompartido.tipo }}"
-    placeholder="{{ inputCompartido.placeholder }}"
-    [formControl]="inputCompartido.data"
-    class="{{ inputCompartido.estilo.estiloInput }} regular"
-    autocomplete="disabled"
-    [maxLength]="determinarCadenaMaxima()"
-    (focus)="empezarEscribir()"
-    (keyup)="escribiendoEnInput()"
-    (blur)="dejarDeEscribir()"
->
+<input *ngIf="inputCompartido" type="{{ inputCompartido.tipo }}" placeholder="{{ inputCompartido.placeholder }}"
+    [formControl]="inputCompartido.data" class="{{ inputCompartido.estilo.estiloInput }} regular"
+    autocomplete="disabled" [maxLength]="determinarCadenaMaxima()" (focus)="empezarEscribir()"
+    (keyup)="escribiendoEnInput()" (blur)="dejarDeEscribir()">
 <!--error-->
-<div
+<div 
     *ngIf="inputCompartido && (!inputCompartido.errorPersonalizado || inputCompartido.errorPersonalizado.length === 0)"
-    class="{{ inputCompartido.estilo.estiloError }} italic"
->
+    class="{{ inputCompartido.estilo.estiloError }} italic">
     {{ obtenerError(inputCompartido.data) }}
 </div>
+
 <!-- Error personalizado -->
-<div
-    *ngIf="inputCompartido && inputCompartido.errorPersonalizado && inputCompartido.errorPersonalizado.length > 0"
-    class="{{ inputCompartido.estilo.estiloError }} italic"
->
+<div *ngIf="inputCompartido && inputCompartido.errorPersonalizado && inputCompartido.errorPersonalizado.length > 0"
+    class="{{ inputCompartido.estilo.estiloError }} italic">
     {{ inputCompartido.errorPersonalizado }}
 </div>
 <!-- Contador de caracteres -->
-<div
-    *ngIf="inputCompartido.contadorCaracteres && inputCompartido.contadorCaracteres.mostrar"
-    class="contador"
->
-    <p
-        [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+<div *ngIf="inputCompartido.contadorCaracteres && inputCompartido.contadorCaracteres.mostrar" class="contador">
+    <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
             color: estiloDelTextoServicio.colorDelTexto.TEXTOROJOBASE, 
             estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
             enMayusculas: false,
             tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L1_IGUAL,
             paddingIzqDerDelTexto: estiloDelTextoServicio.paddingIzqDerDelTexto.PADDING_0
-        })"
-    >
+        })">
         {{ obtenerTextoContador() }}
     </p>
 </div>

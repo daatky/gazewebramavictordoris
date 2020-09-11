@@ -9,6 +9,7 @@ import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipo
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
+import { PerfilModel } from '../modelo/perfil.model';
 
 @Injectable({
     providedIn: 'root'
@@ -62,7 +63,14 @@ export class PerfilRepository {
         return this.perfilServicieLocal.obtenerAlbumEnSessionStorage()
     }
 
-    validarNombreDeContactoUnico(nombreContacto: string) : Observable<string> {
+    almacenarPerfilSeleccionado(perfil: PerfilModel) {
+        this.localStorage.almacenarPerfilSeleccionado(perfil)
+    }
+    obtenerPerfilSeleccionado(): PerfilModel {
+        return this.localStorage.obtenerPerfilSeleccionado();
+    }
+
+    validarNombreDeContactoUnico(nombreContacto: string): Observable<string> {
         return this.perfilServicieRemoto.validarNombreDeContactoUnico(nombreContacto)
             .pipe(
                 map(data => {

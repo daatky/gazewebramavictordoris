@@ -47,18 +47,14 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   }
 
   tap() {
-    try {
+    if (this.configuracionItem.onclick) {
       this.configuracionItem.onclick()
-    } catch (error) {
-      console.error('Evento de click no definido')
     }
   }
 
   dobletap() {
-    try {
-      this.configuracionItem.dobleClick() 
-    } catch (error) {
-      console.error('Evento de doble click no definido')
+    if (this.configuracionItem.dobleClick) {
+      this.configuracionItem.dobleClick()
     }
   }
 
@@ -173,7 +169,9 @@ export class ItemMenuComponent implements OnInit, AfterViewInit {
   }
 
   clickItemSubMenu(item: ItemAccion) {
-    item.accion();
+    if (item.accion) {
+      item.accion();
+    }
   }
 
   //temporal, considere la eliminacion en caso de no usuarlo

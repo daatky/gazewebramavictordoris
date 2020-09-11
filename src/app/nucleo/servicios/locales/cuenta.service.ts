@@ -8,21 +8,21 @@ import { LlavesSessionStorage } from './llaves/session-storage.enum';
 
 @Injectable({ providedIn: 'root' })
 export class CuentaServiceLocal {
-    
+
     constructor(
-        private metodosLocalStorageService:MetodosLocalStorageService,
+        private metodosLocalStorageService: MetodosLocalStorageService,
         private metodosSesionStorage: MetodosSessionStorageService,
     ) {
 
     }
 
     // Guardar usuario en el storage
-    guardarUsuarioEnLocalStorage(usuario: UsuarioModel) : void {
+    guardarUsuarioEnLocalStorage(usuario: UsuarioModel): void {
         this.metodosLocalStorageService.guardar(LlavesLocalStorage.USUARIO, usuario)
     }
 
     // OBtener usuario del storage
-    obtenerUsuarioDelLocalStorage() : UsuarioModel {
+    obtenerUsuarioDelLocalStorage(): UsuarioModel {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.USUARIO)
     }
 

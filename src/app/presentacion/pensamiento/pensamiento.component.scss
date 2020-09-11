@@ -1,0 +1,61 @@
+@import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/colores.scss";
+@import "../../../assets/estilos/imagenes.scss";
+
+.contenidoGeneral{
+    width: $ancho-pagina;
+    height: $cuerpo-general;
+    overflow: hidden; 
+}
+.contenidoPensamientos{
+    width: $ancho-pagina;    
+    height: calc(#{$cuerpo-general} - #{$bottom-bar-alto});    
+    background-color: white;
+    box-sizing: border-box;    
+    overflow: scroll; 
+}
+.padding267{
+    padding: 0 $espacio-267 0 $espacio-267;
+}
+.div249{    
+    height: $interlineado-4;
+}
+.div230Caracteres{
+    padding: $interlineado-8 $espacio-267 $interlineado-8 $espacio-267;
+}
+.div1542{
+    width: $espacio-1542;
+    height: 12px;
+    float: left;
+}
+
+
+
+
+.letra{
+    font-size: x-small;
+}
+.cuerpoPensamiento{      
+    width: $ancho-pagina;
+    height: calcular(131.8643);    
+    padding: $interlineado-8 0 0 0;
+    box-sizing: border-box;   
+}
+.divIndicacionesPensamientos{
+    //width: $ancho-pagina - (($espacio-0658 - $espacio-267) * 2);    
+    width: 100%;
+    //width: calc(100vh - #{$espacio-267});
+    box-sizing: border-box;
+}
+.centrar2{
+    display: table-cell;
+    vertical-align: middle;
+}
+.div316{
+    width: 100%;
+    height: $espacio-0316;
+}
+.div178{
+    width: 100%;
+    height: $interlineado-2;
+}

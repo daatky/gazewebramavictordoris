@@ -1,8 +1,9 @@
 <div *ngIf="!botonCompartido.enProgreso; else elseBlock">
     <div [ngSwitch]="botonCompartido.tipoBoton">
+
         <div *ngSwitchCase="tipoBoton.TEXTO">
-            <div #button (click)="execute()">
-                <p>{{botonCompartido.text}}</p>
+            <div [ngClass]=obtenerEstilosBoton() (click)="execute()">
+                <p>{{obtenerTexto()}}</p>
             </div>
         </div>
         <div *ngSwitchCase="tipoBoton.TEXTO_ICON">
@@ -12,6 +13,9 @@
                 </div>
                 <div class="icono" (click)="execute()"></div>
             </div>
+        </div>
+        <div *ngSwitchCase="tipoBoton.ICON">
+            <div class="iconoBoton" (click)="execute()"></div>
         </div>
     </div>
 </div>

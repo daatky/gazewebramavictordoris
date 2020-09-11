@@ -11,4 +11,5 @@ export enum LlavesLocalStorage {
     METODOS_PAGO = 'metodopago',
     USUARIO = 'usuario',
     ALBUM_ACTIVO = 'album_activo',
+    PERFIL_SELECCIONADO = 'perfil_seleccionado'
 }

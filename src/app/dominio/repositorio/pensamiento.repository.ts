@@ -35,13 +35,15 @@ export class PensamientoRepository {
                     return this.pensamientoMapperService.transform(data.respuesta.datos);
                 }),
                 catchError(err => {
-                    console.log(err)
+                    //console.log(err)
                     return throwError(err)
                 })
             )
     }
     //PensamientoRemotoModel
     crearPensamiento(datos: PensamientoEntity): Observable<PensamientoModel> {
+        console.log("DATOS QUE ENVIO")
+        console.log(datos)
         return this.pensamientoService.crearPensamiento(datos)
             .pipe(
                 map(data => {
@@ -54,7 +56,7 @@ export class PensamientoRepository {
                 })
             )
     }
-    actualizarPensamiento(datos: object): Observable<string> {
+    actualizarPensamiento(datos: PensamientoEntity): Observable<string> {
         return this.pensamientoService.actualizarPensamiento(datos)
             .pipe(
                 map(data => {

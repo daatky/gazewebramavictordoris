@@ -10,7 +10,7 @@ import { EstiloDelTextoServicio } from 'src/app/nucleo/servicios/diseno/estilo-d
 export class ToastComponent implements OnInit {
 
   @Input() configuracion: ConfiguracionToast
-  intervaloTimer;
+  timeOut;
 
   constructor(
     public estiloDelTextoServicio: EstiloDelTextoServicio
@@ -57,16 +57,16 @@ export class ToastComponent implements OnInit {
       if (!this.configuracion.intervalo) {
         this.configuracion.intervalo = 5;
       }
-      this.intervaloTimer = setInterval(() => {
-        if (this.configuracion.intervalo > 0) {
-          this.configuracion.intervalo--;
-          console.log(this.configuracion.intervalo);
-        } else {
-          console.log("cerrar toast");
-          clearInterval(this.intervaloTimer)
-          this.cerrarToast();
-        }
-      }, 1000)
+
+      if (this.timeOut) {
+        clearTimeout(this.timeOut)
+      }
+
+      this.timeOut = setTimeout(() => {
+        this.cerrarToast();
+        console.log("cerrar toast");
+      }, this.configuracion.intervalo * 1000)
+
     }
 
   }

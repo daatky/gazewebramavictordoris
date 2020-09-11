@@ -137,7 +137,6 @@ export class MetodoPagoComponent implements OnInit {
     switch (this.codigoPago) {
       case CodigosCatalogoMetodoPago.PAYPAL.toString():
         this.dataModalPaypal.abierto = true;
-        this.toast.abrirToast("abrir metodo pago");
         break;
       case CodigosCatalogoMetodoPago.TARJETA.toString():
         this.dataModalStripe.abierto = true;
@@ -195,18 +194,22 @@ export class MetodoPagoComponent implements OnInit {
     this.payPalConfig = {
       clientId: "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
-      createOrderOnServer: (data) =>
-        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
+      createOrderOnServer: (data) => {
+        this.toast.abrirToast("Creando cuenta y preparando pago", true)
+        return this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
           (res) => {
             idTransaccion = res.idTransaccion;
-            console.log("se creao la cuenta y se retonor el id para confirmar")
+            this.toast.cerrarToast()
+            console.log("se creo la cuenta y se retonor el id para confirmar")
             return res.idPago
           }
         ).catch((error) => {
           console.log(error);
-          this.toast.abrirToast(error)
+          this.toast.cerrarToast()
+          this.toast.abrirToast(error.toString())
           return error.toString();
-        }),
+        })
+      },
       advanced: {
         commit: "true",
         extraQueryParams: [{ name: 'disable-funding', value: 'card' }]
@@ -218,19 +221,21 @@ export class MetodoPagoComponent implements OnInit {
       },
 
       onApprove: (data, actions) => {
-        this.toast.abrirToast("Transaccion aprobada, pero no autoriazada")
-
-        console.log(
-          "onApprove - Transaccion ha sido aprovada, pero no autorizada",
-          data,
-          actions
-        );
-        actions.order.get().then((details) => {
-          console.log("onApprove - you can get full order details inside onApprove: ", details);
-        });
+        this.toast.abrirToast("Transaccion aprobada")
+        /*
+                console.log(
+                  "onApprove - Transaccion ha sido aprovada, pero no autorizada",
+                  data,
+                  actions
+                );
+                
+                actions.order.get().then((details) => {
+                  console.log("onApprove - you can get full order details inside onApprove: ", details);
+                });
+                */
       },
       onClientAuthorization: (data) => {
-        this.toast.abrirToast("Transaccion autoriazada");
+        this.toast.abrirToast("Transaccion autorizada");
         console.log("onClientAuthorization - transacción autorizada", data);
         this.activarCuenta(idTransaccion);
       },
@@ -257,9 +262,12 @@ export class MetodoPagoComponent implements OnInit {
         email: this.pagoForm.value.email,
       }
       this.dataModalStripe.abierto = false;
+      this.toast.abrirToast("Creando cuenta y preparando pago", true)
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(
         (pagoModel: PagoModel) => {
           console.log(pagoModel, "paymentintent and custumer");
+          this.toast.cerrarToast()
+          this.toast.abrirToast("Confirmando pago", true)
           this.stripeService.confirmCardPayment(pagoModel.idPago, {
             payment_method: {
               card: this.card.element,
@@ -269,8 +277,10 @@ export class MetodoPagoComponent implements OnInit {
               },
             },
           }).subscribe((result) => {
+            this.toast.cerrarToast()
             if (result.error) {
               console.log(result.error?.message); // Mostrar un error al cleinte
+              this.toast.abrirToast(result.error?.message)
             } else {
               if (result.paymentIntent?.status === "succeeded") {
 
@@ -311,7 +321,6 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   activarCuenta(idTransaccion: string) {
-    /*
     this.toast.abrirToast("Procesando Pago para crear la cuenta", true)
     this.cuentaNegocio.activarCuenta(idTransaccion)
       .subscribe((res: UsuarioModel) => {
@@ -323,7 +332,6 @@ export class MetodoPagoComponent implements OnInit {
         this.toast.abrirToast(error.toString())
         console.log(error)
       })
-      */
   }
 
   configurarToast() {

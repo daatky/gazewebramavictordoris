@@ -9,6 +9,7 @@ import { IdiomaNegocio } from 'src/app/dominio/logica-negocio/idioma.negocio';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { TamanoPortadaGaze } from '../../diseno/enums/tamano-portada-gaze.enum';
 import { ConfiguracionToast } from '../../diseno/modelos/toast.interface';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-cabecera-idiomas',
@@ -16,6 +17,7 @@ import { ConfiguracionToast } from '../../diseno/modelos/toast.interface';
   styleUrls: ['./cabecera-idiomas.component.scss']
 })
 export class CabeceraIdiomasComponent implements OnInit {
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   idiomas: Array<CatalogoIdiomaEntity>
   idiomaEstilo: LineaDeTexto
   idiomaSeleccionado:string
@@ -25,9 +27,13 @@ export class CabeceraIdiomasComponent implements OnInit {
     private idiomaNegocio: IdiomaNegocio,  
     //private localStorageNegocio:LocalStorageNegocio,
     private internacionalizacionNegocio:InternacionalizacionNegocio,        
-  ) { }
+  ) {     
+  }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
+    this.caragarDatos()
+  }
+  caragarDatos(){
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
     //VERIFICAR SI ESTA GUARDADO UN IDIOMA EN LOCALSTORAGE    
     this.idiomaSeleccionado=this.internacionalizacionNegocio.obtenerIdiomaInternacionalizacion()
@@ -38,20 +44,28 @@ export class CabeceraIdiomasComponent implements OnInit {
       tamanoConInterlineado: TamanoDeTextoConInterlineado.L3_IGUAL,
       color: ColorDelTexto.TEXTOBLANCO
     }    
-    this.obtenerCatalogoIdiomas()    
+    this.obtenerCatalogoIdiomas()  
   }
 
     //OBTENER EL CATALOGO DE IDIOMAS
-    obtenerCatalogoIdiomas(){   
-      this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}   
+    obtenerCatalogoIdiomas(){
+      
+      //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'),true)         
       this.idiomaNegocio.obtenerCatalogoIdiomas()
-        .subscribe(res => {          
-          this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-          this.idiomas = res
+        .subscribe(res => { 
+          //this.toast.cerrarToast()                   
+          if(res){
+            console.log("DATOS")
+            this.idiomas = res
+          }else{
+            console.log("NO TRAJE NADA DE DATOS")
+            this.idiomas=[] 
+            //this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('problemaObtenerDatos'))           
+          }
           //this.idiomaNegocio.ordenarIdioma()
         }, error => {
-          console.log(error)
-          this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
+          //this.toast.cerrarToast()
+          //this.toast.abrirToast(error)
         })
     }
   // Obtener clases lineas texto 

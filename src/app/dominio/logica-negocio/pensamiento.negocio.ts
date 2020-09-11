@@ -15,7 +15,7 @@ export class PensamientoNegocio {
         //private pensamientoRepository:PensamientoRepository
         private pensamientoRepository: PensamientoRepository
     ) { }
-    obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
+    obtenerPensamientoAleatorio(): Observable<PensamientoModel> {        
         return this.pensamientoRepository.obtenerPensamientoAleatorio()
             .pipe(
                 map((data: PensamientoModel) => {
@@ -54,21 +54,23 @@ export class PensamientoNegocio {
                 })
             )
     }*/
-    obtenerPensamientos(idPerfil: string, esPrivado: boolean) {
+    obtenerPensamientos(idPerfil: string, esPrivado: boolean):Observable<Array<PensamientoModel>> {        
         return this.pensamientoRepository.obtenerPensamientos(idPerfil, esPrivado)
             .pipe(
                 map((data: Array<PensamientoModel>) => {
                     return data
                 }),
                 catchError(err => {
-                    console.log(err)
+                    //console.log(err)
                     return throwError(err)
                 })
             )
     }
     crearPensamiento(idPerfil: string, publico: boolean, pensamiento: string): Observable<PensamientoModel> {
-        let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
-        return this.pensamientoRepository.crearPensamiento({ perfil: { _id: idPerfil }, traducciones: traduccionTexto, publico: publico })
+        //let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
+        console.log("ESTADO QUE ENVIO")
+        console.log(publico)
+        return this.pensamientoRepository.crearPensamiento({ perfil: {_id: idPerfil }, traducciones: [{ texto: pensamiento }], publico: publico })
             .pipe(
                 map((data: PensamientoModel) => {
                     return data
@@ -80,7 +82,7 @@ export class PensamientoNegocio {
             )
     }
     actualizarPensamiento(idPensamiento: string, pensamiento: string): Observable<string> {
-        return this.pensamientoRepository.actualizarPensamiento({ _id: idPensamiento, texto: pensamiento })
+        return this.pensamientoRepository.actualizarPensamiento({ _id: idPensamiento, traducciones:[{texto: pensamiento}]})
             .pipe(
                 map((data: string) => {
                     return data

@@ -17,13 +17,10 @@ export class PensamientoService {
         return this.http.get<RespuestaRemota<PensamientoEntity>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString());
 
     }
-    obtenerPensamientos(idPerfil:string,esPrivado:boolean):Observable<RespuestaRemota<Array<PensamientoEntity>>>{
-        console.log(esPrivado)
-        if(esPrivado){            
+    obtenerPensamientos(idPerfil:string,esPublico:boolean):Observable<RespuestaRemota<Array<PensamientoEntity>>>{        
+        if(!esPublico){            
             return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO_PRIVADO.toString()+`/${idPerfil}`);        
         }  
-        console.log("PUBLICOS")
-        console.log(APIGAZE.BASE + Pensamiento.PENSAMIENTO_PUBLICO.toString()+`/${idPerfil}`)
         return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO_PUBLICO.toString()+`/${idPerfil}`);
     }
     /*obtenerPensamientoPublicos(idPerfil:string):Observable<RespuestaRemota<Array<PensamientoEntity>>>{
@@ -37,7 +34,7 @@ export class PensamientoService {
     crearPensamiento(data:PensamientoEntity):Observable<RespuestaRemota<PensamientoEntity>>{
         return this.http.post<RespuestaRemota<PensamientoEntity>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString(),data);
     }
-    actualizarPensamiento(data:object):Observable<RespuestaRemota<string>> {
+    actualizarPensamiento(data:PensamientoEntity):Observable<RespuestaRemota<string>> {
         return this.http.put<RespuestaRemota<string>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString(),data);
 
     }

@@ -3,11 +3,27 @@
 .letra{
     font-size: x-small;
 }
-.cargandoCompleto{
-    //height:$altura-pagina;    
-    background-color: $tranparencia-base;  
+.cuerpoPensamiento{      
+    width: $ancho-pagina;
+    height: calcular(131.8643);    
+    padding: $interlineado-8 0 0 0;
+    box-sizing: border-box;   
 }
-.cuerpoPensamiento{
-    //height: $cuerpo-default-alto;
-    background-color: aliceblue;
+.divIndicacionesPensamientos{
+    //width: $ancho-pagina - (($espacio-0658 - $espacio-267) * 2);    
+    width: 100%;
+    //width: calc(100vh - #{$espacio-267});
+    box-sizing: border-box;
+}
+.centrar2{
+    display: table-cell;
+    vertical-align: middle;
+}
+.div316{
+    width: 100%;
+    height: $espacio-0316;
+}
+.div178{
+    width: 100%;
+    height: $interlineado-2;
 }
