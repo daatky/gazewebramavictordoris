@@ -88,7 +88,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public confDialogoMasPerfiles: ConfiguracionDialogoInline // Dialogo compartido
   public confDialogoHibernar: DialogoCompartido // Dialogo de hibernar
   public confDialogoEliminar: DialogoCompartido // Dialogo de eliminar
-  
+
   public noCrearMasPerfiles: boolean // False aparece boton no, true aparece boton payment
   public registroForm: FormGroup // Formulario de registro
   public inputsForm: Array<InputCompartido> // Configuracion de los inputs
@@ -98,6 +98,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public posPerfil: number // Posicion del perfil en la lista
   public perfil: PerfilModel // Model del perfil
   public perfilCreado: boolean // Indica que el perfil ha sido creado y se debe mostrar la info de pago
+
+  // Utils
+  public validadorExternoDelFormulario: boolean
+  public validadoresEjecutados: boolean
 
   constructor(
     private translateService: TranslateService,
@@ -115,6 +119,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.perfilCreado = false
     this.noCrearMasPerfiles = false
     this.inputsForm = []
+    // this.validadorExternoDelFormulario = true
+    this.validadoresEjecutados = false
   }
 
   ngOnInit(): void {
@@ -268,7 +274,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar AppBar
   configurarAppBar() {
     const infoAppBar = this.registroService.obtenerParametrosDelAppBarSegunAccionEntidad(this.codigoPerfil, this.accionEntidad)
-    
+
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
@@ -293,8 +299,29 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Configurar inputs
-  configurarInputs() {
+  async configurarInputs() {
     this.inputsForm = this.registroService.configurarInputsDelFormulario(this.registroForm)
+    if (this.inputsForm.length > 0) {
+      this.inputsForm[0].placeholder = await this.translateService.get('nombreContacto').toPromise()
+      this.inputsForm[1].placeholder = await this.translateService.get('nombre').toPromise()
+      this.inputsForm[2].placeholder = await this.translateService.get('email').toPromise()
+      this.inputsForm[3].placeholder = await this.translateService.get('contrasena').toPromise()
+      this.inputsForm[4].placeholder = await this.translateService.get('direccion').toPromise()
+
+      this.inputsForm.forEach((input, pos) => {
+        if (pos === 0) {
+          input.validarCampo = {
+            validar: true,
+            validador: (data: any) => this.validarCampoEnInput(data, 0)
+          }
+        } else if (pos === 2) {
+          input.validarCampo = {
+            validar: true,
+            validador: (data: any) => this.validarCampoEnInput(data, 1)
+          }
+        }
+      })
+    }
   }
 
   // Configurar boton
@@ -325,7 +352,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar album perfil
   async configurarAlbumPerfil() {
     const album: AlbumModel = this.registroService.obtenerPortadaAlbumSegunTipoDelAlbum(this.perfil, CodigosCatalogoTipoAlbum.PERFIL)
-    console.log(album)
     const infoPortada = this.registroService.definirDataItemSegunPortadaAlbum(album)
 
     this.confItemCir = {
@@ -389,7 +415,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar selectores
   configurarSelectorPais() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
 
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
@@ -420,7 +446,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarBuscadorLocalidades() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones, false)
     }
@@ -712,7 +738,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       ]
     }
-    this.confDialogoEliminar.descripcion = await  this.translateService.get('suprimirPerfil').toPromise()
+    this.confDialogoEliminar.descripcion = await this.translateService.get('suprimirPerfil').toPromise()
     this.confDialogoEliminar.listaAcciones[0].text = await this.translateService.get('si').toPromise()
     this.confDialogoEliminar.listaAcciones[1].text = await this.translateService.get('no').toPromise()
   }
@@ -740,7 +766,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
           this.selectorPaises.mostrarError('Problemas al obtener los datos solicitados')
         }
       }, error => {
-        console.log(error)
         this.selectorPaises.mostrarError('Lo sentimos, ocurrio un error al obtener la informacion')
       })
   }
@@ -866,24 +891,70 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cuentaNegocio.guardarUsuarioEnSessionStorage(usuario)
   }
 
-  // submit para el registro
-  submitRegistro() {
-    let error = true
-    this.botonSubmit.enProgreso = true
-    if (this.registroForm.valid) {
-      if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
-        if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
-          this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO)
-          this.perfilCreado = true
-          this.botonSubmit.enProgreso = false
-          error = false
-        }
+  // Validar campo
+  validarCampoEnInput(data: any, tipo: number) {
+    if (data.texto && data.id && data.texto.length >= 3) {
+      // this.validadoresEjecutados = true
+      if (tipo === 0) {
+        this.perfilNegocio.validarNombreDeContactoUnico(data.texto).subscribe(estado => {
+          this.validadoresEjecutados = true
+        }, error => {
+          this.validadoresEjecutados = false
+          this.inputsForm.forEach(item => {
+            if (item.id === data.id) {
+              item.errorPersonalizado = 'Nombre de contacto no disponible'
+            }
+          })
+        })
+      }
+
+      if (tipo === 1) {
+        this.cuentaNegocio.validarEmailUnico(data.texto).subscribe(estado => {
+          this.validadoresEjecutados = true
+        }, error => {
+          this.validadoresEjecutados = false
+          this.inputsForm.forEach(item => {
+            if (item.id === data.id) {
+              item.errorPersonalizado = 'Email ya registrado'
+            }
+          })
+        })
       }
     }
+  }
 
-    if (error) {
-      this.botonSubmit.enProgreso = false
-      this.toast.cambiarStatusToast('Existen campos incompletos', false, true, true)
+  // submit para el registro
+  submitRegistro() {
+    if (!this.validadoresEjecutados) {
+      if (this.inputsForm.length > 0) {
+        this.validarCampoEnInput({
+          id: this.inputsForm[0].id,
+          texto: this.inputsForm[0].data.value
+        }, 0)
+        this.validarCampoEnInput({
+          id: this.inputsForm[2].id,
+          texto: this.inputsForm[2].data.value
+        }, 1)
+      }
+    } else {
+      let error = true
+      this.botonSubmit.enProgreso = true
+
+      if (this.registroForm.valid) {
+        if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
+          if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
+            this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO)
+            this.perfilCreado = true
+            this.botonSubmit.enProgreso = false
+            error = false
+          }
+        }
+      }
+
+      if (error) {
+        this.botonSubmit.enProgreso = false
+        this.toast.abrirToast('Existen campos incompletos o mal llenados')
+      }
     }
   }
 

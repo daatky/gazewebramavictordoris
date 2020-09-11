@@ -239,7 +239,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       mostrarToast: false,
       mostrarLoader: false,
       cerrarClickOutside: false,
-      texto: ''
+      texto: '',
+      intervalo: 3,
+      bloquearPantalla: false,
     }
   }
 
@@ -423,7 +425,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemsAlbum[pos].descripcion = data.descripcion
       }
     }, error => {
-      this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
+      this.toast.abrirToast('Lo sentimos, ocurrio un error al guardar la imagen', false)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
         this.album.media.splice(pos, 1)
@@ -468,7 +470,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemsAlbum[pos].descripcion = data.descripcion
       }
     }, error => {
-      this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
+      this.toast.abrirToast('Lo sentimos, ocurrio un error al guardar la imagen', false)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
         this.album.media.splice(pos, 1)
@@ -480,6 +482,7 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Evento en items
   eventoEnItem(data: InfoAccionCirRec) {
+    console.warn(data)
     // Tomar Foto
     if (data.accion === AccionesItemCircularRectangular.TOMAR_FOTO) {
       this.camara.reiniciarCamara()

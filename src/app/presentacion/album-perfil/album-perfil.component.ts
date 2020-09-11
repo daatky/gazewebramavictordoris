@@ -144,6 +144,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.warn('destruyendo app')
     this.guardarAlbum()
   }
 
@@ -379,6 +380,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         data.forEach((item) => {
           if (item.catalogoArchivoDefault === CodigosCatalogoArchivosPorDefecto.ALBUM_PERFIL) {
             this.itemsAlbumPorDefecto[pos].urlMedia = item.url
+            console.warn(this.itemsAlbumPorDefecto[pos].urlMedia)
             pos += 1
           }
         })

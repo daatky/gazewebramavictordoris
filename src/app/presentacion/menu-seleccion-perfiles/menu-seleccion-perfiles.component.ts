@@ -105,8 +105,8 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: tipoPerfil.codigo,
-      onclick: () => this.navegarMenuPrincipal(tipoPerfil),
-      dobleClick: () => this.navegarCrearEditarPerfil(tipoPerfil)
+      onclick: () => this.gestionarPerfil(tipoPerfil,true),
+      dobleClick: () => this.gestionarPerfil(tipoPerfil)
     };
   }
 
@@ -116,6 +116,19 @@ export class MenuSeleccionPerfilesComponent implements OnInit {
       this.router.navigate([RutasLocales.MENU_PRINCIPAL]);
     } else {
       this.navegarCrearEditarPerfil(tipoPerfil);
+    }
+  }
+
+  gestionarPerfil(tipoPerfil: CatalogoTipoPerfilModel, irMenuPrincipal: boolean = false) {
+    if (this.perfilNegocio.conflictoCrearPerfil(tipoPerfil, this.listaTipoPerfil)) {
+      alert("perfil incompatible");
+    } else {
+      if (irMenuPrincipal) {
+        this.navegarMenuPrincipal(tipoPerfil)
+      } else {
+        this.navegarCrearEditarPerfil(tipoPerfil)
+      }
+
     }
   }
 

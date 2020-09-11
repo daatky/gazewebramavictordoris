@@ -2,7 +2,8 @@
 <div
     *ngIf="configuracion.inputPreview.mostrar"
     class="inputSelector"
-    (tap)="clickInputSelector()"
+    gestorEventos
+    (eventoTap)="clickInputSelector()"
 >
     <input
         type="text"
@@ -18,7 +19,8 @@
         'modal': true,
         'mostrar': configuracion.mostrarModal
     }"
-    (tap)="eventoModal($event.target)"
+    gestorEventos
+    (eventoTap)="eventoModal($event.target)"
 >
     <div class="caja sombraCaja">
         <div
@@ -64,7 +66,8 @@
                         'activo': (configuracion.seleccionado.codigo === item.codigo)
                     }"
                     *ngFor="let item of configuracion.elegibles"
-                    (tap)="elegirPais(item.codigo, item.nombre)"
+                    gestorEventos
+                    (eventoTap)="elegirPais(item.codigo, item.nombre)"
                 >
                     <p
                         [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 

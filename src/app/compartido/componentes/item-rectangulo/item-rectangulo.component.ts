@@ -47,17 +47,6 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      // Inicializar Eventos Tap y Doble Tap
-      const canvas = document.getElementById("itemRectangularCanvas" + this.configuracion.idInterno) as HTMLElement
-      if (canvas) {
-        const gestor = this.itemMetodos.inicializarEventosDeTapPersonalizados(canvas)
-        gestor.on('tap', () => {
-          this.eventoClick()
-        })
-        gestor.on('dobletap', () => {
-          this.eventoDobleClick()
-        })
-      }
     })
   }
 
@@ -88,7 +77,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   }
 
   // Se ejecuta cuando se dispara un evento de click en el item
-  eventoClick() {
+  tap() {
     try {
       // Si el item no tiene eventos
       if (!this.configuracion.activarClick || this.configuracion.mostrarLoader) {
@@ -140,7 +129,6 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
             this.confModalOrigenFoto.mostrar = true
             return
           }
-
           // Por defecto cambia a modo preview para editar la descripcion
           this.infoAccion = {
             accion: AccionesItemCircularRectangular.CAMBIAR_A_MODO_ALBUM_PREVIEW_ADMIN,
@@ -190,7 +178,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
           informacion: this.configuracion.id
         }
         
-        this.configuracion.mostrarIconoExpandirFoto = false
+        // this.configuracion.mostrarIconoExpandirFoto = false
         this.configuracion.mostrarCapaImagenSeleccionadaConBorde = true
         this.configuracion.eventoEnItem(this.infoAccion)
         return
@@ -201,7 +189,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   }
 
   // Se ejecuta cuando se dispara un evento de doble click en el item
-  eventoDobleClick() {
+  dobletap() {
     try {
       // Si el item no tiene eventos
       if (!this.configuracion.activarDobleClick || this.configuracion.mostrarLoader) {
@@ -245,7 +233,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   }
   
   // Se ejecuta cuando se produce un evento de click largo en el item
-  eventoClickLargo() {
+  press() {
     try {
       // Si el item no tiene eventos
       if (!this.configuracion.activarLongPress || this.configuracion.mostrarLoader) {
@@ -312,7 +300,7 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onImageLoad(evt:any) {
+  siImagenEstaCargada(evt:any) {
     if (evt && evt.target) {
       const x = evt.srcElement.x
       const y = evt.srcElement.y

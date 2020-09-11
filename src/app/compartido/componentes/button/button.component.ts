@@ -24,58 +24,43 @@ Se creo dos metodos estaticos para la creacion de los botones estandar de un dia
 })
 export class ButtonComponent implements OnInit {
   @Input() botonCompartido: BotonCompartido
-  @ViewChild('button', { static: false })
-  private buttonElemento: ElementRef
   public tipoBoton = TipoBoton //La referencia esta siendo utilizado para un ngswitch
-  public test = TamanoDeTextoConInterlineado
   texto: Promise<string>;
 
   constructor
     (
-      private render: Renderer2,
       private internacionalizacionNegocio: InternacionalizacionNegocio,
   ) {
 
   }
 
   ngOnInit(): void {
-    if (this.botonCompartido.text) {
-      this.texto = this.internacionalizacionNegocio.obtenerTextoLlave(this.botonCompartido.text);
-    }
-  }
-
-  ngAfterViewInit() {
-    if (!this.botonCompartido.enProgreso) {
-      this.definirEstilo();
-    }
 
   }
 
-
-  definirEstilo() {
-    if (this.botonCompartido.tipoBoton === TipoBoton.TEXTO) {
-      this.render.addClass(this.buttonElemento.nativeElement, "buttonBase")
-
-      this.definirTamanoLetra(this.botonCompartido.tamanoTexto);
-      if (this.botonCompartido.text.length <= 4) { //Botones ok yes, no    
-        this.render.addClass(this.buttonElemento.nativeElement, "botonCorto")
-
-      } else { //Botones como submit, publish 
-        this.render.addClass(this.buttonElemento.nativeElement, "botonLargo")
+  obtenerTexto() {
+    if (this.botonCompartido) {
+      if (this.botonCompartido.text) {
+        return this.internacionalizacionNegocio.obtenerTextoSincrono(this.botonCompartido.text);
       }
-      this.definirColor(this.botonCompartido.colorTexto);
     }
-  }
-  definirColor(color: ColorTextoBoton) {
-    this.render.addClass(this.buttonElemento.nativeElement, color.toString())
+    return "";
+
   }
 
-  definirTamanoLetra(tamano: TamanoDeTextoConInterlineado) {
-    this.render.addClass(this.buttonElemento.nativeElement, tamano.toString())
-  }
 
   execute() {
     this.botonCompartido.ejecutar();
+  }
+
+  obtenerEstilosBoton() {
+    return {
+      'buttonBase': true,
+      'botonCorto': this.botonCompartido.text.length <= 4,
+      'botonLargo': this.botonCompartido.text.length > 4,
+      [this.botonCompartido.colorTexto]: true,
+      [this.botonCompartido.tamanoTexto]: true
+    }
   }
 
   static crearBotonAfirmativo(funcion: Function): BotonCompartido {

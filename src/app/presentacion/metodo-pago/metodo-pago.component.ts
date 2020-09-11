@@ -194,18 +194,22 @@ export class MetodoPagoComponent implements OnInit {
     this.payPalConfig = {
       clientId: "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
-      createOrderOnServer: (data) =>
-        this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
+      createOrderOnServer: (data) => {
+        this.toast.abrirToast("Creando cuenta y preparando pago", true)
+        return this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
           (res) => {
             idTransaccion = res.idTransaccion;
-            console.log("se creao la cuenta y se retonor el id para confirmar")
+            this.toast.cerrarToast()
+            console.log("se creo la cuenta y se retonor el id para confirmar")
             return res.idPago
           }
         ).catch((error) => {
           console.log(error);
+          this.toast.cerrarToast()
           this.toast.abrirToast(error.toString())
           return error.toString();
-        }),
+        })
+      },
       advanced: {
         commit: "true",
         extraQueryParams: [{ name: 'disable-funding', value: 'card' }]
@@ -258,9 +262,12 @@ export class MetodoPagoComponent implements OnInit {
         email: this.pagoForm.value.email,
       }
       this.dataModalStripe.abierto = false;
+      this.toast.abrirToast("Creando cuenta y preparando pago", true)
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(
         (pagoModel: PagoModel) => {
           console.log(pagoModel, "paymentintent and custumer");
+          this.toast.cerrarToast()
+          this.toast.abrirToast("Confirmando pago", true)
           this.stripeService.confirmCardPayment(pagoModel.idPago, {
             payment_method: {
               card: this.card.element,
@@ -270,8 +277,10 @@ export class MetodoPagoComponent implements OnInit {
               },
             },
           }).subscribe((result) => {
+            this.toast.cerrarToast()
             if (result.error) {
               console.log(result.error?.message); // Mostrar un error al cleinte
+              this.toast.abrirToast(result.error?.message)
             } else {
               if (result.paymentIntent?.status === "succeeded") {
 

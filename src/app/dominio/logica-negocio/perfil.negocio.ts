@@ -209,8 +209,11 @@ export class PerfilNegocio {
         this.perfilRepository.almacenarPerfilSeleccionado(tipoPerfil.perfil);
     }
 
-    obtenerPerfilSeleccionado() :PerfilModel{
+    obtenerPerfilSeleccionado(): PerfilModel {
         return this.perfilRepository.obtenerPerfilSeleccionado();
+    }
+    validarNombreDeContactoUnico(nombreContacto: string): Observable<string> {
+        return this.perfilRepository.validarNombreDeContactoUnico(nombreContacto)
     }
 
 }

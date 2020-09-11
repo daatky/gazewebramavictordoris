@@ -2,13 +2,14 @@
 <div
     *ngIf="configuracion.inputPreview.mostrar"
     class="inputBuscador"
-    (tap)="clickInputPreview()"
+    gestorEventos
+    (eventoTap)="clickInputPreview()"
 >
     <input
         type="text"
         [placeholder]="configuracion.inputPreview.input.placeholder"
         [(ngModel)]="configuracion.inputPreview.input.valor"
-        autocomplete="disabled"
+        autocomplete="off"
         readonly="true"
     >
 </div>
@@ -18,7 +19,8 @@
         'modal': true,
         'mostrar': configuracion.mostrarModal
     }"
-    (tap)="eventoModal($event.target)"
+    gestorEventos
+    (eventoTap)="eventoModal($event.target)"
 >
     <div class="caja">
         <input
@@ -27,6 +29,7 @@
             class="buscador"
             [placeholder]="configuracion.inputBuscador.placeholder"
             [(ngModel)]="configuracion.inputBuscador.valor"
+            autocomplete="disabled"
         />
         <div
             [ngClass]="{
@@ -67,7 +70,8 @@
                     'activo': validarElegibleActivo(item.codigo)
                 }"
                 *ngFor="let item of configuracion.resultado.items; let i = index"
-                (tap)="seleccionarItem(item)"
+                gestorEventos
+                (eventoTap)="seleccionarItem(item)"
             >
                 <p
                     [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 

@@ -99,7 +99,7 @@ export class CuentaNegocio {
             )
     }
 
-    obtenerTokenAutenticacion(): Observable<string> {        
+    obtenerTokenAutenticacion(): Observable<string> {
         const tokenActual = this.repository.obtenerTokenAutenticacion()
 
         if (tokenActual) {
@@ -264,6 +264,9 @@ export class CuentaNegocio {
         this.repository.guardarTokenAutenticacion(null)
         this.repository.guardarTokenRefresh(null)
         this.repository.guardarUsuarioEnLocalStorage(null)
+    }
+    validarEmailUnico(email: string): Observable<string> {
+        return this.cuentaRepository.validarEmailUnico(email)
     }
 
 }
