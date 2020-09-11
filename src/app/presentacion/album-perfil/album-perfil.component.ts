@@ -430,7 +430,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemsAlbum[pos].urlMedia = data.principal.url
       }
     }, error => {
-      this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
+      this.toast.abrirToast( 'Lo sentimos, ocurrio un error al guardar la imagen')
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
         this.album.media.splice(pos, 1)
@@ -447,7 +447,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         this.camara.reiniciarCamara()
         this.confCamara.mostrarModal = true
       } else {
-        this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
+        this.toast.abrirToast('Has elegido el numero maximo de fotos, elimina una para poder subir otra')
       }
       return
     }
@@ -460,7 +460,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           imageFile: data.informacion.archivo[0]
         }
       } else {
-        this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
+        this.toast.abrirToast('Has elegido el numero maximo de fotos, elimina una para poder subir otra')
       }
       return
     }

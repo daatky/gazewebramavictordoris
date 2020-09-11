@@ -44,7 +44,7 @@
     >   
         <!-- Clasico -->
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.CLASSIC"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -57,7 +57,7 @@
         </p>
         <!-- Ludico -->
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.PLAYFUL"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.PLAYFUL"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -70,7 +70,7 @@
         </p>
         <!-- Sustituto -->
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -82,11 +82,11 @@
             {{ 'explicacionPerfilSustituto1' | translate }}
         </p>
         <div
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
             class="espacio-0249"
         ></div>
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.SUBSTITUTE"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -99,7 +99,7 @@
         </p>
         <!-- Grupo -->
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -111,11 +111,11 @@
             {{ 'explicacionPerfilGrupo1' | translate }}
         </p>
         <div
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
             class="espacio-0522"
         ></div>
         <p
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOLACRE, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLD, 
@@ -133,7 +133,10 @@
             'mostrar': !perfilCreado
         }"
     >
-        <form [formGroup]="registroForm" autocomplete="off">
+        <form 
+            *ngIf="registroForm"
+            [formGroup]="registroForm" autocomplete="disabled"
+        >
             <div
                 *ngFor="let item of inputsForm"
                 class="input"
@@ -156,7 +159,7 @@
     >
         <!-- Perfil clasico -->
         <div
-            *ngIf="perfil.tipoPerfil.codigo !== codigosCatalogoTipoPerfil.GROUP"
+            *ngIf="perfil && perfil.tipoPerfil.codigo !== codigosCatalogoTipoPerfil.GROUP"
             class="contenido normalProfile"
         >
             <div class="explicacion">
@@ -224,7 +227,7 @@
             </p>
         </div>
         <div
-            *ngIf="perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
+            *ngIf="perfil && perfil.tipoPerfil.codigo === codigosCatalogoTipoPerfil.GROUP"
             class="contenido grupoProfile"
         >
             <div class="explicacion">

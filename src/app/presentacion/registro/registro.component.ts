@@ -88,7 +88,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public confDialogoMasPerfiles: ConfiguracionDialogoInline // Dialogo compartido
   public confDialogoHibernar: DialogoCompartido // Dialogo de hibernar
   public confDialogoEliminar: DialogoCompartido // Dialogo de eliminar
-  
+
   public noCrearMasPerfiles: boolean // False aparece boton no, true aparece boton payment
   public registroForm: FormGroup // Formulario de registro
   public inputsForm: Array<InputCompartido> // Configuracion de los inputs
@@ -149,35 +149,36 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.configurarPortada()
-      this.buscadorLocalidades.pais = this.registroService.obtenerPaisSeleccionadoEnElPerfil(this.perfil)
+      if (this.buscadorLocalidades && this.selectorPaises) {
+        this.buscadorLocalidades.pais = this.registroService.obtenerPaisSeleccionadoEnElPerfil(this.perfil)
+        // Suscribirse a eventos de click en el selector de pais
+        this.selectorPaises.evento.subscribe((info: InfoAccionSelector) => {
+          if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
+            this.abrirSelectorPaises()
+            return
+          }
+          if (info.accion === AccionesSelector.SELECCIONAR_ITEM) {
+            console.log('Seleccionar item: ', info)
+            this.buscadorLocalidades.pais = info.informacion
+            this.confBuscador.seleccionado.codigo = ''
+            this.confBuscador.seleccionado.nombre = ''
+            this.confBuscador.inputPreview.input.valor = ''
+            return
+          }
+        })
 
-      // Suscribirse a eventos de click en el selector de pais
-      this.selectorPaises.evento.subscribe((info: InfoAccionSelector) => {
-        if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
-          this.abrirSelectorPaises()
-          return
-        }
-        if (info.accion === AccionesSelector.SELECCIONAR_ITEM) {
-          console.log('Seleccionar item: ', info)
-          this.buscadorLocalidades.pais = info.informacion
-          this.confBuscador.seleccionado.codigo = ''
-          this.confBuscador.seleccionado.nombre = ''
-          this.confBuscador.inputPreview.input.valor = ''
-          return
-        }
-      })
-
-      // Suscribirse a eventos de click en el buscador de localidades
-      this.buscadorLocalidades.evento.subscribe((info: InfoAccionBuscadorLocalidades) => {
-        if (info.accion === AccionesBuscadorModal.ABRIR_BUSCADOR) {
-          this.abrirBuscadorLocalidades()
-          return
-        }
-        if (info.accion === AccionesBuscadorModal.REALIZAR_BUSQUEDA) {
-          this.buscarLocalidades(info.informacion.pais, info.informacion.query)
-          return
-        }
-      })
+        // Suscribirse a eventos de click en el buscador de localidades
+        this.buscadorLocalidades.evento.subscribe((info: InfoAccionBuscadorLocalidades) => {
+          if (info.accion === AccionesBuscadorModal.ABRIR_BUSCADOR) {
+            this.abrirBuscadorLocalidades()
+            return
+          }
+          if (info.accion === AccionesBuscadorModal.REALIZAR_BUSQUEDA) {
+            this.buscarLocalidades(info.informacion.pais, info.informacion.query)
+            return
+          }
+        })
+      }
     })
   }
 
@@ -220,42 +221,50 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Escucha para el boton de back del navegador
   @HostListener('window:popstate', ['$event'])
   onPopState(event: any) {
-    this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    if (this.perfil) {
+      this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    }
   }
 
 
   // Obtiene los parametros recibidos en la url
   obtenerParametrosUrl() {
     const { accionEntidad, codigoPerfil } = this.rutaActual.snapshot.params
-    if (accionEntidad && codigoPerfil) {
+    if ((accionEntidad && accionEntidad !== ':accionEntidad') && (codigoPerfil && codigoPerfil !== ':codigoPerfil')) {
       this.accionEntidad = accionEntidad
       this.codigoPerfil = codigoPerfil
     } else {
-      // Validar comportamiento en caso de no existir
+      console.warn('data invalida en parametros')
+      this._location.back()
     }
   }
 
   // Validar si existe el usuario
   inicializarDataUsuario() {
     this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-    switch (this.accionEntidad) {
-      case AccionEntidad.REGISTRO:
-        this.perfil = this.perfilNegocio.validarPerfilModelDelSessionStorage(this.codigoPerfil)
-        break
-      case AccionEntidad.CREAR:
-        // Crear el perfil
-        // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-        // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
-        break
-      case AccionEntidad.ACTUALIZAR:
-        // Obtener el perfil del api, segun id en codigoPerfil
-        break
-      default: break
+    console.log(this.codigoPerfil)
+    if (this.tipoPerfil) {
+      switch (this.accionEntidad) {
+        case AccionEntidad.REGISTRO:
+          this.perfil = this.perfilNegocio.validarPerfilModelDelSessionStorage(this.codigoPerfil)
+          break
+        case AccionEntidad.CREAR:
+          // Crear el perfil
+          // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
+          // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
+          break
+        case AccionEntidad.ACTUALIZAR:
+          // Obtener el perfil del api, segun id en codigoPerfil
+          break
+        default:
+          this._location.back()
+          break
+      }
     }
 
-    if (!this.tipoPerfil || !this.perfil) {
-      this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
-    }
+    // if (!this.tipoPerfil || !this.perfil) {
+    //   this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    // }
   }
 
   // Inicializar controles para el formulario
@@ -267,14 +276,16 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Accion atras appbar
   accionAtrasAppbar() {
-    this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    if (this.perfil && this.tipoPerfil) {
+      this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    }
     this._location.back()
   }
 
   // Configurar AppBar
   configurarAppBar() {
     const infoAppBar = this.registroService.obtenerParametrosDelAppBarSegunAccionEntidad(this.codigoPerfil, this.accionEntidad)
-    
+
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
@@ -415,7 +426,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar selectores
   configurarSelectorPais() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
 
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
@@ -446,7 +457,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarBuscadorLocalidades() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones, false)
     }
@@ -515,7 +526,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     const descripcion = await this.translateService.get('dialogoCrearPerfil').toPromise()
     this.confDialogoMasPerfiles.descripcion = descripcion
     // Perfiles sobrantes y boton no o boton pago
-    this.determinarPerfilesSobrantes()
+    if (this.perfil) {
+      this.determinarPerfilesSobrantes()
+    }
   }
 
   async inicializarBotonesSobrantes(
@@ -738,7 +751,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       ]
     }
-    this.confDialogoEliminar.descripcion = await  this.translateService.get('suprimirPerfil').toPromise()
+    this.confDialogoEliminar.descripcion = await this.translateService.get('suprimirPerfil').toPromise()
     this.confDialogoEliminar.listaAcciones[0].text = await this.translateService.get('si').toPromise()
     this.confDialogoEliminar.listaAcciones[1].text = await this.translateService.get('no').toPromise()
   }
@@ -811,7 +824,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     rutaAux = rutaAux.replace(':accionAlbum', accionAlbum)
     // Guardar info antes de cambiar de componente
     this.guardarInformacionPerfil(this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
-    this.router.navigateByUrl(rutaAux, { skipLocationChange: false })
+    this.router.navigateByUrl(rutaAux, { skipLocationChange: true })
   }
 
   // Eventos de click en items
@@ -926,17 +939,19 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // submit para el registro
   submitRegistro() {
     if (!this.validadoresEjecutados) {
+      console.log('entre3')
       if (this.inputsForm.length > 0) {
-        this.validarCampoEnInput({ 
+        this.validarCampoEnInput({
           id: this.inputsForm[0].id,
           texto: this.inputsForm[0].data.value
         }, 0)
-        this.validarCampoEnInput({ 
+        this.validarCampoEnInput({
           id: this.inputsForm[2].id,
           texto: this.inputsForm[2].data.value
         }, 1)
       }
     } else {
+      console.log('entre2')
       let error = true
       this.botonSubmit.enProgreso = true
 
@@ -960,8 +975,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Submit formulario
   submitFormPerfil() {
+    console.log('submit')
     switch (this.accionEntidad) {
       case AccionEntidad.REGISTRO:
+        console.log('entre')
         this.submitRegistro()
         break
       case AccionEntidad.CREAR:

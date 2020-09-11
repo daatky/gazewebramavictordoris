@@ -219,11 +219,13 @@ export class RegistroService {
         tipoAlbum: CodigosCatalogoTipoAlbum
     ) : AlbumModel {
         let portadaPerfil: AlbumModel
-        perfil.album.forEach(item => {
-            if (item && item.tipo.codigo === tipoAlbum) {
-              portadaPerfil = item
-            }
-        })
+        if (perfil && perfil.album) {
+            perfil.album.forEach(item => {
+                if (item && item.tipo.codigo === tipoAlbum) {
+                portadaPerfil = item
+                }
+            })
+        }
         return portadaPerfil
     }
 
@@ -331,7 +333,7 @@ export class RegistroService {
         perfil: PerfilModel
     ) : ItemSelector {
         let item: ItemSelector = null
-        if (perfil.direcciones && perfil.direcciones.length > 0) {
+        if (perfil && perfil.direcciones && perfil.direcciones.length > 0) {
             item = {
                 codigo: perfil.direcciones[0].localidad.pais.codigo,
                 nombre: perfil.direcciones[0].localidad.pais.nombre,
