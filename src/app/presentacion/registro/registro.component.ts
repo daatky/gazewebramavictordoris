@@ -939,7 +939,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // submit para el registro
   submitRegistro() {
     if (!this.validadoresEjecutados) {
-      console.log('entre3')
       if (this.inputsForm.length > 0) {
         this.validarCampoEnInput({
           id: this.inputsForm[0].id,
@@ -951,7 +950,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 1)
       }
     } else {
-      console.log('entre2')
       let error = true
       this.botonSubmit.enProgreso = true
 
