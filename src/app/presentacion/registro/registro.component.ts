@@ -88,7 +88,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public confDialogoMasPerfiles: ConfiguracionDialogoInline // Dialogo compartido
   public confDialogoHibernar: DialogoCompartido // Dialogo de hibernar
   public confDialogoEliminar: DialogoCompartido // Dialogo de eliminar
-  
+
   public noCrearMasPerfiles: boolean // False aparece boton no, true aparece boton payment
   public registroForm: FormGroup // Formulario de registro
   public inputsForm: Array<InputCompartido> // Configuracion de los inputs
@@ -274,7 +274,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar AppBar
   configurarAppBar() {
     const infoAppBar = this.registroService.obtenerParametrosDelAppBarSegunAccionEntidad(this.codigoPerfil, this.accionEntidad)
-    
+
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
@@ -415,7 +415,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Configurar selectores
   configurarSelectorPais() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
 
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
@@ -446,7 +446,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarBuscadorLocalidades() {
     // Definir direccion
-    let item : ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
+    let item: ItemSelector = { codigo: '', nombre: '', auxiliar: '' }
     if (this.perfil) {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones, false)
     }
@@ -738,7 +738,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       ]
     }
-    this.confDialogoEliminar.descripcion = await  this.translateService.get('suprimirPerfil').toPromise()
+    this.confDialogoEliminar.descripcion = await this.translateService.get('suprimirPerfil').toPromise()
     this.confDialogoEliminar.listaAcciones[0].text = await this.translateService.get('si').toPromise()
     this.confDialogoEliminar.listaAcciones[1].text = await this.translateService.get('no').toPromise()
   }
@@ -811,7 +811,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     rutaAux = rutaAux.replace(':accionAlbum', accionAlbum)
     // Guardar info antes de cambiar de componente
     this.guardarInformacionPerfil(this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
-    this.router.navigateByUrl(rutaAux, { skipLocationChange: false })
+    this.router.navigateByUrl(rutaAux, { skipLocationChange: true })
   }
 
   // Eventos de click en items
@@ -927,11 +927,11 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   submitRegistro() {
     if (!this.validadoresEjecutados) {
       if (this.inputsForm.length > 0) {
-        this.validarCampoEnInput({ 
+        this.validarCampoEnInput({
           id: this.inputsForm[0].id,
           texto: this.inputsForm[0].data.value
         }, 0)
-        this.validarCampoEnInput({ 
+        this.validarCampoEnInput({
           id: this.inputsForm[2].id,
           texto: this.inputsForm[2].data.value
         }, 1)
