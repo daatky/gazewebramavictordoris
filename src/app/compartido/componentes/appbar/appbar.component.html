@@ -32,7 +32,9 @@
     <!-- USO_SEARCHBAR_APPBAR -->
     <div *ngIf="configuracion.usoAppBar === usoAppBar.USO_SEARCHBAR_APPBAR" class="box">
         <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.searchBarAppBar.tamanoColorFondo)"></div>
-        <div *ngIf="configuracion.searchBarAppBar.mostrarSearchBar" class="barraBuscar"></div>
+        <div *ngIf="configuracion.searchBarAppBar.configuracion.mostrar">
+            <app-buscador #buscador [data]="configuracion.searchBarAppBar.configuracion.datos"></app-buscador>
+        </div>
         <div *ngIf="configuracion.searchBarAppBar.mostrarDivBack" class="botonAtras" (tap)="clickBotonAtras()">
             <div class="icono"></div>
             <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 

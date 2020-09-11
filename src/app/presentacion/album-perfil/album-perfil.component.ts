@@ -86,9 +86,9 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private rutaActual:ActivatedRoute,
-    private variablesGlobales:VariablesGlobales,
-    public estiloDelTextoServicio:EstiloDelTextoServicio,
+    private rutaActual: ActivatedRoute,
+    private variablesGlobales: VariablesGlobales,
+    public estiloDelTextoServicio: EstiloDelTextoServicio,
     private mediaNegocio: MediaNegocio,
     private convertidorArchivos: ConvertidorArchivos,
     private generadorId: GeneradorId,
@@ -257,7 +257,12 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
-        mostrarSearchBar: true,
+        configuracion: {
+          mostrar: true,
+          datos: {
+            disable: true
+          }
+        },
         nombrePerfil: {
           mostrar: true,
           llaveTexto: this.obtenerLlaveSegunEntidadCodigo()
@@ -269,7 +274,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           llaveTexto: 'fotoPerfil'
         },
         mostrarLineaVerde: true,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100, 
+        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
       },
       accionAtras: () => {
         this.accionAtrasAppBarBack()
@@ -334,7 +339,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     return true
   }
 
-  obtenerColorCapaOpacidad(pos:number) {
+  obtenerColorCapaOpacidad(pos: number) {
     // Opacidad C
     if (pos === 0 || pos === 3) {
       return ColorCapaOpacidadItem.CAPA_OPACIDAD_C
@@ -349,7 +354,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
   configurarItemsAlbumPorDefecto() {
     let pos = 0
-    while( pos < this.cantidadItemsPorDefecto ) {
+    while (pos < this.cantidadItemsPorDefecto) {
       // Llenar item
       this.itemsAlbumPorDefecto.push(
         {
@@ -422,7 +427,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     // Subir archivo al servidor
-    this.mediaNegocio.subirMediaSimpleAlServidor( { archivo: imagen, nombre: 'imagen.jpeg' }, '1:1', '').subscribe(data => {
+    this.mediaNegocio.subirMediaSimpleAlServidor({ archivo: imagen, nombre: 'imagen.jpeg' }, '1:1', '').subscribe(data => {
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
         this.album.media[pos] = data
@@ -430,7 +435,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         this.itemsAlbum[pos].urlMedia = data.principal.url
       }
     }, error => {
-      this.toast.cambiarStatusToast( 'Lo sentimos, ocurrio un error al guardar la imagen', false, true, true )
+      this.toast.cambiarStatusToast('Lo sentimos, ocurrio un error al guardar la imagen', false, true, true)
       const pos = this.obtenerPosicionPorIdItem(idItem)
       if (pos >= 0) {
         this.album.media.splice(pos, 1)
@@ -447,7 +452,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
         this.camara.reiniciarCamara()
         this.confCamara.mostrarModal = true
       } else {
-        this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
+        this.toast.cambiarStatusToast('Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true)
       }
       return
     }
@@ -460,7 +465,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           imageFile: data.informacion.archivo[0]
         }
       } else {
-        this.toast.cambiarStatusToast( 'Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true )
+        this.toast.cambiarStatusToast('Has elegido el numero maximo de fotos, elimina una para poder subir otra', false, true, true)
       }
       return
     }
@@ -546,7 +551,7 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     return pos
   }
 
-  obtenerMediaPorIdItem(id: string) : MediaModel {
+  obtenerMediaPorIdItem(id: string): MediaModel {
     let media = null
     this.album.media.forEach((item, i) => {
       if (item._id === id) {

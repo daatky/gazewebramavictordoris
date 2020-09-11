@@ -1,1 +1,20 @@
-<p>buscador works!</p>
+<div [ngClass]="{
+    'alturaAbierto':abrir,
+    'alturaCerrado':!abrir,
+    'disable': (this.data)?this.data.disable:false
+}" class="contenedorPrincipal">
+    <div class="barraBuscar">
+        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" (focus)="focusGanado()"
+            (blur)="focusPerdido()" (keyup)="capturarPalabra($event)" [ngModel]="palabra">
+        <div *ngIf="!abrir" class="iconoLupa"></div>
+        <div *ngIf="abrir" class="iconoX"></div>
+    </div>
+
+    <div *ngIf="abrir" class="contenedorResultados">
+        <app-lista-vertical [dataLista]='listaResultados' class="centrar">
+            <div *ngFor="let item of listaResultados">
+                <p>item busqueda</p>
+            </div>
+        </app-lista-vertical>
+    </div>
+</div>
