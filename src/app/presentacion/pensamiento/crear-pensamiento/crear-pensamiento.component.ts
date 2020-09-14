@@ -46,7 +46,7 @@ export class CrearPensamientoComponent implements OnInit {
   iniciarDatos(){
 
     this.seleccionarPensamientoMostrar()        
-    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.cargarMasPensamientos()}             
+    this.dataLista={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:[],cargarMas: ()=>this.crearPensamiento()}             
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }            
     this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}    
   }
@@ -175,7 +175,7 @@ export class CrearPensamientoComponent implements OnInit {
       this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
     })
   }
-  cargarMasPensamientos(){
+  /*cargarMasPensamientos(){
     if(this.variablesGlobales.paginacionPublico.actual!=-1){
       this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:true,mostrarToast:true,texto:"Procesando ......"}
       this.pensamientoNegocio.cargarMasPensamientos(this.idPerfil,10,this.variablesGlobales.paginacionPublico.actual,this.esPrivado)
@@ -189,5 +189,5 @@ export class CrearPensamientoComponent implements OnInit {
         this.configuracionToast = {cerrarClickOutside:true,mostrarLoader:false,mostrarToast:true,texto:error}
       })
     }
-  }
+  }*/
 }

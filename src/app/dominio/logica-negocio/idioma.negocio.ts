@@ -42,7 +42,8 @@ export class IdiomaNegocio {
         }else{
             return this.idiomaRepository.obtenerCatalogoIdiomas()
             .pipe(
-                map((data:Array<CatalogoIdiomaEntity>) => {                      
+                map((data:Array<CatalogoIdiomaEntity>) => {     
+                    //Para no guardar en el local storage el catalogo de idiomas vacio                 
                     if(data&&data.length>0){
                         this.idiomaRepository.guardarIdiomas(data)                 
                         return this.ordenarIdioma(data)   

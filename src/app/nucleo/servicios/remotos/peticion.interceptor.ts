@@ -30,8 +30,9 @@ export class PeticionInterceptor implements HttpInterceptor {
             //api key de autorizacion para consumo del api            
             req = req.clone({
                 headers: req.headers.set('apiKey', apiKey)
-            });
+            });            
         }
+
 
         if (!req.url.startsWith("http") || req.url == (APIGAZE.BASE.toString() + Cuenta.REFRESCAR_TOKEN.toString())) {
             return next.handle(req).pipe(map((event: HttpEvent<any>) => {
@@ -57,8 +58,8 @@ export class PeticionInterceptor implements HttpInterceptor {
             if (token) {
                 //Token de autenticacion
                 req = req.clone({
-                    headers: req.headers.set('Authorization', `Bearer ${token}`)
-                });
+                    headers: req.headers.set('Authorization', `Bearer ${token}`)                    
+                });                
             }
 
             return next.handle(req).pipe(

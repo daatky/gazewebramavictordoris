@@ -35,10 +35,13 @@ export class CuentaNegocio {
             .pipe(
                 map(data => {
                     console.log(data)
-                    this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
-                    this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
-                    this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
-                    return data.usuario
+                    if(data){
+                        this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
+                        this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
+                        this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
+                        return data.usuario
+                    }
+                    return null
                 }),
                 catchError(err => {
                     return throwError(err)
