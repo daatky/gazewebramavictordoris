@@ -35,7 +35,8 @@ export class MisContactosComponent implements OnInit {
     this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
     this.prepararDatosBuscador();
     this.appBar;
-    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
+    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());    
+    /*
     this.resultados = [{
       accion: () => { },
       icono: "",
@@ -43,6 +44,7 @@ export class MisContactosComponent implements OnInit {
       titulo: "",
       tipo: CodigosCatalogoEntidad.PERFIL
     }]
+    */
   }
 
   prepararDatosBuscador() {
@@ -54,9 +56,14 @@ export class MisContactosComponent implements OnInit {
     }
   }
 
+  buscarContactos(palabra: string) {
+    this.perfilNegocio.buscarPerfiles(palabra)
+  }
+
   capturarPalabrasBuscador(palabra: string) {
     console.log("la palabra es ", palabra)
-    this.appBar.buscador.mostrarResultados(this.resultados);
+    this.buscarContactos(palabra)
+    //this.appBar.buscador.mostrarResultados(this.resultados);    
   }
 
   reitentarBusqueda() {

@@ -11,9 +11,27 @@
     </div>
 
     <div *ngIf="abrir" class="contenedorResultados">
-        <app-lista-vertical [dataLista]='listaResultados' class="centrar">
+        <app-lista-vertical [dataLista]='dataLista' class="centrar">
             <div *ngFor="let item of listaResultados">
-                <p>item busqueda</p>
+                <div [ngSwitch]="item.tipo">
+                    <div *ngSwitchCase="tipo.NOTICIA">
+                        <p>Agregar diseno noticia</p>
+                    </div>
+                    <div *ngSwitchCase="tipo.PROYECTO">
+                        <p>Agregar diseno proyecto</p>
+                    </div>
+
+                    <div *ngSwitchCase="tipo.PERFIL">
+                        <p>
+                            {{item.titulo}}
+                        </p>
+                        <p>
+                            {{item.subtitulo}}
+                        </p>
+                    </div>
+
+                </div>
+
             </div>
         </app-lista-vertical>
     </div>

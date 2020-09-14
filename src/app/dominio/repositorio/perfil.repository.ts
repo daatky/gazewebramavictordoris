@@ -16,6 +16,7 @@ import { PerfilModel } from '../modelo/perfil.model';
 })
 export class PerfilRepository {
 
+
     constructor(
         protected http: HttpClient,
         private perfilServicieRemoto: PerfilServiceRemoto,
@@ -69,7 +70,7 @@ export class PerfilRepository {
     obtenerPerfilSeleccionado(): PerfilModel {
         return this.localStorage.obtenerPerfilSeleccionado();
     }
-    eliminarVariableStorage(llave:string){
+    eliminarVariableStorage(llave: string) {
         this.localStorage.eliminarVariableStorage(llave)
     }
 
@@ -83,6 +84,17 @@ export class PerfilRepository {
                     return throwError(err)
                 })
             )
+    }
+
+    buscarPerfiles(palabra: string, limite: number, pagina: number): Observable<PerfilModel[]> {
+        return this.perfilServicieRemoto.buscarPerfiles(palabra, limite, pagina).pipe(
+            map(data => {
+                return data.respuesta.datos
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
     }
 
 }

@@ -8,9 +8,10 @@
     width: $ancho-6920;
 }
 .listaScrollPensamientoGestionar {
-    height: calcular(131.8643) - calcular(6.84) - (calcular(131.8643) - calcular(87.85) + calcular(6.84)) - $letra-3 - ($espacio-0316*2) - ($letra-1*2) - ($interlineado-1*2) - $interlineado-2 - calcular(0.78);
+    height: calcular(131.8643) - calcular(6.84) - (calcular(131.8643) - calcular(87.85) + calcular(6.84)) - $letra-3 -
+        ($espacio-0316 * 2) - ($letra-1 * 2) - ($interlineado-1 * 2) - $interlineado-2 - calcular(0.78);
     overflow-y: auto;
-//    word-break: break-all;
+    //    word-break: break-all;
 }
 
 .listaScrollMenuPrincipal {
@@ -25,4 +26,15 @@
     align-items: center;
     justify-content: center;
     flex-flow: column;
+}
+.buscador {
+    background-color: transparent;
+    height: calc(100vh - #{$alto-barra-busqueda + $espacio-267 + $espacio-326 + ($espesor-borde-barra-buscar * 2)});
+    width: $ancho-pagina;
+}
+
+.centralItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

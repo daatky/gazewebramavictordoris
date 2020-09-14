@@ -15,6 +15,7 @@ export class BuscadorComponent implements OnInit {
   listaResultados: ItemResultadoBusqueda[];
   dataLista: DatosLista;
   palabra: string
+  tipo = CodigosCatalogoEntidad
 
 
   constructor() {
@@ -66,7 +67,7 @@ export class BuscadorComponent implements OnInit {
     this.dataLista = {
       cargando: false,
       reintentar: this.data ? this.data.reintentar : () => { },
-      tamanoLista: TamanoLista.TIPO_PERFILES
+      tamanoLista: TamanoLista.BUSCADOR
     }
   }
 

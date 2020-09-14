@@ -18,6 +18,7 @@ import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 })
 export class PerfilNegocio {
 
+
     constructor(
         private perfilRepository: PerfilRepository,
         private cuentaNegocio: CuentaNegocio,
@@ -42,6 +43,14 @@ export class PerfilNegocio {
                 )
         }
         //Se debe llenar el perfil con los datos de cuenta. 
+    }
+
+    buscarPerfiles(palabra: string): Observable<PerfilModel[]> {
+        let limite: 5
+        let pagina: 1;
+
+        return this.perfilRepository.buscarPerfiles(palabra, limite, pagina)
+
     }
 
     obtenerCatalogoTipoPerfilConPerfil(): Observable<CatalogoTipoPerfilModel[]> {

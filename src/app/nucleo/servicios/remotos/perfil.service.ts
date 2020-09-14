@@ -17,8 +17,14 @@ export class PerfilServiceRemoto {
         return this.http.get<RespuestaRemota<CatalogoTipoPerfilEntity[]>>(APIGAZE.BASE + Catalogo.TIPO_PERFIL.toString());
     }
 
-    validarNombreDeContactoUnico(nombreContacto: string) : Observable<RespuestaRemota<string>> {
+    validarNombreDeContactoUnico(nombreContacto: string): Observable<RespuestaRemota<string>> {
         return this.http.get<RespuestaRemota<string>>(APIGAZE.BASE + Perfiles.NOMBRE_CONTACTO_UNICO + '/' + nombreContacto)
+    }
+
+    buscarPerfiles(palabra: string, limite: number, pagina: number) {
+
+        return this.http.get<RespuestaRemota<string>>(APIGAZE.BASE + Perfiles.BUSCAR_PERFILES + '/' + palabra + '/' + limite + '/' + pagina)
+
     }
 
 }
