@@ -10,6 +10,8 @@ import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { DataBuscador } from 'src/app/compartido/componentes/buscador/buscador.component';
 import { ItemResultadoBusqueda } from "../../dominio/modelo/item-resultado-busqueda"
 import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+import { pipe } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mis-contactos',
@@ -35,7 +37,7 @@ export class MisContactosComponent implements OnInit {
     this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
     this.prepararDatosBuscador();
     this.appBar;
-    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());    
+    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
     /*
     this.resultados = [{
       accion: () => { },
@@ -57,7 +59,16 @@ export class MisContactosComponent implements OnInit {
   }
 
   buscarContactos(palabra: string) {
+    this.appBar.buscador.mostrarProgreso(true);
+
     this.perfilNegocio.buscarPerfiles(palabra)
+      .subscribe((res: PerfilModel[]) => {
+        console.log(res)
+        this.appBar.buscador.mostrarResultados<PerfilModel>(res, CodigosCatalogoEntidad.PERFIL);
+      }, error => {
+        this.appBar.buscador.mostrarError(error)
+        console.log(error)
+      })
   }
 
   capturarPalabrasBuscador(palabra: string) {

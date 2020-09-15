@@ -1,5 +1,3 @@
-<!--<div (scroll)="doSomethingOnScroll($event)" style="background-color: cornflowerblue;">-->
-<!--<div (window:scroll)="doSomethingOnWindowScroll($event)" style="width: 700px; height:20px ;background-color: cornflowerblue;">-->
 <div *ngIf="!dataLista.cargando;else mostrarCargando">
     <div *ngIf="dataLista.error==null;else mostrarError" (scroll)="cargarMas()" id="scroll"
         class="{{dataLista.tamanoLista}}">

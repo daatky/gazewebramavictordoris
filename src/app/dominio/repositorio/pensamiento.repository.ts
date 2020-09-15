@@ -4,6 +4,9 @@ import { Observable, throwError } from "rxjs";
 import { catchError, map } from 'rxjs/operators'
 import { PensamientoEntity, PensamientoMapperService } from "../entidades/pensamiento.entity";
 import { PensamientoModel } from '../modelo/pensamiento.model';
+import { HttpResponse } from '@angular/common/http';
+import { RespuestaRemota } from 'src/app/nucleo/util/respuesta';
+import { PaginacionModel } from "../modelo/paginacion-model"
 
 
 @Injectable({
@@ -96,13 +99,15 @@ export class PensamientoRepository {
                 })
             )
     }
-    cargarMasPensamientos(idPerfil: string, limite: number, pagina: number, esPrivado: boolean): Observable<Array<PensamientoModel>> {
+    //Array<PensamientoModel>
+    cargarMasPensamientos(idPerfil: string, limite: number, pagina: number, esPrivado: boolean): Observable<PaginacionModel<PensamientoModel>> {
         return this.pensamientoService.cargarMasPensamientos(idPerfil, limite, pagina, esPrivado)
             .pipe(
-                map(data => {
-                    console.log(data)
-                    //return data.respuesta.datos
-                    return this.pensamientoMapperService.transform(data.respuesta.datos);
+                map((data:HttpResponse<RespuestaRemota<PensamientoEntity[]>>) => {
+                    let cargarMas= data.headers.get("proximaPagina")=="true"    
+                    let paginas:PaginacionModel<PensamientoModel>={proximaPagina:cargarMas,lista:this.pensamientoMapperService.transform(data.body.respuesta.datos)}
+                   // return this.pensamientoMapperService.transform(data.body.respuesta.datos);
+                   return paginas
                 }),
                 catchError(err => {
                     console.log(err)

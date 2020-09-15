@@ -3,6 +3,14 @@ import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos
 import { DatosLista } from '../../diseno/modelos/datos-lista.interface';
 import { TamanoLista } from '../../diseno/enums/tamano-lista.enum';
 import { ItemResultadoBusqueda } from "../../../dominio/modelo/item-resultado-busqueda"
+import { Subject } from 'rxjs/internal/Subject';
+import { Observable } from 'rxjs/internal/Observable';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/internal/operators/debounceTime';
+import { filter } from 'rxjs/operators';
+import { PerfilModel, PerfilModelMapperResultadoBusqueda } from "../../../dominio/modelo/perfil.model"
+import { ProyectoModelMapperResultadoBusqueda } from "../../../dominio/modelo/proyecto.model";
+import { NoticiaModelMapperResultadoBusqueda } from "../../../dominio/modelo/noticia.model";
 
 @Component({
   selector: 'app-buscador',
@@ -16,16 +24,25 @@ export class BuscadorComponent implements OnInit {
   dataLista: DatosLista;
   palabra: string
   tipo = CodigosCatalogoEntidad
+  controlBuscador;
 
 
-  constructor() {
+  constructor
+    (
+      private perfilModelMapperResultadoBusqueda: PerfilModelMapperResultadoBusqueda,
+      private proyectoModelMapperResultadoBusqueda: ProyectoModelMapperResultadoBusqueda,
+      private noticiaModelMapperResultadoBusqueda: NoticiaModelMapperResultadoBusqueda
+
+    ) {
     this.abrir = false
     this.palabra = ''
     this.listaResultados = [];
+    this.controlBuscador = new FormControl();
   }
 
   ngOnInit(): void {
     this.preperarLista()
+    this.capturarPalabra()
   }
 
   focusPerdido() {
@@ -55,12 +72,14 @@ export class BuscadorComponent implements OnInit {
     }
   }
 
-  capturarPalabra(event: any) {
-    this.palabra = event.target.value;
-    console.log("buscando", this.palabra)
-    if (this.data) {
+  capturarPalabra() {
+    this.controlBuscador.valueChanges.pipe(
+      debounceTime(1000),
+      filter(data => data != "")
+    ).subscribe(data => {
+      this.palabra = data
       this.data.capturarPalabra(this.palabra)
-    }
+    });
   }
 
   preperarLista() {
@@ -76,19 +95,36 @@ export class BuscadorComponent implements OnInit {
   }
 
   mostrarError(error: string) {
+    this.dataLista.cargando = false;
     this.dataLista.error = error;
   }
 
-  mostrarResultados(items: ItemResultadoBusqueda[], reiniciar: boolean = false) {
+  mostrarResultados<T>(items: T[], entidad: CodigosCatalogoEntidad, reiniciar: boolean = false) {
+    let resultadoMapeado = this.prepararDatos(items, entidad);
     if (reiniciar) {
-      this.listaResultados = items
+      this.listaResultados = []
+      this.listaResultados.push(...resultadoMapeado)
     } else {
-      this.listaResultados.push(...items)
+      this.listaResultados.push(...resultadoMapeado)
     }
     this.mostrarProgreso(false);
   }
 
+  prepararDatos(items: any[], entidad: CodigosCatalogoEntidad): ItemResultadoBusqueda[] {
+    switch (entidad) {
+      case CodigosCatalogoEntidad.PERFIL: return this.perfilModelMapperResultadoBusqueda.transform(items);
+      case CodigosCatalogoEntidad.PROYECTO: return this.proyectoModelMapperResultadoBusqueda.transform(items);
+      case CodigosCatalogoEntidad.NOTICIA: return this.noticiaModelMapperResultadoBusqueda.transform(items);
+      default: return null;
+    }
+
+  }
+
 }
+
+
+
+
 
 export interface DataBuscador {
   placeholder?: string,

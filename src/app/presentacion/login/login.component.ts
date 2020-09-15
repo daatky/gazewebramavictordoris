@@ -85,11 +85,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginForm.valid) {  
       this.cuentaNegocio.iniciarSesion(this.loginForm.value.email,this.loginForm.value.contrasena)
       .subscribe(async res=>{
-        //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
-        this.botonSubmit = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('enviar'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.iniciarSesion() }  
-        console.log(res)
-        this.loginForm.reset()
-        this.navegarmenuSeleccionarPerfiles();        
+        this.botonSubmit.enProgreso=false
+        if(res){          
+          console.log(res)
+          this.loginForm.reset()
+          this.navegarmenuSeleccionarPerfiles();      
+        }else{
+          this.toast.abrirToast(await this.internacionalizacionNegocio.obtenerTextoLlave('errorInesperado'))
+        }
       },error=>{        
         this.botonSubmit.enProgreso=false                
         this.toast.cerrarToast()
@@ -97,7 +100,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         console.log(error)
       })
     } else {
-      //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}
       this.botonSubmit.enProgreso=false
       this.inputEmail.error = true
       this.inputContrasena.error = true

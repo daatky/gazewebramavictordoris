@@ -7,7 +7,12 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "qa": "ng serve --configuration=qa",
+    "leo": "ng serve --configuration=leo",
+    "marvin": "ng serve --configuration=marvin",
+    "danny": "ng serve --configuration=danny",
+    "byron": "ng serve --configuration=byron"
   },
   "private": true,
   "dependencies": {

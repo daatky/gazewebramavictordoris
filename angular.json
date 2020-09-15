@@ -35,6 +35,46 @@
             "scripts": []
           },
           "configurations": {
+            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
+            },
+            "marvin": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.marvin.ts"
+                }
+              ]
+            },
+            "leo": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.leo.ts"
+                }
+              ]
+            },
+            "byron": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.byron.ts"
+                }
+              ]
+            },
+            "danny": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.danny.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -76,6 +116,21 @@
           "configurations": {
             "production": {
               "browserTarget": "gazelookweb:build:production"
+            },
+            "qa": {
+              "browserTarget": "gazelookweb:build:qa"
+            },
+            "leo": {
+              "browserTarget": "gazelookweb:build:leo"
+            },
+            "marvin": {
+              "browserTarget": "gazelookweb:build:marvin"
+            },
+            "danny": {
+              "browserTarget": "gazelookweb:build:danny"
+            },
+            "byron": {
+              "browserTarget": "gazelookweb:build:byron"
             }
           }
         },

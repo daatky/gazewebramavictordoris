@@ -4,8 +4,8 @@
     'disable': (this.data)?this.data.disable:false
 }" class="contenedorPrincipal">
     <div class="barraBuscar">
-        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" (focus)="focusGanado()"
-            (blur)="focusPerdido()" (keyup)="capturarPalabra($event)" [ngModel]="palabra">
+        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" [formControl]='controlBuscador' (focus)="focusGanado()"
+            (blur)="focusPerdido()" [ngModel]="palabra">
         <div *ngIf="!abrir" class="iconoLupa"></div>
         <div *ngIf="abrir" class="iconoX"></div>
     </div>

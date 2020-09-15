@@ -23,9 +23,9 @@ export class InternacionalizacionService {
     }   
     //Para los input me devuelve la traduccion estatica  
     obtenerTextoSincrono(llave:string,objeto?:Object):string{
-        if(objeto) {
+        /*if(objeto) {
             return this.translateService.instant(llave,objeto)
-        }
-        return this.translateService.instant(llave)
+        }*/
+        return this.translateService.instant(llave,objeto)
     }
 }

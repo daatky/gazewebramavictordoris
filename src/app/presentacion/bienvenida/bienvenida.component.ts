@@ -12,6 +12,7 @@ import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/ta
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { Router } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-bienvenida',
@@ -32,17 +33,18 @@ export class BienvenidaComponent implements OnInit {
   constructor(
     private globales: VariablesGlobales,
     private internacionalizacionNegocio: InternacionalizacionNegocio,
-    private router: Router
+    private router: Router,
+    private _location: Location,
   ) {
     this.cargarDatos()
   }
 
   ngOnInit(): void {
   }
-  async cargarDatos() {
+  cargarDatos() {
     this.configuracionLinea1 = { ancho: AnchoLineaItem.ANCHO6382, espesor: EspesorLineaItem.ESPESOR071, colorFondo: ColorFondoLinea.FONDOLINEAVERDE }
     this.configuracionLinea2 = { ancho: AnchoLineaItem.ANCHO6916, espesor: EspesorLineaItem.ESPESOR071, colorFondo: ColorFondoLinea.FONDOLINEAVERDE }
-    this.botonEnter = { text: await this.internacionalizacionNegocio.obtenerTextoLlave('ingrese'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.navegarMenuPrincipal() }
+    this.botonEnter = { text: this.internacionalizacionNegocio.obtenerTextoSincrono('ingrese'), tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.navegarMenuPrincipal() }
   }
   navegarMenuPrincipal() {
     this.router.navigate([RutasLocales.MENU_PRINCIPAL]);    
@@ -55,6 +57,10 @@ export class BienvenidaComponent implements OnInit {
       this.portadaGazeComponent.reDibujar({ tamano: TamanoPortadaGaze.PORTADACOMPLETA, espacioDerecha: true })
     })
   }
+    // Eventos de click
+    clickBotonAtras() {
+        this._location.back();
+    }    
   async cambiarIdioma() {
     this.botonEnter.text = await this.internacionalizacionNegocio.obtenerTextoLlave('ingrese')
   }

@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpResponse } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Pensamiento } from './rutas/pensamientos.enum';
 import { RespuestaRemota } from '../../util/respuesta';
@@ -45,13 +45,14 @@ export class PensamientoService {
         console.log(idPensamiento)
         return this.http.delete<RespuestaRemota<string>>(APIGAZE.BASE + Pensamiento.PENSAMIENTO.toString()+`/${idPensamiento}`)
     }
-    cargarMasPensamientos(idPerfil:string,limite:number,pagina:number,esPrivado:boolean):Observable<RespuestaRemota<Array<PensamientoEntity>>>{
-        //CARGAR MAS PENSAMIENTOS PRIVADOS
-        if(esPrivado){
-            return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.CARGAR_PENSAMIENTOS_PRIVADO.toString()+`/${idPerfil}/${limite}/${pagina}`);
-        
+    cargarMasPensamientos(idPerfil:string,limite:number,pagina:number,esPublico:boolean):Observable<HttpResponse<RespuestaRemota<Array<PensamientoEntity>>>>{        
+        if(esPublico){
+            console.log("VOY A REALIZAR LA PETICION PARA CARGAR MAS PENSAMIENTOS PUBLICOS")
+                    //CARGAR MAS PENSAMIENTOS PUBLICOS
+            return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.CARGAR_PENSAMIENTOS_PUBLICO.toString()+`/${idPerfil}/${limite}/${pagina}`,{observe:'response'});        
         }        
-        //CARGAR MAS PENSAMIENTOS PUBLICOS
-        return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.CARGAR_PENSAMIENTOS_PUBLICO.toString()+`/${idPerfil}/${limite}/${pagina}`);
+        console.log("VOY A REALIZAR LA PETICION PARA CARGAR MAS PENSAMIENTOS PRIVADOS")
+        //CARGAR MAS PENSAMIENTOS PRIVADOS
+        return this.http.get<RespuestaRemota<Array<PensamientoEntity>>>(APIGAZE.BASE + Pensamiento.CARGAR_PENSAMIENTOS_PRIVADO.toString()+`/${idPerfil}/${limite}/${pagina}`,{observe:'response'});
     }
 }

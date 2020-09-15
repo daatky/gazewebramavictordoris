@@ -12,6 +12,7 @@ import { CatalogoMetodoPagoEntity } from '../entidades/catalogos/catalogo-metodo
 import { CatalogoTipoPerfilEntity } from "../entidades/catalogos/catalogo-tipo-perfil.entity";
 import { PerfilRepository } from "../repositorio/perfil.repository";
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
+import { PaginacionModel } from '../modelo/paginacion-model';
 
 @Injectable({
     providedIn: 'root'
@@ -46,10 +47,17 @@ export class PerfilNegocio {
     }
 
     buscarPerfiles(palabra: string): Observable<PerfilModel[]> {
-        let limite: 5
-        let pagina: 1;
+        let limite = 5
+        let pagina = 1;
 
-        return this.perfilRepository.buscarPerfiles(palabra, limite, pagina)
+        return this.perfilRepository.buscarPerfiles(palabra, limite, pagina).pipe(
+            map((data: PaginacionModel<PerfilModel>) => {
+                return data.lista;
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
 
     }
 

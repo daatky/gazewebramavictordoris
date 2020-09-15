@@ -16,6 +16,8 @@ import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { PerfilEntity } from '../entidades/perfil.entity';
 import { EstadoModelMapperService } from './catalogos/catalogo-estado.model';
+import { ItemResultadoBusqueda } from './item-resultado-busqueda';
+import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 
 export interface PerfilModel {
     _id?: string,
@@ -62,4 +64,15 @@ export class PerfilModelMapperService extends MapedorService<PerfilModel, Perfil
         return null;
     }
 
+}
+
+@Injectable({ providedIn: 'root' })
+export class PerfilModelMapperResultadoBusqueda extends MapedorService<PerfilModel, ItemResultadoBusqueda> {
+    protected map(entity: PerfilModel): ItemResultadoBusqueda {
+        return {
+            titulo: entity.nombreContacto,
+            subtitulo: entity.nombre,
+            tipo: CodigosCatalogoEntidad.PERFIL
+        };
+    }
 }
