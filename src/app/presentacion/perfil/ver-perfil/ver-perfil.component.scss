@@ -3,3 +3,10 @@
     width: $ancho-pagina;
     height: $altura-pagina;
 }
+.divFotos{
+    padding: $interlineado-8 $interlineado-7 0 $interlineado-7;
+    width: $ancho-pagina;
+    background-color: hotpink;
+    color: honeydew;
+    box-sizing: border-box;
+}

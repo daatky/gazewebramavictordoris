@@ -8,7 +8,7 @@ export interface CapaOpacidad {
 
 export interface ItemCompartido {
     id: any, // el id puede ser la pos del elemento en la lista de items o el id de la foto por ejemplo
-    idInterno: string, // Usado para logica interna del item, es generado de forma automatica, en caso de se necesario inicializar en '', el componenete cuando se dibuja lo crea por si solo
+    idInterno?: string, // Usado para logica interna del item, es generado de forma automatica, en caso de se necesario inicializar en '', el componenete cuando se dibuja lo crea por si solo
     esVisitante: boolean, // Indica si el usuario que visualiza el item es propietario o no
     urlMedia: string, // Url de la imagen que contiene el item
     activarClick: boolean, // Indica si tiene o no evento de click
