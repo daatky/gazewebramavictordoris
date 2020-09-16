@@ -17,7 +17,6 @@ $diametro-item-grande: calcular(38.53);
     justify-content: center;
     user-select: none;
     box-sizing: border-box;
-    background: $blanco;
     touch-action: auto;
 }
 
@@ -37,6 +36,32 @@ $diametro-item-grande: calcular(38.53);
 
 }
 
+// Color de borde
+.borde-transparente {
+    border: none !important;
+}
+.borde-rojo {
+    border-color: $rojo-base !important;
+}
+.borde-azul {
+    border-color: $azul-base !important;
+}
+.borde-amarillo {
+    border-color: $amarillo-base !important;
+}
+.borde-negro {
+    border-color: $negro !important;
+}
+
+// Color de fondo
+.fondo-transparente {
+    background-color: transparent;
+}
+.fondo-blanco {
+    background-color: $blanco;
+}
+
+//  Demas estilos del item
 .itemCirculo .textoBoton {
     font-size: $letra-3;
     line-height: $letra-3;

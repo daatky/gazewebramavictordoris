@@ -50,6 +50,47 @@ $expandir-icono-margen: calcular(2.67);
     touch-action: auto;
 }
 
+.itemRectangulo.perfil {
+    width: $perfil-tamano-ancho;
+    height: $perfil-tamano-alto;
+    border: $perfil-espesor solid $negro;
+}
+
+.itemRectangulo.albumMini {
+    width: $album-mini-tamano-ancho;
+    height: $album-mini-tamano-alto;
+}
+
+.itemRectangulo.albumPreview {
+    width: $album-preview-tamano-ancho;
+    height: $album-preview-tamano-alto;
+}
+
+// Color de borde
+.borde-transparente {
+    border: none !important;
+}
+.borde-rojo {
+    border-color: $rojo-base !important;
+}
+.borde-azul {
+    border-color: $azul-base !important;
+}
+.borde-amarillo {
+    border-color: $amarillo-base !important;
+}
+.borde-negro {
+    border-color: $negro !important;
+}
+
+// Color de fondo
+.fondo-transparente {
+    background-color: transparent;
+}
+.fondo-blanco {
+    background-color: $blanco;
+}
+
 .itemRectangulo .esquina {
     display: none;
     position: absolute;
@@ -96,22 +137,6 @@ $expandir-icono-margen: calcular(2.67);
     font-weight: bold;
     text-align: center;
     user-select: none;
-}
-
-.itemRectangulo.perfil {
-    width: $perfil-tamano-ancho;
-    height: $perfil-tamano-alto;
-    border: $perfil-espesor solid $negro;
-}
-
-.itemRectangulo.albumMini {
-    width: $album-mini-tamano-ancho;
-    height: $album-mini-tamano-alto;
-}
-
-.itemRectangulo.albumPreview {
-    width: $album-preview-tamano-ancho;
-    height: $album-preview-tamano-alto;
 }
 
 // Descripcion del item

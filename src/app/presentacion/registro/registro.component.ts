@@ -51,6 +51,7 @@ import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums
 import { TipoDialogo } from 'src/app/compartido/diseno/enums/tipo-dialogo.enum'
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 import { Location } from '@angular/common'
+import { ColorDeBorde, ColorDeFondo } from 'src/app/compartido/diseno/enums/item-cir-rec-colores.enum';
 
 @Component({
   selector: 'app-registro',
@@ -509,7 +510,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       capaOpacidad: {
         mostrar: false
-      }
+      },
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_ROJO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
 
     const texto = await this.translateService.get('subirFotos').toPromise()
@@ -543,7 +547,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       capaOpacidad: {
         mostrar: false
       },
-      esBotonUpload: false
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_NEGRO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
 
     const texto = await this.translateService.get('subirFotos').toPromise()

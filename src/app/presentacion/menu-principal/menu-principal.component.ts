@@ -1,3 +1,4 @@
+import { RutasProyectos } from './../proyectos/rutas-proyectos.enum';
 import { Component, OnInit } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';

@@ -38,6 +38,7 @@ import { ColorCapaOpacidadItem } from 'src/app/compartido/diseno/enums/item-cir-
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
 import { WebcamImage } from 'ngx-webcam'
 import { Location } from '@angular/common'
+import { ColorDeBorde, ColorDeFondo } from 'src/app/compartido/diseno/enums/item-cir-rec-colores.enum';
 
 @Component({
   selector: 'app-album-general',
@@ -197,7 +198,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
           textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
           mostrarIconoExpandirFoto: false,
           mostrarCapaImagenSeleccionadaConBorde: false,
-          esBotonUpload: false
+          esBotonUpload: false,
+          colorBorde: ColorDeBorde.BORDER_TRANSPARENTE,
+          colorDeFondo: ColorDeFondo.FONDO_TRANSPARENTE,
         })
       })
       // Definir la portada
@@ -282,7 +285,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       capaOpacidad: {
         mostrar: false
       },
-      esBotonUpload: false
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_NEGRO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
   }
 
@@ -312,7 +317,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       capaOpacidad: {
         mostrar: false
       },
-      esBotonUpload: true
+      esBotonUpload: true,
+      colorBorde: ColorDeBorde.BORDER_TRANSPARENTE,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
   }
 
@@ -358,7 +365,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
             mostrar: true,
             colorOpacidad: this.obtenerColorCapaOpacidad(pos)
           },
-          esBotonUpload: false
+          esBotonUpload: false,
+          colorBorde: ColorDeBorde.BORDER_TRANSPARENTE,
+          colorDeFondo: ColorDeFondo.FONDO_BLANCO,
         }
       )
       pos += 1
@@ -406,7 +415,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
       mostrarIconoExpandirFoto: false,
       mostrarCapaImagenSeleccionadaConBorde: false,
-      esBotonUpload: false
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_TRANSPARENTE,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     })
 
 
@@ -451,7 +462,9 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
       textoCerrarEditarDescripcion: this.textoCerrarDescripcion,
       mostrarIconoExpandirFoto: false,
       mostrarCapaImagenSeleccionadaConBorde: false,
-      esBotonUpload: false
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_ROJO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     })
 
 

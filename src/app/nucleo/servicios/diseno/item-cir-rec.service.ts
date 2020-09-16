@@ -23,24 +23,34 @@ export class ItemCircularRectangularMetodosCompartidos implements ItemMetodosCom
 
     // Devuelve las clases que definen el estilo del item rectangular
     obtenerClasesParaItemRectangular(configuracion: ItemRectangularCompartido) {
-        return {
+        const clases = {
             'itemRectangulo': true, // Clase por defecto
             'perfil': (configuracion.usoDelItem === UsoItemRectangular.RECPERFIL), // Indica que el item va ser usado con las dimensiones de la clase perfil
             'albumMini': (configuracion.usoDelItem === UsoItemRectangular.RECALBUMMINI), // Indica que el item va a ser usado con las dimenciones de la clase albumMini
             'albumPreview': (configuracion.usoDelItem === UsoItemRectangular.RECALBUMPREVIEW), // Indica que el item va a ser usado con las dimensiones de la clase albumPreview
             'cursorBoton': (configuracion.activarClick || configuracion.activarDobleClick || configuracion.activarLongPress)
         }
+
+        clases[configuracion.colorBorde.toString()] = true
+        clases[configuracion.colorDeFondo.toString()] = true
+
+        return clases
     }
 
     // Devuelve las clases que definen el estilo del item circular
     obtenerClasesParaItemCircular(configuracion: ItemCircularCompartido) {
-        return {
+        const clases = {
             'itemCirculo': true, // Clase por defecto
             'perfil': (configuracion.usoDelItem === UsoItemCircular.CIRPERFIL), // Indica que el item va ser usado con las dimensiones de la clase perfil
             'album': (configuracion.usoDelItem === UsoItemCircular.CIRALBUM), // Indica que el item va a ser usado con las dimenciones de la clase album
             'contacto': (configuracion.usoDelItem === UsoItemCircular.CIRCONTACTO), // Indica que el item va a ser usado con las dimensiones de la clase contacto
             'cursorBoton': (configuracion.activarClick || configuracion.activarDobleClick || configuracion.activarLongPress)
         }
+
+        clases[configuracion.colorBorde.toString()] = true
+        clases[configuracion.colorDeFondo.toString()] = true
+
+        return clases
     }
 
     // Valida si existe una imagen para mostrar en el item como background

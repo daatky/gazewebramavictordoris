@@ -74,11 +74,15 @@ const routes: Routes = [
     path: RutasLocales.MENU_SELECCION_PERFILES.toString(),
     component: MenuSeleccionPerfilesComponent,
     canActivate: [RestriccionRutas]
+  },
+  {
+    path: RutasLocales.MODULO_PROYECTOS.toString(),
+    loadChildren: () => import('./presentacion/proyectos/proyectos.module').then(p => p.ProyectosModule),
+    canActivate: [RestriccionRutas]
   }
 ];
 
 @NgModule({
-  //imports: [RouterModule.forRoot(routes)],
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })

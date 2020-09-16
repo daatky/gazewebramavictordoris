@@ -42,7 +42,7 @@ export class AppComponent {
   obtenerMundoClases() {
     return {
       'mundo': true,
-      'mostrar': this.globales.mostrarMundo
+      'mostrar': true
     }
   }
 }
