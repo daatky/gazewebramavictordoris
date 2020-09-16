@@ -1,14 +1,14 @@
 import { CatalogoEstadoModel } from "./catalogos/catalogo-estado.model";
 import { ParticipanteProyectoModel } from "./entidades/participante-proyecto.model";
-import { PerfilModel } from "./perfil.model";
+import { PerfilModel } from "./entidades/perfil.model";
 import { ComentarioModel } from "./entidades/comentario.model";
 import { CatalogoTipoProyectoModel } from "./catalogos/catalogo-tipo-proyecto.model";
-import { CatalogoLocalidadModel } from "./catalogo-localidad.model";
+import { CatalogoLocalidadModel } from "./catalogos/catalogo-localidad.model";
 import { VotoProyectoModel } from "./entidades/voto-proyecto.model";
 import { CatalogoIdiomaModel } from "./catalogos/catalogo-idioma.model";
 import { EstrategiaModel } from "./entidades/estrategia.model";
 import { CatalogoTipoMonedaModel } from "./catalogos/catalogo-tipo-moneda.model";
-import { AlbumModel } from "./album.model";
+import { AlbumModel } from "./entidades/album.model";
 import { Injectable } from "@angular/core";
 import { MapedorService } from "../../nucleo/base/mapeador.interface";
 import { ItemResultadoBusqueda } from "./item-resultado-busqueda";

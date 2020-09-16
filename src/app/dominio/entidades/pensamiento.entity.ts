@@ -4,7 +4,7 @@ import { CatalogoIdiomaEntity } from "./catalogos/catalogo-idioma.entity";
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 //import { PensamientoModel } from "../../modelos/pensamiento.model";
-import { PensamientoModel } from "../modelo/pensamiento.model"
+import { PensamientoModel } from "../modelo/entidades/pensamiento.model"
 
 export interface PensamientoEntity {
     _id?: string,

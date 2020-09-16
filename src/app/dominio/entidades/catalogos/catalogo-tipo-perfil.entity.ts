@@ -1,10 +1,10 @@
 import { PerfilEntityMapperServicePerfilresumenModelo, PerfilEntityMapperServicePerfil } from './../perfil.entity';
-import { PerfilModel } from './../../modelo/perfil.model';
+import { PerfilModel } from '../../modelo/entidades/perfil.model';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";
 import { Injectable } from '@angular/core';
 import { MapedorService } from "../../../nucleo/base/mapeador.interface";
-import { CatalogoTipoPerfilModel } from "../../modelo/catalogo-tipo-perfil.model";
+import { CatalogoTipoPerfilModel } from "../../modelo/catalogos/catalogo-tipo-perfil.model";
 import { PerfilEntity } from '../perfil.entity';
 
 export interface CatalogoTipoPerfilEntity {

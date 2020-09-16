@@ -3,7 +3,7 @@ import { DatosLista } from '../../diseno/modelos/datos-lista.interface';
 import { PensamientoCompartido, Configuracion, ItemPensamiento } from "../../diseno/modelos/pensamiento";
 import { TipoPensamiento, EstiloItemPensamiento } from '../../diseno/enums/tipo-pensamiento.enum';
 import { PensamientoNegocio } from 'src/app/dominio/logica-negocio/pensamiento.negocio';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { PensamientoModel } from 'src/app/dominio/modelo/entidades/pensamiento.model';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 
 @Component({

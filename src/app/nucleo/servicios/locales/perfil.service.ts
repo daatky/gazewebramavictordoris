@@ -1,12 +1,13 @@
 import { MetodosSessionStorageService } from './../../util/metodos-session-storage.service';
 import { LlavesLocalStorage } from './llaves/local-storage.enum';
 import { MetodosLocalStorageService } from './../../util/metodos-local-storage.service';
-import { AlbumModel } from './../../../dominio/modelo/album.model';
+import { AlbumModel } from '../../../dominio/modelo/entidades/album.model';
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { RespuestaRemota } from '../../util/respuesta'
 import { LlavesSessionStorage } from './llaves/session-storage.enum';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 
 @Injectable({ providedIn: 'root' })
 export class PerfilServiceLocal {
@@ -18,21 +19,15 @@ export class PerfilServiceLocal {
 
     }
 
-    guardarAlbumEnLocalStorage(album: AlbumModel) {
-        this.metodosLocalStorageService.guardar(LlavesLocalStorage.ALBUM_ACTIVO, album)
+    guardarPerfilActivoEnLocalStorage(perfil: PerfilModel) {
+        this.metodosLocalStorageService.guardar(LlavesLocalStorage.PERFIL_ACTIVO, perfil)
     }
 
-    obtenerAlbumEnLocalStorage(): AlbumModel {
-        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.ALBUM_ACTIVO)
+    obtenerPerfilActivoDelLocalStorage(): PerfilModel {
+        return this.metodosLocalStorageService.obtener(LlavesLocalStorage.PERFIL_ACTIVO)
     }
 
-    // metodosSessionStorageService
-    guardarAlbumEnSessionStorage(album: AlbumModel) {
-        this.metodosSessionStorageService.guardar(LlavesSessionStorage.ALBUM_ACTIVO, album)
+    removerPerfilActivoDelLocalStorage() {
+        this.metodosLocalStorageService.remover(LlavesLocalStorage.PERFIL_ACTIVO)
     }
-
-    obtenerAlbumEnSessionStorage(): AlbumModel {
-        return this.metodosSessionStorageService.obtener(LlavesSessionStorage.ALBUM_ACTIVO)
-    }
-
 }

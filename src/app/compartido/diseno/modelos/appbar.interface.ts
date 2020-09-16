@@ -24,7 +24,10 @@ export interface DemoAppBar {
 export interface SearchBarAppBar {
     nombrePerfil: TextoAppBar, // Nombre dle tipo de perfil activo (parte inferior izquierda)
     configuracion: ConfiguracionBarraBusqueda, // Indica si se debe mostrar o no la barra de busqueda
-    mostrarDivBack: boolean,
+    mostrarDivBack: {
+        icono?: boolean,
+        texto?: boolean
+    },
     mostrarTextoHome: boolean,
     subtitulo: TextoAppBar, // Usado para nombre de perfil o titulo debajo del home
     mostrarLineaVerde: boolean, // Indica si la linea verde se debe mostrar o no

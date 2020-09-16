@@ -1,12 +1,12 @@
-import { CatalogoPaisModel } from '../../../dominio/modelo/catalogo-pais.model';
+import { CatalogoPaisModel } from '../../../dominio/modelo/catalogos/catalogo-pais.model';
 import { MetodosLocalStorageService } from '../../util/metodos-local-storage.service'
 import { LlavesLocalStorage } from './llaves/local-storage.enum';
 import { Injectable } from '@angular/core'
 import { CatalogoIdiomaEntity } from 'src/app/dominio/entidades/catalogos/catalogo-idioma.entity'
 import { Subject, Observable } from 'rxjs';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
-import { CatalogoMetodoPagoModel } from 'src/app/dominio/modelo/catalogo-metodo-pago.model';
-import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { CatalogoTipoPerfilModel } from '../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
+import { CatalogoMetodoPagoModel } from '../../../dominio/modelo/catalogos/catalogo-metodo-pago.model';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorage {

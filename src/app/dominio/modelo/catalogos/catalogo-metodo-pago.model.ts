@@ -1,8 +1,8 @@
 
-import { CatalogoEstadoEntity } from "../entidades/catalogos/catalogo-estado.entity";
-import { MediaEntity } from "../entidades/media.entity"
+import { CatalogoEstadoEntity } from "../../entidades/catalogos/catalogo-estado.entity";
+import { MediaEntity } from "../../entidades/media.entity"
 import { Injectable } from '@angular/core';
-import { CatalogoMetodoPagoEntity, PagoFacturacionEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity';
+import { CatalogoMetodoPagoEntity, PagoFacturacionEntity } from '../../entidades/catalogos/catalogo-metodo-pago.entity';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 
 export interface CatalogoMetodoPagoModel {

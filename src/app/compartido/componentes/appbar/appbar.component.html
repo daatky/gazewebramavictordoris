@@ -35,14 +35,20 @@
         <div *ngIf="configuracion.searchBarAppBar.configuracion.mostrar">
             <app-buscador #buscador [data]="configuracion.searchBarAppBar.configuracion.datos"></app-buscador>
         </div>
-        <div *ngIf="configuracion.searchBarAppBar.mostrarDivBack" class="botonAtras" (tap)="clickBotonAtras()">
-            <div class="icono"></div>
-            <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+        <div class="botonAtras" (tap)="clickBotonAtras()">
+            <div
+                *ngIf="configuracion.searchBarAppBar.mostrarDivBack.icono"
+                class="icono"
+            ></div>
+            <p
+                *ngIf="configuracion.searchBarAppBar.mostrarDivBack.texto"
+                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                     color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
                     estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
                     enMayusculas: true,
                     tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_IGUAL 
-                })">
+                })"
+            >
                 {{ textoBack }}
             </p>
         </div>

@@ -1,22 +1,22 @@
 import { TelefonoModel } from './telefono.model';
 import { DireccionModel, DireccionModelMapperService } from './direccion.model';
-import { AlbumModel, AlbumModelMapperServicePerfil } from './album.model';
+import { AlbumModel, AlbumModelMapperService } from './album.model';
 import { UsuarioModel } from './usuario.model';
-import { CatalogoTipoPerfilModel, CatalogoTipoPerfilModelMapperService } from './catalogo-tipo-perfil.model'
-import { AsociacionEntity } from './../entidades/asociacion.entity'
-import { NoticiaEntity } from './../entidades/noticia.entity'
-import { PensamientoEntity } from './../entidades/pensamiento.entity'
-import { ProyectoEntity } from './../entidades/proyecto.entity'
-import { TelefonoEntity } from './../entidades/telefono.entity'
-import { DireccionEntity } from './../entidades/direccion.entity'
-import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.entity'
-import { AlbumEntity } from './../entidades/album.entity'
-import { UsuarioEntity } from './../entidades/usuario.entity'
+import { CatalogoTipoPerfilModel, CatalogoTipoPerfilModelMapperService } from './../catalogos/catalogo-tipo-perfil.model'
+import { AsociacionEntity } from '../../entidades/asociacion.entity'
+import { NoticiaEntity } from '../../entidades/noticia.entity'
+import { PensamientoEntity } from '../../entidades/pensamiento.entity'
+import { ProyectoEntity } from '../../entidades/proyecto.entity'
+import { TelefonoEntity } from '../../entidades/telefono.entity'
+import { DireccionEntity } from '../../entidades/direccion.entity'
+import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
+import { AlbumEntity } from '../../entidades/album.entity'
+import { UsuarioEntity } from '../../entidades/usuario.entity'
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
-import { PerfilEntity } from '../entidades/perfil.entity';
-import { EstadoModelMapperService } from './catalogos/catalogo-estado.model';
-import { ItemResultadoBusqueda } from './item-resultado-busqueda';
+import { PerfilEntity } from '../../entidades/perfil.entity';
+import { EstadoModelMapperService } from '../catalogos/catalogo-estado.model';
+import { ItemResultadoBusqueda } from '../item-resultado-busqueda';
 import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 
 export interface PerfilModel {
@@ -41,7 +41,7 @@ export class PerfilModelMapperService extends MapedorService<PerfilModel, Perfil
     constructor
         (
             private estadoMapper: EstadoModelMapperService,
-            private albumMaper: AlbumModelMapperServicePerfil,
+            private albumMaper: AlbumModelMapperService,
             private direccionMapper: DireccionModelMapperService,
             private tipoPerfilMapper: CatalogoTipoPerfilModelMapperService
         ) {
@@ -67,6 +67,28 @@ export class PerfilModelMapperService extends MapedorService<PerfilModel, Perfil
 }
 
 @Injectable({ providedIn: 'root' })
+export class PerfilModelEstadoMapperService extends MapedorService<PerfilModel, PerfilEntity> {
+    constructor
+        (
+            private estadoMapper: EstadoModelMapperService,
+            private albumMaper: AlbumModelMapperService,
+            private direccionMapper: DireccionModelMapperService,
+            private tipoPerfilMapper: CatalogoTipoPerfilModelMapperService
+        ) {
+        super();
+    }
+
+    protected map(model: PerfilModel): PerfilEntity {
+        if (model) {
+            return {
+                _id: model._id,
+                estado: this.estadoMapper.transform(model.estado),
+            };
+        }
+        return null;
+    }
+}
+
 export class PerfilModelMapperResultadoBusqueda extends MapedorService<PerfilModel, ItemResultadoBusqueda> {
     protected map(entity: PerfilModel): ItemResultadoBusqueda {
         return {

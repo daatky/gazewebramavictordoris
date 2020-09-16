@@ -1,11 +1,11 @@
 import { MediaModel, MediaModelMapperServicePerfil } from './media.model'
-import { CatalogoAlbumEntity } from './../entidades/catalogos/catalogo-album.entity'
+import { CatalogoAlbumEntity } from '../../entidades/catalogos/catalogo-album.entity'
 import { Injectable } from '@angular/core';
-import { AlbumEntity } from '../entidades/album.entity';
+import { AlbumEntity } from '../../entidades/album.entity';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
-import { CatalogoAlbumModelMapperService } from "../modelo/catalogos/catalogo-album.model";
+import { CatalogoAlbumModelMapperService } from "../catalogos/catalogo-album.model";
 export interface AlbumModel {
-    id?: string
+    _id?: string
     nombre?: string,
     tipo?: CatalogoAlbumEntity,
     media?: Array<MediaModel>,
@@ -13,7 +13,7 @@ export interface AlbumModel {
 }
 
 @Injectable({ providedIn: 'root' })
-export class AlbumModelMapperServicePerfil extends MapedorService<AlbumModel, AlbumEntity> {
+export class AlbumModelMapperService extends MapedorService<AlbumModel, AlbumEntity> {
     constructor
         (
             //private estadoMapper: EstadoModelMapperService,
@@ -25,11 +25,17 @@ export class AlbumModelMapperServicePerfil extends MapedorService<AlbumModel, Al
 
     protected map(model: AlbumModel): AlbumEntity {
         if (model) {
-            return {
+            const album: AlbumEntity = {
                 media: this.mediaMapper.transform(model.media),
                 portada: this.mediaMapper.transform(model.portada),
-                tipo: this.catalogoAlbumMapper.transform(model.tipo)                
-            };
+                tipo: this.catalogoAlbumMapper.transform(model.tipo)
+            }
+
+            if (model._id) {
+                album._id = model._id
+            }
+
+            return album
         }
         return null;
     }

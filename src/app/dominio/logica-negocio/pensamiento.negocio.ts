@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { PensamientoRepository } from "../repositorio/pensamiento.repository";
-import { PensamientoModel } from '../modelo/pensamiento.model';
+import { PensamientoModel } from '../modelo/entidades/pensamiento.model';
 //import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
 import { PaginacionModel } from '../modelo/paginacion-model';
 

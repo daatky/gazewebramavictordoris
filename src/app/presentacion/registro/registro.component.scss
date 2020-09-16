@@ -28,6 +28,56 @@ $botones-estado-padding: calcular(3.91);
 
 .cuerpo {
   background: $blanco;
+  position: relative;
+  padding: 0 !important;
+}
+
+.cuerpo .capa {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: $espacio-316 $espacio-267 $espacio-522 $espacio-267;
+  box-sizing: border-box;
+  
+  z-index: -1;
+  opacity: 0;
+}
+.cuerpo .capa.mostrar {
+  z-index: 10;
+  opacity: 1;
+}
+
+.cuerpo .capa.principal {
+  overflow: hidden;
+}
+.cuerpo .capa.principal.mostrar {
+  overflow-y: auto !important;
+}
+
+.cuerpo .capa.loader {
+  
+}
+.cuerpo .capa.loader.mostrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cuerpo .capa.errordiv.mostrar {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+.cuerpo .capa.errordiv div {
+  width: 100%;
+  text-align: center;
+}
+.cuerpo .capa.errordiv .botonReintentar {
+  margin-top: calcular(3);
+  font-size: $letra-2;
+  line-height: 1;
+  padding: calcular(1) calcular(2);
 }
 
 .fotos {

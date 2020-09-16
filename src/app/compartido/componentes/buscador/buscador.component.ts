@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { filter } from 'rxjs/operators';
-import { PerfilModel, PerfilModelMapperResultadoBusqueda } from "../../../dominio/modelo/perfil.model"
+import { PerfilModel, PerfilModelMapperResultadoBusqueda } from "../../../dominio/modelo/entidades/perfil.model"
 import { ProyectoModelMapperResultadoBusqueda } from "../../../dominio/modelo/proyecto.model";
 import { NoticiaModelMapperResultadoBusqueda } from "../../../dominio/modelo/noticia.model";
 

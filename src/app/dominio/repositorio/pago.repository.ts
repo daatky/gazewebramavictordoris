@@ -4,7 +4,7 @@ import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
 import { catchError, tap, map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
 import { CatalogoMetodoPagoEntity, CatalogoMetodoPagoMapperService, MetodoPagoStripeEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity';
-import { CatalogoMetodoPagoModel, PagoStripeModel } from '../modelo/catalogo-metodo-pago.model';
+import { CatalogoMetodoPagoModel, PagoStripeModel } from '../modelo/catalogos/catalogo-metodo-pago.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
 import { PaymentIntent } from '@stripe/stripe-js';
 

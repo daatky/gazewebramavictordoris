@@ -1,11 +1,9 @@
-import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { CatalogoPaisModel } from "../catalogo-pais.model";
+import { CatalogoPaisModel } from '../catalogos/catalogo-pais.model'
+import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
 
 export interface TelefonoModel {
     id?: string,
-    estado?: CatalogoEstadoModel, // CatogoEstado
-    fechaCreacion?: Date,
-    fechaActualizacion?: Date,
+    estado?: CatalogoEstadoEntity,
     numero?: string,
-    pais?: CatalogoPaisModel, // CatalogoPais
+    pais?: CatalogoPaisModel
 }

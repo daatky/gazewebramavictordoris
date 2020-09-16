@@ -1,3 +1,4 @@
+import { AlbumEntity } from './../../../dominio/entidades/album.entity';
 import { Media } from './rutas/media.enum'
 import { APIGAZE } from './rutas/api-gaze.enum'
 import { ArchivoEntity } from './../../../dominio/entidades/archivo.entity'
@@ -6,6 +7,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { MediaEntity } from './../../../dominio/entidades/media.entity'
+import { PerfilEntity } from 'src/app/dominio/entidades/perfil.entity'
 
 @Injectable({ providedIn: 'root' })
 export class MediaServiceRemoto {

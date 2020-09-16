@@ -30,25 +30,20 @@ export class InputComponent implements OnInit {
 
   obtenerError(controlName: any): string {
     let error = '';
-    if (controlName.touched && controlName.errors != null) {
+    if (controlName.touched && controlName.errors != null && !this.inputCompartido.soloLectura) {
       if (controlName.errors.required) {
-        //error="campo requerido"   
         error = this.internacionalizacionNegocio.obtenerTextoSincrono('campoRequerido')
       } else {
-        if (controlName.errors.email) {
-          //error='Correp electronico'          
+        if (controlName.errors.email) { 
           error = this.internacionalizacionNegocio.obtenerTextoSincrono('tipoEmail')
         } else {
           if (controlName.errors.minlength) {
-            //error="Este campo debe tener un minimo de "+controlName.errors.minlength.requiredLength+" caracteres"
             error = this.internacionalizacionNegocio.obtenerTextoSincrono('minimoCaracteres', { numero: controlName.errors.minlength.requiredLength })
           } else {
             if (controlName.errors.maxlength) {
-              //error="Este campo debe tener un maximo de "+controlName.errors.maxlength.requiredLength + " caracteres"
               error = this.internacionalizacionNegocio.obtenerTextoSincrono('maximoCaracteres', { numero: controlName.errors.maxlength.requiredLength })
             } else {
               if (controlName.errors.pattern) {
-                //error="Este campo es invalido"
                 error = this.internacionalizacionNegocio.obtenerTextoSincrono('campoInvalido')
               }
             }
@@ -57,8 +52,9 @@ export class InputComponent implements OnInit {
       }
     } else {
       if (controlName.untouched) {
-        if (this.inputCompartido.error) error = error = this.internacionalizacionNegocio.obtenerTextoSincrono('camposIncompletos')
-        //error='Existen campos incompletos'
+        if (this.inputCompartido.error) {
+          error = this.internacionalizacionNegocio.obtenerTextoSincrono('camposIncompletos')
+        }
       }
     }
     return error
@@ -84,7 +80,7 @@ export class InputComponent implements OnInit {
 
   // Churon
   determinarCadenaMaxima(): string {
-    let numeroCaracteres = '400'
+    let numeroCaracteres = '800'
     if (this.inputCompartido.contadorCaracteres) {
       numeroCaracteres = this.inputCompartido.contadorCaracteres.numeroMaximo.toString()
     }
@@ -93,12 +89,14 @@ export class InputComponent implements OnInit {
 
   // Churon
   empezarEscribir() {
-    if (this.inputCompartido.contadorCaracteres) {
-      this.inputCompartido.contadorCaracteres.mostrar = true
-    }
+    if (!this.inputCompartido.soloLectura) {
+      if (this.inputCompartido.contadorCaracteres) {
+        this.inputCompartido.contadorCaracteres.mostrar = true
+      }
 
-    if (this.inputCompartido.errorPersonalizado) {
-      this.inputCompartido.errorPersonalizado = ''
+      if (this.inputCompartido.errorPersonalizado) {
+        this.inputCompartido.errorPersonalizado = ''
+      }
     }
   }
 
@@ -113,14 +111,16 @@ export class InputComponent implements OnInit {
 
   // Churon
   dejarDeEscribir() {
-    if (this.inputCompartido.contadorCaracteres) {
-      this.inputCompartido.contadorCaracteres.mostrar = false
-    }
-    if (this.inputCompartido.id && this.inputCompartido.validarCampo && this.inputCompartido.validarCampo.validar) {
-      this.inputCompartido.validarCampo.validador({
-        id: this.inputCompartido.id,
-        texto: this.inputCompartido.data.value
-      })
+    if (!this.inputCompartido.soloLectura) {
+      if (this.inputCompartido.contadorCaracteres) {
+        this.inputCompartido.contadorCaracteres.mostrar = false
+      }
+      if (this.inputCompartido.id && this.inputCompartido.validarCampo && this.inputCompartido.validarCampo.validar) {
+        this.inputCompartido.validarCampo.validador({
+          id: this.inputCompartido.id,
+          texto: this.inputCompartido.data.value
+        })
+      }
     }
   }
 }

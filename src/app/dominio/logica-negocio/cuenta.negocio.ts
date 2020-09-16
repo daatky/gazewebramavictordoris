@@ -1,10 +1,10 @@
 import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
-import { UsuarioModel, UsuarioModelMapperService } from './../modelo/usuario.model';
+import { UsuarioModel, UsuarioModelMapperService } from '../modelo/entidades/usuario.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CuentaRepository } from "../repositorio/cuenta.repository";
-import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
 import { PerfilRepository } from '../repositorio/perfil.repository';
 import { IdiomaRepository } from '../repositorio/idioma.repository';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity';
@@ -14,8 +14,8 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { TokenModel } from '../modelo/token.model';
 import { Codigos2CatalogoIdioma } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-idioma.enum';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
-//CuentaRepository
-//iniciarSesion
+import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -71,8 +71,6 @@ export class CuentaNegocio {
         }
 
         let usuarioCrear = this.usuarioModelMapper.transform(usuario)
-
-        console.log(usuarioCrear)
 
         return this.cuentaRepository.crearCuenta(usuarioCrear)
             .pipe(
@@ -204,11 +202,13 @@ export class CuentaNegocio {
     }
 
     // Obtener Email y Contrasena del usuario
-    obtenerEmailConContrasenaDelUsuario() {
-        const usuario: UsuarioModel = this.obtenerUsuarioDelSessionStorage()
+    obtenerEmailConContrasenaDelUsuario(session: boolean = true) {
+        const usuario: UsuarioModel = (session) 
+            ? this.obtenerUsuarioDelSessionStorage()
+            : this.obtenerUsuarioDelLocalStorage()
         return {
             email: usuario.email,
-            contrasena: usuario.contrasena
+            contrasena: (session) ? usuario.contrasena : '**********'
         }
     }
 

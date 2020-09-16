@@ -1,4 +1,4 @@
-import { ArchivoModel } from './../modelo/archivo.model'
+import { ArchivoModel } from './../modelo/entidades/archivo.model'
 import { Injectable } from '@angular/core'
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity"
 import { CatalogoTipoMediaEntity } from "./catalogos/catalogo-tipo-media.entity"

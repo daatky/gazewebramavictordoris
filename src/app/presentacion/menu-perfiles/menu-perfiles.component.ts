@@ -12,7 +12,7 @@ import { PerfilNegocio } from "../../dominio/logica-negocio/perfil.negocio";
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { TamanoItemMenu } from 'src/app/compartido/diseno/enums/tamano-item-menu.enum';
 import { ColorFondoItemMenu } from 'src/app/compartido/diseno/enums/color-fondo-item-menu.enum';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
 import { ItemMenuCompartido } from 'src/app/compartido/diseno/modelos/item-menu.interface';
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface';
 import { DialogoServicie } from 'src/app/nucleo/servicios/diseno/dialogo.service';
@@ -29,7 +29,7 @@ import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-i
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/modal-inferior.component';
-import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
 import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';

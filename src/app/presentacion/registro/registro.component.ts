@@ -6,15 +6,15 @@ import { ConfiguracionDialogoInline } from './../../compartido/diseno/modelos/di
 import { TranslateService } from '@ngx-translate/core'
 import { ConfiguracionToast } from './../../compartido/diseno/modelos/toast.interface'
 import { CodigosCatalogoEntidad, AccionEntidad, AccionAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum'
-import { AlbumModel } from './../../dominio/modelo/album.model'
+import { AlbumModel } from '../../dominio/modelo/entidades/album.model'
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum'
 import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun'
-import { PerfilModel } from './../../dominio/modelo/perfil.model'
+import { PerfilModel } from '../../dominio/modelo/entidades/perfil.model'
 import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio'
-import { UsuarioModel } from './../../dominio/modelo/usuario.model'
+import { UsuarioModel } from '../../dominio/modelo/entidades/usuario.model'
 import { RutasLocales } from './../../rutas-locales.enum'
 import { CodigosCatalogoTipoPerfil } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum'
-import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogo-tipo-perfil.model'
+import { CatalogoTipoPerfilModel } from './../../dominio/modelo/catalogos/catalogo-tipo-perfil.model'
 import { PerfilNegocio } from './../../dominio/logica-negocio/perfil.negocio'
 import { UsoItemCircular, UsoItemRectangular } from './../../compartido/diseno/enums/uso-item-cir-rec.enum'
 import { ItemCircularCompartido, ItemRectangularCompartido } from './../../compartido/diseno/modelos/item-cir-rec.interface'
@@ -45,7 +45,6 @@ import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interfa
 import { UbicacionNegocio } from './../../dominio/logica-negocio/ubicacion.negocio'
 import { SelectorComponent } from './../../compartido/componentes/selector/selector.component'
 import { AccionesSelector } from 'src/app/compartido/diseno/enums/acciones-selector.enum'
-import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum'
 import { ConfiguracionBuscadorModal } from '../../compartido/diseno/modelos/buscador-modal.interface'
 import { AccionesBuscadorModal } from 'src/app/compartido/diseno/enums/acciones-buscador-localidades.enum'
 import { AccionesItemCircularRectangular } from 'src/app/compartido/diseno/enums/acciones-item-cir-rec.enum'
@@ -68,14 +67,21 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('dialogoInline', { static: false }) dialogoInline: DialogoInlineComponent
   @ViewChild('toast', { static: false }) toast: ToastComponent
 
-  // CodigosTipoPerfil
+  // Utils
   public codigosCatalogoTipoPerfil = CodigosCatalogoTipoPerfil
+  public codigosCatalogosEstadoPerfiles = CodigosCatalogosEstadoPerfiles
 
   // Parametros url
   public codigoPerfil: string // Codigo del perfil activo
   public accionEntidad: AccionEntidad // Accion formulario
 
-  // Parametros internos
+  // Parametros internos - generales
+  public mostrarCuerpoLoader: boolean // Oculta o muestra el loader
+  public mostrarError: boolean // Indica si mostrar el error o no
+  public mensajeError: string // Mensaje de error a mostrar
+
+  // Parametros internos - configuracion de items y demas
+  public confBotonReintentar: BotonCompartido // Boton de reintentar
   public confAppBar: ConfiguracionAppbarCompartida // Configuracion del appbar
   public confItemCir: ItemCircularCompartido // Configuracion item del circulo
   public confItemRec: ItemRectangularCompartido // Configuracion item del rectangulo
@@ -84,9 +90,11 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public confToast: ConfiguracionToast  // Configuracion del toast
   public confBotonPago: BotonCompartido // Boton de pago
   public confBotonHibernar: BotonCompartido // Boton de hibernar
+  public confBotonDesHibernar: BotonCompartido // Boton de deshibernar
   public confBotonEliminar: BotonCompartido // Boton de eliminar
   public confDialogoMasPerfiles: ConfiguracionDialogoInline // Dialogo compartido
   public confDialogoHibernar: DialogoCompartido // Dialogo de hibernar
+  public confDialogoDesHibernar: DialogoCompartido // Dialogo de deshibernar
   public confDialogoEliminar: DialogoCompartido // Dialogo de eliminar
 
   public noCrearMasPerfiles: boolean // False aparece boton no, true aparece boton payment
@@ -100,8 +108,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   public perfilCreado: boolean // Indica que el perfil ha sido creado y se debe mostrar la info de pago
 
   // Utils
-  public validadorExternoDelFormulario: boolean
-  public validadoresEjecutados: boolean
+  public validadorNombreContacto: boolean
+  public validadorEmail: boolean
 
   constructor(
     private translateService: TranslateService,
@@ -116,11 +124,15 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     private _location: Location,
     private generadorId: GeneradorId
   ) {
+    this.mostrarCuerpoLoader = false
+    this.mostrarError = false
+    this.mensajeError = ''
+
     this.perfilCreado = false
     this.noCrearMasPerfiles = false
     this.inputsForm = []
-    // this.validadorExternoDelFormulario = true
-    this.validadoresEjecutados = false
+    this.validadorNombreContacto = false
+    this.validadorEmail = false
   }
 
   ngOnInit(): void {
@@ -140,17 +152,89 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configurarDialogoPerfilNormal()
     this.configurarBotonesEstadoDelPerfil()
     this.configurarDialogoHibernar()
+    this.configurarDialogoDesHibernar()
     this.configurarDialogoEliminar()
 
     // En caso la pagina sea recargada, se actualiza la informacion ingresada
-    window.onbeforeunload = () => this.guardarInformacionPerfil(this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    window.onbeforeunload = () => this.validarInformacionDeUsuarioAntesDeCambiarPagina()
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.configurarPortada()
-      this.buscadorLocalidades.pais = this.registroService.obtenerPaisSeleccionadoEnElPerfil(this.perfil)
+      if (this.portada) {
+        this.configurarPortada()
+      }
+      // Subscripcion a eventos de item
+      this.subscripcionEventosEnItems()
+    })
+  }
 
+  ngOnDestroy() {
+
+  }
+
+  // Escucha para el boton de back del navegador
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    this.registroService.validarPerfilParaDestruir(this.accionEntidad, this.codigoPerfil, this.tipoPerfil, this.perfil)
+  }
+
+  reintentar() {
+    switch (this.accionEntidad) {
+      case AccionEntidad.REGISTRO: break
+      case AccionEntidad.CREAR:
+        break
+      case AccionEntidad.ACTUALIZAR:
+        this.inicializarDataUsuario()
+        break
+      default: break;
+    }
+  }
+
+  validarInformacionDeUsuarioAntesDeCambiarPagina() {
+    switch (this.accionEntidad) {
+      case AccionEntidad.REGISTRO:
+        this.perfilNegocio.guardarInformacionPerfilSegunAccionRegistro(
+          this.perfil,
+          this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles,
+          this.codigoPerfil,
+          this.registroForm,
+          this.confSelector.seleccionado,
+          this.confBuscador.seleccionado,
+          this.confBuscador.inputPreview.input.auxiliar,
+        )
+        break
+      case AccionEntidad.CREAR:
+        // Por definir
+        break
+      case AccionEntidad.ACTUALIZAR:
+        this.perfilNegocio.guardarInformacionPerfilSegunAccionActualizar(
+          this.perfil,
+          this.registroForm,
+          this.confSelector.seleccionado,
+          this.confBuscador.seleccionado,
+          this.confBuscador.inputPreview.input.auxiliar,
+        )
+        break
+      default: break;
+    }
+  }
+
+  // Cambia el valor de las capas del cuerpo
+  cambiarValorCapasDelCuerpo(
+    mostrarCuerpoLoader: boolean,
+    mostrarError: boolean = false,
+    mensajeError: string = ''
+  ) {
+    this.mostrarCuerpoLoader = mostrarCuerpoLoader
+    this.mostrarError = mostrarError
+    this.mensajeError = mensajeError
+  }
+
+  // Subscripcion a eventos de item
+  subscripcionEventosEnItems() {
+    if (this.buscadorLocalidades && this.selectorPaises) {
+      this.buscadorLocalidades.pais = this.registroService.obtenerPaisSeleccionadoEnElPerfil(this.perfil)
       // Suscribirse a eventos de click en el selector de pais
       this.selectorPaises.evento.subscribe((info: InfoAccionSelector) => {
         if (info.accion === AccionesSelector.ABRIR_SELECTOR) {
@@ -178,11 +262,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
           return
         }
       })
-    })
-  }
-
-  ngOnDestroy() {
-
+    }
   }
 
   // Reiniciar informacion
@@ -194,16 +274,37 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noCrearMasPerfiles = false
     this.inputsForm = []
 
-    // Metodos para componenentes y demas
-    this.inicializarDataUsuario()
-    this.inicializarControles()
-    this.configurarAppBar()
-    this.configurarInputs()
-    this.configurarAlbumPerfil()
-    this.configurarAlbumGeneral()
-    this.configurarSelectorPais()
-    this.configurarBuscadorLocalidades()
-    this.configurarDialogoPerfilNormal()
+    // Dependiendo de la accion
+    switch (this.accionEntidad) {
+      case AccionEntidad.REGISTRO:
+        this.inicializarDataUsuario()
+        this.inicializarControles()
+        this.configurarAppBar()
+        this.configurarInputs()
+        this.configurarAlbumPerfil()
+        this.configurarAlbumGeneral()
+        this.configurarSelectorPais()
+        this.configurarBuscadorLocalidades()
+        this.configurarDialogoPerfilNormal()
+        break
+      case AccionEntidad.CREAR:
+        this.inicializarControles()
+        this.configurarInputs()
+        this.configurarAlbumPerfil()
+        this.configurarAlbumGeneral()
+        this.configurarSelectorPais()
+        this.configurarBuscadorLocalidades()
+        break
+      case AccionEntidad.ACTUALIZAR:
+        this.inicializarControles()
+        this.configurarInputs()
+        this.configurarAlbumPerfil()
+        this.configurarAlbumGeneral()
+        this.configurarSelectorPais()
+        this.configurarBuscadorLocalidades()
+        break
+      default: break;
+    }
 
     // Reiniciar configuracion en componentes hijo
     this.appbar.configuracion = this.confAppBar
@@ -214,60 +315,84 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectorPaises.configuracion = this.confSelector
       this.buscadorLocalidades.configuracion = this.confBuscador
     }
-    this.dialogoInline.configuracion = this.confDialogoMasPerfiles
-  }
 
-  // Escucha para el boton de back del navegador
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event: any) {
-    this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    if (this.dialogoInline) {
+      this.dialogoInline.configuracion = this.confDialogoMasPerfiles
+    }
   }
-
 
   // Obtiene los parametros recibidos en la url
   obtenerParametrosUrl() {
     const { accionEntidad, codigoPerfil } = this.rutaActual.snapshot.params
-    if (accionEntidad && codigoPerfil) {
+    if ((accionEntidad && accionEntidad !== ':accionEntidad') && (codigoPerfil && codigoPerfil !== ':codigoPerfil')) {
       this.accionEntidad = accionEntidad
       this.codigoPerfil = codigoPerfil
     } else {
-      // Validar comportamiento en caso de no existir
+      console.warn('data invalida en parametros')
+      this._location.back()
     }
   }
 
   // Validar si existe el usuario
   inicializarDataUsuario() {
     this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-    switch (this.accionEntidad) {
-      case AccionEntidad.REGISTRO:
-        this.perfil = this.perfilNegocio.validarPerfilModelDelSessionStorage(this.codigoPerfil)
-        break
-      case AccionEntidad.CREAR:
-        // Crear el perfil
-        // this.tipoPerfil = this.perfilNegocio.obtenerTipoPerfilSegunCodigo(this.codigoPerfil)
-        // this.perfil = this.perfilNegocio.validarPerfilModel(this.codigoPerfil)
-        break
-      case AccionEntidad.ACTUALIZAR:
-        // Obtener el perfil del api, segun id en codigoPerfil
-        break
-      default: break
-    }
 
-    if (!this.tipoPerfil || !this.perfil) {
-      this.router.navigateByUrl(RutasLocales.MENU_PERFILES)
+    if (this.tipoPerfil) {
+      switch (this.accionEntidad) {
+        case AccionEntidad.REGISTRO:
+          this.perfil = this.perfilNegocio.validarPerfilModelDelSessionStorage(this.codigoPerfil)
+          break
+        case AccionEntidad.CREAR:
+          this.perfil = this.perfilNegocio.inicializarPerfilActivoParaAccionCrear(this.tipoPerfil)
+          console.log(this.perfil)
+          break
+        case AccionEntidad.ACTUALIZAR:
+          this.cambiarValorCapasDelCuerpo(true)
+          this.definirDataRegistroSegunAccionActualizar()
+          break
+        default:
+          this._location.back()
+          break
+      }
+    }
+  }
+
+  // Definir data del perfil para Accion actualizar
+  async definirDataRegistroSegunAccionActualizar() {
+    try {
+      const id = this.perfilNegocio.obtenerIdDelPerfilSeleccionado()
+      console.log(id)
+      this.perfil = await this.perfilNegocio.validarOrigenPerfilActivo(id).toPromise()
+      // Guardar el perfil activo en local storage
+      this.perfilNegocio.guardarPerfilActivoEnLocalStorage(this.perfil) // Pendiente de mover a negocio
+      this.reiniciarInformacionParaCambioDePerfil(this.codigoPerfil)
+      this.cambiarValorCapasDelCuerpo(false)
+    } catch (error) {
+      console.log(error)
+      this.cambiarValorCapasDelCuerpo(false, true, 'Lo sentimos ocurrio un error al obtener la informacion solicitada')
     }
   }
 
   // Inicializar controles para el formulario
   inicializarControles() {
-    if (this.perfil) {
-      this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil)
+    console.log(this.accionEntidad)
+    switch (this.accionEntidad) {
+      case AccionEntidad.REGISTRO:
+        this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil)
+        break
+      case AccionEntidad.CREAR:
+        this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil, false)
+        break
+      case AccionEntidad.ACTUALIZAR:
+        this.registroForm = this.registroService.inicializarControlesDelFormulario(this.perfil, false)
+        break
+      default: break;
     }
   }
 
   // Accion atras appbar
   accionAtrasAppbar() {
-    this.cuentaNegocio.validarEstadoPerfilParaDestruir(this.codigoPerfil, this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+    this.registroService.validarPerfilParaDestruir(this.accionEntidad, this.codigoPerfil, this.tipoPerfil, this.perfil)
     this._location.back()
   }
 
@@ -288,7 +413,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
           mostrar: infoAppBar.mostrarNombrePerfil,
           llaveTexto: infoAppBar.llaveTextoNombrePerfil
         },
-        mostrarDivBack: true,
+        mostrarDivBack: {
+          icono: infoAppBar.mostrarIconoBack,
+          texto: infoAppBar.mostrarTextoBack,
+        },
         mostrarTextoHome: infoAppBar.mostrarTextoHome,
         subtitulo: {
           mostrar: true,
@@ -313,16 +441,21 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       this.inputsForm[3].placeholder = await this.translateService.get('contrasena').toPromise()
       this.inputsForm[4].placeholder = await this.translateService.get('direccion').toPromise()
 
+      if (this.accionEntidad === AccionEntidad.CREAR || this.accionEntidad === AccionEntidad.ACTUALIZAR) {
+        this.inputsForm[2].soloLectura = true
+        this.inputsForm[3].soloLectura = true
+      }
+
       this.inputsForm.forEach((input, pos) => {
         if (pos === 0) {
           input.validarCampo = {
             validar: true,
-            validador: (data: any) => this.validarCampoEnInput(data, 0)
+            validador: (data: any) => this.validarCampoEnInput(data, 0, false)
           }
         } else if (pos === 2) {
           input.validarCampo = {
             validar: true,
-            validador: (data: any) => this.validarCampoEnInput(data, 1)
+            validador: (data: any) => this.validarCampoEnInput(data, 1, false)
           }
         }
       })
@@ -426,6 +559,11 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       item = this.registroService.obtenerInformacionDeUbicacion(this.perfil.direcciones)
     }
 
+    // Asignar el pais, al buscador de localidades
+    if (this.buscadorLocalidades) {
+      this.buscadorLocalidades.pais = item
+    }
+
     this.confSelector = {
       tituloSelector: 'Choose the country',
       mostrarModal: false,
@@ -489,7 +627,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       texto: '',
       mostrarToast: false,
       mostrarLoader: false,
-      cerrarClickOutside: true
+      cerrarClickOutside: true,
+      intervalo: 5
     }
   }
 
@@ -520,7 +659,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     const descripcion = await this.translateService.get('dialogoCrearPerfil').toPromise()
     this.confDialogoMasPerfiles.descripcion = descripcion
     // Perfiles sobrantes y boton no o boton pago
-    this.determinarPerfilesSobrantes()
+    if (this.perfil) {
+      this.determinarPerfilesSobrantes()
+    }
   }
 
   async inicializarBotonesSobrantes(
@@ -533,7 +674,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       codigo: CodigosCatalogoTipoPerfil
     },
   ) {
-    // Substituto
     this.confDialogoMasPerfiles.listaBotones.push({
       text: perfilUno.llave,
       tipoBoton: TipoBoton.TEXTO,
@@ -545,7 +685,6 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         this.registroService.navegarAlRegistro(this.accionEntidad, perfilUno.codigo, this.router)
       },
     })
-    // Ludico
     this.confDialogoMasPerfiles.listaBotones.push({
       text: perfilDos.llave,
       tipoBoton: TipoBoton.TEXTO,
@@ -660,6 +799,17 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
 
+    this.confBotonDesHibernar = {
+      text: 'deshibernar',
+      tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
+      colorTexto: ColorTextoBoton.ROJO,
+      tipoBoton: TipoBoton.TEXTO,
+      enProgreso: false,
+      ejecutar: () => {
+        this.confDialogoDesHibernar.mostrarDialogo = true
+      }
+    }
+
     this.confBotonEliminar = {
       text: 'suprimir',
       tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
@@ -708,9 +858,46 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       ]
     }
+
     this.confDialogoHibernar.descripcion = await this.translateService.get('hibernarPerfil').toPromise()
     this.confDialogoHibernar.listaAcciones[0].text = await this.translateService.get('si').toPromise()
     this.confDialogoHibernar.listaAcciones[1].text = await this.translateService.get('no').toPromise()
+  }
+
+  async configurarDialogoDesHibernar() {
+    this.confDialogoDesHibernar = {
+      mostrarDialogo: false,
+      descripcion: '',
+      tipo: TipoDialogo.CONFIRMACION,
+      completo: true,
+      listaAcciones: [
+        {
+          text: 'si',
+          tipoBoton: TipoBoton.TEXTO,
+          colorTexto: ColorTextoBoton.ROJO,
+          tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
+          enProgreso: false,
+          ejecutar: () => {
+            this.confDialogoDesHibernar.mostrarDialogo = false
+            this.desHibernarPerfil()
+          }
+        },
+        {
+          text: 'no',
+          tipoBoton: TipoBoton.TEXTO,
+          colorTexto: ColorTextoBoton.AMARRILLO,
+          tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL,
+          enProgreso: false,
+          ejecutar: () => {
+            this.confDialogoDesHibernar.mostrarDialogo = false
+          }
+        }
+      ]
+    }
+
+    this.confDialogoDesHibernar.descripcion = await this.translateService.get('deshibernar').toPromise()
+    this.confDialogoDesHibernar.listaAcciones[0].text = await this.translateService.get('si').toPromise()
+    this.confDialogoDesHibernar.listaAcciones[1].text = await this.translateService.get('no').toPromise()
   }
 
   async configurarDialogoEliminar() {
@@ -785,6 +972,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Buscador localidades
   buscarLocalidades(pais: string, query: string) {
+    this.buscadorLocalidades.mostrarError('', false)
     this.buscadorLocalidades.configuracion.resultado.mostrarCargando = true
     this.ubicacionNegocio.obtenerCatalogoLocalidadesPorNombrePorPaisParaSelector(pais, query)
       .subscribe(data => {
@@ -806,7 +994,8 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     accionAlbum: AccionAlbum
   ) {
     // Validar el album
-    this.perfilNegocio.validarAlbumSegunTipo(tipoAlbum, this.perfil)
+    this.registroService.validarAlbumSegunAccionEntidad(tipoAlbum, this.perfil, this.accionEntidad)
+    // this.perfilNegocio.validarAlbumSegunTipo(tipoAlbum, this.perfil)
     // Definir parametros de la url
     let rutaAux = ruta.toString()
     rutaAux = rutaAux.replace(':codigo', codigo)
@@ -814,9 +1003,9 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     rutaAux = rutaAux.replace(':accionEntidad', accionEntidad)
     rutaAux = rutaAux.replace(':titulo', titulo)
     rutaAux = rutaAux.replace(':accionAlbum', accionAlbum)
-    // Guardar info antes de cambiar de componente
-    this.guardarInformacionPerfil(this.perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
-    this.router.navigateByUrl(rutaAux, { skipLocationChange: true })
+
+    this.validarInformacionDeUsuarioAntesDeCambiarPagina()
+    this.router.navigateByUrl(rutaAux, { skipLocationChange: false })
   }
 
   // Eventos de click en items
@@ -851,78 +1040,58 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // Actualizar perfil antes de pasar a albunes
-  guardarInformacionPerfil(estadoPerfil: CodigosCatalogosEstadoPerfiles) {
-    const usuario: UsuarioModel = this.cuentaNegocio.validarUsuarioDelSesionStorage(this.codigoPerfil)
-    const { contrasena, direccion, email, nombre, nombreContacto } = this.registroForm.value
-    const itemPais = this.confSelector.seleccionado
-    const itemLocalidad = this.confBuscador.seleccionado
-    const codigoPostal = this.confBuscador.inputPreview.input.auxiliar
-
-    // Asignar data
-    this.perfil.nombreContacto = nombreContacto
-    this.perfil.nombre = nombre
-    this.perfil.direcciones[0] = {
-      descripcion: direccion,
-      localidad: {
-        nombre: (itemLocalidad) ? itemLocalidad.nombre : '',
-        codigo: (itemLocalidad) ? itemLocalidad.codigo : '',
-        pais: {
-          codigo: (itemPais) ? itemPais.codigo : '',
-          nombre: (itemPais) ? itemPais.nombre : ''
-        },
-        codigoPostal: codigoPostal,
+  // Determinar si se debe validar o no
+  ejecutarValidadorDeCampo(valor: string, pos: number): boolean {
+    let res = true
+    if (this.accionEntidad === AccionEntidad.ACTUALIZAR) {
+      if (pos === 0) {
+        res = (!(valor === this.perfil.nombreContacto))
       }
     }
-    // Se cambia el estado a creado
-    this.perfil.estado.codigo = estadoPerfil
-
-    let pos = -1
-    usuario.perfiles.forEach((perfil, i) => {
-      if (perfil.tipoPerfil.codigo === this.perfil.tipoPerfil.codigo) {
-        pos = i
-      }
-    })
-
-    if (pos >= 0) {
-      usuario.perfiles[pos] = this.perfil
-    } else {
-      usuario.perfiles.push(this.perfil)
-    }
-
-    // Actualizar email y contrasena
-    usuario.email = email
-    usuario.contrasena = contrasena
-    this.cuentaNegocio.guardarUsuarioEnSessionStorage(usuario)
+    return res
   }
 
   // Validar campo
-  validarCampoEnInput(data: any, tipo: number) {
+  async validarCampoEnInput(
+    data: any,
+    tipo: number,
+    forzarSubmit: boolean = true
+  ) {
     if (data.texto && data.id && data.texto.length >= 3) {
-      // this.validadoresEjecutados = true
-      if (tipo === 0) {
-        this.perfilNegocio.validarNombreDeContactoUnico(data.texto).subscribe(estado => {
-          this.validadoresEjecutados = true
-        }, error => {
-          this.validadoresEjecutados = false
-          this.inputsForm.forEach(item => {
-            if (item.id === data.id) {
-              item.errorPersonalizado = 'Nombre de contacto no disponible'
+      try {
+        let test: any
+        if (tipo === 0) { // Validar nombre de contacto
+          if (this.ejecutarValidadorDeCampo(data.texto, 0)) {
+            test = await this.perfilNegocio.validarNombreDeContactoUnico(data.texto).toPromise()
+            if (test) {
+              this.validadorNombreContacto = true
             }
-          })
-        })
-      }
-
-      if (tipo === 1) {
-        this.cuentaNegocio.validarEmailUnico(data.texto).subscribe(estado => {
-          this.validadoresEjecutados = true
-        }, error => {
-          this.validadoresEjecutados = false
-          this.inputsForm.forEach(item => {
-            if (item.id === data.id) {
-              item.errorPersonalizado = 'Email ya registrado'
-            }
-          })
+          } else {
+            this.validadorNombreContacto = true
+          }
+        } else if (tipo === 1) {
+          test = await this.cuentaNegocio.validarEmailUnico(data.texto).toPromise()
+          if (test) { // Validar email
+            this.validadorEmail = true
+          }
+        }
+        if ((this.validadorNombreContacto && this.validadorEmail) || forzarSubmit) {
+          this.submitFormPerfil()
+        }
+      } catch (error) {
+        let mensaje = ''
+        if (tipo === 0) {
+          this.validadorNombreContacto = false
+          mensaje = 'Nombre de contacto no disponible'
+        } else if (tipo === 1) {
+          this.validadorEmail = false
+          mensaje = 'Email ya registrado'
+        }
+        // Asignar el error
+        this.inputsForm.forEach(item => {
+          if (item.id === data.id) {
+            item.errorPersonalizado = mensaje
+          }
         })
       }
     }
@@ -930,7 +1099,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // submit para el registro
   submitRegistro() {
-    if (!this.validadoresEjecutados) {
+    if (!this.validadorEmail || !this.validadorNombreContacto) {
       if (this.inputsForm.length > 0) {
         this.validarCampoEnInput({
           id: this.inputsForm[0].id,
@@ -948,7 +1117,15 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.registroForm.valid) {
         if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
           if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
-            this.guardarInformacionPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO)
+            this.perfilNegocio.guardarInformacionPerfilSegunAccionRegistro(
+              this.perfil,
+              CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO,
+              this.codigoPerfil,
+              this.registroForm,
+              this.confSelector.seleccionado,
+              this.confBuscador.seleccionado,
+              this.confBuscador.inputPreview.input.auxiliar,
+            )
             this.perfilCreado = true
             this.botonSubmit.enProgreso = false
             error = false
@@ -963,6 +1140,101 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  // Submit actualizar
+  submitActualizar() {
+    if (!this.validadorNombreContacto) {
+      if (this.inputsForm.length > 0) {
+        this.validarCampoEnInput({
+          id: this.inputsForm[0].id,
+          texto: this.inputsForm[0].data.value,
+        }, 0)
+      }
+    } else {
+      let errorEnCampos = true
+      this.toast.abrirToast('Espere por favor...', true)
+      if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
+        if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
+          errorEnCampos = false
+
+          this.perfilNegocio.guardarInformacionPerfilSegunAccionActualizar(
+            this.perfil,
+            this.registroForm,
+            this.confSelector.seleccionado,
+            this.confBuscador.seleccionado,
+            this.confBuscador.inputPreview.input.auxiliar,
+          )
+
+          const perfilActivo: PerfilModel = this.perfilNegocio.obtenerPerfilActivoDelLocalStorage()
+          
+          this.perfilNegocio.actualizarPerfil(perfilActivo).subscribe(perfil => {
+            console.warn(perfil)
+            this.perfil = perfil
+            this.perfilNegocio.actualizarDataDelPerfilEnElUsuarioDelLocalStorage(this.perfil)
+            this.perfilNegocio.guardarPerfilActivoEnLocalStorage(this.perfil)
+            this.toast.abrirToast('Perfil actualizado con exito')
+          }, error => {
+            console.error(error)
+            this.toast.abrirToast('Lo sentimos, ocurrio un error al actualizar el perfil')
+          })
+        }
+      }
+
+      if (errorEnCampos) {
+        this.toast.abrirToast('Existen campos incompletos o mal llenados')
+      }
+    }
+  }
+
+  // Submit para Accion Crear
+  submitCrear() {
+    if (!this.validadorNombreContacto) {
+      if (this.inputsForm.length > 0) {
+        this.validarCampoEnInput({
+          id: this.inputsForm[0].id,
+          texto: this.inputsForm[0].data.value,
+        }, 0)
+      }
+    } else {
+      let errorEnCampos = true
+      this.toast.abrirToast('Espere por favor...', true)
+
+      if (this.confSelector.seleccionado && this.confSelector.seleccionado.codigo.length > 0) {
+        if (this.confBuscador.seleccionado && this.confBuscador.seleccionado.codigo.length > 0) {
+          
+          this.perfilNegocio.guardarInformacionPerfilSegunAccionCrear(
+            this.perfil,
+            this.registroForm,
+            this.confSelector.seleccionado,
+            this.confBuscador.seleccionado,
+            this.confBuscador.inputPreview.input.auxiliar,
+            CodigosCatalogosEstadoPerfiles.PERFIL_SIN_CREAR
+          )
+
+          const perfilActivo: PerfilModel = this.perfilNegocio.obtenerPerfilActivoDelLocalStorage()
+          const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
+          errorEnCampos = false
+          
+          // Hacer peticion al api
+          this.perfilNegocio.crearPerfilEnElUsuario(perfilActivo, { id: usuario.id }).subscribe(data => {
+            console.warn(data)
+            this.perfil = data
+            this.perfilNegocio.guardarPerfilActivoEnLocalStorage(this.perfil)
+            this.perfilNegocio.insertarPerfilEnElUsuario(this.perfil)
+            this.toast.abrirToast('Perfil creado con exito')
+          }, error => {
+            console.log(error)
+            this.toast.abrirToast('Lo sentimos, ocurrio un error al actualizar el perfil')
+          })              
+        }
+      }
+
+      if (errorEnCampos) {
+        this.botonSubmit.enProgreso = false
+        this.toast.abrirToast('Existen campos incompletos o mal llenados')
+      }
+    }
+  }
+
   // Submit formulario
   submitFormPerfil() {
     switch (this.accionEntidad) {
@@ -970,8 +1242,10 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
         this.submitRegistro()
         break
       case AccionEntidad.CREAR:
+        this.submitCrear()
         break
       case AccionEntidad.ACTUALIZAR:
+        this.submitActualizar()
         break
       default:
         break
@@ -980,12 +1254,57 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Hibernar perfil
   hibernarPerfil() {
-    this.toast.cambiarStatusToast('Espere por favor ...', true, true, false)
-    // Hibernar Perfil peticion
+    this.eliminarHibernarElPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO)
+  }
+
+  // Deshibernar perfil
+  desHibernarPerfil() {
+    const perfil: PerfilModel = {
+      _id: this.perfil._id
+    }
+
+    this.toast.abrirToast('Espere por favor...', true)
+    this.perfilNegocio.activarPerfil(perfil).subscribe(data => {
+      console.log(data)
+      this.perfil.estado.codigo = CodigosCatalogosEstadoPerfiles.PERFIL_ACTIVO
+      this.perfilNegocio.guardarPerfilActivoEnLocalStorage(this.perfil)
+      this.perfilNegocio.actualizarDataDelPerfilEnElUsuarioDelLocalStorage(this.perfil)
+      this.toast.abrirToast('Perfil actulizado correctamente')
+    }, error => {
+      console.log(error)
+      this.toast.abrirToast('Lo sentimos, ocurrio un error al actualizar el perfil')
+    })
   }
 
   // Eliminar perfil
   eliminarPerfil() {
-    this.toast.cambiarStatusToast('Espere por favor ...', true, true, false)
+    this.eliminarHibernarElPerfil(CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO)
   }
+
+  eliminarHibernarElPerfil(codigoEstado: CodigosCatalogosEstadoPerfiles) {
+    const perfil: PerfilModel = {
+      _id: this.perfil._id,
+      estado: {
+        codigo: codigoEstado
+      }
+    }
+
+    this.toast.abrirToast('Espere por favor...', true)
+    this.perfilNegocio.eliminarHibernarElPerfil(perfil).subscribe(data => {
+      this.perfil.estado.codigo = perfil.estado.codigo
+      this.perfilNegocio.guardarPerfilActivoEnLocalStorage(this.perfil)
+      if (codigoEstado === CodigosCatalogosEstadoPerfiles.PERFIL_HIBERNADO) {
+        this.perfilNegocio.actualizarDataDelPerfilEnElUsuarioDelLocalStorage(this.perfil)
+        this.toast.abrirToast('Perfil actualizado con exito')
+      } else if (codigoEstado === CodigosCatalogosEstadoPerfiles.PERFIL_ELIMINADO) {
+        this.perfilNegocio.eliminarDataDelPerfilEnElUsuarioDelLocalStorage(this.perfil)
+        this._location.back()
+      }
+    }, error => {
+      console.log(error)
+      this.toast.abrirToast('Lo sentimos, ocurrio un error al actualizar el perfil')
+    })
+  }
+
+
 }

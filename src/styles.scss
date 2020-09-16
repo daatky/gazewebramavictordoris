@@ -96,9 +96,11 @@ p {
 }
 
 .cuerpo {
-    width: $cuerpo-default-ancho;
+    width: $ancho-pagina;
     height: $cuerpo-default-alto;
     padding: $espacio-316 $espacio-267 $espacio-522 $espacio-267;
+    box-sizing: border-box;
+
 
     overflow-y: scroll;
     overflow-x: hidden;
