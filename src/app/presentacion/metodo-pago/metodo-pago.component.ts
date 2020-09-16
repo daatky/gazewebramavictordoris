@@ -164,11 +164,19 @@ export class MetodoPagoComponent implements OnInit {
     this.configuracionAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
-        mostrarSearchBar: false,
+        configuracion: {
+          mostrar: true,
+          datos: {
+            disable: true
+          }
+        },
         nombrePerfil: {
           mostrar: false
         },
-        mostrarDivBack: true,
+        mostrarDivBack: {
+          icono: true,
+          texto: true,
+        },
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,
@@ -195,7 +203,7 @@ export class MetodoPagoComponent implements OnInit {
       clientId: "ATFYWrmZeBoByifZnWG3CobzUiAoVtTo9U6pEnN7pSFi898Rwr83uZgVyhJDvPYyohdvNiH5FMwL4975",
       currency: "USD",
       createOrderOnServer: (data) => {
-        this.toast.abrirToast("Creando cuenta y preparando pago", true)
+        this.toast.abrirToast("Creando cuenta", true)
         return this.cuentaNegocio.crearCuenta(CodigosCatalogoMetodoPago.PAYPAL.toString(), null).toPromise().then(
           (res) => {
             idTransaccion = res.idTransaccion;
@@ -262,12 +270,12 @@ export class MetodoPagoComponent implements OnInit {
         email: this.pagoForm.value.email,
       }
       this.dataModalStripe.abierto = false;
-      this.toast.abrirToast("Creando cuenta y preparando pago", true)
+      this.toast.abrirToast("Creando cuenta", true)
       this.cuentaNegocio.crearCuenta(this.codigoPago, datosPago).subscribe(
         (pagoModel: PagoModel) => {
           console.log(pagoModel, "paymentintent and custumer");
           this.toast.cerrarToast()
-          this.toast.abrirToast("Confirmando pago", true)
+          this.toast.abrirToast("Procesando el pago", true)
           this.stripeService.confirmCardPayment(pagoModel.idPago, {
             payment_method: {
               card: this.card.element,
@@ -321,7 +329,7 @@ export class MetodoPagoComponent implements OnInit {
   }
 
   activarCuenta(idTransaccion: string) {
-    this.toast.abrirToast("Procesando Pago para crear la cuenta", true)
+    this.toast.abrirToast("Activando cuenta", true)
     this.cuentaNegocio.activarCuenta(idTransaccion)
       .subscribe((res: UsuarioModel) => {
         this.toast.cerrarToast();

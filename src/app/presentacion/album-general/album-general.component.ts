@@ -237,12 +237,20 @@ export class AlbumGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
-        mostrarSearchBar: true,
+        configuracion: {
+          mostrar: true,
+          datos: {
+            disable: true
+          }
+        },
         nombrePerfil: {
           mostrar: true,
           llaveTexto: 'clasico'
         },
-        mostrarDivBack: true,
+        mostrarDivBack: {
+          icono: true,
+          texto: true
+        },
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

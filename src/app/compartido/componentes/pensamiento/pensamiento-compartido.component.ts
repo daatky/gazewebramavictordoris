@@ -57,14 +57,12 @@ export class PensamientoCompartidoComponent implements OnInit {
       }         
     }
   }
-  obtenerPensamientoAleatorio(){
-    console.log('PENSAMIENTO ALEATORIO')     
+  obtenerPensamientoAleatorio(){    
     this.dataPensamiento={data:{texto:""},presentarX:false} 
     this.error=""
     this.divPensamiento='divPensamientoAleatorio' //CLASE PARA EL ESTILO  
     this.pensamientoNegocio.obtenerPensamientoAleatorio()
-    .subscribe((res:PensamientoModel)=>{ 
-      console.log('PENSAMIENTO ALEATORIO')      
+    .subscribe((res:PensamientoModel)=>{      
       console.log(res)
       this.dataPensamiento={data:res,presentarX:false}
     },error=>{

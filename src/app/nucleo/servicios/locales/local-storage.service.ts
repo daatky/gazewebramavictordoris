@@ -93,4 +93,7 @@ export class LocalStorage {
     obtenerPerfilSeleccionado() {
         return this.metodosLocalStorageService.obtener(LlavesLocalStorage.PERFIL_SELECCIONADO);
     }
+    eliminarVariableStorage(llave:string){
+        this.metodosLocalStorageService.remover(llave)
+    }
 }

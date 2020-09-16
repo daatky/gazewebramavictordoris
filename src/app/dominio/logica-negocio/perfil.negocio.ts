@@ -17,11 +17,13 @@ import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfi
 import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { FormGroup } from '@angular/forms';
 import { DireccionModel } from '../modelo/entidades/direccion.model';
+import { PaginacionModel } from '../modelo/paginacion-model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilNegocio {
+
 
     constructor(
         private perfilRepository: PerfilRepository,
@@ -47,6 +49,21 @@ export class PerfilNegocio {
                 )
         }
         //Se debe llenar el perfil con los datos de cuenta. 
+    }
+
+    buscarPerfiles(palabra: string): Observable<PerfilModel[]> {
+        let limite = 5
+        let pagina = 1;
+
+        return this.perfilRepository.buscarPerfiles(palabra, limite, pagina).pipe(
+            map((data: PaginacionModel<PerfilModel>) => {
+                return data.lista;
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
+
     }
 
     obtenerCatalogoTipoPerfilConPerfil(session: boolean = true): Observable<CatalogoTipoPerfilModel[]> {

@@ -4,6 +4,7 @@ import { BotonCompartido } from './boton.interface'
 import { LineaDeTexto } from './linea-de-texto.interface'
 import { TamanoDeAppBar } from "../enums/tamano-appbar.enum"
 import { TamanoColorDeFondoAppBar } from "../enums/tamano-color-fondo-appbar.enum"
+import { DataBuscador } from '../../componentes/buscador/buscador.component';
 
 export interface TextoAppBar {
     mostrar: boolean, // Indica si mostrar o no el texto
@@ -22,13 +23,21 @@ export interface DemoAppBar {
 
 export interface SearchBarAppBar {
     nombrePerfil: TextoAppBar, // Nombre dle tipo de perfil activo (parte inferior izquierda)
-    mostrarSearchBar: boolean, // Indica si se debe mostrar o no la barra de busqueda
-    mostrarDivBack: boolean,
+    configuracion: ConfiguracionBarraBusqueda, // Indica si se debe mostrar o no la barra de busqueda
+    mostrarDivBack: {
+        icono?: boolean,
+        texto?: boolean
+    },
     mostrarTextoHome: boolean,
     subtitulo: TextoAppBar, // Usado para nombre de perfil o titulo debajo del home
     mostrarLineaVerde: boolean, // Indica si la linea verde se debe mostrar o no
     tamanoColorFondo: TamanoColorDeFondoAppBar, // Indica el ancho que debe ocupar el color de fondo
     mostrarBotonXRoja?: boolean, // Indica si se debe mostrar o no el boton de la x roja
+}
+
+export interface ConfiguracionBarraBusqueda {
+    mostrar: boolean,
+    datos: DataBuscador
 }
 
 export interface GazeAppBar {

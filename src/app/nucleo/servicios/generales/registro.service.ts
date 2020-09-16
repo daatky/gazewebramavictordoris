@@ -284,6 +284,8 @@ export class RegistroService {
     ) : {
         mostrarSearchBar: boolean,
         mostrarTextoHome: boolean,
+        mostrarIconoBack: boolean,
+        mostrarTextoBack: boolean,
         llaveSubtitulo: string,
         mostrarNombrePerfil: boolean,
         llaveTextoNombrePerfil: string
@@ -291,6 +293,8 @@ export class RegistroService {
         let appbar = {
             mostrarSearchBar: false,
             mostrarTextoHome: false,
+            mostrarIconoBack: true,
+            mostrarTextoBack: false,  
             llaveSubtitulo: '',
             mostrarNombrePerfil: false,
             llaveTextoNombrePerfil: ''
@@ -305,6 +309,7 @@ export class RegistroService {
             case AccionEntidad.CREAR:
                 appbar.mostrarSearchBar = true
                 appbar.mostrarTextoHome = true
+                appbar.mostrarTextoBack = true
                 appbar.llaveSubtitulo = 'actualizar'
                 appbar.mostrarNombrePerfil = true
                 appbar.llaveTextoNombrePerfil = this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
@@ -312,6 +317,7 @@ export class RegistroService {
             case AccionEntidad.ACTUALIZAR:
                 appbar.mostrarSearchBar = true
                 appbar.mostrarTextoHome = true
+                appbar.mostrarTextoBack = true
                 appbar.llaveSubtitulo = 'actualizar'
                 appbar.mostrarNombrePerfil = true
                 appbar.llaveTextoNombrePerfil = this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)

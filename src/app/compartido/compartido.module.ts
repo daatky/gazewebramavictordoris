@@ -100,7 +100,8 @@ import { BuscadorComponent } from './componentes/buscador/buscador.component';
     ModalInferiorComponent,
     DialogoInlineComponent,
     BarraInferiorComponent,
-    GestorEventosDirective
+    GestorEventosDirective,
+    BuscadorComponent
   ]
 })
 

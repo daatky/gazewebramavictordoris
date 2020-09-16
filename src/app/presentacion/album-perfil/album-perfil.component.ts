@@ -264,12 +264,20 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
       searchBarAppBar: {
-        mostrarSearchBar: true,
+        configuracion: {
+          mostrar: true,
+          datos: {
+            disable: true
+          }
+        },
         nombrePerfil: {
           mostrar: true,
           llaveTexto: this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(this.codigo as CodigosCatalogoTipoPerfil)
         },
-        mostrarDivBack: true,
+        mostrarDivBack: {
+          icono: true,
+          texto: true,
+        },
         mostrarTextoHome: false,
         subtitulo: {
           mostrar: true,

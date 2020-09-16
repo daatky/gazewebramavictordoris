@@ -30,6 +30,13 @@ export class BarraInferiorComponent implements OnInit {
       this.dataForm.get('texto').patchValue(this.barraInferior.input.data.texto)
     }       
   }
+  /*obtenerEstilosBoton(){
+    console.log("TENGO UN CAMBIO QUE NOS E VE")
+    if(this.barraInferior){
+      console.log(this.barraInferior)
+      this.dataForm.get('texto').patchValue(this.barraInferior.input.data.texto)
+    }
+  }*/
   iniciarDatos(){   
     this.dataForm = this.formBuilder.group({
       texto: ['', [Validators.required, Validators.maxLength(230)]],

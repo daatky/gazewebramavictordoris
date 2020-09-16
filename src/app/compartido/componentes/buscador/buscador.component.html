@@ -1,1 +1,38 @@
-<p>buscador works!</p>
+<div [ngClass]="{
+    'alturaAbierto':abrir,
+    'alturaCerrado':!abrir,
+    'disable': (this.data)?this.data.disable:false
+}" class="contenedorPrincipal">
+    <div class="barraBuscar">
+        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" [formControl]='controlBuscador' (focus)="focusGanado()"
+            (blur)="focusPerdido()" [ngModel]="palabra">
+        <div *ngIf="!abrir" class="iconoLupa"></div>
+        <div *ngIf="abrir" class="iconoX"></div>
+    </div>
+
+    <div *ngIf="abrir" class="contenedorResultados">
+        <app-lista-vertical [dataLista]='dataLista' class="centrar">
+            <div *ngFor="let item of listaResultados">
+                <div [ngSwitch]="item.tipo">
+                    <div *ngSwitchCase="tipo.NOTICIA">
+                        <p>Agregar diseno noticia</p>
+                    </div>
+                    <div *ngSwitchCase="tipo.PROYECTO">
+                        <p>Agregar diseno proyecto</p>
+                    </div>
+
+                    <div *ngSwitchCase="tipo.PERFIL">
+                        <p>
+                            {{item.titulo}}
+                        </p>
+                        <p>
+                            {{item.subtitulo}}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </app-lista-vertical>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
 import { CatalogoIdiomaModel } from "../catalogos/catalogo-idioma.model";
-import { NoticiaModel } from "./noticia.model";
-import { PerfilModel } from "../perfil.model";
+import { NoticiaModel } from "../noticia.model";
+import { PerfilModel } from "../entidades/perfil.model";
 
 export interface VotoNoticiaModel {
     id?: string

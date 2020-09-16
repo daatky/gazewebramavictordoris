@@ -1,31 +1,35 @@
-import { PerfilModelMapperService, PerfilModelEstadoMapperService } from '../modelo/entidades/perfil.model';
-import { PerfilEntity, PerfilEntityMapperServicePerfil } from './../entidades/perfil.entity';
-import { PerfilServiceLocal } from './../../nucleo/servicios/locales/perfil.service';
-import { AlbumModel } from '../modelo/entidades/album.model';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
-import { catchError, tap, map, debounceTime } from 'rxjs/operators'
+import { PerfilModelMapperService, PerfilModelEstadoMapperService } from '../modelo/entidades/perfil.model'
+import { PerfilEntity, PerfilEntityMapperServicePerfil } from './../entidades/perfil.entity'
+import { PerfilServiceLocal } from './../../nucleo/servicios/locales/perfil.service'
+import { AlbumModel } from '../modelo/entidades/album.model'
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { PagoService } from '../../nucleo/servicios/remotos/pago.service'
+import { catchError, tap, map, debounceTime, delay } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
-import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipoPerfilMapperService2 } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
-import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
-import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
-import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
-import { PerfilModel } from '../modelo/entidades/perfil.model';
-import { UsuarioModel, UsuarioModelMapperService } from '../modelo/entidades/usuario.model';
+import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipoPerfilMapperService2 } from '../entidades/catalogos/catalogo-tipo-perfil.entity'
+import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service'
+import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model'
+import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service'
+import { PerfilModel } from '../modelo/entidades/perfil.model'
+import { UsuarioModel, UsuarioModelMapperService } from '../modelo/entidades/usuario.model'
+import { PaginacionModel } from '../modelo/paginacion-model'
 
 @Injectable({ providedIn: 'root'})
 export class PerfilRepository {
+
 
     constructor(
         private perfilServicieRemoto: PerfilServiceRemoto,
         private perfilServicieLocal: PerfilServiceLocal,
         private mapeador: CatalogoTipoPerfilMapperService2,
         private perfilEntityMapperService: PerfilEntityMapperServicePerfil,
-        private localStorage: LocalStorage,
         private perfilModelMapperService: PerfilModelMapperService,
         private perfilModelEstadoMapperService: PerfilModelEstadoMapperService,
         private usuarioModelMapperService: UsuarioModelMapperService,
+        private mapeadorTipoPerfiles: CatalogoTipoPerfilMapperService2,
+        private perfileMapper: PerfilEntityMapperServicePerfil,
+        private localStorage: LocalStorage
     ) {
 
     }
@@ -34,7 +38,7 @@ export class PerfilRepository {
         return this.perfilServicieRemoto.obtenerCatalogoTipoPerfil()
             .pipe(
                 map(data => {
-                    return this.mapeador.transform(data.respuesta.datos);
+                    return this.mapeadorTipoPerfiles.transform(data.respuesta.datos);
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -92,6 +96,9 @@ export class PerfilRepository {
     removerPerfilActivoDelLocalStorage() {
         this.perfilServicieLocal.removerPerfilActivoDelLocalStorage()
     }
+    eliminarVariableStorage(llave: string) {
+        this.localStorage.eliminarVariableStorage(llave)
+    }
 
     actualizarPerfil(perfil: PerfilModel): Observable<PerfilModel> {
         const perfilEntity = this.perfilModelMapperService.transform(perfil)
@@ -129,6 +136,23 @@ export class PerfilRepository {
     activarPerfil(perfil: PerfilModel): Observable<object> {
         const perfilEntity : PerfilEntity = { _id: perfil._id }
         return this.perfilServicieRemoto.activarPerfil(perfilEntity)
+    }
+
+    buscarPerfiles(palabra: string, limite: number, pagina: number): Observable<PaginacionModel<PerfilModel>> {        
+        return this.perfilServicieRemoto.buscarPerfiles(palabra, limite, pagina).pipe(
+            map(data => {
+                let cargarMas = data.headers.get("proximaPagina") == "true"
+                let resultado: PaginacionModel<PerfilModel> =
+                {
+                    proximaPagina: cargarMas,
+                    lista: this.perfileMapper.transform(data.body.respuesta.datos)
+                }
+                return resultado;
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
     }
 
 }

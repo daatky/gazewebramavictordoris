@@ -1,21 +1,26 @@
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { PensamientoEntity, TraduccionPensamientoEntity } from "../entidades/pensamiento.entity";
+import { Observable, of, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { PensamientoRepository } from "../repositorio/pensamiento.repository";
 import { PensamientoModel } from '../modelo/entidades/pensamiento.model';
-import { VariablesGlobales, Paginacion } from 'src/app/nucleo/servicios/generales/variables-globales.service';
+//import { VariablesGlobales } from 'src/app/nucleo/servicios/generales/variables-globales.service';
+import { PaginacionModel } from '../modelo/paginacion-model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PensamientoNegocio {
+    paginacionPrivado: number
+    paginacionPublico: number
     constructor(
-        private variablesGlobales: VariablesGlobales,
+        //private variablesGlobales: VariablesGlobales,
         //private pensamientoRepository:PensamientoRepository
         private pensamientoRepository: PensamientoRepository
-    ) { }
-    obtenerPensamientoAleatorio(): Observable<PensamientoModel> {        
+    ) {
+        this.paginacionPrivado = 1
+        this.paginacionPublico = 1
+    }
+    obtenerPensamientoAleatorio(): Observable<PensamientoModel> {
         return this.pensamientoRepository.obtenerPensamientoAleatorio()
             .pipe(
                 map((data: PensamientoModel) => {
@@ -26,63 +31,33 @@ export class PensamientoNegocio {
                 })
             )
     }
-    /*
-    obtenerPensamientoPublicos(idPerfil:string): Observable<Array<PensamientoModel>> {
-        //Para saber que lista debo cargar mas
-        this.isPublico=true
-        return this.pensamientoRepository.obtenerPensamientoPublicos(idPerfil)
-            .pipe(
-                map((data:Array<PensamientoModel>) => {                    
-                    return data
-                }),
-                catchError(err => {
-                    console.log(err)
-                    return throwError(err)
-                })
-            )
-    }
-    obtenerPensamientosPrivados(idPerfil:string){
-        this.isPublico=false
-        return this.pensamientoRepository.obtenerPensamientosPrivados(idPerfil)
-            .pipe(
-                map((data:Array<PensamientoModel>) => {
-                    return data
-                }),
-                catchError(err => {
-                    console.log(err)
-                    return throwError(err)
-                })
-            )
-    }*/
-    obtenerPensamientos(idPerfil: string, esPrivado: boolean):Observable<Array<PensamientoModel>> {        
+
+    obtenerPensamientos(idPerfil: string, esPrivado: boolean): Observable<Array<PensamientoModel>> {
         return this.pensamientoRepository.obtenerPensamientos(idPerfil, esPrivado)
             .pipe(
                 map((data: Array<PensamientoModel>) => {
                     return data
                 }),
                 catchError(err => {
-                    //console.log(err)
-                    return throwError(err)
-                })
-            )
-    }
-    crearPensamiento(idPerfil: string, publico: boolean, pensamiento: string): Observable<PensamientoModel> {
-        //let traduccionTexto: Array<TraduccionPensamientoEntity> = [{ texto: pensamiento }]
-        console.log("ESTADO QUE ENVIO")
-        console.log(publico)
-        return this.pensamientoRepository.crearPensamiento({ perfil: {_id: idPerfil }, traducciones: [{ texto: pensamiento }], publico: publico })
-            .pipe(
-                map((data: PensamientoModel) => {
-                    return data
-                }),
-                catchError(err => {
                     console.log(err)
                     return throwError(err)
                 })
             )
     }
+    crearPensamiento(idPerfil: string, publico: boolean, pensamiento: string): Observable<PensamientoModel> {
+        return this.pensamientoRepository.crearPensamiento({ perfil: { _id: idPerfil }, traducciones: [{ texto: pensamiento }], publico: publico })
+            .pipe(
+                map((data: PensamientoModel) => {
+                    return data
+                }),
+                catchError(err => {
+
+                    return throwError(err)
+                })
+            )
+    }
     actualizarPensamiento(idPensamiento: string, pensamiento: string): Observable<string> {
-        return this.pensamientoRepository.actualizarPensamiento({ _id: idPensamiento, traducciones:[{texto: pensamiento}]})
+        return this.pensamientoRepository.actualizarPensamiento({ _id: idPensamiento, traducciones: [{ texto: pensamiento }] })
             .pipe(
                 map((data: string) => {
                     return data
@@ -117,38 +92,81 @@ export class PensamientoNegocio {
                 })
             )
     }
-    cargarMasPensamientos(idPerfil: string, limite: number, pagina: number, esPrivado: boolean): Observable<Array<PensamientoModel>> {
-        return this.pensamientoRepository.cargarMasPensamientos(idPerfil, limite, pagina, esPrivado)
-            .pipe(
-                map(data => {
-                    this.llenarDatos(this.variablesGlobales.paginacionPublico.actual, this.variablesGlobales.paginacionPublico.total, data.length, esPrivado)
-                    return data
-                }),
-                catchError(err => {
-                    console.log(err)
-                    return throwError(err)
-                })
-            )
+    cargarMasPensamientos(idPerfil: string, limite: number, esPublico: boolean): Observable<Array<PensamientoModel>> {
+        let pagina = this.obtenerPagina(esPublico)
+        if (pagina > 0) {
+            return this.pensamientoRepository.cargarMasPensamientos(idPerfil, limite, pagina, esPublico)
+                .pipe(
+                    map((data: PaginacionModel<PensamientoModel>) => {
+                        this.llenarPaginaActual(esPublico, data.proximaPagina)
+                        //this.llenarDatos(this.variablesGlobales.paginacionPublico.actual, this.variablesGlobales.paginacionPublico.total, data.length, esPrivado)
+                        return data.lista
+                    }),
+                    catchError(err => {
+                        console.log(err)
+                        return throwError(err)
+                    })
+                )
+        }
+        return of(null)
     }
-    //LLega la pagina actual en la que nos encontramos,total que esta en la aplicacion, total de paginas que el backend envia, 
-    llenarDatos(actual: number, total: number, nuevoTotal: number, esPrivado: boolean) {
-        //this.variablesGlobales.paginacionPublico=this.llenarDatos(this.variablesGlobales.paginacionPublico.actual,this.variablesGlobales.paginacionPublico.total,data.length)                    
-        let respuesta = { actual: 1, total: undefined }
-        if (!total) {
-            console.log('NO EXISTE')
-            //Guardar total paginacion
-            respuesta.total = nuevoTotal
-        }
-        if (total === actual) {
-            respuesta.actual = -1
+    //retorna la pagin actual a la que hay que realizar la conlta pra la paginacion
+    obtenerPagina(esPublico: boolean): number {
+        if (esPublico) {
+            return this.paginacionPublico
         } else {
-            respuesta.actual++
+            return this.paginacionPrivado
         }
-        //Para asignar a la varible que le corresponda 
-        if (esPrivado) {
-            this.variablesGlobales.paginacionPrivado = respuesta
+    }
+    //Para llenar momentaneamente la pagina actual de cada una de las variables Publico y privado
+    llenarPaginaActual(esPublico: boolean, cargarMas: boolean) {
+        if (!cargarMas) {
+            if (esPublico) {
+                this.paginacionPublico = -1
+            } else {
+                this.paginacionPrivado = -1
+            }
         } else {
-            this.variablesGlobales.paginacionPublico = respuesta
+            if (esPublico) {
+                this.paginacionPublico++
+            } else {
+                this.paginacionPrivado++
+            }
+        }
+    }
+
+    //Array<PensamientoModel>
+    /*ordenar(data: Array<PensamientoModel>): Array<PensamientoModel> {
+        console.log(data)
+        // data.sort((a, b)=> b.fechaActualizacion.getTime() > a.fechaActualizacion.getTime())
+        return data.sort(function (a, b) { return a.fechaActualizacion.getTime() - b.fechaActualizacion.getTime() })
+    }*/
+
+
+    /*ordenarAsc(data:Array<any>, key) {
+        data.sort(function (a, b) {
+           return a[key] > b[key];
+        });
+     }*/
+    //Para no perfmitir duplicidad de datos en caso de que alguien cambie de estado (Privado,publico) un pensamiento 
+    //Y al traer de la base de datos traiga nuevamente el pensamiento actualizado
+    verificarDuplicidadDatos(listaMomentanea: PensamientoModel[], listaBaseDatos: PensamientoModel[], esPublico: boolean):PensamientoModel[] {
+        let lista:PensamientoModel[]=listaMomentanea
+        let variableEstado = 0
+        if (esPublico) {
+            variableEstado = this.paginacionPublico
+        } else {
+            variableEstado = this.paginacionPrivado
+        }
+        if (listaMomentanea.length > 0) {
+            if (variableEstado > 2) {
+                lista.push(...listaBaseDatos)
+                return lista
+            } else {
+                return listaBaseDatos
+            }
+        } else {
+            return listaBaseDatos
         }
     }
 }

@@ -2,8 +2,11 @@ import { Injectable } from "@angular/core";
 import { IdiomaRepository } from "../repositorio/idioma.repository";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { HandleError } from 'src/app/nucleo/servicios/locales/handleError.service';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity'
+import { PerfilRepository } from '../repositorio/perfil.repository';
+import { UbicacionRepository } from '../repositorio/ubicacion.repository';
+import { PagoRepository } from '../repositorio/pago.repository';
+import { LlavesLocalStorage } from 'src/app/nucleo/servicios/locales/llaves/local-storage.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +14,9 @@ import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.ent
 export class IdiomaNegocio {
     //private observadorItem$ = new BehaviorSubject<string>('');
     constructor(private idiomaRepository: IdiomaRepository,
-        private handleError: HandleError
+        private perfilRepository:PerfilRepository,
+        private ubicacionRepository:UbicacionRepository,
+        private pagoRepository:PagoRepository
         ) { }
     /*crearObservable():Observable<string>{
       //gENERA UN OBSERBALE
@@ -24,6 +29,12 @@ export class IdiomaNegocio {
     obtenerIdiomaSeleccionado():CatalogoIdiomaEntity{
         return this.idiomaRepository.obtenerIdiomaLocal()
     }
+    //
+    eliminarVarablesStorage(){
+        this.perfilRepository.eliminarVariableStorage(LlavesLocalStorage.TIPO_PERFILES)
+        this.pagoRepository.eliminarVariableStorage(LlavesLocalStorage.METODOS_PAGO)
+        this.ubicacionRepository.eliminarVariableStorage(LlavesLocalStorage.PAISES)
+    }
     obtenerCatalogoIdiomas():Observable<Array<CatalogoIdiomaEntity>> {
         let idiomas:Array<CatalogoIdiomaEntity>=this.idiomaRepository.obtenerIdiomas()
         if(idiomas){
@@ -31,7 +42,8 @@ export class IdiomaNegocio {
         }else{
             return this.idiomaRepository.obtenerCatalogoIdiomas()
             .pipe(
-                map((data:Array<CatalogoIdiomaEntity>) => {                      
+                map((data:Array<CatalogoIdiomaEntity>) => {     
+                    //Para no guardar en el local storage el catalogo de idiomas vacio                 
                     if(data&&data.length>0){
                         this.idiomaRepository.guardarIdiomas(data)                 
                         return this.ordenarIdioma(data)   

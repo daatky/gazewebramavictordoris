@@ -1,7 +1,9 @@
 @import '../../../assets/estilos/dimensiones.scss';
+@import '../../../assets/estilos/imagenes.scss';
 
-.divCabecera{
-    height: $item-menu-alto-2621;
+.divCabecera{    
+    position: relative;
+    height: $item-menu-alto-2621;    
     width: 100%;
 }
 .escogerLeng{
@@ -48,7 +50,7 @@
     align-items: center;*/
 }
 .divCompromiso{
-    min-height: calcular(55.07);
+    min-height: calcular(55.07);    
     width: 100%;
     display: table
 } 
@@ -73,3 +75,27 @@
 .posicionRelativa{
     position: absolute;
 }
+/*       */
+// Boton atras
+.botonAtras {
+    position: absolute;
+    left: - ($boton-back-icono-ancho + $espacio-267 +$espacio-554);
+    bottom: $espacio-6545;
+    z-index: 1;
+    height: fit-content;
+    display: flex;
+    flex-flow: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.botonAtras .icono {
+    width: $boton-back-icono-ancho;
+    height: $boton-back-icono-alto;
+    margin: 0 0 0 $espacio-554; 
+    background-color: yellowgreen;
+    background: $forma-flecha-back;
+    background-size: 100% 100%;    
+}
+/*.botonAtras p {
+    margin: 0 0 $espacio-05 0;
+}*/
