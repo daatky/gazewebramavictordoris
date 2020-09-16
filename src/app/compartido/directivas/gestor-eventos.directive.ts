@@ -45,7 +45,9 @@ export class GestorEventosDirective implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscripcion.unsubscribe()
+        if (this.subscripcion) {
+            this.subscripcion.unsubscribe()
+        }
     }
 
     @HostListener('tap', ['$event'])

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { APIGAZE } from './rutas/api-gaze.enum';
 import { Catalogo } from './rutas/catalogos.enum';
 import { CatalogoPaisEntity } from 'src/app/dominio/entidades/catalogos/catalogo-pais.entity'
-import { CatalogoLocalidadModel } from '../../../dominio/modelo/catalogo-localidad.model'
+import { CatalogoLocalidadModel } from '../../../dominio/modelo/catalogos/catalogo-localidad.model'
 import { RespuestaRemota } from '../../util/respuesta'
 import { debounceTime } from 'rxjs/operators';
 

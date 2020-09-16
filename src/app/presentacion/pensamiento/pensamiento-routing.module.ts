@@ -6,14 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: PensamientoComponent,
-    /*children: [
-      {
-        path: RutasLocales.CREAR_PENSAMIENTO.toString(),
-       // redirectTo: 'm1v6',
-     //   pathMatch: 'full'
-        component:CrearPensamientoComponent
-      },
-    ]*/
   }
 ];
 

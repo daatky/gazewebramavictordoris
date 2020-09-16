@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { PensamientoService } from "../../nucleo/servicios/remotos/pensamiento.service";
-import { Observable, throwError } from "rxjs";
+import { Injectable } from "@angular/core"
+import { PensamientoService } from "../../nucleo/servicios/remotos/pensamiento.service"
+import { Observable, throwError } from "rxjs"
 import { catchError, map } from 'rxjs/operators'
-import { PensamientoEntity, PensamientoMapperService } from "../entidades/pensamiento.entity";
-import { PensamientoModel } from '../modelo/pensamiento.model';
-import { HttpResponse } from '@angular/common/http';
-import { RespuestaRemota } from 'src/app/nucleo/util/respuesta';
+import { PensamientoEntity, PensamientoMapperService } from "../entidades/pensamiento.entity"
+import { PensamientoModel } from '../modelo/entidades/pensamiento.model'
+import { HttpResponse } from '@angular/common/http'
+import { RespuestaRemota } from 'src/app/nucleo/util/respuesta'
 import { PaginacionModel } from "../modelo/paginacion-model"
 
 

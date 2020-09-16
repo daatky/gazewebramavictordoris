@@ -1,9 +1,9 @@
-import { PerfilResumenModel } from './perfil-resumen.model'
-import { PerfilModel, PerfilModelMapperService } from "./perfil.model"
+import { PerfilResumenModel } from '../entidades/perfil-resumen.model'
+import { PerfilModel, PerfilModelMapperService } from "../perfil.model"
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
-import { CatalogoTipoPerfilEntity } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
-import { PerfilEntityMapperServicePerfilresumenModelo } from '../entidades/perfil.entity';
+import { CatalogoTipoPerfilEntity } from '../../entidades/catalogos/catalogo-tipo-perfil.entity';
+import { PerfilEntityMapperServicePerfilresumenModelo } from '../../entidades/perfil.entity';
 
 export interface CatalogoTipoPerfilModel {
     codigo?: string,

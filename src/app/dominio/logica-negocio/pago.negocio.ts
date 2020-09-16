@@ -3,11 +3,11 @@ import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, } from 'rxjs/operators'
 import { PagoRepository } from "../repositorio/pago.repository";
 import { CatalogoMetodoPagoEntity, MetodoPagoStripeEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity';
-import { CatalogoMetodoPagoModel, PagoStripeModel } from '../modelo/catalogo-metodo-pago.model';
+import { CatalogoMetodoPagoModel, PagoStripeModel } from '../modelo/catalogos/catalogo-metodo-pago.model';
 import { PaymentIntent } from "@stripe/stripe-js";
 import { PerfilRepository } from '../repositorio/perfil.repository';
 import { Cuenta } from 'src/app/nucleo/servicios/remotos/rutas/cuenta.enum';
-import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
 import { IdiomaRepository } from '../repositorio/idioma.repository';
 import { CatalogoIdiomaEntity } from '../entidades/catalogos/catalogo-idioma.entity';
 

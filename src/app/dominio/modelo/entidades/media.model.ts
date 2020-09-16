@@ -1,9 +1,9 @@
 import { ArchivoModel, ArchivoModeloMapperService } from './archivo.model'
-import { CatalogoMediaEntity } from './../entidades/catalogos/catalogo-media.entity'
-import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.entity'
+import { CatalogoMediaEntity } from '../../entidades/catalogos/catalogo-media.entity'
+import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
-import { MediaEntity } from '../entidades/media.entity';
+import { MediaEntity } from '../../entidades/media.entity';
 
 export interface MediaModel {
     _id?: string,

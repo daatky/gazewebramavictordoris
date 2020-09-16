@@ -1,5 +1,5 @@
 import { ItemSelector } from './../../compartido/diseno/modelos/elegible.interface';
-import { CatalogoPaisModel } from '../modelo/catalogo-pais.model';
+import { CatalogoPaisModel } from '../modelo/catalogos/catalogo-pais.model';
 import { Injectable } from "@angular/core"
 import { Observable, BehaviorSubject, throwError, Subject, of } from 'rxjs'
 import { catchError, tap, map, switchMap } from 'rxjs/operators'

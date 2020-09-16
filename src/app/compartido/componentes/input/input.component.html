@@ -1,7 +1,16 @@
-<input *ngIf="inputCompartido" type="{{ inputCompartido.tipo }}" placeholder="{{ inputCompartido.placeholder }}"
-    [formControl]="inputCompartido.data" class="{{ inputCompartido.estilo.estiloInput }} regular"
-    autocomplete="disabled" [maxLength]="determinarCadenaMaxima()" (focus)="empezarEscribir()"
-    (keyup)="escribiendoEnInput()" (blur)="dejarDeEscribir()">
+<input 
+    *ngIf="inputCompartido"
+    type="{{ inputCompartido.tipo }}"
+    placeholder="{{ inputCompartido.placeholder }}"
+    [formControl]="inputCompartido.data"
+    class="{{ inputCompartido.estilo.estiloInput }} regular"
+    autocomplete="disabled"
+    [maxLength]="determinarCadenaMaxima()"
+    (focus)="empezarEscribir()"
+    (keyup)="escribiendoEnInput()"
+    (blur)="dejarDeEscribir()"
+    [readonly]="(inputCompartido.soloLectura) ? inputCompartido.soloLectura : false"
+>
 <!--error-->
 <div 
     *ngIf="inputCompartido && (!inputCompartido.errorPersonalizado || inputCompartido.errorPersonalizado.length === 0)"

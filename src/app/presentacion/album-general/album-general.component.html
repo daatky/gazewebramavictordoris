@@ -97,7 +97,7 @@
         >
             {{ 'clickDescripcionImagen' | translate }}
         </p>
-        <div class="espaciador-154"></div>
+        <div class="espaciador-139"></div>
         <p
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOAMARILLOBASE, 
@@ -172,7 +172,13 @@
         <div class="icono">
             <img class="iconotexto" src="../../../assets/recursos/botones/forma-icono-editar-texto.svg">
         </div>
-        <input type="text" maxlength="135" placeholder="105 characters maximum" [(ngModel)]="itemDescripcionActivo">
+        <input
+            type="text"
+            maxlength="135"
+            placeholder="105 characters maximum"
+            [(ngModel)]="itemDescripcionActivo"
+            (keyup.enter)="actualizarDescripcion()"
+        >
     </div>
     <div
         class="boton"

@@ -1,5 +1,5 @@
 import { CatalogoEstadoModel } from "./catalogos/catalogo-estado.model";
-import { CatalogoLocalidadModel } from "./catalogo-localidad.model";
+import { CatalogoLocalidadModel } from "./catalogos/catalogo-localidad.model";
 import { PerfilModel } from "./perfil.model";
 import { VotoNoticiaModel } from "./entidades/voto-noticia.model";
 import { Injectable } from "@angular/core";

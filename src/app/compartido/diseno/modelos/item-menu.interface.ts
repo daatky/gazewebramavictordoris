@@ -3,7 +3,7 @@ import { TamanoItemMenu } from '../enums/tamano-item-menu.enum'
 import { ColorFondoItemMenu } from '../enums/color-fondo-item-menu.enum'
 import { LineaCompartida } from './linea.interface'
 import { TipoMenu } from '../../../compartido/componentes/item-menu/item-menu.component';
-import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.model';
+import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/entidades/item-menu.model';
 
 // Configuracion del item menu
 export interface ItemMenuCompartido {

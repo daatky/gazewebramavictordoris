@@ -77,7 +77,10 @@ export class MisContactosComponent implements OnInit {
       this.configuracionAppBar = {
         usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
         searchBarAppBar: {
-          mostrarDivBack: true,
+          mostrarDivBack: {
+            icono: true,
+            texto: true
+          },
           mostrarLineaVerde: true,
           mostrarTextoHome: true,
           mostrarBotonXRoja: false,

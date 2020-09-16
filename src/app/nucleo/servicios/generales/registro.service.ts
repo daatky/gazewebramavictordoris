@@ -1,22 +1,27 @@
+import { AlbumNegocio } from './../../../dominio/logica-negocio/album.negocio';
+import { CatalogoTipoPerfilModel } from './../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
+import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface';
 import { GeneradorId } from './generador-id.service';
-import { DireccionModel } from './../../../dominio/modelo/direccion.model';
+import { DireccionModel } from '../../../dominio/modelo/entidades/direccion.model';
 import { ItemSelector } from './../../../compartido/diseno/modelos/elegible.interface';
 import { CodigosCatalogoTipoAlbum } from './../remotos/codigos-catalogos/catalogo-tipo-album.enum';
-import { MediaModel } from './../../../dominio/modelo/media.model';
-import { PerfilModel } from './../../../dominio/modelo/perfil.model';
+import { MediaModel } from '../../../dominio/modelo/entidades/media.model';
+import { PerfilModel } from '../../../dominio/modelo/perfil.model';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { CodigosCatalogoEntidad, AccionEntidad, AccionAlbum } from './../remotos/codigos-catalogos/catalogo-entidad.enum'
 import { Injectable } from '@angular/core'
 import { CodigosCatalogosEstadoPerfiles } from '../remotos/codigos-catalogos/catalogo-estado-perfiles.enun'
 import { CodigosCatalogoTipoPerfil } from '../remotos/codigos-catalogos/catalogo-tipo-perfiles.enum'
-import { UsuarioModel } from 'src/app/dominio/modelo/usuario.model';
+import { UsuarioModel } from 'src/app/dominio/modelo/entidades/usuario.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
-import { AlbumModel } from 'src/app/dominio/modelo/album.model';
+import { AlbumModel } from 'src/app/dominio/modelo/entidades/album.model';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { Router } from '@angular/router';
+import { TipoBoton } from 'src/app/compartido/componentes/button/button.component';
+import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 
 /*
     - Interfaz para metodos auxiliares del componente registro (creacion, update)
@@ -28,7 +33,9 @@ export class RegistroService {
     constructor(
         private cuentaNegocio: CuentaNegocio,
         private formBuilder: FormBuilder,
-        private generadorId: GeneradorId
+        private generadorId: GeneradorId,
+        private perfilNegocio: PerfilNegocio,
+        private albumNegocio: AlbumNegocio,
     ) {
 
     }
@@ -39,11 +46,11 @@ export class RegistroService {
         accionEntidad: AccionEntidad,
     ) : AccionAlbum {
         if (entidad === CodigosCatalogoEntidad.PERFIL) {
-            if (accionEntidad === AccionEntidad.REGISTRO || accionEntidad === AccionEntidad.CREAR) {
+            if (accionEntidad === AccionEntidad.REGISTRO) {
                 return AccionAlbum.CREAR
             }
             
-            if (accionEntidad === AccionEntidad.ACTUALIZAR) {
+            if (accionEntidad === AccionEntidad.CREAR || accionEntidad === AccionEntidad.ACTUALIZAR) {
                 return AccionAlbum.ACTUALIZAR
             }
         }
@@ -59,73 +66,55 @@ export class RegistroService {
         }
     }
 
-    // Devuelve la llave de la traduccion del texto segun el tipo de perfil
-    obtenerLlaveSegunCodigoPerfil(
-        codigoPerfil: CodigosCatalogoTipoPerfil
-    ) {
-        switch (codigoPerfil) {
-            case CodigosCatalogoTipoPerfil.CLASSIC:
-                return 'clasico'
-            case CodigosCatalogoTipoPerfil.PLAYFUL:
-                return 'ludico'
-            case CodigosCatalogoTipoPerfil.SUBSTITUTE:
-                return 'sustituto'
-            case CodigosCatalogoTipoPerfil.GROUP:
-                return 'grupo'
-            default:
-                return ''
-        }
-    }
-
     // Inicializar controles para el formulario
     inicializarControlesDelFormulario(
-      perfil: PerfilModel
+      perfil: PerfilModel,
+      session: boolean = true
     ) : FormGroup {
         // Definir email y contrasena
-        const loginInfo = this.cuentaNegocio.obtenerEmailConContrasenaDelUsuario()
+        const loginInfo = this.cuentaNegocio.obtenerEmailConContrasenaDelUsuario(session)
 
         let direccion = ''
-        console.log(perfil)
         if (perfil && perfil.direcciones && perfil.direcciones.length > 0) {
             direccion = perfil.direcciones[0].descripcion
         }
 
         const registroForm:FormGroup = this.formBuilder.group({
             nombreContacto: [
-                perfil.nombreContacto,
+                (perfil) ? perfil.nombreContacto : '',
                 [
-                Validators.required,
-                Validators.pattern('^[A-Za-z0-9 ]+$'),
-                Validators.minLength(3)
-                ]
+                    Validators.required,
+                    Validators.pattern('^[A-Za-z0-9 ]+$'),
+                    Validators.minLength(3)
+                ],
             ],
             nombre: [
-                perfil.nombre,
+                (perfil) ? perfil.nombre : '',
                 [
-                Validators.pattern('^[A-Za-z ]+$'),
-                Validators.minLength(3)
+                    Validators.pattern('^[A-Za-z ]+$'),
+                    Validators.minLength(3)
                 ]
             ],
             email: [
-                loginInfo.email,
+                (loginInfo) ? loginInfo.email : '',
                 [
-                Validators.required,
-                Validators.email
+                    Validators.required,
+                    Validators.email
                 ]
             ],
             contrasena: [
-                loginInfo.contrasena,
+                (loginInfo) ? loginInfo.contrasena : '',
                 [
-                Validators.required,
-                Validators.minLength(8),
-                Validators.maxLength(12),
-                Validators.pattern('^[A-Za-z0-9@]{8,12}$')
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.maxLength(12),
+                    Validators.pattern('^[A-Za-z0-9@]{8,12}$')
                 ]
             ],
             direccion: [
                 direccion,
                 [
-                Validators.pattern('^[A-Za-z0-9-, ]+$')
+                    Validators.pattern('^[A-Za-z0-9-, ]+$')
                 ]
             ]
         })
@@ -154,7 +143,8 @@ export class RegistroService {
                     contador: 0
                 },
                 id: this.generadorId.generarIdConSemilla(),
-                errorPersonalizado: ''
+                errorPersonalizado: '',
+                soloLectura: false
             })
             inputsForm.push({
                 tipo: 'text',
@@ -171,7 +161,8 @@ export class RegistroService {
                     contador: 0
                 },
                 id: this.generadorId.generarIdConSemilla(),
-                errorPersonalizado: ''
+                errorPersonalizado: '',
+                soloLectura: false
             })
             inputsForm.push({
                 tipo: 'email',
@@ -183,7 +174,8 @@ export class RegistroService {
                 placeholder: 'E-mail:',
                 data: registroForm.controls.email,
                 id: this.generadorId.generarIdConSemilla(),
-                errorPersonalizado: ''
+                errorPersonalizado: '',
+                soloLectura: false
             })
             inputsForm.push({
                 tipo: 'password',
@@ -195,7 +187,8 @@ export class RegistroService {
                 placeholder: 'Password:',
                 data: registroForm.controls.contrasena,
                 id: this.generadorId.generarIdConSemilla(),
-                errorPersonalizado: ''
+                errorPersonalizado: '',
+                soloLectura: false
             })
             inputsForm.push({
                 tipo: 'text',
@@ -207,7 +200,8 @@ export class RegistroService {
                 placeholder: 'Address:',
                 data: registroForm.controls.direccion,
                 id: this.generadorId.generarIdConSemilla(),
-                errorPersonalizado: ''
+                errorPersonalizado: '',
+                soloLectura: false
             })
         }
         return inputsForm
@@ -219,11 +213,13 @@ export class RegistroService {
         tipoAlbum: CodigosCatalogoTipoAlbum
     ) : AlbumModel {
         let portadaPerfil: AlbumModel
-        perfil.album.forEach(item => {
-            if (item && item.tipo.codigo === tipoAlbum) {
-              portadaPerfil = item
-            }
-        })
+        if (perfil && perfil.album) {
+            perfil.album.forEach(item => {
+                if (item && item.tipo.codigo === tipoAlbum) {
+                portadaPerfil = item
+                }
+            })
+        }
         return portadaPerfil
     }
 
@@ -288,6 +284,8 @@ export class RegistroService {
     ) : {
         mostrarSearchBar: boolean,
         mostrarTextoHome: boolean,
+        mostrarIconoBack: boolean,
+        mostrarTextoBack: boolean,
         llaveSubtitulo: string,
         mostrarNombrePerfil: boolean,
         llaveTextoNombrePerfil: string
@@ -295,6 +293,8 @@ export class RegistroService {
         let appbar = {
             mostrarSearchBar: false,
             mostrarTextoHome: false,
+            mostrarIconoBack: true,
+            mostrarTextoBack: false,  
             llaveSubtitulo: '',
             mostrarNombrePerfil: false,
             llaveTextoNombrePerfil: ''
@@ -303,22 +303,24 @@ export class RegistroService {
         switch (accionEntidad) {
             case AccionEntidad.REGISTRO:
                 appbar.mostrarTextoHome = false
-                appbar.llaveSubtitulo = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.llaveSubtitulo = this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
                 appbar.mostrarNombrePerfil = false
                 break
             case AccionEntidad.CREAR:
                 appbar.mostrarSearchBar = true
                 appbar.mostrarTextoHome = true
+                appbar.mostrarTextoBack = true
                 appbar.llaveSubtitulo = 'actualizar'
                 appbar.mostrarNombrePerfil = true
-                appbar.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.llaveTextoNombrePerfil = this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
                 break
             case AccionEntidad.ACTUALIZAR:
                 appbar.mostrarSearchBar = true
                 appbar.mostrarTextoHome = true
+                appbar.mostrarTextoBack = true
                 appbar.llaveSubtitulo = 'actualizar'
                 appbar.mostrarNombrePerfil = true
-                appbar.llaveTextoNombrePerfil = this.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
+                appbar.llaveTextoNombrePerfil = this.perfilNegocio.obtenerLlaveSegunCodigoPerfil(codigoPerfil as CodigosCatalogoTipoPerfil)
                 break
             default: break
         }
@@ -331,7 +333,7 @@ export class RegistroService {
         perfil: PerfilModel
     ) : ItemSelector {
         let item: ItemSelector = null
-        if (perfil.direcciones && perfil.direcciones.length > 0) {
+        if (perfil && perfil.direcciones && perfil.direcciones.length > 0) {
             item = {
                 codigo: perfil.direcciones[0].localidad.pais.codigo,
                 nombre: perfil.direcciones[0].localidad.pais.nombre,
@@ -339,6 +341,47 @@ export class RegistroService {
         }
 
         return item
+    }
+
+    validarPerfilParaDestruir(
+        accionEntidad: AccionEntidad,
+        codigoPerfil: string,
+        tipoPerfil: CatalogoTipoPerfilModel,
+        perfil: PerfilModel
+    ) {
+        if (perfil && tipoPerfil) {
+            switch (accionEntidad) {
+                case AccionEntidad.REGISTRO:
+                    this.cuentaNegocio.validarEstadoPerfilParaDestruir(codigoPerfil, perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
+                    break
+                case AccionEntidad.CREAR:
+                    // Pendiente de determinar caso al hacer back
+                    break
+                case AccionEntidad.ACTUALIZAR:
+                    this.perfilNegocio.removerPerfilActivoDelLocalStorage()
+                    break
+                default: break;
+            }
+        }
+    }
+
+    validarAlbumSegunAccionEntidad(
+        tipoAlbum: CodigosCatalogoTipoAlbum,
+        perfil: PerfilModel,
+        accionEntidad: AccionEntidad
+    ) {
+        switch (accionEntidad) {
+            case AccionEntidad.REGISTRO:
+                this.albumNegocio.validarAlbumSegunTipoEnSessionStorage(tipoAlbum, perfil)
+                break
+            case AccionEntidad.CREAR:
+                this.albumNegocio.validarAlbumEnPerfilActivo(tipoAlbum, perfil)
+                break
+            case AccionEntidad.ACTUALIZAR:
+                this.albumNegocio.validarAlbumEnPerfilActivo(tipoAlbum, perfil)
+                break
+            default: break;
+        }
     }
 
 }

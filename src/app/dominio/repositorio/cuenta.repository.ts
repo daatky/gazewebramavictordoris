@@ -1,12 +1,12 @@
 import { SessionStorageServicie } from './../../nucleo/servicios/locales/session-storage.service';
-import { UsuarioModel } from './../modelo/usuario.model';
+import { UsuarioModel } from '../modelo/entidades/usuario.model';
 import { CuentaServiceLocal } from './../../nucleo/servicios/locales/cuenta.service';
 import { Injectable } from '@angular/core'
 import { catchError, tap, map } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
 import { CuentaServiceRemoto } from '../../nucleo/servicios/remotos/cuenta.service';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
-import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
 import { PagoEntity } from '../entidades/pago.entity';
 import { PagoModel } from '../modelo/pago.model';
 import { TokenModel } from "../modelo/token.model";

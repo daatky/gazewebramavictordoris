@@ -1,5 +1,5 @@
-import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.entity'
-import { CatalogoPaisEntity } from '../entidades/catalogos/catalogo-pais.entity';
+import { CatalogoEstadoEntity } from './../../entidades/catalogos/catalogo-estado.entity'
+import { CatalogoPaisEntity } from '../../entidades/catalogos/catalogo-pais.entity';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { Injectable } from '@angular/core';
 

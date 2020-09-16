@@ -3,7 +3,7 @@ import { BotonCompartido } from '../../diseno/modelos/boton.interface';
 import { TipoBoton } from '../button/button.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BarraInferior } from "../../diseno/modelos/barra-inferior.interfce";
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { PensamientoModel } from 'src/app/dominio/modelo/entidades/pensamiento.model';
 import { ItemPensamiento } from '../../diseno/modelos/pensamiento';
 
 @Component({

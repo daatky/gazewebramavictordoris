@@ -156,11 +156,22 @@
     height: 100%;
 }
 .inputTexto{
+    //- $espacio-1232
     width: $bottom-bar-ancho - calcular(13.575) - (calcular(1.39)*2) - (calcular(15.88)) !important;
     height: calcular(12.21) !important;
 }
 .inputImagen{
     width: $bottom-bar-ancho - (calcular(1.39)*2) - (calcular(15.88)) !important;
     height: calcular(12.21) !important;
-    background: yellow;
+}
+.divContador{
+    height: 100%;
+    margin-left: -$espacio-1310;
+    width: $espacio-1310;
+    //position: relative;    
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-right: calcular(1.39);
+    box-sizing: border-box;
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CrearPensamientoComponent } from './crear-pensamiento.component';
+import { VerPerfilComponent } from './ver-perfil.component';
 
-describe('CrearPensamientoComponent', () => {
-  let component: CrearPensamientoComponent;
-  let fixture: ComponentFixture<CrearPensamientoComponent>;
+describe('VerPerfilComponent', () => {
+  let component: VerPerfilComponent;
+  let fixture: ComponentFixture<VerPerfilComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrearPensamientoComponent ]
+      declarations: [ VerPerfilComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CrearPensamientoComponent);
+    fixture = TestBed.createComponent(VerPerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

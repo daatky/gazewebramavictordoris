@@ -5,7 +5,8 @@ export interface BarraInferior {
     icono?:ConfiguracionIcono, //PARA ENVIAR LAS CONFIGURACION Y EL ICONO QUE SE DEBE MOSTRAR
     activarBarra?:boolean, //PARA INACTIVAR O ACTIVAR LA BARRA INFERIORE
     variosIconos?:boolean,//PARA SABER SI EL LA BARRA TIENE VARIOS ICONOS
-    enviar?:Function
+    enviar?:Function,
+    presentarContador?:boolean
 }
 
 export interface ConfiguracionInput{

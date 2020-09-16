@@ -1,7 +1,7 @@
-import { PerfilModel } from './../../../dominio/modelo/perfil.model';
+import { PerfilModel } from '../../../dominio/modelo/perfil.model';
 import { Perfiles } from './../remotos/rutas/perfiles.enum';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
-import { UsuarioModel } from './../../../dominio/modelo/usuario.model';
+import { CatalogoTipoPerfilModel } from '../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
+import { UsuarioModel } from '../../../dominio/modelo/entidades/usuario.model';
 import { Injectable } from '@angular/core'
 
 @Injectable({ providedIn: 'root' })
@@ -9,17 +9,11 @@ export class VariablesGlobales {
   // Generales
   public mostrarMundo: boolean // Para ocultar o mostrar el mundo
   public semillaItemsId: number // Semilla para genera el id de los items
-  // Paginacion
-  public paginacionPrivado: Paginacion // Comentar ! xD
-  public paginacionPublico: Paginacion // Comentar ! xD
   
   constructor(){
     // Generales
     this.mostrarMundo = true
     this.semillaItemsId = 0
-    // Paginacion
-    this.paginacionPrivado = new PaginacionClass()
-    this.paginacionPublico = new PaginacionClass()
   }
 }
 

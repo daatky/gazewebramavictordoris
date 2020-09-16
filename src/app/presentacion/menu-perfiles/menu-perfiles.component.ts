@@ -12,7 +12,7 @@ import { PerfilNegocio } from "../../dominio/logica-negocio/perfil.negocio";
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { TamanoItemMenu } from 'src/app/compartido/diseno/enums/tamano-item-menu.enum';
 import { ColorFondoItemMenu } from 'src/app/compartido/diseno/enums/color-fondo-item-menu.enum';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
 import { ItemMenuCompartido } from 'src/app/compartido/diseno/modelos/item-menu.interface';
 import { BotonCompartido } from 'src/app/compartido/diseno/modelos/boton.interface';
 import { DialogoServicie } from 'src/app/nucleo/servicios/diseno/dialogo.service';

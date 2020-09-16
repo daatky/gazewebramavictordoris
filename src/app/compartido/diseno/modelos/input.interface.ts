@@ -15,10 +15,11 @@ export interface InputCompartido{
     },
     id?: string, // identificador unico del input
     validarCampo?: {
-        validar: boolean,
+        validar: boolean, // Indica si se debe o no validar el valor del campo al perder el focus
         validador?: Function // Validar campo
     },
-    errorPersonalizado?: string,
+    errorPersonalizado?: string, // Cuando se requiere mostrar un error personalizado
+    soloLectura?:boolean, // true indica que el input es de solo lectura, false indica que el input es editable
 }
 export interface TipoEstilo{
     estiloInput:EstiloInput,

@@ -1,0 +1,7 @@
+<div class="divGeneral tranparencia-base ">  
+    <app-appbar *ngIf="configuracionAppBar" [configuracion]="configuracionAppBar"></app-appbar>
+    <div class="divFotos">
+        <app-item-circulo [configuracion]="confPortada"></app-item-circulo>
+        <app-portada-gaze #portadaGaze></app-portada-gaze>
+    </div>
+</div>

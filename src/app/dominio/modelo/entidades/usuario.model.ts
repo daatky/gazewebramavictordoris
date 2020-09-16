@@ -1,18 +1,18 @@
-import { CatalogoIdiomaEntity } from './../entidades/catalogos/catalogo-idioma.entity'
-import { CatalogoEstadoEntity } from './../entidades/catalogos/catalogo-estado.entity'
-import { PerfilModel, PerfilModelMapperService } from './perfil.model'
-import { DispositivoEntity } from './../entidades/dispositivo.entity'
-import { SuscripcionEntity } from './../entidades/suscripcion.entity'
-import { TransaccionEntity } from './../entidades/transaccion.entity'
-import { RolSistemaEntity } from '../entidades/rol-sistema.entity'
+import { CatalogoIdiomaEntity } from '../../entidades/catalogos/catalogo-idioma.entity'
+import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
+import { PerfilModel, PerfilModelMapperService } from '../perfil.model'
+import { DispositivoEntity } from '../../entidades/dispositivo.entity'
+import { SuscripcionEntity } from '../../entidades/suscripcion.entity'
+import { TransaccionEntity } from '../../entidades/transaccion.entity'
+import { RolSistemaEntity } from '../../entidades/rol-sistema.entity'
 import { Injectable } from '@angular/core'
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface'
-import { PerfilEntity, PerfilEntityMapperServicePerfil } from '../entidades/perfil.entity'
-import { EstadoModelMapperService } from './catalogos/catalogo-estado.model'
-import { UsuarioEntity } from '../entidades/usuario.entity'
-import { CatalogoMetodoPagoModel, PagoFacturacionModel, CatalogoMetodoPagoModelMapperService, PagoFacturacionModelMapperService } from './catalogo-metodo-pago.model'
-import { PagoFacturacionEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity'
-import { CatalogoIdiomaModel, IdiomaMapperService } from "../modelo/catalogos/catalogo-idioma.model"
+import { PerfilEntity, PerfilEntityMapperServicePerfil } from '../../entidades/perfil.entity'
+import { EstadoModelMapperService } from '../catalogos/catalogo-estado.model'
+import { UsuarioEntity } from '../../entidades/usuario.entity'
+import { CatalogoMetodoPagoModel, PagoFacturacionModel, CatalogoMetodoPagoModelMapperService, PagoFacturacionModelMapperService } from './../catalogos/catalogo-metodo-pago.model'
+import { PagoFacturacionEntity } from '../../entidades/catalogos/catalogo-metodo-pago.entity'
+import { CatalogoIdiomaModel, IdiomaMapperService } from "../catalogos/catalogo-idioma.model"
 
 export interface UsuarioModel {
     id?: string,
@@ -55,6 +55,7 @@ export class UsuarioModelMapperService extends MapedorService<UsuarioModel, Usua
     protected map(model: UsuarioModel): UsuarioEntity {
         if (model) {
             return {
+                _id: model?.id,
                 email: model.email,
                 contrasena: model.contrasena,
                 aceptoTerminosCondiciones: model.aceptoTerminosCondiciones,

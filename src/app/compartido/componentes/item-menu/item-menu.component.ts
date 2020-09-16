@@ -8,7 +8,7 @@ import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/inte
 import { async } from 'rxjs/internal/scheduler/async'
 import { ColorFondoItemMenu } from '../../diseno/enums/color-fondo-item-menu.enum'
 import { EspesorLineaItem } from '../../diseno/enums/espesor-linea-item.enum'
-import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/item-menu.model'
+import { ItemMenuModel, ItemAccion } from 'src/app/dominio/modelo/entidades/item-menu.model'
 import { timeout, map, debounceTime } from 'rxjs/operators'
 import { Observable, fromEvent } from 'rxjs'
 

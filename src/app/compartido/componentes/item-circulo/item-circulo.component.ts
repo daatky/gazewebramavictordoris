@@ -164,7 +164,6 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
           // El item predeterminado se obtiene de forma aleatoria
           return
         }
-
         // Accion por defecto
         // Cuando el item predeterminado se obtiene con doble click
         this.infoAccion = {
@@ -234,7 +233,6 @@ export class ItemCirculoComponent implements OnInit, AfterViewInit {
   }
 
   cerrarModalOrigenFoto(event: any) {
-    console.warn('Click en origien foto:', event.target.className)
     if (event.target.className.indexOf('modalOrigenFoto') >= 0) {
       this.confModalOrigenFoto.mostrar = false
       this.confModalOrigenFoto.origenFoto = OrigenFoto.SIN_DEFINIR

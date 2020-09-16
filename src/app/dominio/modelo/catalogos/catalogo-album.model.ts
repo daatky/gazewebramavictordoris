@@ -15,10 +15,7 @@ export interface CatalogoAlbumModel {
 
 @Injectable({ providedIn: 'root' })
 export class CatalogoAlbumModelMapperService extends MapedorService<CatalogoAlbumModel, CatalogoAlbumEntity> {
-    constructor
-        (
-            //private estadoMapper: EstadoModelMapperService,            
-        ) {
+    constructor() {
         super();
     }
 
@@ -30,5 +27,4 @@ export class CatalogoAlbumModelMapperService extends MapedorService<CatalogoAlbu
         }
         return null;
     }
-
 }

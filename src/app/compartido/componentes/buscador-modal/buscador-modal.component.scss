@@ -49,7 +49,7 @@ $alto-cargando: calc(100% - (#{ $selector-padding-tb } + #{ $alto-0782 } + #{ $e
     width: 100%;
     height: 100%;
 
-    position: absolute;
+    position: fixed;
     z-index: 900;
     top: 0;
     left: 0;
