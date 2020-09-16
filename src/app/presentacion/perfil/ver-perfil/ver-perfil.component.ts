@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ItemCirculoComponent } from 'src/app/compartido/componentes/item-circulo/item-circulo.component';
+import { PortadaGazeComponent } from 'src/app/compartido/componentes/portada-gaze/portada-gaze.component';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
+import { TamanoPortadaGaze } from 'src/app/compartido/diseno/enums/tamano-portada-gaze.enum';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
 import { UsoItemCircular } from 'src/app/compartido/diseno/enums/uso-item-cir-rec.enum';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
 import { ItemCircularCompartido } from 'src/app/compartido/diseno/modelos/item-cir-rec.interface';
+import { PortadaGazeCompartido } from 'src/app/compartido/diseno/modelos/portada-gaze.interface';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.service';
 
 @Component({
@@ -16,6 +19,7 @@ import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.ser
   styleUrls: ['./ver-perfil.component.scss']
 })
 export class VerPerfilComponent implements OnInit {
+  @ViewChild('portadaGaze', { static: false }) portada: PortadaGazeComponent
   configuracionAppBar: ConfiguracionAppbarCompartida //Para enviar la configuracion de para presentar el appBar
   perfilSeleccionado: PerfilModel
   generadorId: GeneradorId
@@ -28,6 +32,13 @@ export class VerPerfilComponent implements OnInit {
     this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
     this.prepararAppBar()
     this.configurarPortada()
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.portada) {
+        this.configurarPortadaGaze()
+      }
+    })
   }
   prepararAppBar() {   
     if(this.perfilSeleccionado){
@@ -44,7 +55,10 @@ export class VerPerfilComponent implements OnInit {
               disable: true
             }
           },
-          mostrarDivBack: true,
+          mostrarDivBack:{
+            icono:true,
+            texto:true
+          },
           mostrarTextoHome: true,
           subtitulo: {
             mostrar: true,
@@ -79,6 +93,13 @@ export class VerPerfilComponent implements OnInit {
       //fotoPredeterminadaRamdon:true
     }
   }
+    // Configurar portada
+    configurarPortadaGaze() {
+      const configuracion: PortadaGazeCompartido = {
+        tamano: TamanoPortadaGaze.PORTADACORTADA
+      }
+      this.portada.configuracionPortada = configuracion
+    }
   accionItem(){
     console.log("Este es una accion")
   }
