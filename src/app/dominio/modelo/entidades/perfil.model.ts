@@ -89,6 +89,7 @@ export class PerfilModelEstadoMapperService extends MapedorService<PerfilModel, 
     }
 }
 
+@Injectable({ providedIn: 'root' })
 export class PerfilModelMapperResultadoBusqueda extends MapedorService<PerfilModel, ItemResultadoBusqueda> {
     protected map(entity: PerfilModel): ItemResultadoBusqueda {
         return {
