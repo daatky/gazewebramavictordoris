@@ -1,0 +1,90 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+.contenedorPrincipal {
+    height: $altura-pagina;
+    width: $ancho-pagina;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: center;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+}
+
+.alturaAbierto {
+    height: $altura-pagina;
+    background: $blanco;
+}
+
+.alturaCerrado {
+    height: fit-content;
+}
+
+.barraBuscar {
+    position: absolute;
+    top: $espacio-267;
+    margin-bottom: $espacio-326;
+    background: $blanco;
+    width: $ancho-barra-busqueda;
+    display: flex;
+    align-items: center;
+    height: $alto-barra-busqueda;
+    border: $espesor-borde-barra-buscar solid $negro;
+    border-radius: $radio-borde-barra-buscar;
+    box-sizing: border-box;
+    z-index: 99;
+}
+
+.inputBusqueda {
+    width: $ancho-barra-busqueda;
+    box-sizing: border-box;
+    margin-right: ($espacio-0167 * 2) + $espacio-0756;
+    margin-left: $espacio-0167;
+    border: $espesor-borde-barra-buscar solid transparent;
+    border-radius: $radio-borde-barra-buscar;
+    border: 0;
+    font-size: $letra-3;
+    outline: none;
+    &::placeholder {
+        position: relative;
+        height: fit-content;
+        text-align: center;
+        padding-left: ($espacio-0167 * 2) + $espacio-0756;
+        color: $txt-celeste;
+        font-size: $letra-4;
+        top: $alto-barra-busqueda * 0.1;
+    }
+}
+
+.iconoLupa {
+    z-index: 2;
+    position: absolute;
+    background-image: $forma-lupa;
+    width: $espacio-0756;
+    height: $espacio-0756;
+    right: $espacio-0167;
+}
+
+.iconoX {
+    z-index: 2;
+    position: absolute;
+    background-image: $cruz-negra-borrar;
+    width: $espacio-0756;
+    height: $espacio-0756;
+    right: $espacio-0167;
+}
+
+.contenedorResultados {
+    background-color: $blanco;
+    width: $ancho-pagina;
+    height: calc(100vh - #{$alto-barra-busqueda + $espacio-267 + $espacio-326 + ($espesor-borde-barra-buscar * 2)});
+    z-index: 99;
+}
+
+.disable {
+    pointer-events: none;
+}

@@ -2,7 +2,7 @@ import { LineaCompartida } from './../../diseno/modelos/linea.interface'
 import { BotonCompartido } from './../../diseno/modelos/boton.interface'
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio'
 import { EstiloDelTextoServicio } from './../../../nucleo/servicios/diseno/estilo-del-texto.service'
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core'
 import { ConfiguracionAppbarCompartida } from '../../diseno/modelos/appbar.interface'
 import { TamanoColorDeFondoAppBar } from '../../diseno/enums/tamano-color-fondo-appbar.enum'
 import { LineaDeTexto } from '../../diseno/modelos/linea-de-texto.interface'
@@ -20,6 +20,7 @@ import { DialogoCompartido } from '../../diseno/modelos/dialogo.interface'
 import { TipoDialogo } from '../../diseno/enums/tipo-dialogo.enum'
 import { DialogoComponent } from '../dialogo/dialogo.component'
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio'
+import { DataBuscador, BuscadorComponent } from '../buscador/buscador.component'
 
 @Component({
   selector: 'app-appbar',
@@ -27,7 +28,7 @@ import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio'
   styleUrls: ['./appbar.component.scss']
 })
 export class AppbarComponent implements OnInit {
-
+  @ViewChild('buscador', { static: false }) public buscador: BuscadorComponent
   @Input() configuracion: ConfiguracionAppbarCompartida
 
   public usoAppBar = UsoAppBar
@@ -67,7 +68,6 @@ export class AppbarComponent implements OnInit {
       }
       this.configurarLinea()
     }
-
     this.prepararDialogoCerrarSession()
   }
 

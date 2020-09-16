@@ -9,20 +9,22 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, delay, debounceTime } from 'rxjs/operators';
 import { LocalStorage } from '../locales/local-storage.service';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { APIGAZE } from './rutas/api-gaze.enum';
 import { Cuenta } from './rutas/cuenta.enum';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
+
+
 @Injectable()
 export class PeticionInterceptor implements HttpInterceptor {
+    peticion: Observable<HttpEvent<MediaDeviceInfo>>
     constructor(
         private localStorage: LocalStorage,
-        private cuentaNegocio: CuentaNegocio,        
+        private cuentaNegocio: CuentaNegocio,
     ) {
-    }
-
+    }    
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<MediaDeviceInfo>> {
         const apiKey = "d2e621a6646a4211768cd68e26f21228a81" // Aqui se debe obtener el ApiKey        
 
@@ -30,7 +32,7 @@ export class PeticionInterceptor implements HttpInterceptor {
             //api key de autorizacion para consumo del api            
             req = req.clone({
                 headers: req.headers.set('apiKey', apiKey)
-            });            
+            });
         }
 
 
@@ -43,58 +45,60 @@ export class PeticionInterceptor implements HttpInterceptor {
             }))
         }
 
-        return this.cuentaNegocio.obtenerTokenAutenticacion().pipe(switchMap((token) => {
+        return this.cuentaNegocio.obtenerTokenAutenticacion()
+            .pipe(
+                switchMap((token) => {
 
-            const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
+                    const idioma = this.localStorage.obtenerIdiomaLocal() // Se obtiene el idioma
 
-            if (idioma) {
-                //Idioma seleccionado por el usuario
-                req = req.clone({
-                    headers: req.headers.set('idioma', idioma.codNombre)
-                });
-            }
+                    if (idioma) {
+                        //Idioma seleccionado por el usuario
+                        req = req.clone({
+                            headers: req.headers.set('idioma', idioma.codNombre)
+                        });
+                    }
 
-            //Se agrega el token 
-            if (token) {
-                //Token de autenticacion
-                req = req.clone({
-                    headers: req.headers.set('Authorization', `Bearer ${token}`)                    
-                });                
-            }
+                    //Se agrega el token 
+                    if (token) {
+                        //Token de autenticacion
+                        req = req.clone({
+                            headers: req.headers.set('Authorization', `Bearer ${token}`)
+                        });
+                    }
 
-            return next.handle(req).pipe(
-                map((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
-                        if (event.body) {
-                            if (event.body.codigoEstado) {
-                                console.log(event.body)
-                                if (event.body.codigoEstado >= 400) {
-                                    
-                                    throw event.body.respuesta.mensaje
+                    return next.handle(req).pipe(                        
+                        map((event: HttpEvent<any>) => {
+                            if (event instanceof HttpResponse) {
+                                if (event.body) {
+                                    if (event.body.codigoEstado) {
+                                        console.log(event.body)
+                                        if (event.body.codigoEstado >= 400) {
+                                            throw event.body.respuesta.mensaje
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                    return event;
-                }),
-                catchError((error: HttpErrorResponse) => {  
-                    console.log(error)
-                    if (error.status||error['codigoEstado']>399) {
-                        //await this.internacionalizacionNegocio.obtenerTextoLlave('enviar')
-                        if (error.status === 401||error['codigoEstado']===401) {
-                            return throwError("No tienes autorizacion");
-                        } else {
-                            if (error.status === 404||error['codigoEstado']===404) {
-                                return throwError("No encontrado");
-                            } else {
-                                return throwError("Lo sentimos ocurrio un error al procesar tu solicitid, intenta mas tarde");
+                            return event;
+                        }),
+                        catchError((error: HttpErrorResponse) => {
+                            console.log(error)
+                            if (error.status || error['codigoEstado'] > 399) {
+                                //await this.internacionalizacionNegocio.obtenerTextoLlave('enviar')
+                                if (error.status === 401 || error['codigoEstado'] === 401) {
+                                    return throwError("No tienes autorizacion");
+                                } else {
+                                    if (error.status === 404 || error['codigoEstado'] === 404) {
+                                        return throwError("No encontrado");
+                                    } else {
+                                        return throwError("Lo sentimos ocurrio un error al procesar tu solicitid, intenta mas tarde");
+                                    }
+                                }
                             }
-                        }
-                    }
-                    console.log("------")
-                    return throwError(error)
-                }));
-        }))
+                            console.log("------")
+                            return throwError(error)
+                        }));
+                }))
+
 
 
     }

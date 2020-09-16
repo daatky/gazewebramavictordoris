@@ -3,24 +3,28 @@ import { AlbumModel } from './../modelo/album.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
-import { catchError, tap, map } from 'rxjs/operators'
+import { catchError, tap, map, delay } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
 import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipoPerfilMapperService2 } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
 import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
 import { PerfilModel } from '../modelo/perfil.model';
+import { PaginacionModel } from '../modelo/paginacion-model';
+import { PerfilEntityMapperServicePerfil } from '../entidades/perfil.entity';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PerfilRepository {
 
+
     constructor(
         protected http: HttpClient,
         private perfilServicieRemoto: PerfilServiceRemoto,
         private perfilServicieLocal: PerfilServiceLocal,
-        private mapeador: CatalogoTipoPerfilMapperService2,
+        private mapeadorTipoPerfiles: CatalogoTipoPerfilMapperService2,
+        private perfileMapper: PerfilEntityMapperServicePerfil,
         private localStorage: LocalStorage
     ) {
 
@@ -30,7 +34,7 @@ export class PerfilRepository {
         return this.perfilServicieRemoto.obtenerCatalogoTipoPerfil()
             .pipe(
                 map(data => {
-                    return this.mapeador.transform(data.respuesta.datos);
+                    return this.mapeadorTipoPerfiles.transform(data.respuesta.datos);
                 }),
                 catchError(err => {
                     return throwError(err)
@@ -69,7 +73,7 @@ export class PerfilRepository {
     obtenerPerfilSeleccionado(): PerfilModel {
         return this.localStorage.obtenerPerfilSeleccionado();
     }
-    eliminarVariableStorage(llave:string){
+    eliminarVariableStorage(llave: string) {
         this.localStorage.eliminarVariableStorage(llave)
     }
 
@@ -83,6 +87,23 @@ export class PerfilRepository {
                     return throwError(err)
                 })
             )
+    }
+
+    buscarPerfiles(palabra: string, limite: number, pagina: number): Observable<PaginacionModel<PerfilModel>> {        
+        return this.perfilServicieRemoto.buscarPerfiles(palabra, limite, pagina).pipe(
+            map(data => {
+                let cargarMas = data.headers.get("proximaPagina") == "true"
+                let resultado: PaginacionModel<PerfilModel> =
+                {
+                    proximaPagina: cargarMas,
+                    lista: this.perfileMapper.transform(data.body.respuesta.datos)
+                }
+                return resultado;
+            }),
+            catchError(err => {
+                return throwError(err)
+            })
+        )
     }
 
 }

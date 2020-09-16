@@ -1,5 +1,6 @@
 <div *ngIf="!dataLista.cargando;else mostrarCargando">
-    <div *ngIf="dataLista.error==null;else mostrarError" (scroll)="cargarMas()" id="scroll" class="{{dataLista.tamanoLista}}">
+    <div *ngIf="dataLista.error==null;else mostrarError" (scroll)="cargarMas()" id="scroll"
+        class="{{dataLista.tamanoLista}}">
 
         <ng-content>
 
@@ -7,7 +8,7 @@
 
     </div>
     <ng-template #mostrarError>
-        <div class="centrarText reintentar">
+        <div class="{{dataLista.tamanoLista}}" class="centralItems">
             <h5>
                 {{dataLista.error}}
             </h5>
@@ -16,7 +17,7 @@
     </ng-template>
 </div>
 <ng-template #mostrarCargando>
-    <div class="listaScroll fondoLista">
+    <div class="{{dataLista.tamanoLista}}" class="centralItems">
         <app-cargando> </app-cargando>
     </div>
 </ng-template>

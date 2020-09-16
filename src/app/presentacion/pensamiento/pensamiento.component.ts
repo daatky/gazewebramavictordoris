@@ -61,7 +61,12 @@ export class PensamientoComponent implements OnInit {
           mostrar: true,
           llaveTexto: this.perfilSeleccionado.tipoPerfil.nombre
         },
-        mostrarSearchBar: true,
+        configuracion: {
+          mostrar: true,
+          datos: {
+            disable: true
+          }
+        },
         mostrarDivBack: true,
         mostrarTextoHome: true,
         subtitulo: {

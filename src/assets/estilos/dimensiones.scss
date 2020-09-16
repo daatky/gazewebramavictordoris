@@ -143,6 +143,9 @@ $espacio-2744: calcular(27.44);
 $espacio-0518: calcular(5.18);
 $espacio-0875: calcular(8.75);
 $espacio-3035: calcular(3.035);
+$espacio-0167: calcular(1.67);
+$espacio-0756: calcular(7.56);
+
 // Prueba churon
 $espacio-4541: calcular(45.41);
 $espacio-326: calcular(3.26);
@@ -188,7 +191,6 @@ $ancho-6920: calcular(69.16);
 $ancho-6382: calcular(63.82);
 $ancho-6916: calcular(69.16);
 $ancho-100: $ancho-pagina;
-
 
 // Espesor para lineas
 $espesor-041: calcular(0.41);
@@ -237,7 +239,7 @@ $cuerpo-con-bottom-bar-alto: calc(
 $cuerpo-con-bottom-bar-ancho: $ancho-pagina - ($espacio-267 * 2);
 
 //
-$cuerpo-general:calc(100vh - #{$espesor-071 + $appbar-alto-default});
+$cuerpo-general: calc(100vh - #{$espesor-071 + $appbar-alto-default});
 
 // Portada Gazelook
 $portada-gaze-ancho-cortada: calcular(22.97);
@@ -266,8 +268,7 @@ $espacio-fecha-alto: calcular(6.27);
 
 $espacio-4028: calcular(40.28);
 
-$sombra-1:calcular(0.17);
-$sombra-2:calcular(0.07);
-$sombra-3:calcular(0.41);
-$sombra-4:calcular(0.30);
-
+$sombra-1: calcular(0.17);
+$sombra-2: calcular(0.07);
+$sombra-3: calcular(0.41);
+$sombra-4: calcular(0.3);

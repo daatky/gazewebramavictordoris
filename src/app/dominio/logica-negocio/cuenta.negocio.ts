@@ -25,7 +25,6 @@ export class CuentaNegocio {
     constructor(private cuentaRepository: CuentaRepository,
         private perfilRepository: PerfilRepository,
         private idiomaRepository: IdiomaRepository,
-        private repository: CuentaRepository,
         private usuarioModelMapper: UsuarioModelMapperService
     ) { }
 
@@ -103,21 +102,21 @@ export class CuentaNegocio {
     }
 
     obtenerTokenAutenticacion(): Observable<string> {
-        const tokenActual = this.repository.obtenerTokenAutenticacion()
+        const tokenActual = this.cuentaRepository.obtenerTokenAutenticacion()
 
         if (tokenActual) {
             const helper = new JwtHelperService();
             const isExpired = helper.isTokenExpired(tokenActual);
 
             if (isExpired) {
-                const tokenRefrescar = this.repository.obtenerTokenRefresh();
+                const tokenRefrescar = this.cuentaRepository.obtenerTokenRefresh();
 
-                return this.repository.refrescarToken(tokenRefrescar)
+                return this.cuentaRepository.refrescarToken(tokenRefrescar)
                     .pipe(
                         map((data: TokenModel) => {
                             console.log(data)
-                            this.repository.guardarTokenAutenticacion(data.tokenAccess);
-                            this.repository.guardarTokenRefresh(data.tokenRefresh);
+                            this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess);
+                            this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh);
                             return data.tokenAccess
                         }),
                         catchError(err => {
@@ -245,13 +244,13 @@ export class CuentaNegocio {
     }
 
     sesionIniciada(): boolean {
-        return this.repository.obtenerTokenAutenticacion() != null
+        return this.cuentaRepository.obtenerTokenAutenticacion() != null
     }
 
     limpiarTerminosCondiciones() {
-        const user = this.repository.obtenerUsuarioDelSessionStorage();
+        const user = this.cuentaRepository.obtenerUsuarioDelSessionStorage();
         if (user && user.email == "") {
-            this.repository.guardarUsuarioEnSessionStorage(null);
+            this.cuentaRepository.guardarUsuarioEnSessionStorage(null);
         }
     }
 
@@ -264,9 +263,10 @@ export class CuentaNegocio {
     }
 
     cerrarSession() {
-        this.repository.guardarTokenAutenticacion(null)
-        this.repository.guardarTokenRefresh(null)
-        this.repository.guardarUsuarioEnLocalStorage(null)
+        this.cuentaRepository.guardarTokenAutenticacion(null)
+        this.cuentaRepository.guardarTokenRefresh(null)
+        this.cuentaRepository.guardarUsuarioEnLocalStorage(null)
+        this.perfilRepository.almacenarPerfilSeleccionado(null)
     }
     validarEmailUnico(email: string): Observable<string> {
         return this.cuentaRepository.validarEmailUnico(email)

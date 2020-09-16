@@ -14,6 +14,7 @@ import { MisContactosComponent } from './presentacion/mis-contactos/mis-contacto
 import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
 import { RestriccionRutas } from "../app/nucleo/servicios/generales/canActivate/resticcionRutas.service";
 import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
+import { BuscadorComponent } from './compartido/componentes/buscador/buscador.component';
 
 
 const routes: Routes = [
@@ -80,7 +81,6 @@ const routes: Routes = [
     component: MenuSeleccionPerfilesComponent,
     canActivate: [RestriccionRutas]
   }
-
 ];
 
 @NgModule({

@@ -277,8 +277,13 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.confAppBar = {
       usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
-      searchBarAppBar: {
-        mostrarSearchBar: infoAppBar.mostrarSearchBar,
+      searchBarAppBar: {        
+        configuracion: {
+          mostrar: infoAppBar.mostrarSearchBar,
+          datos: {
+            disable: true
+          }
+        },
         nombrePerfil: {
           mostrar: infoAppBar.mostrarNombrePerfil,
           llaveTexto: infoAppBar.llaveTextoNombrePerfil
