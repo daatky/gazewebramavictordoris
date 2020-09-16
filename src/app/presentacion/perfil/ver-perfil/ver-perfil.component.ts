@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AppbarComponent } from 'src/app/compartido/componentes/appbar/appbar.component';
 import { ItemCirculoComponent } from 'src/app/compartido/componentes/item-circulo/item-circulo.component';
 import { PortadaGazeComponent } from 'src/app/compartido/componentes/portada-gaze/portada-gaze.component';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
@@ -20,6 +21,7 @@ import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.ser
 })
 export class VerPerfilComponent implements OnInit {
   @ViewChild('portadaGaze', { static: false }) portada: PortadaGazeComponent
+  @ViewChild('barra', { static: true }) appBar: AppbarComponent
   configuracionAppBar: ConfiguracionAppbarCompartida //Para enviar la configuracion de para presentar el appBar
   perfilSeleccionado: PerfilModel
   generadorId: GeneradorId
@@ -45,6 +47,14 @@ export class VerPerfilComponent implements OnInit {
       this.configuracionAppBar = {
         usoAppBar: UsoAppBar.USO_SEARCHBAR_APPBAR,
         searchBarAppBar: {
+          mostrarDivBack: {
+            icono: true,
+            texto: true
+          },
+          mostrarTextoHome: true,
+          mostrarLineaVerde: true,
+          mostrarBotonXRoja: false,
+          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
           nombrePerfil: {
             mostrar: true,
             llaveTexto: this.perfilSeleccionado.tipoPerfil.nombre
@@ -52,26 +62,28 @@ export class VerPerfilComponent implements OnInit {
           configuracion: {
             mostrar: true,
             datos: {
-              disable: true
+              disable: true,
+              placeholder: "BUSCAR CONTACTOS",
+              capturarPalabra: (palabra) => this.capturarPalabrasBuscador(palabra),
+              reintentar: this.reitentarBusqueda
             }
-          },
-          mostrarDivBack:{
-            icono:true,
-            texto:true
-          },
-          mostrarTextoHome: true,
+          },      
           subtitulo: {
             mostrar: true,
             llaveTexto: this.internacionalizacionNegocio.obtenerTextoSincrono('miPerfil')
             //llaveTexto:"SIDAISDJIJ"
-          },
-          mostrarLineaVerde: true,
-          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO100,
+          },                  
         }
       }
     }else{
       console.log("OCURRIO UN ERROR")
     }
+  }
+  capturarPalabrasBuscador(palabra:string){
+
+  }
+  reitentarBusqueda(){
+    
   }
   configurarPortada() {
     this.confPortada = {
@@ -85,7 +97,7 @@ export class VerPerfilComponent implements OnInit {
       activarLongPress: false,
       mostrarBoton: true,
       mostrarLoader: false,
-      textoBoton: 'Chosen photos',
+      //textoBoton: 'Chosen photos',
       eventoEnItem: this.accionItem,
       capaOpacidad: {
         mostrar: false

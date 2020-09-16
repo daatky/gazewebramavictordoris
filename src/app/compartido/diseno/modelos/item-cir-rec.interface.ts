@@ -16,7 +16,7 @@ export interface ItemCompartido {
     activarLongPress: boolean, // Indica si tiene o no evento de long press
     mostrarBoton: boolean, // Indica si se debe mostrar el boton de upload photos, 
     mostrarLoader: boolean, // Indica si mostrar el loader del item
-    textoBoton: string, // Texto del boton que se muestra en el item
+    textoBoton?: string, // Texto del boton que se muestra en el item
     capaOpacidad: CapaOpacidad, // Indica la capa de opcacidad que se va a utilizar en el item -  Item en fotos por defecto
     eventoEnItem?: Function, // Funcion a ejecutar cuando se dispare algun evento en el item, recibe la accions a ejecutar
 }

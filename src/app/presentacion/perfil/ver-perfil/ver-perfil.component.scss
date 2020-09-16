@@ -6,7 +6,15 @@
 .divFotos{
     padding: $interlineado-8 $interlineado-7 0 $interlineado-7;
     width: $ancho-pagina;
+    height: fit-content;
     background-color: hotpink;
-    color: honeydew;
     box-sizing: border-box;
+}
+.divItemMiFoto{
+    background-color: hotpink;
+    float: left;
+    padding-bottom: $interlineado-9;
+}
+.portadaGaze{
+    float: left;
 }
