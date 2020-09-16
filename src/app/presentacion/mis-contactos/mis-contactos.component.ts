@@ -23,7 +23,7 @@ export class MisContactosComponent implements OnInit {
   configuracionAppBar: ConfiguracionAppbarCompartida;
   perfilSeleccionado: PerfilModel
   datosBuscador: DataBuscador;
-  resultados: ItemResultadoBusqueda[]
+
 
   constructor(
     private _location: Location,
@@ -38,15 +38,6 @@ export class MisContactosComponent implements OnInit {
     this.prepararDatosBuscador();
     this.appBar;
     this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
-    /*
-    this.resultados = [{
-      accion: () => { },
-      icono: "",
-      subtitulo: "asd",
-      titulo: "",
-      tipo: CodigosCatalogoEntidad.PERFIL
-    }]
-    */
   }
 
   prepararDatosBuscador() {

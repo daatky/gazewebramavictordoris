@@ -67,12 +67,13 @@ export class PerfilModelMapperService extends MapedorService<PerfilModel, Perfil
 }
 
 @Injectable({ providedIn: 'root' })
-export class PerfilModelMapperResultadoBusqueda extends MapedorService<PerfilModel, ItemResultadoBusqueda> {
-    protected map(entity: PerfilModel): ItemResultadoBusqueda {
+export class PerfilModelMapperResultadoBusqueda extends MapedorService<PerfilModel, ItemResultadoBusqueda<PerfilModel>> {
+    protected map(model: PerfilModel): ItemResultadoBusqueda<PerfilModel> {
         return {
-            titulo: entity.nombreContacto,
-            subtitulo: entity.nombre,
-            tipo: CodigosCatalogoEntidad.PERFIL
+            titulo: model.nombreContacto,
+            subtitulo: model.nombre,
+            tipo: CodigosCatalogoEntidad.PERFIL,
+            item: model
         };
     }
 }

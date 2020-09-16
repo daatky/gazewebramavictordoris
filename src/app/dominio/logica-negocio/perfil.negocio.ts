@@ -19,7 +19,6 @@ import { PaginacionModel } from '../modelo/paginacion-model';
 })
 export class PerfilNegocio {
 
-
     constructor(
         private perfilRepository: PerfilRepository,
         private cuentaNegocio: CuentaNegocio,
@@ -231,6 +230,11 @@ export class PerfilNegocio {
     }
     validarNombreDeContactoUnico(nombreContacto: string): Observable<string> {
         return this.perfilRepository.validarNombreDeContactoUnico(nombreContacto)
+    }
+
+    soyPropietario(id: string) {
+        const perfilSeleccionado = this.perfilRepository.obtenerPerfilSeleccionado();
+        return perfilSeleccionado._id === id
     }
 
 }

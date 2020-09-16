@@ -39,12 +39,13 @@ export interface ProyectoModel {
 }
 
 @Injectable({ providedIn: 'root' })
-export class ProyectoModelMapperResultadoBusqueda extends MapedorService<ProyectoModel, ItemResultadoBusqueda> {
-    protected map(entity: ProyectoModel): ItemResultadoBusqueda {
+export class ProyectoModelMapperResultadoBusqueda extends MapedorService<ProyectoModel, ItemResultadoBusqueda<ProyectoModel>> {
+    protected map(model: ProyectoModel): ItemResultadoBusqueda<ProyectoModel> {
         return {
-            titulo: entity.tituloCorto,
-            subtitulo: entity.titulo,
-            tipo: CodigosCatalogoEntidad.PROYECTO
+            titulo: model.tituloCorto,
+            subtitulo: model.titulo,
+            tipo: CodigosCatalogoEntidad.PROYECTO,
+            item: model
         };
     }
 }

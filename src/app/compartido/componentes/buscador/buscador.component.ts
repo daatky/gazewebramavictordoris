@@ -9,8 +9,11 @@ import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { filter } from 'rxjs/operators';
 import { PerfilModel, PerfilModelMapperResultadoBusqueda } from "../../../dominio/modelo/perfil.model"
-import { ProyectoModelMapperResultadoBusqueda } from "../../../dominio/modelo/proyecto.model";
-import { NoticiaModelMapperResultadoBusqueda } from "../../../dominio/modelo/noticia.model";
+import { ProyectoModel, ProyectoModelMapperResultadoBusqueda } from "../../../dominio/modelo/proyecto.model";
+import { NoticiaModel, NoticiaModelMapperResultadoBusqueda } from "../../../dominio/modelo/noticia.model";
+import { Router } from '@angular/router';
+import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
+import { ParticipanteAsociacionModel, ParticipanteAsosiacionMapperResultadoBusqueda } from '../../../dominio/modelo/participante-asociacion.model'
 
 @Component({
   selector: 'app-buscador',
@@ -20,19 +23,20 @@ import { NoticiaModelMapperResultadoBusqueda } from "../../../dominio/modelo/not
 export class BuscadorComponent implements OnInit {
   @Input() data: DataBuscador
   abrir: boolean
-  listaResultados: ItemResultadoBusqueda[];
+  listaResultados: ItemResultadoBusqueda<PerfilModel | NoticiaModel | ProyectoModel | ParticipanteAsociacionModel>[];
   dataLista: DatosLista;
   palabra: string
   tipo = CodigosCatalogoEntidad
   controlBuscador;
 
-
   constructor
     (
       private perfilModelMapperResultadoBusqueda: PerfilModelMapperResultadoBusqueda,
       private proyectoModelMapperResultadoBusqueda: ProyectoModelMapperResultadoBusqueda,
-      private noticiaModelMapperResultadoBusqueda: NoticiaModelMapperResultadoBusqueda
-
+      private noticiaModelMapperResultadoBusqueda: NoticiaModelMapperResultadoBusqueda,
+      private participanteAsosiacionMapperResultadoBusqueda: ParticipanteAsosiacionMapperResultadoBusqueda,
+      private route: Router,
+      private perfilNegocio: PerfilNegocio
     ) {
     this.abrir = false
     this.palabra = ''
@@ -110,14 +114,47 @@ export class BuscadorComponent implements OnInit {
     this.mostrarProgreso(false);
   }
 
-  prepararDatos(items: any[], entidad: CodigosCatalogoEntidad): ItemResultadoBusqueda[] {
+  prepararDatos(items: any[], entidad: CodigosCatalogoEntidad): ItemResultadoBusqueda<PerfilModel | NoticiaModel | ProyectoModel | ParticipanteAsociacionModel>[] {
     switch (entidad) {
       case CodigosCatalogoEntidad.PERFIL: return this.perfilModelMapperResultadoBusqueda.transform(items);
       case CodigosCatalogoEntidad.PROYECTO: return this.proyectoModelMapperResultadoBusqueda.transform(items);
       case CodigosCatalogoEntidad.NOTICIA: return this.noticiaModelMapperResultadoBusqueda.transform(items);
+      case CodigosCatalogoEntidad.PARTICIPANTE_ASOCIACION: return this.participanteAsosiacionMapperResultadoBusqueda.transform(items);
       default: return null;
     }
 
+  }
+
+  navegarPerfil(perfil: PerfilModel) {
+    if (this.perfilNegocio.soyPropietario(perfil._id)) {
+
+    } else {
+
+    }
+  }
+
+  navegarConversacion(contacto: ParticipanteAsociacionModel) {
+    if (this.perfilNegocio.soyPropietario(contacto.perfil._id)) {
+      //No realizo ningua accion
+    } else {
+      //Se navega a la conversacion
+    }
+  }
+
+  navegarNoticia(noticia: NoticiaModel) {
+    if (this.perfilNegocio.soyPropietario(noticia.id)) {
+      //navegamos a editar noticia
+    } else {
+      //navegamos a ver noticia
+    }
+  }
+
+  navegarProyecto(proyecto: ProyectoModel) {
+    if (this.perfilNegocio.soyPropietario(proyecto.id)) {
+      //navegamos a editar proyecto
+    } else {
+      //navegamos a ver proyecto
+    }
   }
 
 }

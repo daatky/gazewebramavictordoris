@@ -27,3 +27,21 @@ export abstract class MapedorService<S, T> implements Mapeador<S, T> {
             this.map(entityOrArray);
     }
 }
+
+/*
+
+export abstract class MapedorActionService<S, T> implements Mapeador<S, T> {
+
+    protected abstract map(entity: S, action?: Function): T;
+
+    transform(entity: S, action?: Function): T;
+
+    transform(array: S[], action?: Function): T[];
+
+    transform(entityOrArray: S | S[], action?: Function): T | T[] {
+        return Array.isArray(entityOrArray) ?
+            entityOrArray.map((item: S) => this.map(item, action)) :
+            this.map(entityOrArray, action);
+    }
+}
+*/
