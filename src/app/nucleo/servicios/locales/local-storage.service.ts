@@ -6,7 +6,7 @@ import { CatalogoIdiomaEntity } from 'src/app/dominio/entidades/catalogos/catalo
 import { Subject, Observable } from 'rxjs';
 import { CatalogoTipoPerfilModel } from '../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
 import { CatalogoMetodoPagoModel } from '../../../dominio/modelo/catalogos/catalogo-metodo-pago.model';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorage {

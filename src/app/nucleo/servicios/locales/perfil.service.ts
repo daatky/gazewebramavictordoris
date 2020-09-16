@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { RespuestaRemota } from '../../util/respuesta'
 import { LlavesSessionStorage } from './llaves/session-storage.enum';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 @Injectable({ providedIn: 'root' })
 export class PerfilServiceLocal {

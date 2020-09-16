@@ -5,7 +5,7 @@ import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano
 import { Location } from '@angular/common';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { AppbarComponent } from 'src/app/compartido/componentes/appbar/appbar.component';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { DataBuscador } from 'src/app/compartido/componentes/buscador/buscador.component';
 import { ItemResultadoBusqueda } from "../../dominio/modelo/item-resultado-busqueda"
@@ -23,7 +23,7 @@ export class MisContactosComponent implements OnInit {
   configuracionAppBar: ConfiguracionAppbarCompartida;
   perfilSeleccionado: PerfilModel
   datosBuscador: DataBuscador;
-  resultados: ItemResultadoBusqueda[]
+
 
   constructor(
     private _location: Location,
@@ -38,15 +38,6 @@ export class MisContactosComponent implements OnInit {
     this.prepararDatosBuscador();
     this.appBar;
     this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
-    /*
-    this.resultados = [{
-      accion: () => { },
-      icono: "",
-      subtitulo: "asd",
-      titulo: "",
-      tipo: CodigosCatalogoEntidad.PERFIL
-    }]
-    */
   }
 
   prepararDatosBuscador() {

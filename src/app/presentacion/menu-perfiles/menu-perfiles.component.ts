@@ -29,7 +29,7 @@ import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-i
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ModalInferior } from 'src/app/compartido/componentes/modal-inferior/modal-inferior.component';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
 import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';

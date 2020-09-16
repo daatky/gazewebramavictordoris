@@ -5,7 +5,7 @@ import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codig
 import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { CuentaNegocio } from './cuenta.negocio';
 import { UsuarioModel } from '../modelo/entidades/usuario.model';
-import { PerfilModel } from '../modelo/entidades/perfil.model';
+import { PerfilModel } from '../modelo/perfil.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, } from 'rxjs/operators'
@@ -23,7 +23,6 @@ import { PaginacionModel } from '../modelo/paginacion-model';
     providedIn: 'root'
 })
 export class PerfilNegocio {
-
 
     constructor(
         private perfilRepository: PerfilRepository,
@@ -439,6 +438,11 @@ export class PerfilNegocio {
 
     activarPerfil(perfil: PerfilModel): Observable<object> {
         return this.perfilRepository.activarPerfil(perfil)
+    }
+
+    soyPropietario(id: string) {
+        const perfilSeleccionado = this.perfilRepository.obtenerPerfilSeleccionado();
+        return perfilSeleccionado._id === id
     }
 
 }

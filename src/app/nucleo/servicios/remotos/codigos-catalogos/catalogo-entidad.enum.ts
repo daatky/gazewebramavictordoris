@@ -3,6 +3,7 @@ export enum CodigosCatalogoEntidad {
     PERFIL = '0',
     PROYECTO = '1',
     NOTICIA = '2',
+    PARTICIPANTE_ASOCIACION = '3'
 }
 
 export enum AccionEntidad {

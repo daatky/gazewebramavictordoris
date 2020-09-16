@@ -1,6 +1,6 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
 import { ConfiguracionEstiloModel } from "./configuracion-estilo.model";
-import { PerfilModel } from "../entidades/perfil.model";
+import { PerfilModel } from "../perfil.model";
 import { ProyectoModel } from "../proyecto.model";
 import { ComentarioModel } from "./comentario.model";
 import { RolEntidadModel } from "./rol-entidad.model";

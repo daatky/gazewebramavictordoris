@@ -1,5 +1,5 @@
 import { PerfilEntityMapperServicePerfilresumenModelo, PerfilEntityMapperServicePerfil } from './../perfil.entity';
-import { PerfilModel } from '../../modelo/entidades/perfil.model';
+import { PerfilModel } from '../../modelo/perfil.model';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";
 import { Injectable } from '@angular/core';

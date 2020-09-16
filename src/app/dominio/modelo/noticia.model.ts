@@ -1,8 +1,7 @@
 import { CatalogoEstadoModel } from "./catalogos/catalogo-estado.model";
 import { CatalogoLocalidadModel } from "./catalogos/catalogo-localidad.model";
-import { PerfilModel } from "./entidades/perfil.model";
+import { PerfilModel } from "./perfil.model";
 import { VotoNoticiaModel } from "./entidades/voto-noticia.model";
-import { CatalogoIdiomaModel } from "./catalogos/catalogo-idioma.model";
 import { Injectable } from "@angular/core";
 import { MapedorService } from "../../nucleo/base/mapeador.interface";
 import { ItemResultadoBusqueda } from "./item-resultado-busqueda";
@@ -25,12 +24,13 @@ export interface NoticiaModel {
 }
 
 @Injectable({ providedIn: 'root' })
-export class NoticiaModelMapperResultadoBusqueda extends MapedorService<NoticiaModel, ItemResultadoBusqueda> {
-    protected map(entity: NoticiaModel): ItemResultadoBusqueda {
+export class NoticiaModelMapperResultadoBusqueda extends MapedorService<NoticiaModel, ItemResultadoBusqueda<NoticiaModel>> {
+    protected map(model: NoticiaModel): ItemResultadoBusqueda<NoticiaModel> {
         return {
-            titulo: entity.tituloCorto,
-            subtitulo: entity.titulo,
-            tipo: CodigosCatalogoEntidad.PROYECTO
+            titulo: model.tituloCorto,
+            subtitulo: model.titulo,
+            tipo: CodigosCatalogoEntidad.PROYECTO,
+            item: model
         };
     }
 }

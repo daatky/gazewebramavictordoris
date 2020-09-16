@@ -21,7 +21,7 @@ import { CatalogoTipoPerfilModel } from '../../dominio/modelo/catalogos/catalogo
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ignoreElements } from 'rxjs/operators';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 
 

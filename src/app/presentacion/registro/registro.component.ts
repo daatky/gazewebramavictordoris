@@ -9,7 +9,7 @@ import { CodigosCatalogoEntidad, AccionEntidad, AccionAlbum } from './../../nucl
 import { AlbumModel } from '../../dominio/modelo/entidades/album.model'
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum'
 import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun'
-import { PerfilModel } from '../../dominio/modelo/entidades/perfil.model'
+import { PerfilModel } from '../../dominio/modelo/perfil.model'
 import { CuentaNegocio } from './../../dominio/logica-negocio/cuenta.negocio'
 import { UsuarioModel } from '../../dominio/modelo/entidades/usuario.model'
 import { RutasLocales } from './../../rutas-locales.enum'

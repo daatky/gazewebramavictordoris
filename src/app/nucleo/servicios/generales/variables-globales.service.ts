@@ -1,4 +1,4 @@
-import { PerfilModel } from '../../../dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from '../../../dominio/modelo/perfil.model';
 import { Perfiles } from './../remotos/rutas/perfiles.enum';
 import { CatalogoTipoPerfilModel } from '../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
 import { UsuarioModel } from '../../../dominio/modelo/entidades/usuario.model';

@@ -1,4 +1,4 @@
-import { PerfilModel } from './perfil.model';
+import { PerfilModel } from '../perfil.model';
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
 
 export interface PensamientoModel {

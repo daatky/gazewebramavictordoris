@@ -1,6 +1,6 @@
 import { CatalogoIdiomaEntity } from '../../entidades/catalogos/catalogo-idioma.entity'
 import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
-import { PerfilModel, PerfilModelMapperService } from './perfil.model'
+import { PerfilModel, PerfilModelMapperService } from '../perfil.model'
 import { DispositivoEntity } from '../../entidades/dispositivo.entity'
 import { SuscripcionEntity } from '../../entidades/suscripcion.entity'
 import { TransaccionEntity } from '../../entidades/transaccion.entity'

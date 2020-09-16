@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { CodigosCatalogoTipoPerfil } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
 import { AccionEntidad, CodigosCatalogoEntidad } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
-import { PerfilModel } from '../modelo/entidades/perfil.model';
+import { PerfilModel } from '../modelo/perfil.model';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { AlbumModel } from 'src/app/dominio/modelo/entidades/album.model';
 import { AlbumRepository } from './../repositorio/album.repository'

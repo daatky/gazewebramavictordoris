@@ -11,7 +11,7 @@ import { ItemCircularCompartido } from 'src/app/compartido/diseno/modelos/item-c
 import { PortadaGazeCompartido } from 'src/app/compartido/diseno/modelos/portada-gaze.interface';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { GeneradorId } from 'src/app/nucleo/servicios/generales/generador-id.service';
 
 @Component({

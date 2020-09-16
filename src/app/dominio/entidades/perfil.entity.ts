@@ -11,7 +11,7 @@ import { AsociacionEntity } from "./asociacion.entity";
 import { NoticiaEntity } from "./noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService } from "./catalogos/catalogo-tipo-perfil.entity";
-import { PerfilModel } from '../modelo/entidades/perfil.model';
+import { PerfilModel } from '../modelo/perfil.model';
 
 export interface PerfilEntity {
     _id: string,

@@ -1,7 +1,7 @@
-import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { CatalogoTipoAsociacionModel } from "../catalogos/catalogo-tipo-asociacion.model";
+import { CatalogoEstadoModel } from "./catalogos/catalogo-estado.model";
+import { CatalogoTipoAsociacionModel } from "./catalogos/catalogo-tipo-asociacion.model";
+import { ConversacionModel } from "./entidades/conversacion.model";
 import { ParticipanteAsociacionModel } from "./participante-asociacion.model";
-import { ConversacionModel } from "./conversacion.model";
 
 export interface AsociacionModel {
     id?: string,

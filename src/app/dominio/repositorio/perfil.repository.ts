@@ -1,4 +1,4 @@
-import { PerfilModelMapperService, PerfilModelEstadoMapperService } from '../modelo/entidades/perfil.model'
+import { PerfilModelMapperService, PerfilModelEstadoMapperService } from '../modelo/perfil.model'
 import { PerfilEntity, PerfilEntityMapperServicePerfil } from './../entidades/perfil.entity'
 import { PerfilServiceLocal } from './../../nucleo/servicios/locales/perfil.service'
 import { AlbumModel } from '../modelo/entidades/album.model'
@@ -11,7 +11,7 @@ import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipo
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service'
 import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model'
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service'
-import { PerfilModel } from '../modelo/entidades/perfil.model'
+import { PerfilModel } from '../modelo/perfil.model'
 import { UsuarioModel, UsuarioModelMapperService } from '../modelo/entidades/usuario.model'
 import { PaginacionModel } from '../modelo/paginacion-model'
 

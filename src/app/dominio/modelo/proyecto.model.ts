@@ -1,6 +1,6 @@
 import { CatalogoEstadoModel } from "./catalogos/catalogo-estado.model";
 import { ParticipanteProyectoModel } from "./entidades/participante-proyecto.model";
-import { PerfilModel } from "./entidades/perfil.model";
+import { PerfilModel } from "./perfil.model";
 import { ComentarioModel } from "./entidades/comentario.model";
 import { CatalogoTipoProyectoModel } from "./catalogos/catalogo-tipo-proyecto.model";
 import { CatalogoLocalidadModel } from "./catalogos/catalogo-localidad.model";
@@ -39,12 +39,13 @@ export interface ProyectoModel {
 }
 
 @Injectable({ providedIn: 'root' })
-export class ProyectoModelMapperResultadoBusqueda extends MapedorService<ProyectoModel, ItemResultadoBusqueda> {
-    protected map(entity: ProyectoModel): ItemResultadoBusqueda {
+export class ProyectoModelMapperResultadoBusqueda extends MapedorService<ProyectoModel, ItemResultadoBusqueda<ProyectoModel>> {
+    protected map(model: ProyectoModel): ItemResultadoBusqueda<ProyectoModel> {
         return {
-            titulo: entity.tituloCorto,
-            subtitulo: entity.titulo,
-            tipo: CodigosCatalogoEntidad.PROYECTO
+            titulo: model.tituloCorto,
+            subtitulo: model.titulo,
+            tipo: CodigosCatalogoEntidad.PROYECTO,
+            item: model
         };
     }
 }

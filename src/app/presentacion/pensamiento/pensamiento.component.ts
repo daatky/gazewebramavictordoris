@@ -17,7 +17,7 @@ import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/disen
 import { PensamientoModel } from 'src/app/dominio/modelo/entidades/pensamiento.model';
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 
 @Component({
   selector: 'app-pensamiento',

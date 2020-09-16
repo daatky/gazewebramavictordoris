@@ -6,7 +6,7 @@ import { DireccionModel } from '../../../dominio/modelo/entidades/direccion.mode
 import { ItemSelector } from './../../../compartido/diseno/modelos/elegible.interface';
 import { CodigosCatalogoTipoAlbum } from './../remotos/codigos-catalogos/catalogo-tipo-album.enum';
 import { MediaModel } from '../../../dominio/modelo/entidades/media.model';
-import { PerfilModel } from '../../../dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from '../../../dominio/modelo/perfil.model';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { CodigosCatalogoEntidad, AccionEntidad, AccionAlbum } from './../remotos/codigos-catalogos/catalogo-entidad.enum'
 import { Injectable } from '@angular/core'

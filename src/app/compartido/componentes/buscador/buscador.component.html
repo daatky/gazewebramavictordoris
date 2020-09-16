@@ -4,8 +4,8 @@
     'disable': (this.data)?this.data.disable:false
 }" class="contenedorPrincipal">
     <div class="barraBuscar">
-        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" [formControl]='controlBuscador' (focus)="focusGanado()"
-            (blur)="focusPerdido()" [ngModel]="palabra">
+        <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" [formControl]='controlBuscador'
+            (focus)="focusGanado()" (blur)="focusPerdido()" [ngModel]="palabra">
         <div *ngIf="!abrir" class="iconoLupa"></div>
         <div *ngIf="abrir" class="iconoX"></div>
     </div>
@@ -14,14 +14,23 @@
         <app-lista-vertical [dataLista]='dataLista' class="centrar">
             <div *ngFor="let item of listaResultados">
                 <div [ngSwitch]="item.tipo">
-                    <div *ngSwitchCase="tipo.NOTICIA">
+                    <div *ngSwitchCase="tipo.NOTICIA" (tap)="navegarNoticia(item.item)">
                         <p>Agregar diseno noticia</p>
                     </div>
-                    <div *ngSwitchCase="tipo.PROYECTO">
+                    <div *ngSwitchCase="tipo.PROYECTO" (tap)="navegarProyecto(item.item)">
                         <p>Agregar diseno proyecto</p>
                     </div>
 
-                    <div *ngSwitchCase="tipo.PERFIL">
+                    <div *ngSwitchCase="tipo.PERFIL" (tap)="navegarPerfil(item.item)">
+                        <p>
+                            {{item.titulo}}
+                        </p>
+                        <p>
+                            {{item.subtitulo}}
+                        </p>
+                    </div>
+
+                    <div *ngSwitchCase="tipo.PARTICIPANTE_ASOCIACION" (tap)="navegarConversacion(item.item)">
                         <p>
                             {{item.titulo}}
                         </p>

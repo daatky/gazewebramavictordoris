@@ -8,7 +8,7 @@ import { Perfiles } from './rutas/perfiles.enum';
 import { RespuestaRemota } from '../../util/respuesta';
 import { CatalogoTipoPerfilEntity } from '../../../dominio/entidades/catalogos/catalogo-tipo-perfil.entity';
 import { MediaEntity } from 'src/app/dominio/entidades/media.entity';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { UsuarioModel } from 'src/app/dominio/modelo/entidades/usuario.model';
 import { UsuarioEntity } from 'src/app/dominio/entidades/usuario.entity';
 import { debounceTime, map } from 'rxjs/operators';

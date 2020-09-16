@@ -19,7 +19,7 @@ import { EstilosDelTexto } from 'src/app/compartido/diseno/enums/estilo-del-text
 import { AnchoLineaItem } from 'src/app/compartido/diseno/enums/ancho-linea-item.enum';
 import { EspesorLineaItem } from 'src/app/compartido/diseno/enums/espesor-linea-item.enum';
 import { ColorFondoLinea } from 'src/app/compartido/diseno/enums/color-fondo-linea.enum';
-import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { CodigosCatalogosEstadoPerfiles } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { CodigosCatalogoTipoPerfil } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
