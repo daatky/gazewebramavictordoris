@@ -1,4 +1,4 @@
-import { AsociacionModel } from "./asociacion.model";
+/*import { AsociacionModel } from "./asociacion.model";
 export interface ContactoModel extends AsociacionModel {
  
-}
+}*/
