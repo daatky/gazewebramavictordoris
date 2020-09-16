@@ -1,8 +1,8 @@
 import { CatalogoPaisModel, CatalogoPaisMapperService } from './catalogo-pais.model'
 import { Injectable } from '@angular/core'
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface'
-import { ItemSelector } from './../../compartido/diseno/modelos/elegible.interface'
-import { CatalogoLocalidadEntity } from '../entidades/catalogos/catalogo-localidad.entity';
+import { ItemSelector } from '../../../compartido/diseno/modelos/elegible.interface'
+import { CatalogoLocalidadEntity } from '../../entidades/catalogos/catalogo-localidad.entity';
 
 export interface CatalogoLocalidadModel {
     id?: string
@@ -40,7 +40,7 @@ export class CatalogoLocalidadMapperService extends MapedorService<CatalogoLocal
             codigo: model.codigo,
             codigoPostal: model.codigoPostal,
             nombre: model.nombre,
-            pais: this.catalogoPaisMapper.transform(model.pais)
+            catalogoPais: this.catalogoPaisMapper.transform(model.pais)
         };
     }
 

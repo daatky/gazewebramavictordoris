@@ -3,7 +3,7 @@ import { MediaEntity } from "../media.entity"
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { CatalogoIdiomaEntity } from './catalogo-idioma.entity';
-import { CatalogoMetodoPagoModel } from '../../modelo/catalogo-metodo-pago.model'
+import { CatalogoMetodoPagoModel } from '../../modelo/catalogos/catalogo-metodo-pago.model'
 
 export interface CatalogoMetodoPagoEntity {
     id?: string

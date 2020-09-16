@@ -3,7 +3,7 @@ import { PensamientoService } from "../../nucleo/servicios/remotos/pensamiento.s
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from 'rxjs/operators'
 import { PensamientoEntity, PensamientoMapperService } from "../entidades/pensamiento.entity";
-import { PensamientoModel } from '../modelo/pensamiento.model';
+import { PensamientoModel } from '../modelo/entidades/pensamiento.model';
 
 
 @Injectable({

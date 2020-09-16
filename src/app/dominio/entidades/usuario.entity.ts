@@ -8,9 +8,9 @@ import { PagoFacturacionEntity, CatalogoMetodoPagoEntity } from './catalogos/cat
 import { RolSistemaEntity } from "./rol-sistema.entity";
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
-import { UsuarioModel } from '../modelo/usuario.model';
-import { PerfilModelMapperService } from '../modelo/perfil.model';
-import { CatalogoMetodoPagoModelMapperService, PagoFacturacionModelMapperService } from '../modelo/catalogo-metodo-pago.model';
+import { UsuarioModel } from '../modelo/entidades/usuario.model';
+import { PerfilModelMapperService } from '../modelo/entidades/perfil.model';
+import { CatalogoMetodoPagoModelMapperService, PagoFacturacionModelMapperService } from '../modelo/catalogos/catalogo-metodo-pago.model';
 import { IdiomaMapperService } from '../modelo/catalogos/catalogo-idioma.model';
 
 export interface UsuarioEntity {

@@ -13,9 +13,11 @@ import { IniciarSesionEntity } from "../../../dominio/entidades/iniciar-sesion.e
 
 @Injectable({ providedIn: 'root' })
 export class CuentaServiceRemoto {
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient
+    ) {
+
     }
-    ///
 
     // OBTENER el catalo
     iniciarSesion(datos: Object): Observable<RespuestaRemota<IniciarSesionEntity>> {

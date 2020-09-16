@@ -15,10 +15,10 @@ import { PensamientoCompartido, ItemPensamiento } from 'src/app/compartido/disen
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 import { TamanoLista } from 'src/app/compartido/diseno/enums/tamano-lista.enum';
 import { TipoPensamiento, EstiloItemPensamiento } from 'src/app/compartido/diseno/enums/tipo-pensamiento.enum';
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { PensamientoModel } from 'src/app/dominio/modelo/entidades/pensamiento.model';
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
-import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 
 @Component({
   selector: 'app-pensamiento',

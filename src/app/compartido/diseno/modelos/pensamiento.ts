@@ -1,5 +1,5 @@
 import { TipoPensamiento, EstiloItemPensamiento } from "../enums/tipo-pensamiento.enum";
-import { PensamientoModel } from 'src/app/dominio/modelo/pensamiento.model';
+import { PensamientoModel } from 'src/app/dominio/modelo/entidades/pensamiento.model';
 
 export interface PensamientoCompartido {
     //pensamiento:Array<PensamientoEntity>, //PENAMIENTO

@@ -1,5 +1,5 @@
 import { LlavesLocalStorage } from './llaves/local-storage.enum';
-import { UsuarioModel } from './../../../dominio/modelo/usuario.model'
+import { UsuarioModel } from '../../../dominio/modelo/entidades/usuario.model'
 import { MetodosLocalStorageService } from './../../util/metodos-local-storage.service'
 import { Injectable } from '@angular/core'
 import { SessionStorageServicie } from './session-storage.service';
@@ -29,7 +29,6 @@ export class CuentaServiceLocal {
     // Guardar usuario en el storage
     guardarUsuarioEnSessionStorage(usuario: UsuarioModel): void {
         this.metodosSesionStorage.guardar(LlavesSessionStorage.USUARIO, usuario);
-
     }
 
     // OBtener usuario del storage

@@ -5,7 +5,7 @@ import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano
 import { PagoNegocio } from '../../dominio/logica-negocio/pago.negocio'
 import { EstiloDelTextoServicio } from "../../nucleo/servicios/diseno/estilo-del-texto.service";
 import { Router } from '@angular/router';
-import { CatalogoMetodoPagoModel } from 'src/app/dominio/modelo/catalogo-metodo-pago.model';
+import { CatalogoMetodoPagoModel } from '../../dominio/modelo/catalogos/catalogo-metodo-pago.model';
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
 import { IPayPalConfig } from 'ngx-paypal';
@@ -37,7 +37,7 @@ import { CodigosEstadoMetodoPago, CodigosCatalogoMetodoPago } from "../../nucleo
 import { InputCompartido } from 'src/app/compartido/diseno/modelos/input.interface';
 import { EstiloErrorInput } from 'src/app/compartido/diseno/enums/estilo-error-input.enum';
 import { EstiloInput } from 'src/app/compartido/diseno/enums/estilo-input.enum';
-import { UsuarioModel } from 'src/app/dominio/modelo/usuario.model';
+import { UsuarioModel } from 'src/app/dominio/modelo/entidades/usuario.model';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { Location } from '@angular/common'

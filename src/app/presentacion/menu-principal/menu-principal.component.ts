@@ -3,7 +3,7 @@ import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
-import { ItemMenuModel, ItemSubMenu, ItemAccion } from '../../dominio/modelo/item-menu.model';
+import { ItemMenuModel, ItemSubMenu, ItemAccion } from '../../dominio/modelo/entidades/item-menu.model';
 import { InternacionalizacionNegocio } from 'src/app/dominio/logica-negocio/internacionalizacion.negocio';
 import { ItemMenuCompartido } from 'src/app/compartido/diseno/modelos/item-menu.interface';
 import { TamanoItemMenu } from 'src/app/compartido/diseno/enums/tamano-item-menu.enum';
@@ -17,11 +17,11 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RutasLocales } from 'src/app/rutas-locales.enum';
 import { Catalogo } from 'src/app/nucleo/servicios/remotos/rutas/catalogos.enum';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
 import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ignoreElements } from 'rxjs/operators';
-import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
+import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
 
 
 

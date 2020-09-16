@@ -1,5 +1,5 @@
 import { ItemSelector } from './../../../compartido/diseno/modelos/elegible.interface';
-import { CatalogoPaisModel } from '../../modelo/catalogo-pais.model';
+import { CatalogoPaisModel } from '../../modelo/catalogos/catalogo-pais.model';
 import { Injectable } from '@angular/core';
 import { CatalogoEstadoEntity } from "./catalogo-estado.entity";
 import { CatalogoIdiomaEntity } from "./catalogo-idioma.entity";

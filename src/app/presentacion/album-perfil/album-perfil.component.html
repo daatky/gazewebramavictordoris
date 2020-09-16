@@ -3,6 +3,7 @@
     <div class="portada">
         <app-item-circulo #portada [configuracion]="confPortada"></app-item-circulo>
         <p
+            *ngIf="codigo && codigo !== codigosTipoPerfil.PLAYFUL"
             [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                 color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
                 estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
@@ -11,6 +12,17 @@
             })"
         >
             {{ 'indicacionSubirFoto' | translate }}
+        </p>
+        <p
+            *ngIf="codigo && codigo === codigosTipoPerfil.PLAYFUL"
+            [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+                color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
+                estiloTexto: estiloDelTextoServicio.estilosDelTexto.REGULAR, 
+                enMayusculas: true,
+                tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L2_IGUAL 
+            })"
+        >
+            {{ 'fotoAzar' | translate }}
         </p>
     </div>
     <div class="nombrePerfil">

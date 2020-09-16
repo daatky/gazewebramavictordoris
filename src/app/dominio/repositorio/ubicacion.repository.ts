@@ -4,9 +4,9 @@ import { catchError, map, delay, debounceTime } from 'rxjs/operators'
 import { HandleError } from '../../nucleo/servicios/locales/handleError.service'
 import { Observable, throwError } from 'rxjs'
 import { UbicacionServiceLocal } from './../../nucleo/servicios/locales/ubicacion.service'
-import { CatalogoLocalidadMapperAItemSelectorService } from './../modelo/catalogo-localidad.model'
+import { CatalogoLocalidadMapperAItemSelectorService } from './../modelo/catalogos/catalogo-localidad.model'
 import { ItemSelector } from './../../compartido/diseno/modelos/elegible.interface'
-import { CatalogoPaisModel } from '../modelo/catalogo-pais.model'
+import { CatalogoPaisModel } from '../modelo/catalogos/catalogo-pais.model'
 import { CatalogoPaisEntity, CatalogoPaisMapperAItemSelectorService, CatalogoPaisMapperService } from './../entidades/catalogos/catalogo-pais.entity'
 
 @Injectable({ providedIn: 'root'})

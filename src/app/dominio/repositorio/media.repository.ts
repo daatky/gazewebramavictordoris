@@ -1,8 +1,8 @@
 import { MapearMediaEntityAlMediaModelo } from './../entidades/media.entity';
-import { ArchivoModel } from './../modelo/archivo.model';
+import { ArchivoModel } from './../modelo/entidades/archivo.model';
 import { AlbumEntity } from './../entidades/album.entity';
-import { MediaServiceLocal } from './../../nucleo/servicios/locales/media.service';
-import { MediaModel } from '../modelo/media.model';
+import { AlbumServiceLocal } from '../../nucleo/servicios/locales/album.service';
+import { MediaModel } from '../modelo/entidades/media.model';
 import { Injectable } from "@angular/core"
 import { Observable, throwError } from "rxjs"
 import { catchError, map } from "rxjs/operators"
@@ -14,7 +14,7 @@ export class MediaRepository {
 
     constructor(
         private mediaServiceRemoto: MediaServiceRemoto,
-        private mediaServiceLocal: MediaServiceLocal,
+        private mediaServiceLocal: AlbumServiceLocal,
         private mapearArchivoAlArchivoDefaultModelo: MapearArchivoAlArchivoDefaultModelo,
         private mapearMediaEntityAlMediaModelo: MapearMediaEntityAlMediaModelo
     ) {

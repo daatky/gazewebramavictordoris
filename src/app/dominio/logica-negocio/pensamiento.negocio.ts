@@ -3,7 +3,7 @@ import { Observable, throwError } from "rxjs";
 import { PensamientoEntity, TraduccionPensamientoEntity } from "../entidades/pensamiento.entity";
 import { map, catchError } from "rxjs/operators";
 import { PensamientoRepository } from "../repositorio/pensamiento.repository";
-import { PensamientoModel } from '../modelo/pensamiento.model';
+import { PensamientoModel } from '../modelo/entidades/pensamiento.model';
 import { VariablesGlobales, Paginacion } from 'src/app/nucleo/servicios/generales/variables-globales.service';
 
 @Injectable({

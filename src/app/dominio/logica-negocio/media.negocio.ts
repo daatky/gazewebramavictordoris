@@ -1,6 +1,6 @@
-import { ArchivoModel } from './../modelo/archivo.model';
+import { ArchivoModel } from './../modelo/entidades/archivo.model';
 import { AlbumEntity } from './../entidades/album.entity';
-import { MediaModel } from '../modelo/media.model'
+import { MediaModel } from '../modelo/entidades/media.model'
 import { CodigosCatalogoArchivosPorDefecto } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-archivos-defeto.enum';
 import { CodigosCatalogoTipoMedia } from '../../nucleo/servicios/remotos/codigos-catalogos/catalago-tipo-media.enum';
 import { Injectable } from "@angular/core"

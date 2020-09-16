@@ -1,7 +1,7 @@
-import { PerfilModel } from './../../../dominio/modelo/perfil.model';
+import { PerfilModel } from '../../../dominio/modelo/entidades/perfil.model';
 import { Perfiles } from './../remotos/rutas/perfiles.enum';
-import { CatalogoTipoPerfilModel } from 'src/app/dominio/modelo/catalogo-tipo-perfil.model';
-import { UsuarioModel } from './../../../dominio/modelo/usuario.model';
+import { CatalogoTipoPerfilModel } from '../../../dominio/modelo/catalogos/catalogo-tipo-perfil.model';
+import { UsuarioModel } from '../../../dominio/modelo/entidades/usuario.model';
 import { Injectable } from '@angular/core'
 
 @Injectable({ providedIn: 'root' })

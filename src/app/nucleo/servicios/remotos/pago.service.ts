@@ -6,7 +6,7 @@ import { Catalogo } from './rutas/catalogos.enum';
 import { Pago } from "./rutas/pago.enum";
 import { RespuestaRemota } from '../../util/respuesta';
 import { CatalogoMetodoPagoEntity, MetodoPagoStripeEntity } from 'src/app/dominio/entidades/catalogos/catalogo-metodo-pago.entity';
-import { PagoStripeModel } from 'src/app/dominio/modelo/catalogo-metodo-pago.model';
+import { PagoStripeModel } from '../../../dominio/modelo/catalogos/catalogo-metodo-pago.model';
 
 @Injectable({ providedIn: 'root' })
 export class PagoService {

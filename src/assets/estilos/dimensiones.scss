@@ -59,7 +59,7 @@ $defecto-total: $defecto-top + $defecto-bottom;
 // Mundo
 $mundo-diametro: $ancho-pagina + calcular(3.27); // El diametro es el 100 + 3.27%
 $mundo-derecha: calcular(6.58);
-$mundo-abajo: calcular(25.16);
+$mundo-abajo: calcular(8.16);
 
 // Portada Gazelook
 $portada-gaze-ancho-cortada: calcular(22.97);
@@ -150,6 +150,7 @@ $espacio-1590: calcular(15.9);
 $espacio-558: calcular(5.58);
 $espacio-159: calcular(1.59);
 $espacio-1542: calcular(15.42);
+$espacio-0139: calcular(1.39);
 
 // X blanca para Imagenes profile y album
 $diametro-x-blanca: calcular(6.87);
@@ -227,13 +228,11 @@ $bottom-bar-caja-icono-texto-alto: calcular(8.82);
 
 // Cuerpo mesa 2, para otros casos realizar calculo en caso de que varien los valores
 // Para espesor de linea 0.89
-$cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316});
-$cuerpo-default-ancho: $ancho-pagina - ($espacio-267 * 2);
+$cuerpo-default-alto: calc(100vh - #{$appbar-alto-default + $espesor-071});
+$cuerpo-default-ancho: $ancho-pagina;
 // Para cuerpo con bottom bar
-$cuerpo-con-bottom-bar-alto: calc(
-    100vh - #{$appbar-alto-default + $espesor-089 + $espacio-522 + $espacio-316 + $bottom-bar-alto}
-);
-$cuerpo-con-bottom-bar-ancho: $ancho-pagina - ($espacio-267 * 2);
+$cuerpo-con-bottom-bar-alto: calc(100vh - #{$appbar-alto-default + $espesor-089 + $bottom-bar-alto});
+$cuerpo-con-bottom-bar-ancho: $ancho-pagina;
 
 //
 $cuerpo-general:calc(100vh - #{$espesor-071 + $appbar-alto-default});

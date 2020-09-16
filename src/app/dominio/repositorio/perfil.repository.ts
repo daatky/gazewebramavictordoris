@@ -1,27 +1,31 @@
+import { PerfilModelMapperService, PerfilModelEstadoMapperService } from '../modelo/entidades/perfil.model';
+import { PerfilEntity, PerfilEntityMapperServicePerfil } from './../entidades/perfil.entity';
 import { PerfilServiceLocal } from './../../nucleo/servicios/locales/perfil.service';
-import { AlbumModel } from './../modelo/album.model';
+import { AlbumModel } from '../modelo/entidades/album.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PagoService } from '../../nucleo/servicios/remotos/pago.service';
-import { catchError, tap, map } from 'rxjs/operators'
+import { catchError, tap, map, debounceTime } from 'rxjs/operators'
 import { Observable, throwError } from 'rxjs'
 import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService, CatalogoTipoPerfilMapperService2 } from '../entidades/catalogos/catalogo-tipo-perfil.entity';
 import { PerfilServiceRemoto } from '../../nucleo/servicios/remotos/perfil.service';
-import { CatalogoTipoPerfilModel } from '../modelo/catalogo-tipo-perfil.model';
+import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
 import { LocalStorage } from 'src/app/nucleo/servicios/locales/local-storage.service';
-import { PerfilModel } from '../modelo/perfil.model';
+import { PerfilModel } from '../modelo/entidades/perfil.model';
+import { UsuarioModel, UsuarioModelMapperService } from '../modelo/entidades/usuario.model';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root'})
 export class PerfilRepository {
 
     constructor(
-        protected http: HttpClient,
         private perfilServicieRemoto: PerfilServiceRemoto,
         private perfilServicieLocal: PerfilServiceLocal,
         private mapeador: CatalogoTipoPerfilMapperService2,
-        private localStorage: LocalStorage
+        private perfilEntityMapperService: PerfilEntityMapperServicePerfil,
+        private localStorage: LocalStorage,
+        private perfilModelMapperService: PerfilModelMapperService,
+        private perfilModelEstadoMapperService: PerfilModelEstadoMapperService,
+        private usuarioModelMapperService: UsuarioModelMapperService,
     ) {
 
     }
@@ -46,23 +50,6 @@ export class PerfilRepository {
         return this.localStorage.obtenerCatalogoPerfiles();
     }
 
-    // Album del perfil
-    guardarAlbumActivoEnLocalStorage(album: AlbumModel) {
-        this.perfilServicieLocal.guardarAlbumEnLocalStorage(album)
-    }
-
-    obtenerAlbumActivoDelLocalStorage(): AlbumModel {
-        return this.perfilServicieLocal.obtenerAlbumEnLocalStorage()
-    }
-
-    guardarAlbumActivoEnSessionStorage(album: AlbumModel) {
-        this.perfilServicieLocal.guardarAlbumEnSessionStorage(album)
-    }
-
-    obtenerAlbumActivoDelSessionStorage(): AlbumModel {
-        return this.perfilServicieLocal.obtenerAlbumEnSessionStorage()
-    }
-
     almacenarPerfilSeleccionado(perfil: PerfilModel) {
         this.localStorage.almacenarPerfilSeleccionado(perfil)
     }
@@ -76,10 +63,72 @@ export class PerfilRepository {
                 map(data => {
                     return data.respuesta.datos
                 }),
-                catchError(err => {
-                    return throwError(err)
+                catchError(error => {
+                    return throwError(error)
                 })
             )
+    }
+
+    obtenerDatosDelPerfil(id: string): Observable<PerfilModel> {
+        return this.perfilServicieRemoto.obtenerDatosDelPerfil(id)
+            .pipe(
+                map(data => {
+                    return this.perfilEntityMapperService.transform(data.respuesta.datos)
+                }),
+                catchError(error => {
+                    return throwError(error)
+                })
+            )
+    }
+
+    guardarPerfilActivoEnLocalStorage(perfil: PerfilModel) {
+        this.perfilServicieLocal.guardarPerfilActivoEnLocalStorage(perfil)
+    }
+
+    obtenerPerfilActivoDelLocalStorage(): PerfilModel {
+        return this.perfilServicieLocal.obtenerPerfilActivoDelLocalStorage()
+    }
+
+    removerPerfilActivoDelLocalStorage() {
+        this.perfilServicieLocal.removerPerfilActivoDelLocalStorage()
+    }
+
+    actualizarPerfil(perfil: PerfilModel): Observable<PerfilModel> {
+        const perfilEntity = this.perfilModelMapperService.transform(perfil)
+        return this.perfilServicieRemoto.actualizarPerfil(perfilEntity)
+            .pipe(
+                map(data => {
+                    return this.perfilEntityMapperService.transform(data.respuesta.datos)
+                }),
+                catchError(error => {
+                    return throwError(error)
+                })
+            )
+    }
+
+    eliminarHibernarElPerfil(perfil: PerfilModel): Observable<object> {
+        const perfilEntity = this.perfilModelEstadoMapperService.transform(perfil)
+        console.warn('entidad', perfilEntity)
+        return this.perfilServicieRemoto.eliminarHibernarElPerfil(perfilEntity)
+    }
+
+    crearPerfilEnElUsuario(perfil: PerfilModel, usuario: UsuarioModel): Observable<PerfilModel> {
+        const perfilEntity = this.perfilModelMapperService.transform(perfil)
+        const usuarioEntity = this.usuarioModelMapperService.transform(usuario)
+        return this.perfilServicieRemoto.crearPerfilEnElUsuario(perfilEntity, usuarioEntity)
+            .pipe(
+                map(data => {
+                    return this.perfilEntityMapperService.transform(data.respuesta.datos)
+                }),
+                catchError(error => {
+                    return throwError(error)
+                })
+            )
+    }
+
+    activarPerfil(perfil: PerfilModel): Observable<object> {
+        const perfilEntity : PerfilEntity = { _id: perfil._id }
+        return this.perfilServicieRemoto.activarPerfil(perfilEntity)
     }
 
 }
