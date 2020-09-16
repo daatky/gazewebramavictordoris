@@ -9,17 +9,11 @@ export class VariablesGlobales {
   // Generales
   public mostrarMundo: boolean // Para ocultar o mostrar el mundo
   public semillaItemsId: number // Semilla para genera el id de los items
-  // Paginacion
-  public paginacionPrivado: Paginacion // Comentar ! xD
-  public paginacionPublico: Paginacion // Comentar ! xD
   
   constructor(){
     // Generales
     this.mostrarMundo = true
     this.semillaItemsId = 0
-    // Paginacion
-    this.paginacionPrivado = new PaginacionClass()
-    this.paginacionPublico = new PaginacionClass()
   }
 }
 

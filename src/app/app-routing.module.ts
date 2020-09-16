@@ -66,6 +66,12 @@ const routes: Routes = [
     canActivate: [RestriccionRutas]
   },
   {
+    path: RutasLocales.PERFIL.toString(),
+    loadChildren: () =>
+      import('./presentacion/perfil/perfil.module').then(p => p.PerfilModule),
+    canActivate: [RestriccionRutas]
+  },
+  {
     path: RutasLocales.MIS_CONTACTOS.toString(),
     component: MisContactosComponent
   },

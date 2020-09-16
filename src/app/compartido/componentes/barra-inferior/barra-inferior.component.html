@@ -10,9 +10,10 @@
             <form [formGroup]="dataForm">
                 <input class="inputTexto" type={{barraInferior.input.tipo.toString()}}
                     attr.maxlength="{{barraInferior.input.maximo}}" placeholder="{{barraInferior.input.placeholder}}"
-                    formControlName='texto'>
-            </form>
-        </div>
+                    formControlName='texto'>                    
+            </form>            
+            <div *ngIf="barraInferior.presentarContador" class="divContador txt-rojo-base regular letra-1-con-interlineado-igual">{{dataForm.controls.texto.value.length}}/230</div>
+        </div>        
         <ng-template #mostrarIconos>
             <div class="icono">
                 <img class="iconotexto" src="../../../../assets/recursos/botones/forma-icono-editar-texto.svg">

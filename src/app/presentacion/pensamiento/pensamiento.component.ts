@@ -96,22 +96,22 @@ export class PensamientoComponent implements OnInit {
       case 0:
         this.cargando = false
         this.pensamientoCompartido = { tipoPensamiento: TipoPensamiento.PENSAMIENTO_SIN_SELECCIONAR, configuracionItem: { estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO }, subtitulo: false }
-        this.dataListaPublico = { tamanoLista: TamanoLista.TIPO_PENSAMIENTO_GESTIONAR, lista: [], cargarMas: () => this.cargarMasPensamientos() }
-        this.dataListaPrivado = { tamanoLista: TamanoLista.TIPO_PENSAMIENTO_GESTIONAR, lista: [], cargarMas: () => this.cargarMasPensamientos() }
+        this.dataListaPublico = { tamanoLista: TamanoLista.TIPO_PENSAMIENTO_GESTIONAR, lista: [], cargarMas: () => this.cargarMasPensamientos(true) }
+        this.dataListaPrivado = { tamanoLista: TamanoLista.TIPO_PENSAMIENTO_GESTIONAR, lista: [], cargarMas: () => this.cargarMasPensamientos(true) }
         break;
       case 1:
         this.cargando = true
         this.esPublico = true
         this.pensamientoCompartido = { esLista: true, tipoPensamiento: TipoPensamiento.PENSAMIENTO_PUBLICO_CREACION, configuracionItem: { estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO, presentarX: true }, subtitulo: true }
         //this.obtenerPensamientos() 
-        this.cargarMasPensamientos()
+        this.cargarMasPensamientos(false)
         break;
       case 2:
         this.cargando = true
         this.esPublico = false
         this.pensamientoCompartido = { esLista: true, tipoPensamiento: TipoPensamiento.PENSAMIENTO_PRIVADO_CREACION, configuracionItem: { estilo: EstiloItemPensamiento.ITEM_CREAR_PENSAMIENTO, presentarX: true }, subtitulo: true }
         //this.obtenerPensamientos()
-        this.cargarMasPensamientos()
+        this.cargarMasPensamientos(false)
         break;
       default:
         this.cargando = false
@@ -131,7 +131,7 @@ export class PensamientoComponent implements OnInit {
   }
   //Metodo que para inicializar la barra inferior y ademas sirve para enviar el meto de crear cuenta
   enviarPensamienroCrear(activar: boolean) {
-    this.barraInferior = { input: { maximo: 230, placeholder: "Ingrese un pensamiento", data: { texto: "" }, tipo: TipoInput.TEXTO }, activarBarra: activar, variosIconos: false, enviar: () => this.crearPensamiento() }
+    this.barraInferior = { input: { maximo: 230, placeholder: "Ingrese un pensamiento", data: { texto: "" }, tipo: TipoInput.TEXTO }, activarBarra: activar, variosIconos: false, enviar: () => this.crearPensamiento(), presentarContador:true}
   }
   crearPensamiento() {
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'), true)
@@ -170,7 +170,7 @@ export class PensamientoComponent implements OnInit {
 
   //Para enviar el texto para que se presente el input de la barra inferior
   enviarPensamientoActualizar = (itemPensamiento: ItemPensamiento) => {
-    this.barraInferior = { input: { maximo: 230, placeholder: "Ingrese un pensamiento", data: { id: itemPensamiento.pensamiento.id, indice: itemPensamiento.indice, texto: itemPensamiento.pensamiento.texto }, tipo: TipoInput.TEXTO }, activarBarra: true, variosIconos: false, enviar: () => this.actualizarPensamiento() }
+    this.barraInferior = { input: { maximo: 230, placeholder: "Ingrese un pensamiento", data: { id: itemPensamiento.pensamiento.id, indice: itemPensamiento.indice, texto: itemPensamiento.pensamiento.texto }, tipo: TipoInput.TEXTO }, activarBarra: true, variosIconos: false, enviar: () => this.actualizarPensamiento(),presentarContador:true }
   }
   actualizarPensamiento() {
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'), true)
@@ -234,30 +234,52 @@ export class PensamientoComponent implements OnInit {
         this.toast.abrirToast(error)
       })
   }
-  cargarMasPensamientos() {
+  cargarMasPensamientos(estoyCargandoMas:boolean) {
+      //this.cargando = false      
+        if(this.esPublico){
+          console.log("publico")
+          this.cargarPensamientosPublicos(estoyCargandoMas)
+        }else{
+          console.log("rivado")
+          this.cargarPensamientosPrivados(estoyCargandoMas)
+        }
+  }
+  cargarPensamientosPrivados(estoyCargandoMas:boolean){    
+    let listaMomentanea=[]
+    this.pensamientoNegocio.cargarPensamientosPrivados(this.perfilSeleccionado._id, 3, this.esPublico,estoyCargandoMas)
+    .subscribe(res => {      
+      if(res===null){
+        this.cargando = false
+        console.log("No tengo MAS que cargar")        
+        this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('noEncontreElemento'))
+      }else{
+        this.cargando = false
+        listaMomentanea=this.dataListaPrivado.lista
+        //this.dataListaPrivado.lista.push(...res)
+        this.dataListaPrivado.lista=this.pensamientoNegocio.verificarDuplicidadDatos(listaMomentanea,res,this.esPublico)
+        console.log(this.dataListaPrivado.lista)  
+      }
+    }, error => {
       this.cargando = false
-      let listaMomentanea=[]
-      this.pensamientoNegocio.cargarMasPensamientos(this.perfilSeleccionado._id, 3, this.esPublico)
-        .subscribe(res => {
-          console.log(res)
-          if(res===null){
-            console.log("No tengo MAS que cargar")
-          }else{
-            if (!this.esPublico) {
-              listaMomentanea=this.dataListaPrivado.lista
-              //this.dataListaPrivado.lista.push(...res)
-              this.dataListaPrivado.lista.push(this.pensamientoNegocio.verificarDuplicidadDatos(listaMomentanea,res,this.esPublico))
-              console.log(this.dataListaPrivado.lista)              
-              return
-            }
-            listaMomentanea=this.dataListaPublico.lista
-            this.dataListaPublico.lista.push(this.pensamientoNegocio.verificarDuplicidadDatos(listaMomentanea,res,this.esPublico))
-            //this.dataListaPublico.lista.push(...res)
-            console.log(this.dataListaPublico.lista)    
-            this.pensamientoNegocio.verificarDuplicidadDatos(listaMomentanea,res,this.esPublico)        
-          }
-        }, error => {
-          this.cargando = false
-        })    
+    })
+  }
+  cargarPensamientosPublicos(estoyCargandoMas:boolean){
+    let listaMomentanea=[]
+    this.pensamientoNegocio.cargarPensamientosPublicos(this.perfilSeleccionado._id, 3, this.esPublico,estoyCargandoMas)
+    .subscribe(res => {
+      if(res===null){
+        this.cargando = false
+        console.log("No tengo MAS que cargar")
+        this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('noEncontreElemento'))
+      }else{
+        this.cargando = false 
+        listaMomentanea=this.dataListaPublico.lista            
+        this.dataListaPublico.lista=this.pensamientoNegocio.verificarDuplicidadDatos(listaMomentanea,res,this.esPublico)
+        //this.dataListaPublico.lista.push(...res)
+        console.log(this.dataListaPublico.lista)  
+      }
+    }, error => {
+      this.cargando = false
+    })  
   }
 }

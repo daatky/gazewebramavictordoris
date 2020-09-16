@@ -6,11 +6,11 @@ export enum RutasLocales {
   PAGO_TARJETA = 'pagotarjeta/:codigo',
   MENU_PERFILES = 'menuperfiles',
   BIENVENIDO = 'bienvenido',
-  MODULO_PENSAMIENTO = 'pensamiento',
-  //CREAR_PENSAMIENTO = 'crear-pensamiento',
+  MODULO_PENSAMIENTO = 'pensamiento',  
   MENU_PRINCIPAL = "menuprincipal",
   MIS_CONTACTOS = "miscontactos",
   ALBUM_PERFIL = 'albumperfil/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
   ALBUM_GENERAL = 'albumgeneral/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
-  MENU_SELECCION_PERFILES = "menuseleccionperfiles"
+  MENU_SELECCION_PERFILES = "menuseleccionperfiles",
+  PERFIL="perfil"
 }
