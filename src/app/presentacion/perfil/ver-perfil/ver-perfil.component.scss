@@ -6,7 +6,23 @@
 .divFotos{
     padding: $interlineado-8 $interlineado-7 0 $interlineado-7;
     width: $ancho-pagina;
-    background-color: hotpink;
-    color: honeydew;
+//    display: flex;
+//    flex-flow: row;
     box-sizing: border-box;
+}
+.divItemMiFoto{
+    padding-bottom: $interlineado-9;
+}
+.divTextNombreContact{
+    padding:0 $interlineado-7 0 $interlineado-11;
+}
+.divBotonContactos{
+    padding:$interlineado-10 0 $interlineado-10 0;
+}
+.divInvitacionesContactos{
+    padding: $interlineado-4 0 0 $interlineado-7;
+    display: flex;
+}
+.padding178{
+    padding-bottom: $interlineado-2;
 }
