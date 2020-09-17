@@ -14,4 +14,6 @@ export enum LlavesLocalStorage {
     PERFIL_SELECCIONADO = 'perfil_seleccionado',
     PERFIL_ACTIVO = 'perfil_activo',
     PERFIL_ORIGINAL = 'perfil_original',
+    PROYECTO_ACTIVO = 'proyecto_activo',
+    TIPO_MONEDA = 'tipo_moneda',
 }

@@ -9,6 +9,7 @@ import { CatalogoTipoMonedaEntity } from "./catalogos/catalogo-tipo-moneda.entit
 import { CatalogoTipoProyectoEntity } from "./catalogos/catalogo-tipo-proyecto.entity";
 import { CatalogoLocalidadEntity } from "./catalogos/catalogo-localidad.entity";
 import { CatalogoIdiomaEntity } from "./catalogos/catalogo-idioma.entity";
+import { MediaEntity } from './media.entity';
 
 export interface ProyectoEntity {
     _id?: string,
@@ -28,7 +29,8 @@ export interface ProyectoEntity {
     traducciones?: Array<TraduccionProyectoEntity>,
     estrategia?: EstrategiaEntity,
     comentarios?: Array<ComentarioEntity>,
-    moneda?: CatalogoTipoMonedaEntity
+    moneda?: CatalogoTipoMonedaEntity,
+    medias?: Array<MediaEntity>,
 }
 
 export interface TraduccionProyectoEntity{

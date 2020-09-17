@@ -1,3 +1,4 @@
+import { CodigosCatalogoTipoProyecto } from './../../nucleo/servicios/remotos/codigos-catalogos/codigos-catalogo-tipo-proyecto.enum';
 import { RutasProyectos } from './../proyectos/rutas-proyectos.enum';
 import { Component, OnInit } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
@@ -23,6 +24,7 @@ import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ignoreElements } from 'rxjs/operators';
 import { PerfilModel } from 'src/app/dominio/modelo/entidades/perfil.model';
+import { AccionProyecto } from '../proyectos/publicar/publicar.component';
 
 
 
@@ -177,7 +179,13 @@ export class MenuPrincipalComponent implements OnInit {
       gazeAnuncios: item.id == MenuPrincipal.ANUNCIOS,
       idInterno: item.id,
       onclick: () => this.navigationSubMenu(item.ruta),
-      dobleClick: () => { }
+      dobleClick: () => { 
+        let ruta = RutasLocales.MODULO_PROYECTOS.toString()
+        let publicar = RutasProyectos.PUBLICAR.toString()
+        publicar = publicar.replace(':accionProyecto', AccionProyecto.CREAR.toString())
+        publicar = publicar.replace(':codigoTipoProyecto', CodigosCatalogoTipoProyecto.PROYECTO_LOCAL.toString())
+        this.router.navigateByUrl(ruta + '/' + publicar)
+      }
     };
   }
 

@@ -33,7 +33,7 @@ $diametro-item-grande: calcular(38.53);
 }
 
 .itemCirculo.contato {
-
+    // Definir cuando haya especificaciones
 }
 
 // Color de borde
@@ -96,6 +96,10 @@ $diametro-item-grande: calcular(38.53);
 .itemCirculo.album .capa {
     width: $diametro-item-grande - ($espedor-borde-grande * 2);
     height: $diametro-item-grande - ($espedor-borde-grande * 2);
+}
+
+.itemCirculo.contacto .capa {
+    // Definir cuando haya especificaciones
 }
 
 // Capa loader

@@ -46,6 +46,7 @@ export interface GazeAppBar {
     subtituloNormal?: TextoAppBar, // Usado para nombre de perfil o titulo debajo del home
     mostrarBotonXRoja: boolean, // Indica si se debe mostrar o no el boton de la x roja
     tamanoColorFondo: TamanoColorDeFondoAppBar, // Indica el ancho que debe ocupar el color de fondo
+    clickTituloPrincipal?: Function
 }
 
 export interface SoloTituloAppBar {
