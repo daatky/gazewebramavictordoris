@@ -5,9 +5,9 @@
 }" class="contenedorPrincipal">
     <div class="barraBuscar">
         <input type="text" [placeholder]="obtenerPlaceholder()" class="inputBusqueda" [formControl]='controlBuscador'
-            (focus)="focusGanado()" (blur)="focusPerdido()" [ngModel]="palabra">
+            (focus)="focusGanado()" [ngModel]="palabra">
         <div *ngIf="!abrir" class="iconoLupa"></div>
-        <div *ngIf="abrir" class="iconoX"></div>
+        <div *ngIf="abrir" class="iconoX" (tap)="cerrar()"></div>
     </div>
 
     <div *ngIf="abrir" class="contenedorResultados">

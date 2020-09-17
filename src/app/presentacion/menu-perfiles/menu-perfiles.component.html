@@ -11,7 +11,8 @@
             <app-item-menu [configuracionItem]="prepararItemTipoPerfil(item)"></app-item-menu>
         </div>
 
-        <app-item-menu *ngIf="itemInformacion" [configuracionItem]="prepareItemInformacion(itemInformacion)"></app-item-menu>
+        <app-item-menu *ngIf="itemInformacion" [configuracionItem]="prepareItemInformacion(itemInformacion)">
+        </app-item-menu>
     </div>
 
 </app-lista-vertical>

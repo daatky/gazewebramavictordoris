@@ -1,12 +1,5 @@
-<div
-    #itemMenu
-    id="{{ 'itemMenu' + configuracionItem.idInterno }}"
-    [ngClass]="obtenerItemClases()"
-    gestorEventos
-    (eventoTap)="tap()"
-    (dobleTap)="dobletap()"
-    (press)="press()"
->
+<div #itemMenu id="{{ 'itemMenu' + configuracionItem.idInterno }}" [ngClass]="obtenerItemClases()" gestorEventos
+    (eventoTap)="tap()" (dobleTap)="dobletap()" (press)="press()">
     <div [ngClass]="obtenerClasesItemCaja()">
         <div class="contenedor-texto">
             <!-- ITEM PARA PERFIL CREATE, TIPO, PROFILE-->
@@ -61,6 +54,61 @@
                     </p>
 
                 </div>
+                <div class="second" *ngSwitchCase="tipoMenu.PUBLICAR_PROYECTOS">
+                    <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I8
+                        })">
+                        {{ texto1 | async }}
+
+                    <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I8
+                        })">
+                        {{ texto2 | async }}
+
+                    <p *ngIf="configuracionItem.texto3" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L7_I8
+                        })">
+                        {{ texto3 | async }}
+                    </p>
+
+                </div>
+
+                <div class="second" *ngSwitchCase="tipoMenu.INFORMATION_PROYECTOS">
+                    <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I8
+                        })">
+                        {{ texto1 | async }}
+
+                    <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I8
+                        })">
+                        {{ texto2 | async }}
+
+                    <p *ngIf="configuracionItem.texto3" [ngClass]="estiloTexto.obtenerEstilosTexto({ 
+                            color: estiloTexto.colorDelTexto.TEXTOBLANCO, 
+                            estiloTexto: estiloTexto.estilosDelTexto.BOLDCONSOMBRA, 
+                            enMayusculas: true,
+                            tamanoConInterlineado: estiloTexto.tamanoDeTextoConInterlineado.L5_I8
+                        })">
+                        {{ texto3 | async }}
+                    </p>
+
+                </div>
                 <div class="second" *ngSwitchCase="tipoMenu.ANUNCIOS">
                     <p [ngClass]="estiloTexto.obtenerEstilosTexto({ 
                             color: estiloTexto.colorDelTexto.GRIS, 
@@ -102,6 +150,7 @@
                 <div class="second" *ngSwitchCase="tipoMenu.SUBMENU">
                     <div class="boton-puntos"></div>
                 </div>
+
                 <div class="second" *ngSwitchCase="tipoMenu.LEGAL">
                     <p (click)="clickItemSubMenu(item)" *ngFor="let item of configuracionItem.acciones;let i = index"
                         [ngClass]="estiloTextoMenus(item)">

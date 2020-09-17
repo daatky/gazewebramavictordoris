@@ -1,39 +1,46 @@
 <div class="centrar login">
+    <div class="flechaAtras">
+        <div class="botonAtras" (tap)="clickBotonAtras()">
+            <div class="icono"></div>
+        </div>
+    </div>
+
     <div class="fondoTransparente">
         <div class="divCabecera">
-            <div class="botonAtras" (tap)="clickBotonAtras()">
-                <div class="icono"></div>
-            </div>
             <div class="centrar escogerLeng txt-celeste regular letra-2-con-interlineado-2 enMayusculas">
                 {{ 'traduccionAutomatica' | translate | uppercase }}
             </div>
             <!-- (cambiraIdioma)="cambiraIdioma()"-->
-            <app-cabecera-idiomas  (cambiarIdioma)="cambiarIdioma()"></app-cabecera-idiomas>
+            <app-cabecera-idiomas (cambiarIdioma)="cambiarIdioma()"></app-cabecera-idiomas>
         </div>
         <app-portada-gaze #portadaGazeComponent></app-portada-gaze>
-            <div class="divContenido">            
-                <div class="centrarText paddinLeft267 paddinRight267 divPaddign522 bold txt-blanco letra-4-con-interlineado-2">
-                    {{'avisoImportante' | translate | uppercase }}
-                </div> 
-                <!--centrar2 centrarText-->
-                <div class="divAviso">
-                    <div class="paddinLeft267 paddinRight267 regular centrar2 centrarText txt-blanco letra-3-con-interlineado-2">
-                        <p>{{'avisoWeb1' | translate | uppercase}}</p>
-                        <p>{{'avisoWeb2' | translate | uppercase}}</p>
-                    </div>            
-                </div> 
-                <div class="paddinLeft267 divPaddign522 paddinRight267">
-                    <app-linea [configuracionLinea]="configuracionLinea1"></app-linea>
-                </div>  
-                <div class="divCompromiso">
-                    <div class="paddinLeft267 paddinRight267 centrar2 centrarText bold txt-verde-base letra-3-con-interlineado-2">
-                        {{'visitarRed' | translate | uppercase}}
-                    </div>
-                </div>                            
-                <app-button *ngIf="botonEnter" class="btnEnviar centrar" [botonCompartido]='botonEnter' type="submit"></app-button>
-                    <div class="lineaInferior">
-                        <app-linea class="posicionRelativa" [configuracionLinea]="configuracionLinea2"></app-linea>
+        <div class="divContenido">
+            <div
+                class="centrarText paddinLeft267 paddinRight267 divPaddign522 bold txt-blanco letra-4-con-interlineado-2">
+                {{'avisoImportante' | translate | uppercase }}
+            </div>
+            <!--centrar2 centrarText-->
+            <div class="divAviso">
+                <div
+                    class="paddinLeft267 paddinRight267 regular centrar2 centrarText txt-blanco letra-3-con-interlineado-2">
+                    <p>{{'avisoWeb1' | translate | uppercase}}</p>
+                    <p>{{'avisoWeb2' | translate | uppercase}}</p>
                 </div>
             </div>
+            <div class="paddinLeft267 divPaddign522 paddinRight267">
+                <app-linea [configuracionLinea]="configuracionLinea1"></app-linea>
+            </div>
+            <div class="divCompromiso">
+                <div
+                    class="paddinLeft267 paddinRight267 centrar2 centrarText bold txt-verde-base letra-3-con-interlineado-2">
+                    {{'visitarRed' | translate | uppercase}}
+                </div>
+            </div>
+            <app-button *ngIf="botonEnter" class="btnEnviar centrar" [botonCompartido]='botonEnter' type="submit">
+            </app-button>
+            <div class="lineaInferior">
+                <app-linea class="posicionRelativa" [configuracionLinea]="configuracionLinea2"></app-linea>
+            </div>
+        </div>
     </div>
 </div>

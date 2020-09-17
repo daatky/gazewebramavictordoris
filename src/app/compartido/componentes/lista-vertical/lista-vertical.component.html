@@ -1,23 +1,27 @@
-<div *ngIf="!dataLista.cargando;else mostrarCargando">
-    <div *ngIf="dataLista.error==null;else mostrarError" (scroll)="cargarMas()" id="scroll"
-        class="{{dataLista.tamanoLista}}">
+<div *ngIf="dataLista">
 
-        <ng-content>
 
-        </ng-content>
+    <div *ngIf="!dataLista.cargando;else mostrarCargando">
+        <div *ngIf="dataLista.error==null;else mostrarError" (scroll)="cargarMas()" id="scroll"
+            class="{{dataLista.tamanoLista}}">
 
+            <ng-content>
+
+            </ng-content>
+
+        </div>
+        <ng-template #mostrarError>
+            <div class="{{dataLista.tamanoLista}}" class="centralItems">
+                <h5>
+                    {{dataLista.error}}
+                </h5>
+                <button (click)="reintentar()">Reintentar</button>
+            </div>
+        </ng-template>
     </div>
-    <ng-template #mostrarError>
+    <ng-template #mostrarCargando>
         <div class="{{dataLista.tamanoLista}}" class="centralItems">
-            <h5>
-                {{dataLista.error}}
-            </h5>
-            <button (click)="reintentar()">Reintentar</button>
+            <app-cargando> </app-cargando>
         </div>
     </ng-template>
 </div>
-<ng-template #mostrarCargando>
-    <div class="{{dataLista.tamanoLista}}" class="centralItems">
-        <app-cargando> </app-cargando>
-    </div>
-</ng-template>

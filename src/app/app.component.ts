@@ -18,6 +18,7 @@ import { InternacionalizacionNegocio } from "../app/dominio/logica-negocio/inter
 })
 export class AppComponent {
   public title = 'gazelookweb'
+  public mundoClases: any
 
   constructor(
     private globales: VariablesGlobales,
@@ -40,7 +41,7 @@ export class AppComponent {
   }
 
   obtenerMundoClases() {
-    return {
+    this.mundoClases = {
       'mundo': true,
       'mostrar': this.globales.mostrarMundo
     }

@@ -1,0 +1,7 @@
+<app-appbar #barra [configuracion]="configuracionAppBar"> </app-appbar>
+
+<app-lista-vertical #listaVertical class="centrar">
+    <div *ngFor="let item of listaMenu">
+        <app-item-menu [configuracionItem]="configurarItemMenu(item)"></app-item-menu>
+    </div>
+</app-lista-vertical>

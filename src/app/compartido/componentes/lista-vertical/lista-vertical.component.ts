@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { TamanoLista } from '../../diseno/enums/tamano-lista.enum'
 import { DatosItem } from '../../diseno/modelos/datos-item-lista.interface'
 import { DatosLista } from '../../diseno/modelos/datos-lista.interface'
 
@@ -31,9 +32,18 @@ export class ListaVerticalComponent implements OnInit {
 
   }
 
-  
+
 
   ngOnInit(): void {
+
+  }
+
+  configurarLista(tamanoLista: TamanoLista = TamanoLista.TIPO_PERFILES, reintentar: Function = () => { }) {
+    this.dataLista = {
+      cargando: false,
+      reintentar: reintentar,
+      tamanoLista: tamanoLista
+    }
   }
   //Verifica si presento error al traer los datos de la lista, en caso de llegar a final ejecuta el metodo que envio el padre de reintentar
   reintentar() {
@@ -49,4 +59,6 @@ export class ListaVerticalComponent implements OnInit {
       }
     }
   }
+
+
 }
