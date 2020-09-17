@@ -16,6 +16,7 @@ import { RestriccionRutas } from "../app/nucleo/servicios/generales/canActivate/
 import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
 import { BuscadorComponent } from './compartido/componentes/buscador/buscador.component';
 import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
+import { RutasInicioSessionPerfil } from './nucleo/servicios/generales/canActivate/rutas-inicio-session-perfil.service';
 
 
 const routes: Routes = [
@@ -59,7 +60,8 @@ const routes: Routes = [
   },
   {
     path: RutasLocales.MENU_PRINCIPAL.toString(),
-    component: MenuPrincipalComponent
+    component: MenuPrincipalComponent,
+    canActivate: [RutasInicioSessionPerfil]
   },
   {
     path: RutasLocales.MODULO_PENSAMIENTO.toString(),
@@ -75,7 +77,8 @@ const routes: Routes = [
   },
   {
     path: RutasLocales.MIS_CONTACTOS.toString(),
-    component: MisContactosComponent
+    component: MisContactosComponent,
+    canActivate: [RutasInicioSessionPerfil]
   },
   {
     path: RutasLocales.MENU_SELECCION_PERFILES.toString(),
@@ -85,6 +88,7 @@ const routes: Routes = [
   {
     path: RutasLocales.MENU_PUBLICAR_PROYECTOS.toString(),
     component: MenuPublicarProyectosComponent,
+    canActivate: [RutasInicioSessionPerfil]
   }
 ];
 

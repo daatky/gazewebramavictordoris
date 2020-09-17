@@ -34,7 +34,7 @@ export class CuentaNegocio {
             .pipe(
                 map(data => {
                     console.log(data)
-                    if(data){
+                    if (data) {
                         this.cuentaRepository.guardarTokenAutenticacion(data.tokenAccess)
                         this.cuentaRepository.guardarTokenRefresh(data.tokenRefresh)
                         this.cuentaRepository.guardarUsuarioEnLocalStorage(data.usuario)
@@ -203,7 +203,7 @@ export class CuentaNegocio {
 
     // Obtener Email y Contrasena del usuario
     obtenerEmailConContrasenaDelUsuario(session: boolean = true) {
-        const usuario: UsuarioModel = (session) 
+        const usuario: UsuarioModel = (session)
             ? this.obtenerUsuarioDelSessionStorage()
             : this.obtenerUsuarioDelLocalStorage()
         return {
@@ -270,6 +270,6 @@ export class CuentaNegocio {
     }
     validarEmailUnico(email: string): Observable<string> {
         return this.cuentaRepository.validarEmailUnico(email)
-    }
+    }    
 
 }
