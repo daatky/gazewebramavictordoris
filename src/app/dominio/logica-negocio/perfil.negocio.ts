@@ -225,7 +225,7 @@ export class PerfilNegocio {
         }
     }
 
-    validarOrigenPerfilActivo(id: string) : Observable<PerfilModel> {
+    validarOrigenPerfilActivo(id: string): Observable<PerfilModel> {
         let perfil: PerfilModel = this.obtenerPerfilActivoDelLocalStorage()
         if (perfil) {
             return of(perfil)
@@ -317,7 +317,7 @@ export class PerfilNegocio {
                 codigoPostal: codigoPostal,
             }
         }
-        
+
         this.guardarPerfilActivoEnLocalStorage(perfil)
     }
 
@@ -352,7 +352,7 @@ export class PerfilNegocio {
                 codigoPostal: codigoPostal,
             }
         }
-        
+
         this.guardarPerfilActivoEnLocalStorage(perfil)
     }
 
@@ -394,12 +394,12 @@ export class PerfilNegocio {
         }
     }
 
-    eliminarHibernarElPerfil(perfil: PerfilModel) : Observable<object> {
+    eliminarHibernarElPerfil(perfil: PerfilModel): Observable<object> {
         return this.perfilRepository.eliminarHibernarElPerfil(perfil)
     }
 
     inicializarPerfilActivoParaAccionCrear(tipoPerfil: CatalogoTipoPerfilModel): PerfilModel {
-        let perfil : PerfilModel = this.obtenerPerfilActivoDelLocalStorage()
+        let perfil: PerfilModel = this.obtenerPerfilActivoDelLocalStorage()
         if (!perfil) {
             perfil = {
                 _id: '',

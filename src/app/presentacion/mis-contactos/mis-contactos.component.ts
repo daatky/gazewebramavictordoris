@@ -34,9 +34,18 @@ export class MisContactosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
+    this.inicializarDatos()
+
+  }
+
+  inicializarDatos() {
+    if (this.cuentaNegocio.sesionIniciada()) {
+      this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
+      this.prepararAppBar(true);
+    } else {
+      this.prepararAppBar(false)
+    }
     this.prepararDatosBuscador();
-    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
   }
 
   prepararDatosBuscador() {

@@ -35,14 +35,21 @@ export class MenuPublicarProyectosComponent implements OnInit {
     private perfilNegocio: PerfilNegocio,
     private router: Router,
   ) {
-
     this.prepararItemsMenu();
   }
 
   ngOnInit(): void {
-    this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
+    this.inicializarDatos();
+  }
+
+  inicializarDatos() {
+    if (this.cuentaNegocio.sesionIniciada()) {
+      this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
+      this.prepararAppBar(true);
+    } else {
+      this.prepararAppBar(false)
+    }
     this.prepararDatosBuscador();
-    this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
     this.listaVertical.configurarLista()
   }
 
@@ -76,7 +83,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
           },
           subtitulo: {
             mostrar: true,
-            llaveTexto: "CONTACTOS " + this.perfilSeleccionado.nombreContacto
+            llaveTexto: "publicar"
           }
         }
       }
@@ -99,7 +106,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
     }
   }
 
-  async prepararItemsMenu() {
+  prepararItemsMenu() {
     this.listaMenu = []
 
     this.listaMenu.push({
@@ -149,7 +156,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
       linea: {
         mostrar: true,
         configuracion: {
-          ancho: AnchoLineaItem.ANCHO6382,
+          ancho: (item.tipo == TipoMenu.INFORMATION_PROYECTOS) ? AnchoLineaItem.ANCHO6920 : AnchoLineaItem.ANCHO6382,
           espesor: EspesorLineaItem.ESPESOR071,
           colorFondo: ColorFondoLinea.FONDOLINEAVERDE,
           forzarAlFinal: true,
@@ -158,7 +165,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
       },
       gazeAnuncios: false,
       idInterno: item.id,
-      onclick: () => { },
+      onclick: () => this.navegarSeccion(item.ruta),
       dobleClick: () => { }
     };
   }
@@ -167,7 +174,8 @@ export class MenuPublicarProyectosComponent implements OnInit {
     if (ruta) {
       this.router.navigateByUrl(ruta.toString());
     } else {
-      this.toast.abrirToast("No disponible, estamos construyendo esta sección");
+      //this.toast.abrirToast("No disponible, estamos construyendo esta sección");
+      alert("no hay ruta");
     }
   }
 

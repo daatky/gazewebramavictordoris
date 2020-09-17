@@ -43,6 +43,7 @@ import { MisContactosComponent } from './presentacion/mis-contactos/mis-contacto
 import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-perfiles/menu-seleccion-perfiles.component';
 import { RestriccionRutas } from './nucleo/servicios/generales/canActivate/resticcionRutas.service';
 import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
+import { RutasInicioSessionPerfil } from './nucleo/servicios/generales/canActivate/rutas-inicio-session-perfil.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
@@ -67,7 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
     MisContactosComponent,
     MenuSeleccionPerfilesComponent,
     MenuPublicarProyectosComponent,
-    MenuSeleccionarProyectosComponent    
+    MenuSeleccionarProyectosComponent
   ],
   imports: [
     BrowserModule,
@@ -79,9 +80,9 @@ export function createTranslateLoader(http: HttpClient) {
     CompartidoModule,
     TranslateModule.forRoot({
       loader: {
-        provide:TranslateLoader,
-        useFactory: (createTranslateLoader),        
-        deps: [HttpClient]        
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
       },
       isolate: true,
       //extend:true
@@ -104,7 +105,8 @@ export function createTranslateLoader(http: HttpClient) {
     HandleError,
     IdiomaService,
     RestriccionRutas,
-    RutasInicioSession
+    RutasInicioSession,
+    RutasInicioSessionPerfil
   ],
   bootstrap: [AppComponent,
     //[{provide: PLATFORM_PIPES, useValue: TranslatePipe, multi: true} ]    

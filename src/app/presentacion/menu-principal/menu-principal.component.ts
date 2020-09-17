@@ -61,12 +61,15 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sesionIniciada = this.cuentaNegocio.sesionIniciada();
-    this.prepararAppBar();
-    if (this.sesionIniciada) {
-      this.verificarPerfilSeleccionado();
+    this.inicializarDatos();
+  }
+
+  inicializarDatos() {
+    if (this.cuentaNegocio.sesionIniciada()) {
+      this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado();
+      this.prepararAppBar(true)
     } else {
-      this.configuracionAppBar.gazeAppBar.subtituloDemo = this.obtenerTituloPrincipal(false)
+      this.prepararAppBar(false)
     }
   }
 
@@ -80,28 +83,42 @@ export class MenuPrincipalComponent implements OnInit {
     }
   }
 
-  verificarPerfilSeleccionado() {
-    this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado();
-    if (this.perfilSeleccionado) {
-      this.configuracionAppBar.gazeAppBar.subtituloNormal = this.obtenerTituloPrincipal(true)
-      this.configuracionAppBar.gazeAppBar.mostrarBotonXRoja = true;
-    } else {
-      this.router.navigateByUrl(RutasLocales.MENU_SELECCION_PERFILES);
-    }
-  }
 
-  async prepararAppBar() {
-    this.configuracionAppBar = {
-      usoAppBar: UsoAppBar.USO_GAZE_BAR,
-      gazeAppBar: {
-        tituloPrincipal: {
-          mostrar: true,
-          llaveTexto: "My PROFILE"
-        },
-        mostrarBotonXRoja: false,
-        tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
+  async prepararAppBar(session: boolean) {
+    if (session) {
+      this.configuracionAppBar = {
+        usoAppBar: UsoAppBar.USO_GAZE_BAR,
+        gazeAppBar: {
+          tituloPrincipal: {
+            mostrar: true,
+            llaveTexto: "My PROFILE"
+          },
+          subtituloNormal: {
+            mostrar: true,
+            llaveTexto: this.perfilSeleccionado.tipoPerfil.nombre
+          },
+          mostrarBotonXRoja: true,
+          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
+        }
+      }
+    } else {
+      this.configuracionAppBar = {
+        usoAppBar: UsoAppBar.USO_GAZE_BAR,
+        gazeAppBar: {
+          tituloPrincipal: {
+            mostrar: true,
+            llaveTexto: "My PROFILE"
+          },
+          subtituloDemo: {
+            mostrar: true,
+            llaveTexto: "demo"
+          },
+          mostrarBotonXRoja: false,
+          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
+        }
       }
     }
+
   }
 
   obtenerTituloPrincipal(profileCreated: boolean) {
