@@ -1,5 +1,5 @@
 import { RutasProyectos } from './../proyectos/rutas-proyectos.enum';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
 import { DatosLista } from 'src/app/compartido/diseno/modelos/datos-lista.interface';
 import { UsoAppBar } from 'src/app/compartido/diseno/enums/uso-appbar.enum';
@@ -23,8 +23,8 @@ import { PerfilNegocio } from 'src/app/dominio/logica-negocio/perfil.negocio';
 import { CuentaNegocio } from 'src/app/dominio/logica-negocio/cuenta.negocio';
 import { ignoreElements } from 'rxjs/operators';
 import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
-
-
+import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
+import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
 
 @Component({
   selector: 'app-menu-principal',
@@ -32,7 +32,7 @@ import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
   styleUrls: ['./menu-principal.component.scss']
 })
 export class MenuPrincipalComponent implements OnInit {
-
+  @ViewChild('toast', { static: false }) toast: ToastComponent
   configuracionAppBar: ConfiguracionAppbarCompartida;
   listaMenu: ItemMenuModel[]
   itemSubMenu3Puntos: ItemSubMenu;
@@ -44,6 +44,7 @@ export class MenuPrincipalComponent implements OnInit {
     tamanoLista: TamanoLista.TIPO_MENU_PRINCIPAL
   }
   perfilSeleccionado: PerfilModel
+  configuracionToast: ConfiguracionToast
 
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
@@ -51,11 +52,12 @@ export class MenuPrincipalComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private perfilNegocio: PerfilNegocio,
-    private cuentaNegocio: CuentaNegocio
+    private cuentaNegocio: CuentaNegocio,
   ) {
     this.prepararItemsMenu();
     this.prepararDataSubMenu3puntos();
     this.prepararDatosParaMenuMultipleAccion();
+    this.configurarToast()
   }
 
   ngOnInit(): void {
@@ -65,6 +67,16 @@ export class MenuPrincipalComponent implements OnInit {
       this.verificarPerfilSeleccionado();
     } else {
       this.configuracionAppBar.gazeAppBar.subtituloDemo = this.obtenerTituloPrincipal(false)
+    }
+  }
+
+  configurarToast() {
+    this.configuracionToast = {
+      cerrarClickOutside: false,
+      bloquearPantalla: false,
+      mostrarLoader: false,
+      mostrarToast: false,
+      texto: ""
     }
   }
 
@@ -113,7 +125,7 @@ export class MenuPrincipalComponent implements OnInit {
       {
         id: MenuPrincipal.MIS_PENSAMIENTOS,
         titulo: ["publicar", "mis", "pensamientos"],
-        ruta:RutasLocales.MODULO_PENSAMIENTO,
+        ruta: RutasLocales.MODULO_PENSAMIENTO,
         tipo: TipoMenu.ACCION,
       },
       {
@@ -125,6 +137,7 @@ export class MenuPrincipalComponent implements OnInit {
       {
         id: MenuPrincipal.PUBLICAR,
         titulo: ["publicar", "mis proyectos", "y noticias"],
+        ruta: RutasLocales.MENU_PUBLICAR_PROYECTOS,
         tipo: TipoMenu.ACCION,
       },
       {
@@ -220,7 +233,7 @@ export class MenuPrincipalComponent implements OnInit {
     if (ruta) {
       this.router.navigateByUrl(ruta.toString());
     } else {
-      alert("Ruta no implementada")
+      this.toast.abrirToast("No disponible, estamos construyendo esta sección");
     }
   }
 

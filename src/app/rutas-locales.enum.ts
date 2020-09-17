@@ -13,5 +13,6 @@ export enum RutasLocales {
   ALBUM_GENERAL = 'albumgeneral/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
   MENU_SELECCION_PERFILES = 'menuseleccionperfiles',
   MODULO_PROYECTOS = 'proyectos',
-  PERFIL="perfil"
+  PERFIL="perfil",
+  MENU_PUBLICAR_PROYECTOS="menupublicarproyectos"
 }

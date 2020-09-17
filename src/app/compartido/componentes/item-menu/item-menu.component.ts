@@ -203,5 +203,7 @@ export enum TipoMenu {
   INSTRUCCIONES,
   SUBMENU, // PARA EL SUBMENU DE LOS TRES PUNTOS
   ANUNCIOS, // Para el item menu de gaze anouncement,
-  LEGAL
+  LEGAL,
+  PUBLICAR_PROYECTOS,
+  INFORMATION_PROYECTOS
 }

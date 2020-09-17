@@ -98,9 +98,6 @@ export class PeticionInterceptor implements HttpInterceptor {
                             return throwError(error)
                         }));
                 }))
-
-
-
     }
 
 }

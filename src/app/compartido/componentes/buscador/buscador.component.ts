@@ -3,8 +3,6 @@ import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos
 import { DatosLista } from '../../diseno/modelos/datos-lista.interface';
 import { TamanoLista } from '../../diseno/enums/tamano-lista.enum';
 import { ItemResultadoBusqueda } from "../../../dominio/modelo/item-resultado-busqueda"
-import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs/internal/Observable';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { filter } from 'rxjs/operators';
@@ -49,15 +47,16 @@ export class BuscadorComponent implements OnInit {
     this.capturarPalabra()
   }
 
-  focusPerdido() {
-    console.log("perdi foco")
+  cerrar() {
     this.abrir = false;
     this.palabra = ''
+    this.listaResultados = []
+    this.dataLista.error = null
   }
 
   focusGanado() {
-    console.log("gane foco")
     this.abrir = true
+    this.palabra = ''
   }
 
   obtenerPlaceholder() {
@@ -111,6 +110,7 @@ export class BuscadorComponent implements OnInit {
     } else {
       this.listaResultados.push(...resultadoMapeado)
     }
+    this.dataLista.error = null
     this.mostrarProgreso(false);
   }
 
@@ -126,6 +126,7 @@ export class BuscadorComponent implements OnInit {
   }
 
   navegarPerfil(perfil: PerfilModel) {
+
     if (this.perfilNegocio.soyPropietario(perfil._id)) {
 
     } else {

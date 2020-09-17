@@ -1,68 +1,84 @@
-@import '../../../assets/estilos/dimensiones.scss';
-@import '../../../assets/estilos/imagenes.scss';
+@import "../../../assets/estilos/dimensiones.scss";
+@import "../../../assets/estilos/imagenes.scss";
 
-.divCabecera{    
+.centrar {
     position: relative;
-    height: $item-menu-alto-2621;    
+    z-index: 2;
+}
+.flechaAtras {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $ancho-pagina;
+    height: $appbar-alto-default;
+    z-index: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.divCabecera {
+    position: relative;
+    height: $item-menu-alto-2621;
     width: 100%;
 }
-.escogerLeng{
-    height:$item-menu-alto-2621 - calcular(6.4);
+.escogerLeng {
+    height: $item-menu-alto-2621 - calcular(6.4);
     //$item-menu-alto-2621 - ($ancho-pagina*0.064);
     padding-top: $interlineado-8;
     padding-bottom: $espacio-1719;
     box-sizing: border-box;
     text-align: center;
 }
-.divContenido{
+.divContenido {
     float: left;
-    position: relative;    
+    position: relative;
     width: $ancho-6920;
-    height: calc(#{$altura-pagina} - #{($item-menu-alto-2621 + $portada-gaze-alto-completo)});    
-    left: - $espacio-267;
-    overflow-y: auto
+    height: calc(#{$altura-pagina} - #{($item-menu-alto-2621 + $portada-gaze-alto-completo)});
+    left: -$espacio-267;
+    overflow-y: auto;
 }
-.divPaddign522{    
+.divPaddign522 {
     padding: $interlineado-10 0 $interlineado-10 0;
     box-sizing: border-box;
 }
 
-.divMargin522{    
+.divMargin522 {
     margin: $interlineado-10 0 $interlineado-10 0;
     box-sizing: border-box;
 }
 
-.divPaddign522Top{
+.divPaddign522Top {
     padding-top: $interlineado-10;
     box-sizing: border-box;
 }
 
-.centrar2{
+.centrar2 {
     display: table-cell;
     vertical-align: middle;
 }
-.divAviso{
+.divAviso {
     min-height: calcular(57.14);
     width: 100%;
-    display: table
+    display: table;
     /*display: flex;
     justify-content: center;
     align-items: center;*/
 }
-.divCompromiso{
-    min-height: calcular(55.07);    
+.divCompromiso {
+    min-height: calcular(55.07);
     width: 100%;
-    display: table
-} 
-.paddinLeft267{
+    display: table;
+}
+.paddinLeft267 {
     box-sizing: border-box;
     padding-left: $espacio-267;
 }
-.paddinRight267{
+.paddinRight267 {
     box-sizing: border-box;
     padding-right: $espacio-267;
 }
-.btnEnviar{
+.btnEnviar {
     margin-top: $interlineado-10;
     margin-bottom: $interlineado-10;
     box-sizing: border-box;
@@ -72,15 +88,13 @@
     position: relative;
     left: - $espacio-267 !important;
 }*/
-.posicionRelativa{
+.posicionRelativa {
     position: absolute;
 }
 /*       */
 // Boton atras
 .botonAtras {
-    position: absolute;
-    left: - ($boton-back-icono-ancho + $espacio-267 +$espacio-554);
-    bottom: $espacio-6545;
+    margin-bottom: $espacio-6545;
     z-index: 1;
     height: fit-content;
     display: flex;
@@ -91,10 +105,10 @@
 .botonAtras .icono {
     width: $boton-back-icono-ancho;
     height: $boton-back-icono-alto;
-    margin: 0 0 0 $espacio-554; 
+    margin: 0 0 0 $espacio-554;
     background-color: yellowgreen;
     background: $forma-flecha-back;
-    background-size: 100% 100%;    
+    background-size: 100% 100%;
 }
 /*.botonAtras p {
     margin: 0 0 $espacio-05 0;

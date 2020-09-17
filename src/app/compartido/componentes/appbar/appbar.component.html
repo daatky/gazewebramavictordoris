@@ -36,19 +36,13 @@
             <app-buscador #buscador [data]="configuracion.searchBarAppBar.configuracion.datos"></app-buscador>
         </div>
         <div class="botonAtras" (tap)="clickBotonAtras()">
-            <div
-                *ngIf="configuracion.searchBarAppBar.mostrarDivBack.icono"
-                class="icono"
-            ></div>
-            <p
-                *ngIf="configuracion.searchBarAppBar.mostrarDivBack.texto"
-                [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
+            <div *ngIf="configuracion.searchBarAppBar.mostrarDivBack.icono" class="icono"></div>
+            <p *ngIf="configuracion.searchBarAppBar.mostrarDivBack.texto" [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                     color: estiloDelTextoServicio.colorDelTexto.TEXTOVERDEBASE, 
                     estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 
                     enMayusculas: true,
                     tamanoConInterlineado: estiloDelTextoServicio.tamanoDeTextoConInterlineado.L4_IGUAL 
-                })"
-            >
+                })">
                 {{ textoBack }}
             </p>
         </div>
@@ -129,9 +123,7 @@
     <div *ngIf="configuracion.usoAppBar === usoAppBar.SOLO_TITULO" class="box">
         <div [ngClass]="obtenerClasesCapaColorFondo(configuracion.tituloAppbar.tamanoColorFondo)"></div>
         <div *ngIf="configuracion.tituloAppbar.mostrarDivBack" class="botonAtras" (tap)="clickBotonAtras()">
-            <div class="botonAtras" (tap)="clickBotonAtras()">
-                <div class="icono"></div>
-            </div>
+            <div class="icono"></div>
         </div>
         <div class="tituloPrincipalSolo">
             <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 

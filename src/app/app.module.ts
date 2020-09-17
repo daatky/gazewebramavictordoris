@@ -45,6 +45,8 @@ import { RestriccionRutas } from './nucleo/servicios/generales/canActivate/resti
 import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
+import { MenuSeleccionarProyectosComponent } from './presentacion/menu-seleccionar-proyectos/menu-seleccionar-proyectos.component';
 
 //Traducciones
 export function createTranslateLoader(http: HttpClient) {
@@ -63,7 +65,9 @@ export function createTranslateLoader(http: HttpClient) {
     AlbumGeneralComponent,
     MenuPrincipalComponent,
     MisContactosComponent,
-    MenuSeleccionPerfilesComponent    
+    MenuSeleccionPerfilesComponent,
+    MenuPublicarProyectosComponent,
+    MenuSeleccionarProyectosComponent    
   ],
   imports: [
     BrowserModule,

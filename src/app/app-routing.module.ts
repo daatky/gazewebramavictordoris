@@ -15,6 +15,7 @@ import { MenuSeleccionPerfilesComponent } from './presentacion/menu-seleccion-pe
 import { RestriccionRutas } from "../app/nucleo/servicios/generales/canActivate/resticcionRutas.service";
 import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rutas-inicio-session.service';
 import { BuscadorComponent } from './compartido/componentes/buscador/buscador.component';
+import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
 
 
 const routes: Routes = [
@@ -85,6 +86,10 @@ const routes: Routes = [
     path: RutasLocales.MODULO_PROYECTOS.toString(),
     loadChildren: () => import('./presentacion/proyectos/proyectos.module').then(p => p.ProyectosModule),
     canActivate: [RestriccionRutas]
+  },
+  {
+    path: RutasLocales.MENU_PUBLICAR_PROYECTOS.toString(),
+    component: MenuPublicarProyectosComponent,
   }
 ];
 

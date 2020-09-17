@@ -36,7 +36,6 @@ export class MisContactosComponent implements OnInit {
   ngOnInit(): void {
     this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
     this.prepararDatosBuscador();
-    this.appBar;
     this.prepararAppBar(this.cuentaNegocio.sesionIniciada());
   }
 
@@ -55,7 +54,7 @@ export class MisContactosComponent implements OnInit {
     this.perfilNegocio.buscarPerfiles(palabra)
       .subscribe((res: PerfilModel[]) => {
         console.log(res)
-        this.appBar.buscador.mostrarResultados<PerfilModel>(res, CodigosCatalogoEntidad.PERFIL);
+        this.appBar.buscador.mostrarResultados<PerfilModel>(res, CodigosCatalogoEntidad.PERFIL, true);
       }, error => {
         this.appBar.buscador.mostrarError(error)
         console.log(error)
