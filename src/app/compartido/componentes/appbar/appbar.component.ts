@@ -183,13 +183,14 @@ export class AppbarComponent implements OnInit {
     switch (this.configuracion.usoAppBar) {
       case UsoAppBar.USO_DEMO_APPBAR: break
       case UsoAppBar.USO_SEARCHBAR_APPBAR:
+        break
+      case UsoAppBar.USO_GAZE_BAR:
         if (this.configuracion.gazeAppBar.clickTituloPrincipal) {
           this.configuracion.gazeAppBar.clickTituloPrincipal()
         } else {
           console.error('metodo indefinido')
         }
         break
-      case UsoAppBar.USO_GAZE_BAR: break
       case UsoAppBar.SOLO_TITULO: break
       default: break
     }
