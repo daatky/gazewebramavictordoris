@@ -44,6 +44,7 @@ import { CropperComponent } from 'src/app/compartido/componentes/cropper/cropper
 import { ImageCroppedEvent } from 'ngx-image-cropper'
 import { Location } from '@angular/common'
 import { ThrowStmt } from '@angular/compiler';
+import { ColorDeBorde, ColorDeFondo } from 'src/app/compartido/diseno/enums/item-cir-rec-colores.enum';
 
 @Component({
   selector: 'app-album-perfil',
@@ -215,7 +216,10 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           capaOpacidad: {
             mostrar: false
           },
-          eventoEnItem: this.eventoEnitemFuncion
+          eventoEnItem: this.eventoEnitemFuncion,
+          esBotonUpload: false,
+          colorBorde: ColorDeBorde.BORDER_ROJO,
+          colorDeFondo: ColorDeFondo.FONDO_BLANCO,
         })
       })
       // Definir la portada
@@ -308,7 +312,10 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       eventoEnItem: this.eventoEnitemFuncion,
       capaOpacidad: {
         mostrar: false
-      }
+      },
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_ROJO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
   }
 
@@ -337,7 +344,10 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       eventoEnItem: this.eventoEnitemFuncion,
       capaOpacidad: {
         mostrar: false
-      }
+      },
+      esBotonUpload: true,
+      colorBorde: ColorDeBorde.BORDER_ROJO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO,
     }
   }
 
@@ -382,7 +392,10 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
           capaOpacidad: {
             mostrar: true,
             colorOpacidad: this.obtenerColorCapaOpacidad(pos)
-          }
+          },
+          esBotonUpload: false,
+          colorBorde: ColorDeBorde.BORDER_ROJO,
+          colorDeFondo: ColorDeFondo.FONDO_TRANSPARENTE,
         }
       )
       pos += 1
@@ -428,7 +441,10 @@ export class AlbumPerfilComponent implements OnInit, AfterViewInit, OnDestroy {
       capaOpacidad: {
         mostrar: false
       },
-      eventoEnItem: this.eventoEnitemFuncion
+      eventoEnItem: this.eventoEnitemFuncion,
+      esBotonUpload: false,
+      colorBorde: ColorDeBorde.BORDER_ROJO,
+      colorDeFondo: ColorDeFondo.FONDO_BLANCO
     })
 
 

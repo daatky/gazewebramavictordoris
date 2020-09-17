@@ -17,7 +17,6 @@ $diametro-item-grande: calcular(38.53);
     justify-content: center;
     user-select: none;
     box-sizing: border-box;
-    background: $blanco;
     touch-action: auto;
 }
 
@@ -33,10 +32,38 @@ $diametro-item-grande: calcular(38.53);
     border: $espedor-borde-grande solid $rojo-base;
 }
 
-.itemCirculo.contato {
-
+.itemCirculo.contacto {
+    width: $portada-gaze-ancho-cortada;
+    height: $portada-gaze-ancho-cortada; 
+    border: $espedor-borde-grande solid $rojo-base;
 }
 
+// Color de borde
+.borde-transparente {
+    border: none !important;
+}
+.borde-rojo {
+    border-color: $rojo-base !important;
+}
+.borde-azul {
+    border-color: $azul-base !important;
+}
+.borde-amarillo {
+    border-color: $amarillo-base !important;
+}
+.borde-negro {
+    border-color: $negro !important;
+}
+
+// Color de fondo
+.fondo-transparente {
+    background-color: transparent;
+}
+.fondo-blanco {
+    background-color: $blanco;
+}
+
+//  Demas estilos del item
 .itemCirculo .textoBoton {
     font-size: $letra-3;
     line-height: $letra-3;
@@ -72,7 +99,10 @@ $diametro-item-grande: calcular(38.53);
     width: $diametro-item-grande - ($espedor-borde-grande * 2);
     height: $diametro-item-grande - ($espedor-borde-grande * 2);
 }
-
+.itemCirculo.contacto .capa{
+    width: $portada-gaze-ancho-cortada - ($espedor-borde-grande *2 );
+    height: $portada-gaze-ancho-cortada - ($espedor-borde-grande *2 ); 
+}
 // Capa loader
 .capa.loader {
     align-items: center;

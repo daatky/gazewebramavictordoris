@@ -3,6 +3,7 @@ import { AppbarComponent } from 'src/app/compartido/componentes/appbar/appbar.co
 import { ColorTextoBoton, TipoBoton } from 'src/app/compartido/componentes/button/button.component';
 import { ItemCirculoComponent } from 'src/app/compartido/componentes/item-circulo/item-circulo.component';
 import { PortadaGazeComponent } from 'src/app/compartido/componentes/portada-gaze/portada-gaze.component';
+import { ColorDeBorde, ColorDeFondo } from 'src/app/compartido/diseno/enums/item-cir-rec-colores.enum';
 import { TamanoColorDeFondoAppBar } from 'src/app/compartido/diseno/enums/tamano-color-fondo-appbar.enum';
 import { TamanoDeTextoConInterlineado } from 'src/app/compartido/diseno/enums/tamano-letra-con-interlineado.enum';
 import { TamanoPortadaGaze } from 'src/app/compartido/diseno/enums/tamano-portada-gaze.enum';
@@ -28,24 +29,25 @@ export class VerPerfilComponent implements OnInit {
   @ViewChild('portadaGaze', { static: false }) portada: PortadaGazeComponent
   @ViewChild('barra', { static: true }) appBar: AppbarComponent
   botonContactos: BotonCompartido //Para enviar la configuracion del boton publico
-  listaContactos:Array<ParticipanteAsociacionModel>
+  //listaContactos:Array<ParticipanteAsociacionModel>
+  listaConfiguracionAppbar:Array<ItemCircularCompartido>
   configuracionAppBar: ConfiguracionAppbarCompartida //Para enviar la configuracion de para presentar el appBar
   perfilSeleccionado: PerfilModel  
   //confPortada: ItemCircularCompartido // Portada del album  
   confItemRec: ItemRectangularCompartido // Configuracion item del rectangulo
   fotoPerfil:UsoItemCircular
-  fotoUsers:UsoItemCircular
+  //fotoUsers:UsoItemCircular
   constructor(
     private internacionalizacionNegocio: InternacionalizacionNegocio,
     private perfilNegocio: PerfilNegocio,
-    private generadorId: GeneradorId
+    public generadorId: GeneradorId
   ) { }
   ngOnInit(): void {
     this.perfilSeleccionado = this.perfilNegocio.obtenerPerfilSeleccionado()
     this.botonContactos = { text: this.internacionalizacionNegocio.obtenerTextoSincrono('misContactos'), tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL, colorTexto: ColorTextoBoton.VERDE, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: () => this.enviarVistaContactos() }
-    this.fotoUsers=UsoItemCircular.CIRCONTACTO
+    //this.fotoUsers=UsoItemCircular.CIRCONTACTO
     this.fotoPerfil=UsoItemCircular.CIRPERFIL
-    this.listaContactos=[]
+    this.listaConfiguracionAppbar=[]
     this.prepararAppBar()
     this.configurarAlbumGeneral()
     this.obtenerContactosInvitaciones()
@@ -94,18 +96,17 @@ export class VerPerfilComponent implements OnInit {
       console.log("OCURRIO UN ERROR")
     }
   }
-  configurarPortada(url:string,usoItem:UsoItemCircular):ItemCircularCompartido {
+  configurarPortada(url:string,usoItem:UsoItemCircular,id:string):ItemCircularCompartido {
     return {
       id: '',
-      idInterno: this.generadorId.generarIdConSemilla(),
+      idInterno: id,
       usoDelItem: usoItem,
-      esVisitante: false,
+      esVisitante: false,      
       urlMedia: url,
-      /*idInterno: this.generadorId.generarIdConSemilla(),
-      usoDelItem: UsoItemCircular.CIRPERFIL,
-      esVisitante: false,
-      urlMedia: '../../../../assets/recursos/fondos/cruz-negra-borrar.svg',*/
-      activarClick: false,
+      esBotonUpload:false,
+      colorBorde:ColorDeBorde.BORDER_AMARILLO,
+      colorDeFondo:ColorDeFondo.FONDO_BLANCO,
+      activarClick: true,
       activarDobleClick: false,
       activarLongPress: false,
       mostrarBoton: true,
@@ -118,8 +119,17 @@ export class VerPerfilComponent implements OnInit {
       //fotoPredeterminadaRamdon:true
     }
   }
+
+  llenarListaConfiguracion(lista:Array<ParticipanteAsociacionModel>){
+    if(lista){
+     for (let i = 0; i < lista.length; i++) {
+      this.listaConfiguracionAppbar.push(this.configurarPortada(lista[i].perfil.album[0].portada.miniatura.url,UsoItemCircular.CIRCONTACTO,lista[i].perfil._id))       
+     } 
+    }    
+  }
+
   obtenerContactosInvitaciones(){    
-    this.listaContactos=[
+    let listaContactos:Array<ParticipanteAsociacionModel>=[
       {
         perfil:{
           _id:"1",
@@ -191,6 +201,7 @@ export class VerPerfilComponent implements OnInit {
         }
       }
     ]
+    this.llenarListaConfiguracion(listaContactos)
     //this.listaContactosItemCirculo.push({configurarPortada.})
   }
   accionItem() {
@@ -209,9 +220,11 @@ export class VerPerfilComponent implements OnInit {
   configurarAlbumGeneral() {
     this.confItemRec = {
       id: '',
-      //idInterno: this.generadorId.generarIdConSemilla(),
+      idInterno: this.generadorId.generarIdConSemilla(),
       usoDelItem: UsoItemRectangular.RECPERFIL,
       esVisitante: false,
+      colorBorde:ColorDeBorde.BORDER_NEGRO,
+      colorDeFondo:ColorDeFondo.FONDO_BLANCO,
       //urlMedia: infoPortada.urlMedia,
       urlMedia: '../../../../assets/recursos/fondos/cruz-negra-borrar.svg',
       activarClick: true,
@@ -241,5 +254,8 @@ export class VerPerfilComponent implements OnInit {
   }
   enviarVistaContactos(){
     console.log("Voy a enviar a la vista de contactos")
+  }
+  seleccionarPerfil(index:number){
+    console.log(index)
   }
 }

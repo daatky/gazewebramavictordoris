@@ -2,24 +2,24 @@
     <app-appbar *ngIf="configuracionAppBar" [configuracion]="configuracionAppBar"></app-appbar>
     <div class="divFotos centrar">
         <div class="divItemMiFoto">
-            <app-item-circulo [configuracion]="configurarPortada('../../../../assets/recursos/fondos/cruz-negra-borrar.svg',fotoPerfil)"></app-item-circulo>
+            <app-item-circulo [configuracion]="configurarPortada('../../../../assets/recursos/fondos/cruz-negra-borrar.svg',fotoPerfil,generadorId.generarIdConSemilla())"></app-item-circulo>
         </div>
         <app-portada-gaze #portadaGaze></app-portada-gaze>
         <app-item-rectangulo [configuracion]="confItemRec"></app-item-rectangulo>
     </div>
-    <div class="divTextNombreContact">
-        <p class="txt-amarillo-base bold letra-3-con-interlineado-igual">{{perfilSeleccionado.nombre |uppercase}}</p>
+    <div class="divTextNombreContact paddingBottom522">
+        <p *ngIf="perfilSeleccionado" class="txt-amarillo-base bold letra-3-con-interlineado-igual">{{perfilSeleccionado.nombre |uppercase}}</p>
     </div>
     <div class="divBotonContactos">
         <app-button class="centrar" [botonCompartido]='botonContactos'></app-button>
     </div>   
     <div class="divTextNombreContact">
-        <p class="txt-blanco bold letra-4-con-interlineado-igual padding178">CONTACTS INVITING ME</p>
-        <p class="txt-blanco ">CLICK TO SEE INFO</p>
+        <p class="txt-blanco bold letra-4-con-interlineado-2">CONTACTS INVITING ME</p>
+        <p class="txt-blanco regular letra-2-con-interlineado-2">CLICK TO SEE INFO</p>
     </div> 
     <div class="divInvitacionesContactos">        
-        <div *ngFor="let contact of listaContactos">      
-          <app-item-circulo [configuracion]="configurarPortada(contact.perfil.album[0].portada.miniatura.url,fotoUsers)"></app-item-circulo>
+        <div *ngFor="let contact of listaConfiguracionAppbar; let i=index">    
+          <app-item-circulo gestorEventos (eventoTap)="seleccionarPerfil(i)" [configuracion]="contact"></app-item-circulo>
         </div>
     </div>
 </div>

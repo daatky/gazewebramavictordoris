@@ -355,7 +355,7 @@ export class RegistroService {
                     this.cuentaNegocio.validarEstadoPerfilParaDestruir(codigoPerfil, perfil.estado.codigo as CodigosCatalogosEstadoPerfiles)
                     break
                 case AccionEntidad.CREAR:
-                    // Pendiente de determinar caso al hacer back
+                    this.perfilNegocio.removerPerfilActivoDelLocalStorage()
                     break
                 case AccionEntidad.ACTUALIZAR:
                     this.perfilNegocio.removerPerfilActivoDelLocalStorage()

@@ -1,4 +1,5 @@
 @import '../../../../assets/estilos/dimensiones.scss';
+
 .divGeneral{
     width: $ancho-pagina;
     height: $altura-pagina;
@@ -17,12 +18,15 @@
     padding:0 $interlineado-7 0 $interlineado-11;
 }
 .divBotonContactos{
-    padding:$interlineado-10 0 $interlineado-10 0;
+    padding:0 0 $interlineado-10 0;
+}
+.paddingBottom522{
+    padding-bottom:$interlineado-10;
 }
 .divInvitacionesContactos{
-    padding: $interlineado-4 0 0 $interlineado-7;
+    margin: $interlineado-4 0 0 $interlineado-7;
     display: flex;
-}
-.padding178{
-    padding-bottom: $interlineado-2;
+    width: $ancho-pagina -$interlineado-7;  
+    overflow: hidden;  
+    box-sizing: border-box;
 }

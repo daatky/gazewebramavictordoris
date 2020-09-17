@@ -84,9 +84,6 @@ export class PerfilModelEstadoMapperService extends MapedorService<PerfilModel, 
     constructor
         (
             private estadoMapper: EstadoModelMapperService,
-            private albumMaper: AlbumModelMapperService,
-            private direccionMapper: DireccionModelMapperService,
-            private tipoPerfilMapper: CatalogoTipoPerfilModelMapperService
         ) {
         super();
     }

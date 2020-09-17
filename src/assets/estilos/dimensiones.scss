@@ -241,15 +241,15 @@ $cuerpo-con-bottom-bar-ancho: $ancho-pagina;
 $cuerpo-general: calc(100vh - #{$espesor-071 + $appbar-alto-default});
 
 // Portada Gazelook
-$portada-gaze-ancho-cortada: calcular(22.97);
-$portada-gaze-alto-cortada: calcular(16.09);
+//$portada-gaze-ancho-cortada: calcular(22.97);
+//$portada-gaze-alto-cortada: calcular(16.09);
 
-$portada-gaze-ancho-completo: $ancho-pagina;
-$portada-gaze-alto-completo: calcular(35.24);
+//$portada-gaze-ancho-completo: $ancho-pagina;
+//$portada-gaze-alto-completo: calcular(35.24);
 
 //fecha
-$espacio-fecha-ancho: calcular(26.55);
-$espacio-fecha-alto: calcular(6.27);
+//$espacio-fecha-ancho: calcular(26.55);
+//$espacio-fecha-alto: calcular(6.27);
 
 // Selector
 $selector-alto: calcular(108);
