@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { MapedorService } from "../../nucleo/base/mapeador.interface";
 import { ItemResultadoBusqueda } from "./item-resultado-busqueda";
 import { CodigosCatalogoEntidad } from "../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum";
+import { AlbumModel } from './entidades/album.model';
 
 export interface NoticiaModel {
     id?: string
@@ -21,6 +22,7 @@ export interface NoticiaModel {
     titulo?: string,
     descripcion?: string,
     tags?: Array<string>,
+    adjuntos?:Array<AlbumModel>
 }
 
 @Injectable({ providedIn: 'root' })

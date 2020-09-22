@@ -86,7 +86,7 @@
         <div class="botonAtras" (tap)="clickBotonAtras()">
             <div class="icono"></div>
         </div>
-        <div *ngIf="configuracion.gazeAppBar?.tituloPrincipal.mostrar" class="tituloPrincipal">
+        <div *ngIf="configuracion.gazeAppBar?.tituloPrincipal.mostrar" class="tituloPrincipal" (tap)="clickTituloPrincipal()">
             <p [ngClass]="estiloDelTextoServicio.obtenerEstilosTexto({ 
                     color: estiloDelTextoServicio.colorDelTexto.TEXTOBLANCO, 
                     estiloTexto: estiloDelTextoServicio.estilosDelTexto.BOLDCONSOMBRA, 

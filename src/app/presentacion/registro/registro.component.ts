@@ -1266,7 +1266,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
   // Deshibernar perfil
   desHibernarPerfil() {
     const perfil: PerfilModel = {
-      _id: this.perfil._id
+      id: this.perfil.id
     }
 
     this.toast.abrirToast('Espere por favor...', true)
@@ -1289,7 +1289,7 @@ export class RegistroComponent implements OnInit, AfterViewInit, OnDestroy {
 
   eliminarHibernarElPerfil(codigoEstado: CodigosCatalogosEstadoPerfiles) {
     const perfil: PerfilModel = {
-      _id: this.perfil._id,
+      id: this.perfil.id,
       estado: {
         codigo: codigoEstado
       }

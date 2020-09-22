@@ -13,7 +13,11 @@
     overflow-y: auto;
     //    word-break: break-all;
 }
-
+.listaScrollPernsamientoPerfil{
+//    width: $ancho-pagina - ($interlineado-11*2);
+    height: calc(250px - #{(($interlineado-10 + $interlineado-8) * 2)});
+    overflow-y: auto;    
+} 
 .listaScrollMenuPrincipal {
     height: calc(100vh - #{$appbar-alto-default} - #{$portada-gaze-alto-completo}) !important;
     overflow-y: auto;

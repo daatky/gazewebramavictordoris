@@ -1,7 +1,5 @@
 import { ItemSelector } from './../../compartido/diseno/modelos/elegible.interface';
 import { CodigosCatalogoTipoPerfil } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-perfiles.enum';
-import { AlbumModel } from '../modelo/entidades/album.model';
-import { CodigosCatalogoTipoAlbum } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-tipo-album.enum';
 import { CodigosCatalogosEstadoPerfiles } from './../../nucleo/servicios/remotos/codigos-catalogos/catalogo-estado-perfiles.enun';
 import { CuentaNegocio } from './cuenta.negocio';
 import { UsuarioModel } from '../modelo/entidades/usuario.model';
@@ -9,14 +7,9 @@ import { PerfilModel } from '../modelo/perfil.model';
 import { Injectable } from "@angular/core";
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, } from 'rxjs/operators'
-import { PagoRepository } from "../repositorio/pago.repository";
-import { CatalogoMetodoPagoEntity } from '../entidades/catalogos/catalogo-metodo-pago.entity';
-import { CatalogoTipoPerfilEntity } from "../entidades/catalogos/catalogo-tipo-perfil.entity";
 import { PerfilRepository } from "../repositorio/perfil.repository";
 import { CatalogoTipoPerfilModel } from '../modelo/catalogos/catalogo-tipo-perfil.model';
-import { AccionEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { FormGroup } from '@angular/forms';
-import { DireccionModel } from '../modelo/entidades/direccion.model';
 import { PaginacionModel } from '../modelo/paginacion-model';
 
 @Injectable({
@@ -135,7 +128,7 @@ export class PerfilNegocio {
             // Si el perfil no existe, se crea y se actualiza el usuario
             if (!perfil) {
                 perfil = {
-                    _id: '',
+                    id: '',
                     nombre: '',
                     nombreContacto: '',
                     direcciones: [],
@@ -157,7 +150,7 @@ export class PerfilNegocio {
         const perfil: PerfilModel = this.perfilRepository.obtenerPerfilSeleccionado()
         let id = ''
         if (perfil) {
-            id = perfil._id
+            id = perfil.id
         }
         return id
     }
@@ -402,7 +395,7 @@ export class PerfilNegocio {
         let perfil: PerfilModel = this.obtenerPerfilActivoDelLocalStorage()
         if (!perfil) {
             perfil = {
-                _id: '',
+                id: '',
                 nombre: '',
                 nombreContacto: '',
                 direcciones: [],
@@ -422,7 +415,7 @@ export class PerfilNegocio {
         const usuario: UsuarioModel = this.cuentaNegocio.obtenerUsuarioDelLocalStorage()
         if (usuario) {
             usuario.perfiles.push({
-                _id: perfil._id,
+                id: perfil.id,
                 nombre: perfil.nombre,
                 nombreContacto: perfil.nombreContacto,
                 tipoPerfil: perfil.tipoPerfil,
@@ -442,7 +435,7 @@ export class PerfilNegocio {
 
     soyPropietario(id: string) {
         const perfilSeleccionado = this.perfilRepository.obtenerPerfilSeleccionado();
-        return perfilSeleccionado._id === id
+        return perfilSeleccionado.id === id
     }
 
 }

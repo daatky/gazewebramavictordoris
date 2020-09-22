@@ -86,6 +86,17 @@ export class ItemCircularRectangularMetodosCompartidos implements ItemMetodosCom
             'mostrar': (usoDelItem === UsoItemRectangular.RECPERFIL)
         }
     }
+    //ESCONDE LAS ESQUINAS DEL RECTANGULO
+    esconderBoderEsquinas(index:number, usoDelItem: UsoItemRectangular){
+        return {
+            'esquina': false,
+            'a': (index === 0),
+            'b': (index === 1),
+            'c': (index === 2),
+            'd': (index === 3),
+            'mostrar': (usoDelItem === UsoItemRectangular.RECPERFIL)
+        }
+    }
 
     // Define las clases para la descripcion del item - Uso UsoItemCirRec.RECALBUMPREVIEW
     obtenerClasesItemDescripcion(usoDelItem: UsoItemRectangular) {

@@ -13,6 +13,7 @@ import { Injectable } from "@angular/core";
 import { MapedorService } from "../../nucleo/base/mapeador.interface";
 import { ItemResultadoBusqueda } from "./item-resultado-busqueda";
 import { CodigosCatalogoEntidad } from "../../nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum";
+import { MediaModel } from './entidades/media.model';
 
 export interface ProyectoModel {
     id?: string,
@@ -32,10 +33,11 @@ export interface ProyectoModel {
     estrategia?: EstrategiaModel,
     comentarios?: Array<ComentarioModel>,
     moneda?: CatalogoTipoMonedaModel
-    titulo?: string
-    tituloCorto?: string
-    descripcion?: string
-    tags?: Array<string>
+    titulo?: string,
+    tituloCorto?: string,
+    descripcion?: string,
+    tags?: Array<string>,
+    medias?: Array<MediaModel>,
 }
 
 @Injectable({ providedIn: 'root' })

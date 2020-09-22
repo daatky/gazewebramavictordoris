@@ -12,6 +12,10 @@ const routes: Routes = [
       {
         path: RutasProyectos.PUBLICAR.toString(),
         component: PublicarComponent
+      },
+      {
+        path: RutasProyectos.ACTUALIZAR.toString(),
+        component: PublicarComponent
       }
     ]
   }

@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
+  public menuLanding = MenuLanding
+
   public itemMenuActivo: MenuLanding
   public itemsMenu: Array<{
     texto: string,
@@ -29,7 +31,7 @@ export class LandingPageComponent implements OnInit {
 
   inicializarItemsMenu() {
     this.itemsMenu.push({
-      texto: 'Página de Inicio',
+      texto: 'Inicio',
       tipoItem: MenuLanding.PAGINA_INICIO,
       clases: {
         boton: true,
@@ -38,7 +40,7 @@ export class LandingPageComponent implements OnInit {
     })
 
     this.itemsMenu.push({
-      texto: '¿Por qué Gazelook?',
+      texto: '¿Por qué?',
       tipoItem: MenuLanding.PORQUE_GAZELOOK,
       clases: {
         boton: true,
@@ -46,7 +48,7 @@ export class LandingPageComponent implements OnInit {
       }
     })
     this.itemsMenu.push({
-      texto: 'Nuestros Objetivos',
+      texto: 'Objetivos',
       tipoItem: MenuLanding.NUESTROS_OBJETIVOS,
       clases: {
         boton: true,

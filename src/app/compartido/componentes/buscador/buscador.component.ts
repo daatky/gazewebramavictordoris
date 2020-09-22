@@ -127,7 +127,7 @@ export class BuscadorComponent implements OnInit {
 
   navegarPerfil(perfil: PerfilModel) {
 
-    if (this.perfilNegocio.soyPropietario(perfil._id)) {
+    if (this.perfilNegocio.soyPropietario(perfil.id)) {
 
     } else {
 
@@ -135,7 +135,7 @@ export class BuscadorComponent implements OnInit {
   }
 
   navegarConversacion(contacto: ParticipanteAsociacionModel) {
-    if (this.perfilNegocio.soyPropietario(contacto.perfil._id)) {
+    if (this.perfilNegocio.soyPropietario(contacto.perfil.id)) {
       //No realizo ningua accion
     } else {
       //Se navega a la conversacion

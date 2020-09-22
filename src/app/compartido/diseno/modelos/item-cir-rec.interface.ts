@@ -7,7 +7,7 @@ export interface CapaOpacidad {
     colorOpacidad?: ColorCapaOpacidadItem,
 }
 
-export interface ItemCompartido {
+export interface ItemCompartido{
     id: any, // el id puede ser la pos del elemento en la lista de items o el id de la foto por ejemplo
     idInterno?: string, // Usado para logica interna del item, es generado de forma automatica, en caso de se necesario inicializar en '', el componenete cuando se dibuja lo crea por si solo
     esVisitante: boolean, // Indica si el usuario que visualiza el item es propietario o no
@@ -23,6 +23,7 @@ export interface ItemCompartido {
     colorDeFondo: ColorDeFondo, // Indica el color de fondo a usar en el item
     esBotonUpload: boolean, // El evento de click cambia segun esta variable
     eventoEnItem?: Function, // Funcion a ejecutar cuando se dispare algun evento en el item, recibe la accions a ejecutar
+    data?:any//Informacion que contiene el item    
 }
 
 export interface ItemCircularCompartido extends ItemCompartido {
@@ -36,4 +37,5 @@ export interface ItemRectangularCompartido extends ItemCompartido {
     textoCerrarEditarDescripcion?: string, // Texto que se muestra para indicar al usuario que debe hacer para dejar de editar la descripcion
     mostrarIconoExpandirFoto?: boolean, // Indica si se debe mostrar la capa con el icono de expandir a pantalla completa la foto
     mostrarCapaImagenSeleccionadaConBorde?: boolean, // Indica si se debe mostrar la capa con borde rojo de editar descripcion
+    esconderEsquina?:boolean
 }

@@ -3,9 +3,10 @@
 .divGeneral{
     width: $ancho-pagina;
     height: $altura-pagina;
+    overflow-y: auto
 }
 .divFotos{
-    padding: $interlineado-8 $interlineado-7 0 $interlineado-7;
+    padding: 0 $interlineado-7 0 $interlineado-7;
     width: $ancho-pagina;
 //    display: flex;
 //    flex-flow: row;
@@ -27,6 +28,22 @@
     margin: $interlineado-4 0 0 $interlineado-7;
     display: flex;
     width: $ancho-pagina -$interlineado-7;  
-    overflow: hidden;  
+    overflow: hidden; 
     box-sizing: border-box;
+}
+.divEspacio{    
+    width: $interlineado-2;
+    height: $interlineado-7;
+}
+.divFormaRectangulo{
+    padding-right: calcular(0.71);
+}
+.divPensamientos{
+    padding: $interlineado-4 $interlineado-11 $interlineado-10 $interlineado-11;
+}
+.paddingTop316{
+    padding-top: $interlineado-8;
+}
+.paddingBottom249{
+    padding-bottom: $interlineado-4;
 }

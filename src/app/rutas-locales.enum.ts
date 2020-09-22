@@ -14,5 +14,6 @@ export enum RutasLocales {
   MENU_SELECCION_PERFILES = 'menuseleccionperfiles',
   MODULO_PROYECTOS = 'proyectos',
   PERFIL="perfil",
+  PERFIL_DE_TERCERO="perfil/:id",
   MENU_PUBLICAR_PROYECTOS="menupublicarproyectos"
 }

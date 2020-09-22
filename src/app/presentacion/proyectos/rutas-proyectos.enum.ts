@@ -1,3 +1,4 @@
 export enum RutasProyectos {
-    PUBLICAR = 'publicar/:tipo/:codigo', // Tipo del proyecto, codigo del perfil
+    PUBLICAR = 'publicar/:accionProyecto/:codigoTipoProyecto',
+    ACTUALIZAR = 'publicar/:accionProyecto/:codigoTipoProyecto/:idProyecto',
 }

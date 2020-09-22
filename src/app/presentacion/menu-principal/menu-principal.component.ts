@@ -1,3 +1,4 @@
+import { CodigosCatalogoTipoProyecto } from './../../nucleo/servicios/remotos/codigos-catalogos/codigos-catalogo-tipo-proyecto.enum';
 import { RutasProyectos } from './../proyectos/rutas-proyectos.enum';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfiguracionAppbarCompartida } from 'src/app/compartido/diseno/modelos/appbar.interface';
@@ -25,6 +26,7 @@ import { ignoreElements } from 'rxjs/operators';
 import { PerfilModel } from 'src/app/dominio/modelo/perfil.model';
 import { ConfiguracionToast } from 'src/app/compartido/diseno/modelos/toast.interface';
 import { ToastComponent } from 'src/app/compartido/componentes/toast/toast.component';
+import { AccionProyecto } from '../proyectos/publicar/publicar.component';
 
 @Component({
   selector: 'app-menu-principal',
@@ -98,7 +100,8 @@ export class MenuPrincipalComponent implements OnInit {
             llaveTexto: this.perfilSeleccionado.tipoPerfil.nombre
           },
           mostrarBotonXRoja: true,
-          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
+          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+          clickTituloPrincipal:()=>this.navigationSubMenu(RutasLocales.PERFIL)
         }
       }
     } else {
@@ -114,13 +117,13 @@ export class MenuPrincipalComponent implements OnInit {
             llaveTexto: "demo"
           },
           mostrarBotonXRoja: false,
-          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920
+          tamanoColorFondo: TamanoColorDeFondoAppBar.TAMANO6920,
+          clickTituloPrincipal:()=>this.navigationSubMenu(RutasLocales.PERFIL)
         }
       }
     }
 
   }
-
   obtenerTituloPrincipal(profileCreated: boolean) {
     if (profileCreated) {
       return {
@@ -135,7 +138,14 @@ export class MenuPrincipalComponent implements OnInit {
     }
   }
 
-
+  navigationSubMenuParametros(rutasLocales:RutasLocales,paramAntiguo:string,paramNuevo:string){
+    let variable=rutasLocales.toString()
+    if (rutasLocales) {
+      this.router.navigateByUrl(variable.replace(paramAntiguo,paramNuevo));
+    } else {
+      this.toast.abrirToast("No disponible, estamos construyendo esta sección");
+    }
+  }
 
   async prepararItemsMenu() {
     this.listaMenu = [
@@ -207,7 +217,13 @@ export class MenuPrincipalComponent implements OnInit {
       gazeAnuncios: item.id == MenuPrincipal.ANUNCIOS,
       idInterno: item.id,
       onclick: () => this.navigationSubMenu(item.ruta),
-      dobleClick: () => { }
+      dobleClick: () => { 
+        let ruta = RutasLocales.MODULO_PROYECTOS.toString()
+        let publicar = RutasProyectos.PUBLICAR.toString()
+        publicar = publicar.replace(':accionProyecto', AccionProyecto.CREAR.toString())
+        publicar = publicar.replace(':codigoTipoProyecto', CodigosCatalogoTipoProyecto.PROYECTO_LOCAL.toString())
+        this.router.navigateByUrl(ruta + '/' + publicar)
+      }
     };
   }
 

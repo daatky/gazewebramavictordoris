@@ -26,11 +26,12 @@ export class ItemRectanguloComponent implements OnInit, AfterViewInit {
   */
   @ViewChild('inputFile', { static: false }) inputFile: ElementRef
   @Input() configuracion: ItemRectangularCompartido // Configuracion del item, para dibujar el item los valores de dataItemCRCompartido deben ser establecidos
-  
+  @Input() esconderEsquinas:boolean
+
   public infoAccion: InfoAccionCirRec // Informacion de que accion se va a ejecutar en el padre cuando se dispare un evento
   public itemMetodos: ItemCircularRectangularMetodosCompartidos // Contiene metodos generales para el item
   public bordesEsquinas: Array<number> // El numero de bordes (esquinas)
-  public confModalOrigenFoto: ModalOrigenFoto // Modal origen foto
+  public confModalOrigenFoto: ModalOrigenFoto // Modal origen foto  
 
   constructor(
     private generadorId:GeneradorId,

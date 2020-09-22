@@ -1,14 +1,14 @@
 import { ArchivoModel, ArchivoModeloMapperService } from './archivo.model'
-import { CatalogoMediaEntity } from '../../entidades/catalogos/catalogo-media.entity'
-import { CatalogoEstadoEntity } from '../../entidades/catalogos/catalogo-estado.entity'
 import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { MediaEntity } from '../../entidades/media.entity';
+import { CatalogoEstadoModel } from '../catalogos/catalogo-estado.model';
+import { CatalogoMediaModel } from '../catalogos/catalogo-media.model';
 
 export interface MediaModel {
     _id?: string,
-    estado?: CatalogoEstadoEntity,
-    tipo?: CatalogoMediaEntity,
+    estado?: CatalogoEstadoModel,
+    tipo?: CatalogoMediaModel,
     principal?: ArchivoModel,
     miniatura?: ArchivoModel,
     enlace?: string,

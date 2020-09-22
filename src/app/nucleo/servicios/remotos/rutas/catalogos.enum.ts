@@ -4,5 +4,6 @@ export enum Catalogo {
     BUSCAR_LOCALIDAD = "catalogos/buscar-localidad/",
     METODOS_PAGOS = "catalogos/catalogo-metodo-pago",
     TIPO_PERFIL = "catalogos/tipo-perfiles",
-    MEDIA = "catalogos/catalogo-tipo-media"
+    MEDIA = 'catalogos/catalogo-tipo-media',
+    CATALOGO_TIPO_MONEDA = 'catalogos/catalogo-tipo-media',
 }

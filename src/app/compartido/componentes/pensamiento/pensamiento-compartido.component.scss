@@ -11,13 +11,20 @@
     box-sizing: border-box;
     width: $ancho-pagina*0.6382;
 }
-
 .divPensamientoAmarillo{
     background-image: $forma-amarilla-pensamientos-login;    
     //border-image-source: $forma-amarilla-pensamientos-login;
     background-repeat: no-repeat;     
 }
-.divFormasPensamientoAmarillo{    
+.divPensamientoPerfilImagen{
+    background-image: $forma-amarilla-pensamientos-login;    
+    background-repeat: no-repeat;    
+    width: $ancho-pagina - ($interlineado-11*2);
+    height: 250px;
+    padding: ($interlineado-10 + $interlineado-8) $interlineado-7 ($interlineado-10 + $interlineado-8) $interlineado-7;    
+    box-sizing: border-box;
+}
+.divFormasPensamientoAmarillo{  
     background-image: $forma-amarilla-pensamientos;    
     background-repeat: no-repeat;
 }
@@ -28,22 +35,19 @@
 .divFormasPensamiento{
     background-image: $forma-ambos-pensamientos;    
     background-repeat: no-repeat;
+    height:13px;
 }
 .tamanoPensamientoAleatorio{
     width: 100%;
     min-height: calcular(41.43);
-    //$ancho-pagina*0.4143;
     height: fit-content;
-    //max-height: $ancho-pagina*0.6143;
-    //height: fit-content;
     padding-top: $espacio-677;    
     padding-left: $espacio-267;
     padding-right: $espacio-267;
-    //padding-bottom: $espacio-677;  
     padding-bottom: $espacio-677 - $espacio-0249;  
     box-sizing: border-box;
-    //margin-bottom: $interlineado-10;
 }
+
 .tamanoPensamiento{    
     height: calcular(131.8643);    
     padding: calcular(6.84) ($espacio-267 + $espacio-0658 + calcular(0.78)) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78));   
@@ -52,7 +56,6 @@
 .tamanoPensamientoPrivado{
     height: calcular(131.8643);    
     padding: calcular(6.84) ($espacio-267 + calcular(0.78)) (calcular(131.8643) - calcular(87.85) + calcular(6.84)) ($espacio-267 + calcular(0.78)+ $espacio-0658);
-    //padding-bottom: calcular(9.212);    
     box-sizing: border-box;
 }
 .divPensamientoFormaAmarilla{
@@ -65,10 +68,6 @@
     height: 100%;    
     padding: 0 $espacio-0658 0 0;
 }
-/*.divPensamientoForma{
-    width: $ancho-pagina;       
-    height: 100%;    
-}*/
 .divError{
     height: calcular(41.43)-($espacio-677*2)
 }

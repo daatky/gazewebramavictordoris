@@ -1,7 +1,8 @@
 import { AlbumModel } from '../modelo/entidades/album.model';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { CatalogoAlbumEntity, CatalogoAlbumEntityMapperService } from "./catalogos/catalogo-album.entity";
-import { MapearMediaModelAlMediaEntity, MediaEntity } from "./media.entity";
+//import { MapearMediaModelAlMediaEntity, MediaEntity, MediaPerfilEntityMapperServiceMediaModel } from "./media.entity";
+import { MediaEntity, MediaPerfilEntityMapperServiceMediaModel } from "./media.entity";
 import { CatalogoIdiomaEntity } from "./catalogos/catalogo-idioma.entity";
 import { Injectable } from '@angular/core';
 
@@ -21,7 +22,7 @@ export interface TraduccionAlbumEntity {
     idioma?: CatalogoIdiomaEntity,
     original?: boolean
 }
-
+/*
 @Injectable({ providedIn: 'root' })
 export class AlbumEntityMapperService extends MapedorService<AlbumModel, AlbumEntity> {
     constructor
@@ -45,4 +46,19 @@ export class AlbumEntityMapperService extends MapedorService<AlbumModel, AlbumEn
         return null;
     }
 
+}*/
+@Injectable({ providedIn: 'root' })
+export class AlbumPerfilEntityMapperServiceAlbumPerfil extends MapedorService<AlbumEntity, AlbumModel> {
+    constructor(
+        private mediaPerfilEntityMapperServiceMediaModel:MediaPerfilEntityMapperServiceMediaModel,
+    ){
+        super();
+    }
+    protected map(entity: AlbumEntity): AlbumModel {
+        return {
+            portada:this.mediaPerfilEntityMapperServiceMediaModel.transform(entity.portada),
+            tipo:entity.tipo,
+            media:this.mediaPerfilEntityMapperServiceMediaModel.transform(entity.media)
+        }
+    }
 }

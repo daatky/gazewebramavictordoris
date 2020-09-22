@@ -134,7 +134,7 @@ export class PerfilRepository {
     }
 
     activarPerfil(perfil: PerfilModel): Observable<object> {
-        const perfilEntity : PerfilEntity = { _id: perfil._id }
+        const perfilEntity : PerfilEntity = { _id: perfil.id }
         return this.perfilServicieRemoto.activarPerfil(perfilEntity)
     }
 

@@ -2,13 +2,13 @@ import { PerfilResumenModel } from '../modelo/entidades/perfil-resumen.model';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { Injectable } from '@angular/core';
 import { UsuarioEntity, UsuarioEntityMapperService } from "./usuario.entity";
-import { AlbumEntity } from "./album.entity"
+import { AlbumEntity, AlbumPerfilEntityMapperServiceAlbumPerfil } from "./album.entity"
 import { TelefonoEntity } from "./telefono.entity"
 import { DireccionEntity, DireccionEntityMapperService } from "./direccion.entity";
-import { ProyectoEntity } from "./proyecto.entity";
-import { PensamientoEntity } from "./pensamiento.entity";
+import { ProyectoEntity, ProyectoPerfilEntityMapperServiceProyectoPerfilModel } from "./proyecto.entity";
+import { PensamientoEntity, PensamientoMapperService } from "./pensamiento.entity";
 import { AsociacionEntity } from "./asociacion.entity";
-import { NoticiaEntity } from "./noticia.entity";
+import { NoticiaEntity, NoticiaPerfilEntityMapperServiceNoticiaPerfilModel } from "./noticia.entity";
 import { CatalogoEstadoEntity } from "./catalogos/catalogo-estado.entity";
 import { CatalogoTipoPerfilEntity, CatalogoTipoPerfilMapperService } from "./catalogos/catalogo-tipo-perfil.entity";
 import { PerfilModel } from '../modelo/perfil.model';
@@ -65,7 +65,7 @@ export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity
     protected map(entity: PerfilEntity): PerfilModel {
         if (entity) {
             const perfil: PerfilModel = {
-                _id: entity._id,
+                id: entity._id,
                 nombreContacto: entity.nombreContacto,
                 nombre: entity.nombre,
                 estado: entity.estado,
@@ -80,5 +80,27 @@ export class PerfilEntityMapperServicePerfil extends MapedorService<PerfilEntity
             return perfil
         }
         return null;
+    }
+}
+
+@Injectable({ providedIn: 'root' })
+export class ParticipantePerfilEntityMapperServicePerfilModel extends MapedorService<PerfilEntity, PerfilModel> {
+    constructor(
+        private albumPerfilEntityMapperServiceAlbumPerfil:AlbumPerfilEntityMapperServiceAlbumPerfil,
+        private proyectoPerfilEntityMapperServiceProyectoPerfilModel:ProyectoPerfilEntityMapperServiceProyectoPerfilModel,
+        private pensamientoMapperService:PensamientoMapperService,
+        private noticiaPerfilEntityMapperServiceNoticiaPerfilModel:NoticiaPerfilEntityMapperServiceNoticiaPerfilModel
+    ){
+        super()
+    }
+    protected map(entity: PerfilEntity): PerfilModel {
+        return {
+            id:entity._id,
+            nombre:entity.nombre,
+            album:this.albumPerfilEntityMapperServiceAlbumPerfil.transform(entity.album),
+            proyectos:this.proyectoPerfilEntityMapperServiceProyectoPerfilModel.transform(entity.proyectos),
+            noticias:this.noticiaPerfilEntityMapperServiceNoticiaPerfilModel.transform(entity.noticias),
+            pensamientos:this.pensamientoMapperService.transform(entity.pensamientos)
+        }
     }
 }

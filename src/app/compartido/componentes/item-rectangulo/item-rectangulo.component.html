@@ -35,10 +35,18 @@
     />
     <p [ngClass]="itemMetodos.obtenerClasesTextoBoton(configuracion.mostrarBoton)">{{ configuracion.textoBoton }}</p>
     <!-- Esquinas -->
-    <div 
+    <div *ngIf="esconderEsquinas; else presentar">
+        <div 
+        *ngFor="let item of bordesEsquinas; let i = index"
+        [ngClass]="itemMetodos.esconderBoderEsquinas(i, configuracion.usoDelItem)"
+        ></div>
+    </div>
+    <ng-template #presentar>
+        <div 
         *ngFor="let item of bordesEsquinas; let i = index"
         [ngClass]="itemMetodos.obtenerClasesBordesEnLasEsquinas(i, configuracion.usoDelItem)"
-    ></div>
+        ></div>
+    </ng-template>
     <!-- Capa Marco Seleccionada - ALBUMPREVIEW -->
     <div
         [ngClass]="itemMetodos.obtenerClasesCapaConBordeRojo(configuracion.mostrarCapaImagenSeleccionadaConBorde)"

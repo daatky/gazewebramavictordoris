@@ -1,0 +1,6 @@
+export enum CodigosCatalogoTipoProyecto {
+    PROYECTO_MUNDIAL = 'CAT_TIPO_PROY_01',
+    PROYECTO_LOCAL = 'CAT_TIPO_PROY_02',
+    PROYECTO_RED = 'CAT_TIPO_PROY_03',
+    PROYECTO_PAIS = 'CAT_TIPO_PROY_04',
+}

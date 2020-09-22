@@ -8,9 +8,14 @@ const routes: Routes = [
     component: PerfilComponent,
     children:[
       {
-        path:"",
+        path:'',
+        component:VerPerfilComponent,
+        pathMatch:'full'
+      },
+      {
+        path:':id',
         component:VerPerfilComponent
-      }
+      },
     ]
   }
 ];

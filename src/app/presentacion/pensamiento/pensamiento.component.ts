@@ -90,8 +90,7 @@ export class PensamientoComponent implements OnInit {
     this.botonPublico = { text: this.internacionalizacionNegocio.obtenerTextoSincrono('publico'), tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: (param) => this.cambiarEstado(1) }
     this.botonPrivado = { text: this.internacionalizacionNegocio.obtenerTextoSincrono('privado'), tamanoTexto: TamanoDeTextoConInterlineado.L4_IGUAL, colorTexto: ColorTextoBoton.ROJO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: (param) => this.cambiarEstado(2) }    
     this.botonCrearPensamiento = { text: 'Enviar', tamanoTexto: TamanoDeTextoConInterlineado.L7_IGUAL, colorTexto: ColorTextoBoton.AMARRILLO, tipoBoton: TipoBoton.TEXTO, enProgreso: false, ejecutar: this.crearPensamiento }
-    this.configuracionToast = { cerrarClickOutside: false, mostrarLoader: false, mostrarToast: false, texto: "" }
-    //this.configuracionToast = {cerrarClickOutside:false,mostrarLoader:false,mostrarToast:false,texto:""}    
+    this.configuracionToast = { cerrarClickOutside: false, mostrarLoader: false, mostrarToast: false, texto: "" } 
   }
   //Cuando se le presenta la pagina principal y tiene que seleccionar un tipo de pensamiento(PensamientoCompartido)
   cambiarEstado(param: number) {
@@ -144,7 +143,7 @@ export class PensamientoComponent implements OnInit {
   }
   crearPensamiento() {
     this.toast.abrirToast(this.internacionalizacionNegocio.obtenerTextoSincrono('procesando'), true)
-    this.pensamientoNegocio.crearPensamiento(this.perfilSeleccionado._id, this.esPublico, this.barraInferior.input.data.texto)
+    this.pensamientoNegocio.crearPensamiento(this.perfilSeleccionado.id, this.esPublico, this.barraInferior.input.data.texto)
       .subscribe(res => {
         this.toast.cerrarToast()
         if (!this.esPublico) {
@@ -157,25 +156,6 @@ export class PensamientoComponent implements OnInit {
         this.toast.abrirToast(error)
       })
   }
-  /*obtenerPensamientos(){
-    this.pensamientoNegocio.obtenerPensamientos(this.perfilSeleccionado._id,this.esPublico)
-    .subscribe((res:Array<PensamientoModel>)=>{      
-      this.cargando=false     
-      if(this.esPublico){        
-          this.dataListaPublico.lista=res
-        return
-      }
-      this.dataListaPrivado.lista=res
-    },error=>{
-      this.cargando=false 
-      if(this.esPublico){ 
-        this.dataListaPublico={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:this.dataListaPublico.lista,cargarMas: ()=>this.cargarMasPensamientos(),error:error}  
-        return
-      } 
-      this.dataListaPublico={tamanoLista:TamanoLista.TIPO_PENSAMIENTO_GESTIONAR,lista:this.dataListaPrivado.lista,cargarMas: ()=>this.cargarMasPensamientos(),error:error}  
-      //this.toast.abrirToast(error)
-    })
-  }*/
 
   //Para enviar el texto para que se presente el input de la barra inferior
   enviarPensamientoActualizar = (itemPensamiento: ItemPensamiento) => {
@@ -255,7 +235,7 @@ export class PensamientoComponent implements OnInit {
   }
   cargarPensamientosPrivados(estoyCargandoMas:boolean){    
     let listaMomentanea=[]
-    this.pensamientoNegocio.cargarPensamientosPrivados(this.perfilSeleccionado._id, 3, this.esPublico,estoyCargandoMas)
+    this.pensamientoNegocio.cargarPensamientosPrivados(this.perfilSeleccionado.id, 3, this.esPublico,estoyCargandoMas)
     .subscribe(res => {      
       if(res===null){
         this.cargando = false
@@ -274,7 +254,7 @@ export class PensamientoComponent implements OnInit {
   }
   cargarPensamientosPublicos(estoyCargandoMas:boolean){
     let listaMomentanea=[]
-    this.pensamientoNegocio.cargarPensamientosPublicos(this.perfilSeleccionado._id, 3, this.esPublico,estoyCargandoMas)
+    this.pensamientoNegocio.cargarPensamientosPublicos(this.perfilSeleccionado.id, 3, this.esPublico,estoyCargandoMas)
     .subscribe(res => {
       if(res===null){
         this.cargando = false

@@ -4,7 +4,8 @@
 
 $espedor-borde-normal: calcular(0.71);
 $diametro-item-normal: calcular(29.01);
-
+$diametro-item-contacto:calcular(20);
+$espedor-borde-contacto: calcular(0.5);
 $espedor-borde-grande: calcular(0.96);
 $diametro-item-grande: calcular(38.53);
 
@@ -33,9 +34,9 @@ $diametro-item-grande: calcular(38.53);
 }
 
 .itemCirculo.contacto {
-    width: $portada-gaze-ancho-cortada;
-    height: $portada-gaze-ancho-cortada; 
-    border: $espedor-borde-grande solid $rojo-base;
+    width: $diametro-item-contacto;
+    height: $diametro-item-contacto; 
+    border: $espedor-borde-contacto solid $rojo-base;
 }
 
 // Color de borde
@@ -100,8 +101,8 @@ $diametro-item-grande: calcular(38.53);
     height: $diametro-item-grande - ($espedor-borde-grande * 2);
 }
 .itemCirculo.contacto .capa{
-    width: $portada-gaze-ancho-cortada - ($espedor-borde-grande *2 );
-    height: $portada-gaze-ancho-cortada - ($espedor-borde-grande *2 ); 
+    width: $diametro-item-contacto - ($espedor-borde-contacto *2 );
+    height: $diametro-item-contacto - ($espedor-borde-contacto *2 ); 
 }
 // Capa loader
 .capa.loader {
