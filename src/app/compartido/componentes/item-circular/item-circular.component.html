@@ -1,0 +1,10 @@
+<div *ngIf="configuracion">
+
+    <img [ngClass]="obtenerClasesParaItemCircularFoto()"
+        [src]="(configuracion.urlFoto)?configuracion.urlFoto:configuracion.urlFotoDefecto"
+        (load)="siImagenEstaCargada($event)">
+
+    <div [ngClass]="obtenerClasesParaItemCircularLoader()">
+        <app-cargando></app-cargando>
+    </div>
+</div>

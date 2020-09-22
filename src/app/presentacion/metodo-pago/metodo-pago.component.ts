@@ -111,7 +111,6 @@ export class MetodoPagoComponent implements OnInit {
     this.configurarDialogoContenido();
     this.obtenerIdioma();
     this.configurarToast();
-
   }
 
 

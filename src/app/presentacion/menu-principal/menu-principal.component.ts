@@ -159,6 +159,7 @@ export class MenuPrincipalComponent implements OnInit {
       {
         id: MenuPrincipal.PROYECTOS,
         titulo: ["usuarios", "proyectos"],
+        ruta: RutasLocales.MENU_VER_PROYECTOS,
         tipo: TipoMenu.ACCION,
       },
       {

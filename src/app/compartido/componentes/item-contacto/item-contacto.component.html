@@ -1,0 +1,11 @@
+<div class="contener-principal">
+    <app-item-circular [configuracion]="obtenerConfiguracionFoto()"> </app-item-circular>
+
+    <div class="info-contacto">
+        <p>{{contactoItem.contacto.perfil.nombreContacto}}</p>
+        <p>{{contactoItem.contacto.perfil.nombre}}</p>
+    </div>
+
+    <div class="iconoX"></div>
+    <app-linea [configuracionLinea]="obtenerConfiguracionLinea()" ></app-linea>
+</div>

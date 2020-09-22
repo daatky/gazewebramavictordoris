@@ -1,5 +1,5 @@
 import { CatalogoEstadoModel } from "../catalogos/catalogo-estado.model";
-import { AsociacionModel } from "./asociacion.model";
+import { AsociacionModel } from "../asociacion.model";
 import { MensajeModel } from "./mensaje.model";
 import { ConfiguracionEstiloModel } from "./configuracion-estilo.model";
 
