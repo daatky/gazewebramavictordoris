@@ -48,6 +48,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
 import { MenuSeleccionarProyectosComponent } from './presentacion/menu-seleccionar-proyectos/menu-seleccionar-proyectos.component';
+import { InformacionUtilComponent } from './presentacion/informacion-util/informacion-util.component';
 
 //Traducciones
 export function createTranslateLoader(http: HttpClient) {
@@ -68,7 +69,8 @@ export function createTranslateLoader(http: HttpClient) {
     MisContactosComponent,
     MenuSeleccionPerfilesComponent,
     MenuPublicarProyectosComponent,
-    MenuSeleccionarProyectosComponent
+    MenuSeleccionarProyectosComponent,
+    InformacionUtilComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { MapedorService } from 'src/app/nucleo/base/mapeador.interface';
 import { CodigosCatalogoEntidad } from 'src/app/nucleo/servicios/remotos/codigos-catalogos/catalogo-entidad.enum';
 import { ItemResultadoBusqueda } from './item-resultado-busqueda';
+import { AsociacionModel } from "../modelo/asociacion.model"
 
 export interface ParticipanteAsociacionModel {
     id?: string
@@ -16,7 +17,8 @@ export interface ParticipanteAsociacionModel {
     invitadoPor?: ParticipanteAsociacionModel
     configuraciones?: Array<ConfiguracionEstiloModel>
     perfil?: PerfilModel
-    sobrenombre?: string
+    sobrenombre?: string,
+    asociacion?: AsociacionModel
 }
 
 

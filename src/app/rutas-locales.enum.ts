@@ -6,7 +6,7 @@ export enum RutasLocales {
   PAGO_TARJETA = 'pagotarjeta/:codigo',
   MENU_PERFILES = 'menuperfiles',
   BIENVENIDO = 'bienvenido',
-  MODULO_PENSAMIENTO = 'pensamiento',  
+  MODULO_PENSAMIENTO = 'pensamiento',
   MENU_PRINCIPAL = "menuprincipal",
   MIS_CONTACTOS = "miscontactos",
   ALBUM_PERFIL = 'albumperfil/:codigo/:entidad/:accionEntidad/:titulo/:accionAlbum',
@@ -15,5 +15,7 @@ export enum RutasLocales {
   MODULO_PROYECTOS = 'proyectos',
   PERFIL="perfil",
   PERFIL_DE_TERCERO="perfil/:id",
-  MENU_PUBLICAR_PROYECTOS="menupublicarproyectos"
+  MENU_PUBLICAR_PROYECTOS="menupublicarproyectos",
+  MENU_VER_PROYECTOS = "menuverproyectos",
+  INFORMACION_UTIL_PROYECTOS = "infoproyectos"
 }

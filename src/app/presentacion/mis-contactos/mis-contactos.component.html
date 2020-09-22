@@ -1,1 +1,13 @@
 <app-appbar #barra [configuracion]="configuracionAppBar"> </app-appbar>
+<div class="cuerpo cuerpo-blanco">
+    <div>
+        <div>
+            MIS CONTACTOS
+        </div>
+        <app-lista-vertical [dataLista]='dataListaMisContacto'>
+            <div *ngFor="let contacto of misContactoLista">
+                <app-item-contacto [contactoItem]="obtenerConfiguracionContacto(contacto.id)"></app-item-contacto>
+            </div>
+        </app-lista-vertical>
+    </div>
+</div>

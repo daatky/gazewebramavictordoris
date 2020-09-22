@@ -1,0 +1,26 @@
+@import "../../../../assets/estilos/dimensiones.scss";
+@import "../../../../assets/estilos/colores.scss";
+@import "../../../../assets/estilos/imagenes.scss";
+
+.info-contacto {
+    margin-left: $espacio-316;
+    margin-right: $espacio-316;
+}
+
+.contener-principal {
+    display: flex;
+    flex-flow: row;
+    background-color: aqua;
+    width: 100%;
+    align-items: center;
+    position: relative;
+}
+
+.iconoX {
+    z-index: 2;
+    position: absolute;
+    background-image: $cruz-negra-borrar;
+    width: $espacio-0756;
+    height: $espacio-0756;
+    right: $espacio-0167;
+}

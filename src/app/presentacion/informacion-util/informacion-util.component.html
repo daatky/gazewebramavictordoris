@@ -1,0 +1,8 @@
+<app-appbar #barra [configuracion]="configuracionAppBar"> </app-appbar>
+<div class="cuerpo cuerpo-blanco">
+    <div *ngIf="informacionUtil">
+        <div *ngFor="let item of informacionUtil" [ngClass]="obtenerEstilosTexto(item.importante,item.tamano,item.espacio)">
+            {{item.descripcion}}
+        </div>
+    </div>
+</div>

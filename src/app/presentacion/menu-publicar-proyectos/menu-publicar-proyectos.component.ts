@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataBuscador } from 'src/app/compartido/componentes/buscador/buscador.component';
 import { TipoMenu } from 'src/app/compartido/componentes/item-menu/item-menu.component';
 import { ListaVerticalComponent } from 'src/app/compartido/componentes/lista-vertical/lista-vertical.component';
@@ -30,16 +30,29 @@ export class MenuPublicarProyectosComponent implements OnInit {
   perfilSeleccionado: PerfilModel
   datosBuscador: DataBuscador;
   listaMenu: ItemMenuModel[]
+  rutaActual: RutasLocales
   constructor(
     private cuentaNegocio: CuentaNegocio,
     private perfilNegocio: PerfilNegocio,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
-    this.prepararItemsMenu();
+
   }
 
   ngOnInit(): void {
-    this.inicializarDatos();
+    this.obtenerRutaActual();
+  }
+
+  obtenerRutaActual() {
+    this.activatedRoute.url.subscribe(
+      (url) => {
+        this.rutaActual = (RutasLocales.MENU_PUBLICAR_PROYECTOS == url[0].path)
+          ? RutasLocales.MENU_PUBLICAR_PROYECTOS
+          : RutasLocales.MENU_VER_PROYECTOS
+        this.inicializarDatos();
+      }
+    );
   }
 
   inicializarDatos() {
@@ -51,6 +64,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
     }
     this.prepararDatosBuscador();
     this.listaVertical.configurarLista()
+    this.prepararItemsMenu();
   }
 
 
@@ -83,7 +97,7 @@ export class MenuPublicarProyectosComponent implements OnInit {
           },
           subtitulo: {
             mostrar: true,
-            llaveTexto: "publicar"
+            llaveTexto: (this.rutaActual == RutasLocales.MENU_PUBLICAR_PROYECTOS) ? "publicar" : "proyectos"
           }
         }
       }
@@ -134,11 +148,21 @@ export class MenuPublicarProyectosComponent implements OnInit {
       tipo: TipoMenu.PUBLICAR_PROYECTOS,
     })
 
+    if (this.rutaActual == RutasLocales.MENU_PUBLICAR_PROYECTOS) {
+      this.listaMenu.push({
+        id: MenuPublicarProyectos.NOTICIAS,
+        titulo: ["noticias"],
+        //ruta: RutasLocales.MODULO_PENSAMIENTO,
+        tipo: TipoMenu.PUBLICAR_PROYECTOS,
+      })
+    }
+
     //Agregar el ultimo item para informacion de proyectos.
     this.listaMenu.push(
       {
         id: MenuPublicarProyectos.PROYECTOS_INFORMACION,
         titulo: ["INFORMACION", "DE", "PROYECTOS"],
+        ruta: RutasLocales.INFORMACION_UTIL_PROYECTOS,
         tipo: TipoMenu.INFORMATION_PROYECTOS,
       }
     )
@@ -179,9 +203,9 @@ export class MenuPublicarProyectosComponent implements OnInit {
     }
   }
 
-
 }
 
 export enum MenuPublicarProyectos {
+  NOTICIAS,
   PROYECTOS_INFORMACION
 }

@@ -7,6 +7,13 @@
     overflow-y: auto;
     width: $ancho-6920;
 }
+
+.listaContactos {
+    height: calc(100vh - #{$appbar-alto-default} - #{$espesor-089}) !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 .listaScrollPensamientoGestionar {
     height: calcular(131.8643) - calcular(6.84) - (calcular(131.8643) - calcular(87.85) + calcular(6.84)) - $letra-3 -
         ($espacio-0316 * 2) - ($letra-1 * 2) - ($interlineado-1 * 2) - $interlineado-2 - calcular(0.78);

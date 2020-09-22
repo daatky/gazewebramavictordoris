@@ -33,6 +33,8 @@ import { DialogoInlineComponent } from './componentes/dialogo-inline/dialogo-inl
 import { ListoComponent } from './componentes/listo/listo.component';
 import { BarraInferiorComponent } from './componentes/barra-inferior/barra-inferior.component';
 import { BuscadorComponent } from './componentes/buscador/buscador.component';
+import { ItemCircularComponent } from './componentes/item-circular/item-circular.component';
+import { ItemContactoComponent } from './componentes/item-contacto/item-contacto.component';
 
 @NgModule({
   imports: [
@@ -71,7 +73,9 @@ import { BuscadorComponent } from './componentes/buscador/buscador.component';
     ListoComponent,
     BarraInferiorComponent,
     GestorEventosDirective,
-    BuscadorComponent
+    BuscadorComponent,
+    ItemCircularComponent,
+    ItemContactoComponent
   ],
   exports: [
     CrearComponenteDirective,
@@ -101,7 +105,9 @@ import { BuscadorComponent } from './componentes/buscador/buscador.component';
     DialogoInlineComponent,
     BarraInferiorComponent,
     GestorEventosDirective,
-    BuscadorComponent
+    BuscadorComponent,
+    ItemCircularComponent,
+    ItemContactoComponent
   ]
 })
 

@@ -17,6 +17,7 @@ import { RutasInicioSession } from './nucleo/servicios/generales/canActivate/rut
 import { BuscadorComponent } from './compartido/componentes/buscador/buscador.component';
 import { MenuPublicarProyectosComponent } from './presentacion/menu-publicar-proyectos/menu-publicar-proyectos.component';
 import { RutasInicioSessionPerfil } from './nucleo/servicios/generales/canActivate/rutas-inicio-session-perfil.service';
+import { InformacionUtilComponent } from './presentacion/informacion-util/informacion-util.component';
 
 
 const routes: Routes = [
@@ -93,6 +94,16 @@ const routes: Routes = [
   {
     path: RutasLocales.MENU_PUBLICAR_PROYECTOS.toString(),
     component: MenuPublicarProyectosComponent,
+    canActivate: [RutasInicioSessionPerfil]
+  },
+  {
+    path: RutasLocales.MENU_VER_PROYECTOS.toString(),
+    component: MenuPublicarProyectosComponent,
+    canActivate: [RutasInicioSessionPerfil]
+  },
+  {
+    path: RutasLocales.INFORMACION_UTIL_PROYECTOS,
+    component: InformacionUtilComponent,
     canActivate: [RutasInicioSessionPerfil]
   }
 ];
